@@ -1,0 +1,14 @@
+{
+  "name": "private",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Promisezhangbo/private.git",
+  "author": "zhangbo <zhangbo3.vendor@sensetime.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "vite build"
+  },
+  "dependencies": {
+    "vite": "npm:rolldown-vite@^7.2.5"
+  }
+}
