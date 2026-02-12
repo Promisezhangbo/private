@@ -1,6 +1,6 @@
+import { router } from '@/router'
 import { RouterProvider } from 'react-router-dom'
 import reactLogo from './assets/react.svg'
-import { router } from './router'
 import viteLogo from '/vite.svg'
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>我是agent</h1>
+      <h1>我是blog</h1>
       <RouterProvider router={router} />
     </>
   )

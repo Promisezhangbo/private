@@ -24,6 +24,7 @@ function render(props: any) {
 }
 
 
+
 if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
   render({})
 } else {
@@ -31,18 +32,19 @@ if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
     bootstrap: async () => {
     },
     mount: async (props) => {
-      console.log('【agent】挂载完成', props);
+      console.log('【blog】挂载完成', props);
       render(props)
     },
     unmount: async (props) => {
-      console.log('【agent】卸载完成', props);
+      console.log('【blog】卸载完成', props);
       if (root) {
         root.unmount()
         root = null;
       }
     },
     update: async (props) => {
-      console.log('【agent】更新完成', props);
+      console.log('【blog】更新完成', props);
     },
   })
 }
+

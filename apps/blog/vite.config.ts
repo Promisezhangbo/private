@@ -5,8 +5,7 @@ import qiankun from 'vite-plugin-qiankun'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/',//'//localhost:9001',
-  plugins: [react(), qiankun('agent', {
+  plugins: [react(), qiankun('blog', {
     useDevMode: true
   })],
   resolve: {
@@ -14,14 +13,13 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     }
   },
+  base: '/',
   server: {
-    host: true,
-    hmr: false,
-    port: 9001,
+    port: 9002,
     cors: true,
+    hmr: false,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-    },
-  },
-
+      "access-control-allow-origin": '*'
+    }
+  }
 })

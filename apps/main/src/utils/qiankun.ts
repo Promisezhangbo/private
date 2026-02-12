@@ -1,13 +1,20 @@
-import { registerMicroApps, start } from "qiankun"
+import { registerMicroApps, start } from "qiankun";
 
-const apps = [
+export const apps = [
     {
         name: 'agent',
         entry: '//localhost:9001',
-        container: '#subapp',
+        container: '#sub-app',
         activeRule: '/agent',
         props: {
-            mountId: '#subapp'
+        }
+    },
+    {
+        name: 'blog',
+        entry: '//localhost:9002',
+        container: '#sub-app',
+        activeRule: '/blog',
+        props: {
         }
     }
 ]
@@ -32,9 +39,10 @@ export function registerAppsFn() {
         },
     })
     start({
-        prefetch: true, sandbox: {
-            experimentalStyleIsolation:true,
-            strictStyleIsolation: true
+        // prefetch: true,
+        sandbox: {
+            strictStyleIsolation: true, // 样式隔离保留
+            experimentalStyleIsolation: true,
         }
     })
 }

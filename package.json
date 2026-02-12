@@ -6,7 +6,8 @@
   "author": "zhangbo <zhangbo3.vendor@sensetime.com>",
   "license": "MIT",
   "scripts": {
-    "build": "vite build"
+    "build": "vite build",
+    "dev:agent": "pnpm --parall --filter \"./apps/{agent,main,blog}\" dev"
   },
   "dependencies": {
     "vite": "npm:rolldown-vite@^7.2.5"
