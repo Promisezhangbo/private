@@ -14,6 +14,9 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     }
   },
+  build: {
+    outDir: '../../dist/agent'
+  },
   server: {
     host: true,
     hmr: false,
