@@ -1,13 +1,20 @@
-import React, { useEffect } from 'react'
 import { registerAppsFn } from '@/utils/qiankun'
+import { Spin } from 'antd'
+import { useEffect, useState } from 'react'
 
 function QiankunProvider(props) {
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     registerAppsFn()
 
+
   }, [])
   return (
-    <div>{props?.children}</div>
+    <div>
+      <Spin spinning={loading}>
+        {props?.children}
+      </Spin>
+    </div>
   )
 }
 
