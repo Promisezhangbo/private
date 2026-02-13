@@ -85,6 +85,9 @@ importers:
       '@eslint/js':
         specifier: ^9.39.1
         version: 9.39.2
+      '@packages/ts-config':
+        specifier: workspace:*
+        version: link:../../packages/ts-config
       '@types/node':
         specifier: ^24.10.1
         version: 24.10.11
@@ -140,6 +143,9 @@ importers:
       '@eslint/js':
         specifier: ^9.39.1
         version: 9.39.2
+      '@packages/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
       '@packages/ts-config':
         specifier: workspace:*
         version: link:../../packages/ts-config
@@ -176,6 +182,27 @@ importers:
       vite:
         specifier: ^8.0.0-beta.13
         version: 8.0.0-beta.13(@types/node@24.10.11)
+
+  packages/eslint-config:
+    devDependencies:
+      '@eslint/js':
+        specifier: ^9.39.2
+        version: 9.39.2
+      eslint:
+        specifier: ^9.39.2
+        version: 9.39.2
+      eslint-plugin-react-hooks:
+        specifier: ^7.0.1
+        version: 7.0.1(eslint@9.39.2)
+      eslint-plugin-react-refresh:
+        specifier: ^0.4.26
+        version: 0.4.26(eslint@9.39.2)
+      globals:
+        specifier: ^16.5.0
+        version: 16.5.0
+      typescript-eslint:
+        specifier: ^8.54.0
+        version: 8.54.0(eslint@9.39.2)(typescript@5.9.3)
 
   packages/ts-config: {}
 

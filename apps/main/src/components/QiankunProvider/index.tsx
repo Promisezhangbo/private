@@ -1,21 +1,21 @@
-import { registerAppsFn } from '@/utils/qiankun'
-import { Spin } from 'antd'
-import { useEffect, useState, type PropsWithChildren } from 'react'
+import { registerAppsFn } from "@/utils/qiankun";
+import { Spin } from "antd";
+import { useEffect, useState, type PropsWithChildren } from "react";
 
 function QiankunProvider(props: PropsWithChildren) {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    registerAppsFn()
+    registerAppsFn();
 
 
-  }, [])
+  }, []);
   return (
     <div>
       <Spin spinning={loading}>
         {props?.children}
       </Spin>
     </div>
-  )
+  );
 }
 
-export default QiankunProvider
+export default QiankunProvider;

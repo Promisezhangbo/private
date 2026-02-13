@@ -5,6 +5,8 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
+// const project = path.resolve(process.cwd(), "tsconfig.json");
+
 export default defineConfig([
   globalIgnores(["dist"]),
   {
@@ -15,11 +17,21 @@ export default defineConfig([
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
     ],
+
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: "latest",
       globals: globals.browser,
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
-    tsconfigRootDir: import.meta.dirname,
-    rules: {},
+    rules: {
+      quotes: "error",
+      "no-console": "off",
+      semi: "error",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "warn",
+    },
   },
 ]);

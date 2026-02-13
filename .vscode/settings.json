@@ -1,9 +1,34 @@
 {
     "typescript.preferences.importModuleSpecifier": "non-relative",
     "javascript.preferences.importModuleSpecifier": "non-relative",
+    "editor.formatOnSave": true,
+    // 开启 ESLint 自动修复（保存时）
     "editor.codeActionsOnSave": {
         "source.organizeImports": "always",
         "source.fixAll.eslint": "always"
     },
-    "editor.formatOnSave": true,
+    // 启用 ESLint 校验的文件类型（覆盖所有前端文件）
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "vue",
+        "json"
+    ],
+    // 强制开启 ESLint（避免被全局设置屏蔽）
+    "eslint.enable": true,
+    // monorepo 场景关键配置：指定 ESLint 工作区根目录
+    "eslint.workingDirectories": [
+        {
+            "mode": "auto"
+        }, // 自动识别 monorepo 子包
+        "../apps/main",
+        "../apps/agent"
+    ],
+    // 禁用 VS Code 内置的语法校验（避免冲突）
+    "javascript.validate.enable": false,
+    "typescript.validate.enable": false,
+    // 确保 ESLint 插件使用项目本地的 ESLint 版本
+    "eslint.nodePath": "./node_modules"
 }
