@@ -30,6 +30,9 @@ importers:
       '@eslint/js':
         specifier: ^9.39.1
         version: 9.39.2
+      '@packages/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
       '@packages/ts-config':
         specifier: workspace:*
         version: link:../../packages/ts-config
@@ -85,6 +88,9 @@ importers:
       '@eslint/js':
         specifier: ^9.39.1
         version: 9.39.2
+      '@packages/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
       '@packages/ts-config':
         specifier: workspace:*
         version: link:../../packages/ts-config

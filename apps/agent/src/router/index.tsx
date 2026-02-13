@@ -3,13 +3,13 @@ import Home from "../pages/home";
 
 const route = [
     {
-        path: '/agent',
+        path: "/agent",
         element: <Outlet />,
         children: [
             { index: true, element: <Navigate to="home" replace /> },
-            { path: 'home', element: <Home /> },
+            { path: "home", element: <Home /> },
         ]
     }
-]
+];
 
-export const router = createBrowserRouter(route)
+export const router = createBrowserRouter(route);

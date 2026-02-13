@@ -1,7 +1,7 @@
-import { router } from '@/router'
-import { RouterProvider } from 'react-router-dom'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { router } from "@/router";
+import { RouterProvider } from "react-router-dom";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
       <h1>我是blog</h1>
       <RouterProvider router={router} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
