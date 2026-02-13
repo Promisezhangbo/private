@@ -30,6 +30,9 @@ importers:
       '@eslint/js':
         specifier: ^9.39.1
         version: 9.39.2
+      '@packages/ts-config':
+        specifier: workspace:*
+        version: link:../../packages/ts-config
       '@types/node':
         specifier: ^24.10.1
         version: 24.10.11
@@ -137,6 +140,9 @@ importers:
       '@eslint/js':
         specifier: ^9.39.1
         version: 9.39.2
+      '@packages/ts-config':
+        specifier: workspace:*
+        version: link:../../packages/ts-config
       '@types/node':
         specifier: ^24.10.1
         version: 24.10.11
@@ -170,6 +176,8 @@ importers:
       vite:
         specifier: ^8.0.0-beta.13
         version: 8.0.0-beta.13(@types/node@24.10.11)
+
+  packages/ts-config: {}
 
 packages:
 
