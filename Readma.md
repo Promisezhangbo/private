@@ -43,3 +43,8 @@ pnpm i
 # 或者直接进行一次
 pnpm i
 ```
+
+### git 配置
+
+遵守angular 团队commit规范
+commit规范[https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#type]
