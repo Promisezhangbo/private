@@ -129,6 +129,31 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ts-config
 
+  apps/singin:
+    dependencies:
+      eslint:
+        specifier: '>=9.0.0'
+        version: 9.39.2(jiti@2.6.1)
+      react:
+        specifier: ^19.2.0
+        version: 19.2.4
+      react-dom:
+        specifier: ^19.2.0
+        version: 19.2.4(react@19.2.4)
+      react-router-dom:
+        specifier: ^7.13.0
+        version: 7.13.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      vite-plugin-qiankun:
+        specifier: ^1.0.15
+        version: 1.0.15(typescript@5.9.3)(vite@8.0.0-beta.13(@types/node@24.10.11)(jiti@2.6.1)(yaml@2.8.2))
+    devDependencies:
+      '@packages/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@packages/ts-config':
+        specifier: workspace:*
+        version: link:../../packages/ts-config
+
   packages/eslint-config:
     devDependencies:
       '@eslint/js':

@@ -1,0 +1,25 @@
+{
+  "name": "singin",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint . --fix",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.13.0",
+    "vite-plugin-qiankun": "^1.0.15"
+  },
+  "devDependencies": {
+    "@packages/ts-config": "workspace:*",
+    "@packages/eslint-config": "workspace:*"
+  },
+  "peerDependencies": {
+    "eslint": ">=9.0.0"
+  }
+}

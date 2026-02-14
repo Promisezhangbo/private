@@ -11,3 +11,4 @@
 9. github CICD 配置
 10. k8s 集群上线
 11. tubor 化
+12. 公共types抽包
