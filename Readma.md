@@ -33,3 +33,14 @@ pnpm i
 ### Prettier
 
 参考链接[https://juejin.cn/post/7085257325165936648]
+配合 .vscode/setting 配置及vscode 插件保存自动格式化
+![prettier 插件](./docs/assets/prettier.png)
+这个在根目录下配置，修改 @packages/prettier-config 的配置后,子应用便可直接生效
+
+如修改不生效，请检查子应用 package.json的依赖配置，或则子应用的 eslint.config.js 配置
+
+```bash
+# 或者直接进行一次
+pnpm i
+```
+

@@ -8,7 +8,14 @@
     "source.fixAll.eslint": "always"
   },
   // 启用 ESLint 校验的文件类型（覆盖所有前端文件）
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "json"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "json"
+  ],
   // 强制开启 ESLint（避免被全局设置屏蔽）
   "eslint.enable": true,
   // monorepo 场景关键配置：指定 ESLint 工作区根目录
@@ -28,9 +35,9 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   // ========== Prettier 插件配置 ==========
   // 指定根目录的 Prettier 配置文件（确保所有子应用读取同一套规则）
-  "prettier.configPath": "${workspaceRoot}/.prettierrc.js",
+  "prettier.configPath": "prettier.config.js",
   // 指定根目录的忽略文件
-  "prettier.ignorePath": "${workspaceRoot}/.prettierignore",
+  "prettier.ignorePath": ".prettierignore",
   // 禁用 Prettier 插件的本地配置覆盖（可选：强制所有子应用用根规则）
   // "prettier.disableLocalConfig": true,
   // ========== 格式化范围配置 ==========
