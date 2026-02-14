@@ -40,6 +40,7 @@ export function registerAppsFn() {
     sandbox: {
       strictStyleIsolation: true, // 样式隔离保留
       experimentalStyleIsolation: true
-    }
+    },
+    singular: false
   });
 }
