@@ -6,7 +6,7 @@
   "author": "zhangbo <zhangbo3.vendor@sensetime.com>",
   "license": "MIT",
   "scripts": {
-    "build": "pnpm --parall --filter \"./apps/{agent,main,blog}\" build",
+    "build": "rm -rf dist && pnpm --parall --filter \"./apps/{agent,main,blog}\" build",
     "dev": "pnpm --parall --filter \"./apps/{agent,main,blog}\" dev",
     "lint": "pnpm --parall --filter \"./apps/*\" lint",
     "format": "prettier --write .",
