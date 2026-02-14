@@ -8,7 +8,13 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default defineConfig([
-  globalIgnores(["dist"]),
+  globalIgnores([
+    "dist",
+    "node_modules",
+    "**/commitlint.config.js", // 忽略所有目录下的 commitlint 配置
+    "**/eslint.config.js", // 忽略所有目录下的 eslint 配置
+    "packages/*/eslint-config.js" // 忽略公共包内的 eslint 配置
+  ]),
   {
     files: ["**/*.{ts,tsx,js,jsx}"],
     extends: [
@@ -16,7 +22,7 @@ export default defineConfig([
       tseslint.configs.recommended,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
-      ...prettierConfig
+      prettierConfig
     ],
 
     plugins: { prettier: prettierPlugin },
@@ -25,7 +31,8 @@ export default defineConfig([
       ecmaVersion: "latest",
       globals: globals.browser,
       parserOptions: {
-        projectService: true
+        projectService: true,
+        allowDefaultProject: true
       }
     },
     rules: {
@@ -34,7 +41,7 @@ export default defineConfig([
       "no-console": "off",
       semi: "error",
       "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
       "@typescript-eslint/no-explicit-any": "warn"
     }
   }

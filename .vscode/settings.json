@@ -8,14 +8,7 @@
     "source.fixAll.eslint": "always"
   },
   // 启用 ESLint 校验的文件类型（覆盖所有前端文件）
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue",
-    "json"
-  ],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "json"],
   // 强制开启 ESLint（避免被全局设置屏蔽）
   "eslint.enable": true,
   // monorepo 场景关键配置：指定 ESLint 工作区根目录

@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "license": "ISC",
   "packageManager": "pnpm@10.13.1",
+  "type": "module",
+  "main": "./eslint-config.js",
   "exports": {
     ".": "./eslint-config.js"
   },
