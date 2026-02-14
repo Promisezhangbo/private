@@ -5,8 +5,9 @@
 ## 配置相关
 
 ### ts相关配置
+
 ts的配置做了一个基础的抽离，将公共的配置单独抽成了一个包，便于维护及形成一个公共规范
-这个包叫做 @packages/ts-config, 并且通过pnpm workspace:* 的方式链接到子应用
+这个包叫做 @packages/ts-config, 并且通过pnpm workspace:\* 的方式链接到子应用
 修改 @packages/ts-config 的配置后,子应用便可直接生效
 
 如修改不生效，请检查子应用 package.json的依赖配置，或则子应用的tsconfig.json 配置
@@ -16,10 +17,10 @@ ts的配置做了一个基础的抽离，将公共的配置单独抽成了一个
 pnpm i
 ```
 
-
 ### eslint 相关配置
+
 eslint 配置做了一个基础的抽离，将公共的配置单独抽成了一个包，便于维护及形成一个公共规范
-这个包叫做 @packages/eslint-config, 并且通过pnpm workspace:* 的方式链接到子应用
+这个包叫做 @packages/eslint-config, 并且通过pnpm workspace:\* 的方式链接到子应用
 修改 @packages/eslint-config 的配置后,子应用便可直接生效
 
 如修改不生效，请检查子应用 package.json的依赖配置，或则子应用的 eslint.config.js 配置
@@ -30,4 +31,5 @@ pnpm i
 ```
 
 ### Prettier
+
 参考链接[https://juejin.cn/post/7085257325165936648]

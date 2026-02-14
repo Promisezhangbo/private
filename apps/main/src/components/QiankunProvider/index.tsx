@@ -6,14 +6,10 @@ function QiankunProvider(props: PropsWithChildren) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     registerAppsFn();
-
-
   }, []);
   return (
     <div>
-      <Spin spinning={loading}>
-        {props?.children}
-      </Spin>
+      <Spin spinning={loading}>{props?.children}</Spin>
     </div>
   );
 }

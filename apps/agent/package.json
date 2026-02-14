@@ -16,8 +16,8 @@
     "vite-plugin-qiankun": "^1.0.15"
   },
   "devDependencies": {
-    "@packages/ts-config": "workspace:*",
-    "@packages/eslint-config": "workspace:*"
+    "@packages/eslint-config": "workspace:*",
+    "@packages/ts-config": "workspace:*"
   },
   "peerDependencies": {
     "eslint": ">=9.0.0"

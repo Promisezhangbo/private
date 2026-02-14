@@ -1,34 +1,59 @@
 {
-    "typescript.preferences.importModuleSpecifier": "non-relative",
-    "javascript.preferences.importModuleSpecifier": "non-relative",
-    "editor.formatOnSave": true,
-    // 开启 ESLint 自动修复（保存时）
-    "editor.codeActionsOnSave": {
-        "source.organizeImports": "always",
-        "source.fixAll.eslint": "always"
-    },
-    // 启用 ESLint 校验的文件类型（覆盖所有前端文件）
-    "eslint.validate": [
-        "javascript",
-        "javascriptreact",
-        "typescript",
-        "typescriptreact",
-        "vue",
-        "json"
-    ],
-    // 强制开启 ESLint（避免被全局设置屏蔽）
-    "eslint.enable": true,
-    // monorepo 场景关键配置：指定 ESLint 工作区根目录
-    "eslint.workingDirectories": [
-        {
-            "mode": "auto"
-        }, // 自动识别 monorepo 子包
-        "../apps/main",
-        "../apps/agent"
-    ],
-    // 禁用 VS Code 内置的语法校验（避免冲突）
-    "javascript.validate.enable": false,
-    "typescript.validate.enable": false,
-    // 确保 ESLint 插件使用项目本地的 ESLint 版本
-    "eslint.nodePath": "./node_modules"
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "editor.formatOnSave": true,
+  // 开启 ESLint 自动修复（保存时）
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always",
+    "source.fixAll.eslint": "always"
+  },
+  // 启用 ESLint 校验的文件类型（覆盖所有前端文件）
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "json"],
+  // 强制开启 ESLint（避免被全局设置屏蔽）
+  "eslint.enable": true,
+  // monorepo 场景关键配置：指定 ESLint 工作区根目录
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }, // 自动识别 monorepo 子包
+    "../apps/main",
+    "../apps/agent"
+  ],
+  // 禁用 VS Code 内置的语法校验（避免冲突）
+  "javascript.validate.enable": false,
+  "typescript.validate.enable": false,
+  // 确保 ESLint 插件使用项目本地的 ESLint 版本
+  "eslint.nodePath": "./node_modules",
+  // 设置 Prettier 为默认格式化工具
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // ========== Prettier 插件配置 ==========
+  // 指定根目录的 Prettier 配置文件（确保所有子应用读取同一套规则）
+  "prettier.configPath": "${workspaceRoot}/.prettierrc.js",
+  // 指定根目录的忽略文件
+  "prettier.ignorePath": "${workspaceRoot}/.prettierignore",
+  // 禁用 Prettier 插件的本地配置覆盖（可选：强制所有子应用用根规则）
+  // "prettier.disableLocalConfig": true,
+  // ========== 格式化范围配置 ==========
+  // 对以下文件类型启用 Prettier 格式化
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

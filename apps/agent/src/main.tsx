@@ -7,7 +7,13 @@ let root: Root | null = null;
 
 function render(props: any) {
   const { container } = props ?? {};
-  console.log(container, props, "测试一下");
+  console.log(container, props, "测试一下22");
+
+  const obj = {
+    a: 1
+  };
+  console.log(333, obj);
+
   const rootContainer = container?.querySelector("#root") || document.getElementById("root");
 
   if (!rootContainer) return;
@@ -23,26 +29,24 @@ function render(props: any) {
   );
 }
 
-
 if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
   render({});
 } else {
   renderWithQiankun({
-    bootstrap: async () => {
-    },
-    mount: async (props) => {
+    bootstrap: async () => {},
+    mount: async props => {
       console.log("【agent】挂载完成", props);
       render(props);
     },
-    unmount: async (props) => {
+    unmount: async props => {
       console.log("【agent】卸载完成", props);
       if (root) {
         root.unmount();
         root = null;
       }
     },
-    update: async (props) => {
+    update: async props => {
       console.log("【agent】更新完成", props);
-    },
+    }
   });
 }

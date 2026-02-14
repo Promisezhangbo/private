@@ -13,16 +13,15 @@ export default defineConfig([
       js.configs.recommended,
       tseslint.configs.recommended,
       reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
+      reactRefresh.configs.vite
     ],
 
     languageOptions: {
       ecmaVersion: "latest",
       globals: globals.browser,
       parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-      },
+        projectService: true
+      }
     },
     rules: {
       quotes: "error",
@@ -30,7 +29,7 @@ export default defineConfig([
       semi: "error",
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": "warn",
-      "@typescript-eslint/no-explicit-any": "warn",
-    },
-  },
+      "@typescript-eslint/no-explicit-any": "warn"
+    }
+  }
 ]);

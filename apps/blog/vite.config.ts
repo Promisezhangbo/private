@@ -5,12 +5,15 @@ import qiankun from "vite-plugin-qiankun";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), qiankun("blog", {
-    useDevMode: true
-  })],
+  plugins: [
+    react(),
+    qiankun("blog", {
+      useDevMode: true
+    })
+  ],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"),
+      "@": path.resolve(__dirname, "src")
     }
   },
   build: {

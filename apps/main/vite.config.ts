@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"),
+      "@": path.resolve(__dirname, "src")
     }
   },
   build: {
@@ -18,7 +18,7 @@ export default defineConfig({
     port: 9000,
     cors: true,
     headers: {
-      "Access-Control-Allow-Origin": "*",
-    },
+      "Access-Control-Allow-Origin": "*"
+    }
   }
 });
