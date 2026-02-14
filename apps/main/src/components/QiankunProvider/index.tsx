@@ -3,7 +3,7 @@ import { Spin } from "antd";
 import { useEffect, useState, type PropsWithChildren } from "react";
 
 function QiankunProvider(props: PropsWithChildren) {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     registerAppsFn();
   }, []);
