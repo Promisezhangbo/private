@@ -1,0 +1,20 @@
+[[redirects]]
+  from = "/agent/*"
+  to = "/agent/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog/*"
+  to = "/blog/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/main/*"
+  to = "/main/index.html"
+  status = 200
+
+# 默认重定向到 main 应用
+[[redirects]]
+  from = "/*"
+  to = "/main/index.html"
+  status = 200
