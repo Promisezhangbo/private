@@ -10,7 +10,8 @@ const route = [
       { index: true, element: <Navigate to='home' replace /> },
       { path: "home", element: <Home /> },
       { path: "/agent/*", element: <div id='sub-app' /> },
-      { path: "/blog/*", element: <div id='sub-app' /> }
+      { path: "/blog/*", element: <div id='sub-app' /> },
+      { path: "/singin/*", element: <div id='sub-app' /> }
     ]
   }
 ];

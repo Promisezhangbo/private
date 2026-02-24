@@ -14,6 +14,13 @@ export const apps = [
     container: "#sub-app",
     activeRule: "/blog",
     props: {}
+  },
+  {
+    name: "singin",
+    entry: "//localhost:9003",
+    container: "#sub-app",
+    activeRule: "/singin",
+    props: {}
   }
 ];
 
