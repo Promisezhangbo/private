@@ -1,28 +1,27 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 function Layouts() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isShowMain = !location.pathname.startsWith("/login");
 
-  // 父应用子作为基座，不做子应用渲染
-
-  // useEffect(() => {
-  //   if (location.pathname === '/') {
-  //     navigate('/agent')
-  //   }
-  // }, [location])
   return (
     <div>
-      <div>
-        基座操作
-        <div>
-          <button onClick={() => navigate("/agent")}>子应用1 Layout</button>
-          <button onClick={() => navigate("/blog")}>子应用2 Layout</button>
-          <button onClick={() => navigate("/")}>首页 Layout</button>
+      {isShowMain && (
+        <div id='sub-main-app'>
+          <div>
+            基座操作22223333
+            <div>
+              <button onClick={() => navigate("/agent")}>子应用1 Layout</button>
+              <button onClick={() => navigate("/blog")}>子应用2 Layout</button>
+              <button onClick={() => navigate("/")}>首页 Layout</button>
+            </div>
+          </div>
+          <div>
+            <Outlet />
+          </div>
         </div>
-      </div>
-      <div>
-        <Outlet />
-      </div>
+      )}
 
       {/* 永远存在的子应用容器，避免路由切换时容器还未渲染导致 qiankun 找不到挂载点 */}
       <div id='sub-app' style={{ minHeight: 200 }}></div>

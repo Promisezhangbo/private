@@ -7,12 +7,12 @@ import qiankun from "vite-plugin-qiankun";
 export default defineConfig({
   plugins: [
     react(),
-    qiankun("singin", {
+    qiankun("login", {
       useDevMode: true
     })
   ],
   build: {
-    outDir: "../../dist/singin"
+    outDir: "../../dist/login"
   },
   resolve: {
     alias: {

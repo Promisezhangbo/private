@@ -16,10 +16,10 @@ export const apps = [
     props: {}
   },
   {
-    name: "singin",
+    name: "login",
     entry: "//localhost:9003",
     container: "#sub-app",
-    activeRule: "/singin",
+    activeRule: "/login",
     props: {}
   }
 ];

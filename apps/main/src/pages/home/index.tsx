@@ -7,7 +7,7 @@ function Home() {
       "父应用首页"
       <button onClick={() => navigate("/agent")}>子应用1 Home</button>
       <button onClick={() => navigate("/blog")}>子应用2 Home</button>
-      <button onClick={() => navigate("/singin")}>去登录页</button>
+      <button onClick={() => navigate("/login")}>去登录页</button>
     </div>
   );
 }
