@@ -13,7 +13,8 @@ export default defineConfig([
     "node_modules",
     "**/commitlint.config.js", // 忽略所有目录下的 commitlint 配置
     "**/eslint.config.js", // 忽略所有目录下的 eslint 配置
-    "packages/*/eslint-config.js" // 忽略公共包内的 eslint 配置
+    "packages/*/eslint-config.js", // 忽略公共包内的 eslint 配置
+    "packages/prettier-config/*.js" // 忽略公共包内的 eslint 配置
   ]),
   {
     files: ["**/*.{ts,tsx,js,jsx}"],
@@ -36,11 +37,17 @@ export default defineConfig([
       }
     },
     rules: {
-      "prettier/prettier": "error", // 格式化错误会触发 ESLint 报错
-      quotes: "error",
-      "no-console": "off",
-      semi: "error",
-      "no-unused-vars": "off",
+      "arrow-parens": ["off"],
+      "prettier/prettier": [
+        "error",
+        {
+          arrowParens: "always" // 这里也可配置，和.prettierrc保持一致
+        }
+      ],
+      // quotes: "error",
+      // "no-console": "off",
+      // semi: "error",
+      // "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
       "@typescript-eslint/no-explicit-any": "warn"
     }

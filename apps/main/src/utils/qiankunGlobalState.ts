@@ -6,7 +6,7 @@ const globalState = initGlobalState({
   loadingAppName: ""
 });
 // 暴露订阅方法
-export const subscribeGlobalState = callback => {
+export const subscribeGlobalState = (callback: () => void) => {
   return globalState.onGlobalStateChange(callback);
 };
 

@@ -11,7 +11,7 @@ function QiankunProvider(props: PropsWithChildren) {
   useEffect(() => {
     registerAppsFn();
 
-    subscribeGlobalState(state => {
+    subscribeGlobalState((state) => {
       setLoading(state.loading);
       // setLoadingAppName(state.loadingAppName);
     });

@@ -7,7 +7,7 @@ export default {
   semi: true, // 句末加分号
   trailingComma: "none", // 尾逗号（ES5 兼容模式）
   bracketSpacing: true, // 对象字面量括号间加空格（{ a: 1 } 而非 {a:1}）
-  arrowParens: "avoid", // 箭头函数单个参数省略括号
+  arrowParens: "always",
   endOfLine: "lf", // 换行符（LF，兼容 Linux/Mac）
   // React/JSX 规则
   jsxSingleQuote: true, // JSX 中使用单引号
