@@ -1,12 +1,19 @@
-import { initGlobalState } from "qiankun";
+import { initGlobalState, type OnGlobalStateChangeCallback } from "qiankun";
 
-// 创建全局状态容器
-const globalState = initGlobalState({
+type InitQiankunState = {
+  loading: boolean;
+  loadingAppName: string;
+};
+
+const initState: InitQiankunState = {
   loading: false,
   loadingAppName: ""
-});
+};
+
+// 创建全局状态容器
+const globalState = initGlobalState(initState);
 // 暴露订阅方法
-export const subscribeGlobalState = (callback: () => void) => {
+export const subscribeGlobalState = (callback: OnGlobalStateChangeCallback) => {
   return globalState.onGlobalStateChange(callback);
 };
 

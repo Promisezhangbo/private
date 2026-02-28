@@ -27,11 +27,10 @@ if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
   render({});
 } else {
   renderWithQiankun({
-    bootstrap: async () => {},
+    bootstrap: async () => { },
     mount: async (props) => {
       console.log("【agent】挂载完成", props);
       render(props);
-      props.setGlobalState({ appLoading: false });
     },
     unmount: async (props) => {
       console.log("【agent】卸载完成", props);

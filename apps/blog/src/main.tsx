@@ -26,20 +26,19 @@ if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
   render({});
 } else {
   renderWithQiankun({
-    bootstrap: async () => {},
+    bootstrap: async () => { },
     mount: async (props) => {
       console.log("【blog】挂载完成");
       render(props);
-      props.setGlobalState({ appLoading: false });
     },
-    unmount: async (props) => {
+    unmount: async (_props) => {
       console.log("【blog】卸载完成");
       if (root) {
         root.unmount();
         root = null;
       }
     },
-    update: async (props) => {
+    update: async (_props) => {
       console.log("【blog】更新完成");
     }
   });

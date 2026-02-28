@@ -39,15 +39,14 @@ export default defineConfig([
     rules: {
       "arrow-parens": ["off"],
       "prettier/prettier": [
-        "error",
+        "warn",
         {
-          arrowParens: "always" // 这里也可配置，和.prettierrc保持一致
+          arrowParens: "always", // 这里也可配置，和.prettierrc保持一致
+          singleQuote: false
+          // "arrow-body-style": "off"
         }
       ],
-      // quotes: "error",
-      // "no-console": "off",
-      // semi: "error",
-      // "no-unused-vars": "off",
+      "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
       "@typescript-eslint/no-explicit-any": "warn"
     }
