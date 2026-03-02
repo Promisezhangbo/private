@@ -2,8 +2,11 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
 
+const isDev = process.env.NODE_ENV === "development";
+
 // https://vite.dev/config/
 export default defineConfig({
+  base: isDev ? "/" : "/main/",
   plugins: [react()],
   resolve: {
     alias: {
