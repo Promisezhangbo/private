@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          # 关键：拉取完整历史，避免 git 推送时的历史冲突
+          fetch-depth: 0
 
       # 关键修复：使用官方 pnpm 安装 action（比手动 npm install -g 更稳定）
       - name: Setup Node.js and pnpm
@@ -39,3 +42,10 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          user_name: "github-actions[bot]" # 关键修复1：配置 git 提交身份（必填）
+          user_email: "github-actions[bot]@users.noreply.github.com"
+          # 关键修复2：强制推送，覆盖旧的 gh-pages 分支（解决冲突）
+          force_orphan: true
+          # 关键修复3：清空 gh-pages 分支历史，避免缓存冲突
+          clean: true
+          clean_keep: ".git" # 保留 git 目录，避免重新初始化
