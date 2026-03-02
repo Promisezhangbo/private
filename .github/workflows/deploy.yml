@@ -1,43 +1,41 @@
 # .github/workflows/deploy.yml
 name: Deploy to GitHub Pages
 
-# 触发条件：推送到 main 分支时自动部署
 on:
   push:
-    branches: [main] # 改成你的主分支名（如 master）
+    branches: [main]
 
-# 工作流任务
 jobs:
   deploy:
-    runs-on: ubuntu-latest # 使用 Ubuntu 系统运行
+    runs-on: ubuntu-latest
     steps:
-      # 步骤1：拉取代码到 GitHub 服务器
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 步骤2：设置 Node.js 环境（匹配你的项目 Node 版本）
+      # 关键修复：使用官方 pnpm 安装 action（比手动 npm install -g 更稳定）
+      - name: Setup Node.js and pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest # 自动安装最新版 pnpm
+          run_install: false # 先不安装依赖，后续手动装
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20" # 改成你项目用的 Node 版本（如 18）
-          cache: "pnpm" # 如果你用 npm/yarn，改成 npm/yarn
+          node-version: "20"
+          cache: "pnpm" # 缓存 pnpm 依赖，加速下次构建
 
-      - name: Install pnpm
-        run: npm install -g pnpm # 如果你用 npm/yarn，改成安装对应的包管理器
-
-      # 步骤3：安装依赖（适配 monorepo + pnpm）
+      # 安装依赖（此时 pnpm 已在 PATH 中）
       - name: Install dependencies
-        run: pnpm install # 用 npm 则改成 npm install；yarn 则 yarn install
+        run: pnpm install
 
-      # 步骤4：构建所有应用（和你 Netlify 的构建命令一致）
+      # 构建应用（确认 package.json 中的脚本是 "build"，不是 "build:all"）
       - name: Build all apps
-        run: pnpm run build # 确保 package.json 中有这个脚本
+        run: pnpm run build
 
-      # 步骤5：部署到 GitHub Pages
+      # 部署到 gh-pages 分支
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4 # 主流的 GitHub Pages 部署插件
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} # GitHub 自动生成的令牌，无需手动配置
-          publish_dir: ./dist # 发布目录（和你 Netlify 的 publish 目录一致）
-          # 可选：如果你的仓库是组织仓库/自定义域名，添加以下配置
-          # cname: your-custom-domain.com
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
