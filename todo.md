@@ -8,8 +8,9 @@
 6. 基础页面搭建
 7. 打包成docker 镜像
 8. 各个子应用可以单独打包、单独部署
-9. github CICD 配置
+9. github Actions 配置 ✅
 10. k8s 集群上线
 11. tubor 化
 12. 公共types抽包
 13. 后端接口类型生成
+14. 部署到github、netlify （现在是整体部署） ✅
