@@ -57,6 +57,9 @@ importers:
 
   apps/agent:
     dependencies:
+      dayjs:
+        specifier: ^1.11.19
+        version: 1.11.19
       eslint:
         specifier: '>=9.0.0'
         version: 9.39.2(jiti@2.6.1)
@@ -82,6 +85,9 @@ importers:
 
   apps/blog:
     dependencies:
+      dayjs:
+        specifier: ^1.11.19
+        version: 1.11.19
       eslint:
         specifier: '>=9.0.0'
         version: 9.39.2(jiti@2.6.1)
@@ -107,6 +113,9 @@ importers:
 
   apps/login:
     dependencies:
+      dayjs:
+        specifier: ^1.11.19
+        version: 1.11.19
       eslint:
         specifier: '>=9.0.0'
         version: 9.39.2(jiti@2.6.1)
@@ -135,6 +144,9 @@ importers:
       antd:
         specifier: ^6.3.0
         version: 6.3.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      dayjs:
+        specifier: ^1.11.19
+        version: 1.11.19
       eslint:
         specifier: '>=9.0.0'
         version: 9.39.2(jiti@2.6.1)

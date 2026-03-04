@@ -44,3 +44,7 @@ if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
     }
   });
 }
+
+if (window?.__BUILD_TIME__) {
+  console.log(`%c【login】${window?.__BUILD_TIME__}`, 'color: #48a19e; font-size: 18px; font-weight: bold;'); // 调试
+}

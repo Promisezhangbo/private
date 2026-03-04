@@ -10,3 +10,7 @@ createRoot(document.getElementById("root")!).render(
     </QiankunProvider>
   </StrictMode>
 );
+
+if (window?.__BUILD_TIME__) {
+  console.log(`%c【blog】${window?.__BUILD_TIME__}`, 'color: #48a19e; font-size: 18px; font-weight: bold;'); // 调试
+}

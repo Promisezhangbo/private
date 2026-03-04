@@ -8,6 +8,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src", "vite.config.ts", "public/**/*.js"],
+  "include": ["src", "vite.config.ts", "public/**/*.js", "types.d.ts"],
   "exclude": ["node_modules", "dist"]
 }
