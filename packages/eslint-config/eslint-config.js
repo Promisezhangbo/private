@@ -91,7 +91,7 @@ export default defineConfig([
 
       /** TypeScript-Specific Rules */
       "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/no-empty-function": ["off", { allow: [] }],
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
       "@typescript-eslint/no-inferrable-types": "error",
