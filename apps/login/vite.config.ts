@@ -11,7 +11,7 @@ export default defineConfig((config) => {
   const isDev = env.NODE_ENV === "development";
   return {
     plugins: [
-      react(),
+      ...(isDev ? [] : [react()]),
       qiankun("login", {
         useDevMode: true
       })
@@ -31,11 +31,11 @@ export default defineConfig((config) => {
     base: isDev ? "/" : "/login/",
     server: {
       port: 9003,
-      hmr: false,
+      host: true,
+      cors: true,
       headers: {
         "Access-Control-Allow-Origin": "*"
-      },
-      cors: true
+      }
     }
   };
 });

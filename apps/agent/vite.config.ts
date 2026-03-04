@@ -12,7 +12,7 @@ export default defineConfig((config) => {
   return {
     base: isDev ? "/" : "/agent/",
     plugins: [
-      react(),
+      ...(isDev ? [] : [react()]),
       qiankun("agent", {
         useDevMode: true
       })
@@ -31,7 +31,6 @@ export default defineConfig((config) => {
     },
     server: {
       host: true,
-      hmr: false,
       port: 9001,
       cors: true,
       headers: {

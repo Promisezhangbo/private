@@ -10,7 +10,7 @@ export default defineConfig((config) => {
   const isDev = env.NODE_ENV === "development";
   return {
     plugins: [
-      react(),
+      ...(isDev ? [] : [react()]),
       qiankun("blog", {
         useDevMode: true
       })
@@ -31,7 +31,7 @@ export default defineConfig((config) => {
     server: {
       port: 9002,
       cors: true,
-      hmr: false,
+      host: true,
       headers: {
         "access-control-allow-origin": "*"
       }
