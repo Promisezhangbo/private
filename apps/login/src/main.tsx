@@ -29,22 +29,19 @@ if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
   renderWithQiankun({
     bootstrap: async () => { },
     mount: async (props) => {
-      console.log("【login】挂载完成", props);
       render(props);
+      if (window?.__BUILD_TIME__) {
+        console.log(`%c【login】${window?.__BUILD_TIME__}`, 'color: #48a19e; font-size: 18px; font-weight: bold;'); // 调试
+      }
     },
-    unmount: async (props) => {
-      console.log("【login】卸载完成", props);
+    unmount: async (_props) => {
       if (root) {
         root.unmount();
         root = null;
       }
     },
-    update: async (props) => {
-      console.log("【blog】更新完成", props);
+    update: async (_props) => {
     }
   });
 }
 
-if (window?.__BUILD_TIME__) {
-  console.log(`%c【login】${window?.__BUILD_TIME__}`, 'color: #48a19e; font-size: 18px; font-weight: bold;'); // 调试
-}
