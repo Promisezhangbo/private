@@ -1,11 +1,11 @@
 <!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/svg+xml" href="/agent/vite.svg">
+    <link rel="icon" type="image/svg+xml" href="/login/vite.svg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>agent</title>
-    <script crossorigin="">import('/agent/assets/index-evey70Fx.js').finally(() => {
+    <title>login</title>
+    <script crossorigin="">import('/login/assets/index-D8I0k8Nn.js').finally(() => {
             
-    const qiankunLifeCycle = window.moudleQiankunAppLifeCycles && window.moudleQiankunAppLifeCycles['agent'];
+    const qiankunLifeCycle = window.moudleQiankunAppLifeCycles && window.moudleQiankunAppLifeCycles['login'];
     if (qiankunLifeCycle) {
       window.proxy.vitemount((props) => qiankunLifeCycle.mount(props));
       window.proxy.viteunmount((props) => qiankunLifeCycle.unmount(props));
@@ -14,7 +14,9 @@
     }
   
           })</script>
+    <link rel="stylesheet" crossorigin="" href="/login/assets/index-BpyQWJ-k.css">
   </head>
+
   <body>
     <div id="root"></div>
   
@@ -32,8 +34,8 @@
   const update = createDeffer('update');
 
   ;(global => {
-    global.qiankunName = 'agent';
-    global['agent'] = {
+    global.qiankunName = 'login';
+    global['login'] = {
       bootstrap,
       mount,
       unmount,
