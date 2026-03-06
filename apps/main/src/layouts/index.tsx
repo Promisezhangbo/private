@@ -1,34 +1,52 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Layout, Menu } from "antd";
+import type { MenuProps } from 'antd';
+
+const { Sider, Content, Header } = Layout;
 
 function Layouts() {
   const navigate = useNavigate();
   const location = useLocation();
-  // 包含login就不展示main应用
+
+  // 当路径以 /login 开头时，不展示主应用的左侧导航（登录页为独立子应用）
   const isShowMain = !location.pathname.startsWith("/login");
+  const selectedKey = location.pathname?.split('/')[1] || '';
 
 
+
+  const items: MenuProps['items'] = [
+    { key: 'home', label: '首页' },
+    { key: 'agent', label: '子应用[Agent]' },
+    { key: 'blog', label: '子应用[Blog]' },
+    { key: 'login', label: '登录' }
+  ];
+
+  const onMenuSelect: MenuProps['onSelect'] = ({ key }) => {
+    if (key === 'home') navigate('/home');
+    else if (key === 'login') navigate('/login');
+    else navigate('/' + key);
+  };
 
   return (
-    <div>
+    <Layout style={{ minHeight: '100vh' }}>
       {isShowMain && (
-        <div id='sub-main-app'>
-          <div>
-            基座操作22223333
-            <div>
-              <button onClick={() => navigate("/agent")}>子应用1 Layout</button>
-              <button onClick={() => navigate("/blog")}>子应用2 Layout</button>
-              <button onClick={() => navigate("/")}>首页 Layout</button>
-            </div>
-          </div>
-          <div>
-            <Outlet />
-          </div>
-        </div>
+        <Sider width={220} style={{ background: '#fff', borderRight: '1px solid #f0f0f0' }}>
+          <div style={{ height: 56, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600 }}>主应用</div>
+          <Menu mode="inline" selectedKeys={[selectedKey]} items={items} onSelect={onMenuSelect} />
+        </Sider>
       )}
 
-      {/* 永远存在的子应用容器，避免路由切换时容器还未渲染导致 qiankun 找不到挂载点 */}
-      <div id='sub-app' style={{ minHeight: 200 }}></div>
-    </div>
+      <Layout>
+        {isShowMain && <Header style={{ background: '#fff', padding: '0 16px' }}>欢迎来到主应用</Header>}
+        <Content style={{ position: 'relative' }}>
+          {isShowMain && <div style={{ position: 'absolute', width: '100%', height: '100%' }}><Outlet /></div>}
+
+          <div style={{ height: isShowMain ? '100%' : '100vh' }}>
+            <div id='sub-app' style={{ width: '100%' }} />
+          </div>
+        </Content>
+      </Layout>
+    </Layout>
   );
 }
 
