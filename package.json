@@ -12,7 +12,7 @@
     "format": "prettier --write .",
     "prepare": "husky",
     "postbuild": "cp dist/main/index.html dist/404.html && cp dist/main/index.html dist/index.html && echo '/*  /main/index.html  200' > dist/_redirects",
-    "reinit": "pnpm -r exec rm -rf node_modules pnpm-lock.yaml; rm -rf $_ && pnpm install"
+    "reinit": "pnpm -r exec rm -rf node_modules && rm -rf node_modules pnpm-lock.yaml && pnpm install"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.1",
