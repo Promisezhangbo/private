@@ -1,7 +1,6 @@
 import List from "@/pages/list";
 import Detail from '@/pages/detail';
 import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
-
 const route = [
   {
     path: "/blog",
@@ -13,5 +12,4 @@ const route = [
     ]
   }
 ];
-
 export const router = createBrowserRouter(route);

@@ -2,10 +2,8 @@ import reactLogo from "@/assets/react.svg";
 import { useNavigate } from "react-router-dom";
 import { message, Row, Card, Typography, Image, Button, Flex } from "antd";
 import { ProForm, ProFormText, ProFormCheckbox } from '@ant-design/pro-components';
-
 function Singin() {
   const navigate = useNavigate();
-
   const onFinish = async (_values: Record<string, unknown>) => {
     const hide = message.loading({ content: '正在登录...', key: 'login' });
     try {
@@ -20,7 +18,6 @@ function Singin() {
       message.error('登录失败');
     }
   };
-
   return (
     <Row justify="center" align="middle" style={{ height: '80vh' }}>
       <Card style={{ width: 360, borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.09)' }}>
@@ -28,7 +25,6 @@ function Singin() {
           <Image src={reactLogo} alt="logo" width={64} preview={false} />
           <Typography.Title level={4} style={{ marginTop: 8 }}>欢迎登录</Typography.Title>
         </Flex>
-
         <ProForm
           onFinish={onFinish}
           initialValues={{ remember: true }}
@@ -40,7 +36,6 @@ function Singin() {
             placeholder="用户名或邮箱"
             rules={[{ required: true, message: '请输入用户名' }]}
           />
-
           <ProFormText
             name="password"
             label="密码"
@@ -48,7 +43,6 @@ function Singin() {
             fieldProps={{ type: 'password' }}
             rules={[{ required: true, message: '请输入密码' }]}
           />
-
           <Flex justify="space-between" align="center" style={{ marginBlock: 8 }}>
             <ProFormCheckbox name="remember" noStyle>记住我</ProFormCheckbox>
             <Button type="link" onClick={() => navigate('/login/register')}>注册账号</Button>
@@ -58,5 +52,4 @@ function Singin() {
     </Row>
   );
 }
-
 export default Singin;

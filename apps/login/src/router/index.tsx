@@ -12,5 +12,4 @@ const router = [
     ]
   }
 ];
-
 export const routers = createBrowserRouter(router);

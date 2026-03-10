@@ -1,7 +1,6 @@
 import React from 'react';
 import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import Home from "../pages/home";
-
 const route = [
   {
     path: "/agent",
@@ -12,5 +11,4 @@ const route = [
     ]
   }
 ];
-
 export const router = createBrowserRouter(route);

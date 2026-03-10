@@ -47,6 +47,7 @@ export default defineConfig([
     rules: {
       // 只允许最多 1 个连续空行，文件末尾最多保留 1 个 EOF 空行
       'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
+      'set-state-in-effect': 'off',
       /** Possible Errors */
       'max-len': 'off',
       'no-console': 'off',
@@ -102,6 +103,13 @@ export default defineConfig([
       '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/no-var-requires': 'error',
       '@typescript-eslint/no-require-imports': 'error',
+    },
+  },
+  // For TSX files, disallow any empty lines (useful to enforce compact JSX blocks)
+  {
+    files: ['**/*.tsx'],
+    rules: {
+      'no-multiple-empty-lines': ['error', { max: 0, maxEOF: 0 }],
     },
   },
 ]);

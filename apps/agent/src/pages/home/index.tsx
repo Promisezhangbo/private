@@ -2,18 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Input, Button, Card, Space, Typography, Avatar } from 'antd';
 import { SendOutlined, RobotOutlined, UserOutlined } from '@ant-design/icons';
 import Markdown from '@ant-design/x-markdown';
-
 const { TextArea } = Input;
 const { Title } = Typography;
-
 type Msg = { role: 'user' | 'assistant'; content: string; id: string };
-
 function Home() {
   const [value, setValue] = useState('');
   const [messages, setMessages] = useState<Msg[]>([]);
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
-
   function send() {
     const content = value.trim();
     if (!content) return;
@@ -21,7 +17,6 @@ function Home() {
     setMessages(prev => [...prev, userMsg]);
     setValue('');
     setLoading(true);
-
     // 模拟 AI 响应（这里可以替换为真实 API 调用）
     setTimeout(() => {
       const answer = `**模拟回答：**\n\n你问的是：\n> ${content}\n\n我目前是本地模拟回复，若需要接入真实 AI，请在 agent 中调用后端或第三方 API。`;
@@ -36,12 +31,11 @@ function Home() {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
-
   return (
     <div style={{ padding: 24, display: 'flex', justifyContent: 'center' }}>
-      <div style={{ width: '100%', maxWidth: 980 }}>
+      这里是 Agent 子应用的首页，当前页面展示了一个简单的 AI 问答界面，用户可以输入问题并获取模拟的 AI 回答。你可以在这个基础上进行扩展，例如接入真实的 AI 服务、增加对话历史记录、支持多轮对话等功能。
+      {/* <div style={{ width: '100%', maxWidth: 980 }}>
         <Title level={2}>AI 问答</Title>
-
         <Card style={{ marginBottom: 16 }}>
           <Space orientation="vertical" style={{ width: '100%' }}>
             <TextArea rows={4} value={value} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)} placeholder="请输入你的问题，例如：如何进行前端性能优化？" />
@@ -50,7 +44,6 @@ function Home() {
             </div>
           </Space>
         </Card>
-
         <div
           ref={scrollRef}
           style={{
@@ -71,7 +64,6 @@ function Home() {
                     <Avatar size={36} icon={<RobotOutlined />} />
                   </div>
                 )}
-
                 <div style={{ maxWidth: '75%', display: 'flex', flexDirection: 'column', alignItems: isUser ? 'flex-end' : 'flex-start' }}>
                   <div
                     style={{
@@ -87,7 +79,6 @@ function Home() {
                     {item.role === 'assistant' ? <Markdown>{item.content}</Markdown> : <div>{item.content}</div>}
                   </div>
                 </div>
-
                 {isUser && (
                   <div style={{ marginLeft: 8 }}>
                     <Avatar size={36} icon={<UserOutlined />} />
@@ -97,9 +88,8 @@ function Home() {
             );
           })}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
-
 export default Home;

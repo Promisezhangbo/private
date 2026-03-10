@@ -3,16 +3,14 @@ import { posts } from '@/data/posts';
 import { Card, Typography, List as AntList, Button } from 'antd';
 import { ArrowRightOutlined, BookOutlined } from '@ant-design/icons';
 import type { Post } from '@/data/posts';
-
 const { Title, Paragraph, Link: TyLink } = Typography;
-
 function List() {
   const navigate = useNavigate();
   return (
     <div style={{ padding: 24, display: 'flex', justifyContent: 'center' }}>
-      <div style={{ width: '100%', maxWidth: 980 }}>
+      博客列表
+      {/* <div style={{ width: '100%', maxWidth: 980 }}>
         <Title level={2} style={{ marginBottom: 24 }}>博客列表</Title>
-
         <AntList
           dataSource={posts}
           renderItem={(p: Post) => (
@@ -34,9 +32,8 @@ function List() {
             </AntList.Item>
           )}
         />
-      </div>
+      </div> */}
     </div>
   );
 }
-
 export default List;

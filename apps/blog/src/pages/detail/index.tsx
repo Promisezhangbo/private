@@ -2,16 +2,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { findPost } from '@/data/posts';
 import { Card, Typography, Button } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
-
 const { Title, Paragraph, Link: TyLink } = Typography;
-
 function Detail() {
     const params = useParams();
     const id = params.id ?? '';
     const post = findPost(id);
-
     const navigate = useNavigate();
-
     if (!post) {
         return (
             <div style={{ padding: 24 }}>
@@ -23,7 +19,6 @@ function Detail() {
             </div>
         );
     }
-
     return (
         <div style={{ padding: 24, display: 'flex', justifyContent: 'center' }}>
             <div style={{ width: '100%', maxWidth: 900 }}>
@@ -44,5 +39,4 @@ function Detail() {
         </div>
     );
 }
-
 export default Detail;

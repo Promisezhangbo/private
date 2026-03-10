@@ -2,11 +2,9 @@ import { message, Row, Card, Typography, Flex, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import { ProForm, ProFormText, type ProFormInstance } from '@ant-design/pro-components';
 import { useRef } from "react";
-
 function Register() {
   const navigate = useNavigate();
   const formRef = useRef<ProFormInstance>(null);
-
   const onFinish = async (_values: Record<string, unknown>) => {
     const hide = message.loading({ content: '正在注册...', key: 'register' });
     try {
@@ -19,7 +17,6 @@ function Register() {
       message.error('注册失败');
     }
   };
-
   return (
     <Row justify="center" align="middle" style={{ height: '80vh' }}>
       <Card style={{ width: 420, padding: 24, boxShadow: '0 2px 8px rgba(0,0,0,0.09)', borderRadius: 8 }}>
@@ -45,5 +42,4 @@ function Register() {
     </Row>
   );
 }
-
 export default Register;

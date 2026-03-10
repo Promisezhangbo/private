@@ -1,21 +1,18 @@
 import React from "react";
 // antd 基本样式（使用 reset 以保持与其它子应用一致）
 import 'antd/dist/reset.css';
+import 'antd/dist/antd.css';
 import { createRoot, type Root } from "react-dom/client";
 import { qiankunWindow, renderWithQiankun } from "vite-plugin-qiankun/dist/helper";
 import App from "./App.tsx";
-
 let root: Root | null = null;
-
 function render(props: { container?: HTMLElement }) {
   const { container } = props ?? {};
   const rootContainer = container?.querySelector("#root") || document.getElementById("root");
-
   if (!rootContainer) return;
   if (!root) {
     root = createRoot(rootContainer);
   }
-
   // 复用 root 实例调用 render 方法
   root.render(
     <React.StrictMode>
@@ -25,7 +22,6 @@ function render(props: { container?: HTMLElement }) {
     </React.StrictMode>
   );
 }
-
 if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
   // When running standalone, prevent body/html scrolling and use app-level scroll
   try {
@@ -33,7 +29,6 @@ if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
     document.body.style.height = '100%';
     document.body.style.overflow = 'hidden';
   } catch (err) { void err; }
-
   render({});
 } else {
   renderWithQiankun({
@@ -54,4 +49,3 @@ if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
     }
   });
 }
-

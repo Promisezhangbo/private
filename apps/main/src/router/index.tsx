@@ -1,7 +1,6 @@
 import Layouts from "@/layouts";
 import Home from "@/pages/home";
 import { createBrowserRouter, Navigate } from "react-router-dom";
-
 const route = [
   {
     path: "/",
@@ -14,5 +13,4 @@ const route = [
     ]
   }
 ];
-
 export const router = createBrowserRouter(route);

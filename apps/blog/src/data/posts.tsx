@@ -6,7 +6,6 @@ export type Post = {
     content: string;
     source?: string;
 };
-
 export const posts: Post[] = [
     {
         id: '1',
@@ -33,7 +32,6 @@ export const posts: Post[] = [
         source: 'https://juejin.cn/post/7170852747749621791'
     }
 ];
-
 export function findPost(id: string) {
     return posts.find(p => p.id === id);
 }
