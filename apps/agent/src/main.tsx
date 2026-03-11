@@ -1,6 +1,6 @@
 import React from "react";
-import 'antd/dist/reset.css';
-import 'antd/dist/antd.css';
+// import 'antd/dist/reset.css';
+// import 'antd/dist/antd.css';
 import { createRoot, type Root } from "react-dom/client";
 import { qiankunWindow, renderWithQiankun } from "vite-plugin-qiankun/dist/helper";
 import App from "./App.tsx";
@@ -22,12 +22,6 @@ function render(props: { container?: HTMLElement }) {
   );
 }
 if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
-  // When running standalone, prevent body/html scrolling and use app-level scroll
-  try {
-    document.documentElement.style.height = '100%';
-    document.body.style.height = '100%';
-    document.body.style.overflow = 'hidden';
-  } catch (err) { void err; }
   render({});
 } else {
   renderWithQiankun({

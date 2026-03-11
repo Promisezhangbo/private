@@ -34,7 +34,7 @@ function Home() {
   return (
     <div style={{ padding: 24, display: 'flex', justifyContent: 'center' }}>
       这里是 Agent 子应用的首页，当前页面展示了一个简单的 AI 问答界面，用户可以输入问题并获取模拟的 AI 回答。你可以在这个基础上进行扩展，例如接入真实的 AI 服务、增加对话历史记录、支持多轮对话等功能。
-      {/* <div style={{ width: '100%', maxWidth: 980 }}>
+      <div style={{ width: '100%', maxWidth: 980 }}>
         <Title level={2}>AI 问答</Title>
         <Card style={{ marginBottom: 16 }}>
           <Space orientation="vertical" style={{ width: '100%' }}>
@@ -88,7 +88,7 @@ function Home() {
             );
           })}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

@@ -25,7 +25,20 @@ export default defineConfig((config) => {
     },
     build: {
       outDir: '../../dist/main',
-      target: ['chrome110'],
+      rollupOptions: {
+        external: ['react', 'react-dom', 'antd'],
+        output: {
+          assetFileNames: '[ext]/[name]-[hash].[ext]',
+          chunkFileNames: 'js/[name]-[hash].js',
+          entryFileNames: 'jse/index-[name]-[hash].js',
+          globals: {
+            antd: 'antd',
+            react: 'React',
+            'react-dom': 'ReactDOM',
+          },
+        },
+      },
+      target: 'es2015',
     },
     server: {
       host: true,

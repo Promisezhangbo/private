@@ -9,7 +9,7 @@ function List() {
   return (
     <div style={{ padding: 24, display: 'flex', justifyContent: 'center' }}>
       博客列表
-      {/* <div style={{ width: '100%', maxWidth: 980 }}>
+      <div style={{ width: '100%', maxWidth: 980 }}>
         <Title level={2} style={{ marginBottom: 24 }}>博客列表</Title>
         <AntList
           dataSource={posts}
@@ -32,7 +32,7 @@ function List() {
             </AntList.Item>
           )}
         />
-      </div> */}
+      </div>
     </div>
   );
 }

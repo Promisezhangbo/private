@@ -18,10 +18,13 @@ function Layouts() {
     { value: 'login', label: '登录' }
   ];
   const onMenuSelect = (key: string) => {
-    setCurrentTag(key);
-    if (key === 'home') navigate('/home');
-    else if (key === 'login') navigate('/login');
-    else navigate('/' + key);
+    console.log(key, 'key===key');
+    if (key) {
+      setCurrentTag(key);
+      if (key === 'home') navigate('/home');
+      else if (key === 'login') navigate('/login');
+      else navigate('/' + key);
+    }
   };
   return (
     <Layout>
