@@ -23,7 +23,7 @@ function Home() {
   const navigate = useNavigate();
   return (
     <>
-      <Card className="dash-hero" bordered={false}>
+      <Card className="dash-hero" variant='outlined'>
         <Typography.Title level={3} className="dash-hero-title">
           控制台
         </Typography.Title>
@@ -36,7 +36,7 @@ function Home() {
         <Typography.Text className="dash-hero-tech-title">技术要点</Typography.Text>
         <Space className="dash-hero-tags" size={[8, 8]} wrap>
           {TECH_TAGS.map((label) => (
-            <Tag key={label} bordered={false}>
+            <Tag key={label} variant='outlined'>
               {label}
             </Tag>
           ))}
