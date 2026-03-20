@@ -1,0 +1,96 @@
+/* Blog 子应用：暖色纸张 + 高亮标题 */
+#app-root {
+  --blog-accent: #f97316;
+  --blog-accent-soft: rgba(249, 115, 22, 0.15);
+  --blog-ink: #1c1917;
+  --blog-muted: #78716c;
+  min-height: 100vh;
+  color: var(--blog-ink);
+  background:
+    radial-gradient(ellipse 100% 60% at 0% 0%, rgba(251, 191, 36, 0.18), transparent 55%),
+    radial-gradient(ellipse 80% 50% at 100% 20%, rgba(249, 115, 22, 0.12), transparent 50%),
+    linear-gradient(180deg, #fffbeb 0%, #fef3c7 35%, #fff7ed 100%);
+  background-attachment: fixed;
+}
+
+.blog-shell {
+  position: relative;
+  z-index: 1;
+  padding: clamp(20px, 4vw, 40px);
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.blog-hero {
+  margin-bottom: 32px;
+}
+
+.blog-hero h1.ant-typography,
+.blog-hero h2.ant-typography {
+  color: var(--blog-ink) !important;
+  letter-spacing: -0.03em;
+  background: linear-gradient(120deg, #c2410c, #ea580c, #d97706);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.blog-hero .ant-typography {
+  color: var(--blog-muted) !important;
+}
+
+.blog-card.ant-card {
+  border-radius: 18px !important;
+  border: 1px solid rgba(251, 191, 36, 0.35) !important;
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 20px 40px rgba(180, 83, 9, 0.08);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.blog-card.ant-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(249, 115, 22, 0.45) !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 28px 56px rgba(234, 88, 12, 0.14);
+}
+
+.blog-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #9a3412;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.blog-card-title:hover {
+  color: #c2410c;
+}
+
+.blog-detail-card.ant-card {
+  border-radius: 20px !important;
+  border: 1px solid rgba(251, 191, 36, 0.4) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 24px 48px rgba(120, 53, 15, 0.1);
+}
+
+.blog-detail-meta {
+  color: var(--blog-muted);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.blog-empty {
+  padding: 24px;
+  text-align: center;
+}

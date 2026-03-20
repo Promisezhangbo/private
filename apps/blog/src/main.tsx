@@ -2,6 +2,7 @@ import React from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { qiankunWindow, renderWithQiankun } from "vite-plugin-qiankun/dist/helper";
 import App from "./App.tsx";
+import "./app.css";
 let root: Root | null = null;
 function render(props: { container?: HTMLElement }) {
   const { container } = props ?? {};
@@ -36,7 +37,6 @@ if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
         root = null;
       }
     },
-    update: async () => {
-    }
+    update: async () => { }
   });
 }

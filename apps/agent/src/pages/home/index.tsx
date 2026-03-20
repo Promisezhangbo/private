@@ -1,93 +1,99 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Input, Button, Card, Space, Typography, Avatar } from 'antd';
 import { SendOutlined, RobotOutlined, UserOutlined } from '@ant-design/icons';
 import Markdown from '@ant-design/x-markdown';
 const { TextArea } = Input;
-const { Title } = Typography;
+/** 单条对话 */
 type Msg = { role: 'user' | 'assistant'; content: string; id: string };
+/** 本地模拟回复（接入真实服务时替换为 fetch / SSE） */
+function buildMockReply(question: string): string {
+  return `**模拟回答**\n\n你问的是：\n> ${question}\n\n当前为前端模拟延迟回复，可在 \`send\` 中改为调用后端或第三方 API。`;
+}
 function Home() {
   const [value, setValue] = useState('');
   const [messages, setMessages] = useState<Msg[]>([]);
   const [loading, setLoading] = useState(false);
-  const scrollRef = useRef<HTMLDivElement | null>(null);
-  function send() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollToBottom = useCallback(() => {
+    const el = scrollRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, []);
+  /** 提交问题：入队用户消息 → 模拟 AI 延迟回复 */
+  const send = useCallback(() => {
     const content = value.trim();
-    if (!content) return;
-    const userMsg: Msg = { role: 'user', content, id: Date.now().toString() };
-    setMessages(prev => [...prev, userMsg]);
+    if (!content || loading) return;
+    const userMsg: Msg = { role: 'user', content, id: `${Date.now()}` };
+    setMessages((prev) => [...prev, userMsg]);
     setValue('');
     setLoading(true);
-    // 模拟 AI 响应（这里可以替换为真实 API 调用）
-    setTimeout(() => {
-      const answer = `**模拟回答：**\n\n你问的是：\n> ${content}\n\n我目前是本地模拟回复，若需要接入真实 AI，请在 agent 中调用后端或第三方 API。`;
-      const assistantMsg: Msg = { role: 'assistant', content: answer, id: Date.now().toString() + '_a' };
-      setMessages(prev => [...prev, assistantMsg]);
+    window.setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: buildMockReply(content),
+          id: `${Date.now()}_a`,
+        },
+      ]);
       setLoading(false);
     }, 900);
-  }
+  }, [value, loading]);
   useEffect(() => {
-    // auto-scroll to bottom when messages change
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [messages]);
+    scrollToBottom();
+  }, [messages, scrollToBottom]);
   return (
-    <div style={{ padding: 24, display: 'flex', justifyContent: 'center' }}>
-      这里是 Agent 子应用的首页，当前页面展示了一个简单的 AI 问答界面，用户可以输入问题并获取模拟的 AI 回答。你可以在这个基础上进行扩展，例如接入真实的 AI 服务、增加对话历史记录、支持多轮对话等功能。
-      <div style={{ width: '100%', maxWidth: 980 }}>
-        <Title level={2}>AI 问答</Title>
-        <Card style={{ marginBottom: 16 }}>
-          <Space orientation="vertical" style={{ width: '100%' }}>
-            <TextArea rows={4} value={value} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)} placeholder="请输入你的问题，例如：如何进行前端性能优化？" />
-            <div style={{ textAlign: 'right' }}>
-              <Button type="primary" icon={<SendOutlined />} loading={loading} onClick={send}>发送</Button>
-            </div>
-          </Space>
-        </Card>
-        <div
-          ref={scrollRef}
-          style={{
-            height: 480,
-            overflow: 'auto',
-            padding: '12px 8px',
-            background: '#fafafa',
-            borderRadius: 8,
-            border: '1px solid rgba(0,0,0,0.04)'
-          }}
-        >
-          {messages.map((item) => {
-            const isUser = item.role === 'user';
-            return (
-              <div key={item.id} style={{ display: 'flex', marginBottom: 12, justifyContent: isUser ? 'flex-end' : 'flex-start' }}>
-                {!isUser && (
-                  <div style={{ marginRight: 8 }}>
-                    <Avatar size={36} icon={<RobotOutlined />} />
-                  </div>
-                )}
-                <div style={{ maxWidth: '75%', display: 'flex', flexDirection: 'column', alignItems: isUser ? 'flex-end' : 'flex-start' }}>
-                  <div
-                    style={{
-                      background: isUser ? '#0050b3' : '#fff',
-                      color: isUser ? '#fff' : '#222',
-                      padding: '10px 14px',
-                      borderRadius: 18,
-                      boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
-                      whiteSpace: 'pre-wrap',
-                      overflowWrap: 'break-word'
-                    }}
-                  >
-                    {item.role === 'assistant' ? <Markdown>{item.content}</Markdown> : <div>{item.content}</div>}
-                  </div>
-                </div>
-                {isUser && (
-                  <div style={{ marginLeft: 8 }}>
-                    <Avatar size={36} icon={<UserOutlined />} />
-                  </div>
+    <div className="agent-page">
+      <header className="agent-hero">
+        <Typography.Title level={2}>AI 工作台</Typography.Title>
+        <Typography.Text type="secondary">
+          多轮对话演示：输入问题后由本地模拟引擎返回 Markdown。样式为独立子应用主题，可与主应用壳层并存。
+        </Typography.Text>
+      </header>
+      <Card className="agent-input-card" bordered={false}>
+        <Space orientation="vertical" style={{ width: '100%' }} size="middle">
+          <TextArea
+            rows={4}
+            value={value}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)}
+            placeholder="例如：如何用 React 做微前端子应用样式隔离？"
+            onPressEnter={(e) => {
+              if (!e.shiftKey) {
+                e.preventDefault();
+                send();
+              }
+            }}
+          />
+          <div style={{ textAlign: 'right' }}>
+            <Button type="primary" icon={<SendOutlined />} loading={loading} onClick={send}>
+              发送
+            </Button>
+          </div>
+        </Space>
+      </Card>
+      <div ref={scrollRef} className="agent-thread" role="log" aria-live="polite">
+        {messages.map((item) => {
+          const isUser = item.role === 'user';
+          return (
+            <div
+              key={item.id}
+              className={`agent-row ${isUser ? 'agent-row--user' : ''}`}
+            >
+              {!isUser && (
+                <Avatar size={40} icon={<RobotOutlined />} className="agent-avatar" />
+              )}
+              <div className="agent-bubble">
+                {item.role === 'assistant' ? (
+                  <Markdown>{item.content}</Markdown>
+                ) : (
+                  item.content
                 )}
               </div>
-            );
-          })}
-        </div>
+              {isUser && (
+                <Avatar size={40} icon={<UserOutlined />} className="agent-avatar agent-avatar--user" />
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

@@ -1,0 +1,95 @@
+/* Login 子应用：极光渐变 + 玻璃拟态面板 */
+#app-root {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(56, 189, 248, 0.35), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(167, 139, 250, 0.35), transparent),
+    radial-gradient(ellipse 50% 80% at 50% 100%, rgba(244, 114, 182, 0.2), transparent),
+    linear-gradient(145deg, #0c1222 0%, #1e1b4b 50%, #0f172a 100%);
+  background-attachment: fixed;
+}
+
+.login-auth-shell {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.login-auth-shell::before {
+  content: '';
+  position: fixed;
+  inset: -20%;
+  background: conic-gradient(
+    from 120deg at 50% 50%,
+    rgba(34, 211, 238, 0.08),
+    transparent,
+    rgba(167, 139, 250, 0.1),
+    transparent
+  );
+  animation: login-spin 28s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes login-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.login-glass-card.ant-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: rgba(15, 23, 42, 0.55) !important;
+  backdrop-filter: blur(16px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 32px 64px rgba(0, 0, 0, 0.45);
+}
+
+.login-glass-card .ant-card-body {
+  padding: 28px 28px 24px !important;
+}
+
+.login-glass-card .ant-typography,
+.login-glass-card .ant-form-item-label > label {
+  color: #e2e8f0 !important;
+}
+
+.login-glass-card .ant-input,
+.login-glass-card .ant-input-password {
+  background: rgba(2, 6, 23, 0.55) !important;
+  border-color: rgba(148, 163, 184, 0.25) !important;
+  color: #f1f5f9 !important;
+}
+
+.login-glass-card .ant-input::placeholder {
+  color: #64748b !important;
+}
+
+.login-brand {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.login-brand-title.ant-typography {
+  color: #f8fafc !important;
+  margin-top: 12px !important;
+  letter-spacing: -0.02em;
+}
+
+.login-sub {
+  color: #94a3b8 !important;
+  font-size: 13px;
+  display: block;
+  text-align: center;
+  margin-bottom: 8px;
+}

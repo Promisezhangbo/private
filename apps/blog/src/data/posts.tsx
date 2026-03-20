@@ -32,6 +32,7 @@ export const posts: Post[] = [
         source: 'https://juejin.cn/post/7170852747749621791'
     }
 ];
+/** 按 id 查找文章，未命中返回 undefined */
 export function findPost(id: string) {
     return posts.find(p => p.id === id);
 }

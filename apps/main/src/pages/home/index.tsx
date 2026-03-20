@@ -1,24 +1,74 @@
-import { Card, Typography, Button, Space } from 'antd';
+import { Card, Typography, Space, Tag } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { RobotOutlined, BookOutlined, LoginOutlined, ArrowRightOutlined } from '@ant-design/icons';
+/** 控制台展示用：技术栈与架构关键词（与仓库依赖大致对应） */
+const TECH_TAGS = [
+  'Monorepo · pnpm workspace',
+  '微前端 · qiankun',
+  'vite-plugin-qiankun',
+  'React 19',
+  'React Router 7',
+  'Vite 8',
+  'TypeScript 5.9',
+  'Ant Design 6',
+  'ESLint 9 · Prettier · Husky',
+] as const;
 const apps = [
-  { key: 'agent', title: 'Agent 子应用', description: '演示第一个子应用' },
-  { key: 'blog', title: 'Blog 子应用', description: '演示博客子应用' },
-  { key: 'login', title: 'Login 子应用', description: '演示登录/注册子应用' }
-];
+  { key: 'agent', title: 'Agent', description: 'AI 对话与子应用演示', icon: <RobotOutlined /> },
+  { key: 'blog', title: 'Blog', description: '文章列表与详情', icon: <BookOutlined /> },
+  { key: 'login', title: 'Login', description: '登录 / 注册流程', icon: <LoginOutlined /> },
+] as const;
 function Home() {
   const navigate = useNavigate();
   return (
-    <Card>
-      <Typography.Title level={4}>父应用控制台</Typography.Title>
-      <Typography.Title level={5}>子应用列表</Typography.Title>
-      <Space size={12}>
-        {apps.map(app => (
-          <Button type="primary" key={app.key} onClick={() => navigate('/' + app.key)}>
-            {app.title}
-          </Button>
+    <>
+      <Card className="dash-hero" bordered={false}>
+        <Typography.Title level={3} style={{ marginBottom: 10 }}>
+          控制台
+        </Typography.Title>
+        <Typography.Text className="dash-hero-lead">
+          本项目为基于 <strong style={{ color: '#fff' }}>qiankun</strong> 的微前端示例仓库：主应用（main）负责布局与路由壳层，
+          子应用（Agent / Blog / Login）独立构建、独立部署目录，开发期通过 Vite 与{' '}
+          <strong style={{ color: '#fff' }}>vite-plugin-qiankun</strong> 接入微前端生命周期。
+          下方卡片可跳转至各子应用页面。
+        </Typography.Text>
+        <Typography.Text className="dash-hero-tech-title">技术要点</Typography.Text>
+        <Space className="dash-hero-tags" size={[8, 8]} wrap>
+          {TECH_TAGS.map((label) => (
+            <Tag key={label} bordered={false}>
+              {label}
+            </Tag>
+          ))}
+        </Space>
+      </Card>
+      <Typography.Title level={5} style={{ marginTop: 8, color: '#475569' }}>
+        子应用入口
+      </Typography.Title>
+      <div className="dash-grid">
+        {apps.map((app) => (
+          <Card
+            key={app.key}
+            className="dash-card"
+            bordered={false}
+            onClick={() => navigate(`/${app.key}`)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === 'Enter' && navigate(`/${app.key}`)}
+          >
+            <Typography.Title level={5} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ color: '#6366f1', fontSize: 22 }}>{app.icon}</span>
+              {app.title}
+            </Typography.Title>
+            <Typography.Paragraph type="secondary" style={{ marginBottom: 12 }}>
+              {app.description}
+            </Typography.Paragraph>
+            <Typography.Link>
+              进入 <ArrowRightOutlined />
+            </Typography.Link>
+          </Card>
         ))}
-      </Space>
-    </Card>
+      </div>
+    </>
   );
 }
 export default Home;
