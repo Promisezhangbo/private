@@ -1,0 +1,200 @@
+// ---------------------------------------------------------------------------
+// 浅色 / 暗色语义色板（CSS 变量）
+// 对齐 Ant Design 全局样式中的中性色与暗色模式约定：
+// https://ant-design.antgroup.com/docs/spec/colors-cn
+// https://ant-design.antgroup.com/docs/spec/dark-cn
+// 组件 token 由主应用 ConfigProvider algorithm 接管，此处服务自定义布局与壳层样式。
+// ---------------------------------------------------------------------------
+
+:root,
+html[data-theme='light'] {
+  /* 页面基底（对应浅色布局背景） */
+  --sc-bg-body: #f5f5f5;
+  --sc-bg-layout: #f5f5f5;
+
+  /* 主壳层渐变（在 layout 背景之上） */
+  --sc-app-radial: rgba(99, 102, 241, 0.12);
+  --sc-app-gradient-start: #f8fafc;
+  --sc-app-gradient-mid: #eef2ff;
+  --sc-app-gradient-end: #f1f5f9;
+
+  /* 顶栏：浅色主题 — 浅底 + 深色字（与 Ant 浅色导航一致） */
+  --sc-header-bg: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+  --sc-header-border: #f0f0f0;
+  --sc-header-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  --sc-header-menu-text: rgba(0, 0, 0, 0.65);
+  --sc-header-menu-text-hover: #1677ff;
+  --sc-header-menu-accent: #1677ff;
+  --sc-header-select-bg: #ffffff;
+  --sc-header-select-border: #d9d9d9;
+  --sc-header-select-text: rgba(0, 0, 0, 0.88);
+
+  /* 控制台卡片区 */
+  --sc-dash-section-title: #475569;
+  --sc-dash-card-bg: rgba(255, 255, 255, 0.85);
+  --sc-dash-card-border: rgba(99, 102, 241, 0.15);
+  --sc-dash-card-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+  --sc-dash-card-hover-border: rgba(99, 102, 241, 0.35);
+  --sc-dash-card-hover-shadow: 0 20px 48px rgba(79, 70, 229, 0.15);
+  --sc-dash-card-shine: rgba(99, 102, 241, 0.08);
+  --sc-dash-icon: #6366f1;
+
+  --sc-text-on-hero: rgba(255, 255, 255, 0.92);
+  --sc-text-on-hero-muted: rgba(255, 255, 255, 0.88);
+  --sc-text-on-hero-sub: rgba(255, 255, 255, 0.55);
+
+  /* —— Agent 子应用（浅色：亮底 + 青色氛围）—— */
+  --sc-agent-accent: #06b6d4;
+  --sc-agent-accent-dim: rgba(6, 182, 212, 0.35);
+  --sc-agent-page-text: #334155;
+  --sc-agent-page-muted: #64748b;
+  --sc-agent-title: #0f172a;
+  --sc-agent-bg-radial-a: rgba(34, 211, 238, 0.14);
+  --sc-agent-bg-radial-b: rgba(139, 92, 246, 0.1);
+  --sc-agent-bg-linear-start: #f0fdff;
+  --sc-agent-bg-linear-mid: #e0f2fe;
+  --sc-agent-bg-linear-end: #f8fafc;
+  --sc-agent-surface: rgba(255, 255, 255, 0.88);
+  --sc-agent-border: rgba(148, 163, 184, 0.4);
+  --sc-agent-input-bg: rgba(255, 255, 255, 0.98);
+  --sc-agent-input-text: #1e293b;
+  --sc-agent-placeholder: #94a3b8;
+  --sc-agent-thread-bg: rgba(248, 250, 252, 0.95);
+  --sc-agent-thread-inset: rgba(15, 23, 42, 0.06);
+  --sc-agent-bubble-assistant-bg: #ffffff;
+  --sc-agent-bubble-assistant-text: #1e293b;
+  --sc-agent-bubble-assistant-border: rgba(148, 163, 184, 0.35);
+  --sc-agent-bubble-user-start: rgba(6, 182, 212, 0.18);
+  --sc-agent-bubble-user-end: rgba(139, 92, 246, 0.2);
+  --sc-agent-bubble-user-border: rgba(6, 182, 212, 0.45);
+  --sc-agent-bubble-user-text: #0f172a;
+  --sc-agent-card-shadow-outer: rgba(15, 23, 42, 0.08);
+  --sc-agent-card-shadow-ring: rgba(6, 182, 212, 0.12);
+  --sc-agent-bubble-shadow: rgba(15, 23, 42, 0.08);
+  --sc-agent-grid-line: rgba(148, 163, 184, 0.14);
+  --sc-agent-avatar-bot-start: #22d3ee;
+  --sc-agent-avatar-bot-end: #8b5cf6;
+  --sc-agent-avatar-user-start: #64748b;
+  --sc-agent-avatar-user-end: #475569;
+
+  /* —— Blog 子应用（浅色：暖色纸张，与现有一致）—— */
+  --sc-blog-ink: #1c1917;
+  --sc-blog-muted: #78716c;
+  --sc-blog-bg-radial-a: rgba(251, 191, 36, 0.18);
+  --sc-blog-bg-radial-b: rgba(249, 115, 22, 0.12);
+  --sc-blog-bg-start: #fffbeb;
+  --sc-blog-bg-mid: #fef3c7;
+  --sc-blog-bg-end: #fff7ed;
+  --sc-blog-card-border: rgba(251, 191, 36, 0.35);
+  --sc-blog-card-bg: rgba(255, 255, 255, 0.72);
+  --sc-blog-card-shadow-inset: rgba(255, 255, 255, 0.8);
+  --sc-blog-card-shadow-outer: rgba(180, 83, 9, 0.08);
+  --sc-blog-card-hover-border: rgba(249, 115, 22, 0.45);
+  --sc-blog-card-hover-shadow: rgba(234, 88, 12, 0.14);
+  --sc-blog-title-icon: #ea580c;
+  --sc-blog-card-title: #9a3412;
+  --sc-blog-card-title-hover: #c2410c;
+  --sc-blog-detail-border: rgba(251, 191, 36, 0.4);
+  --sc-blog-detail-bg: rgba(255, 255, 255, 0.85);
+  --sc-blog-detail-shadow: rgba(120, 53, 15, 0.1);
+  --sc-blog-summary: #57534e;
+  --sc-blog-body-text: #292524;
+  --sc-blog-grad-a: #c2410c;
+  --sc-blog-grad-b: #ea580c;
+  --sc-blog-grad-c: #d97706;
+}
+
+html[data-theme='dark'] {
+  /* 暗色基底（规范常用页面背景约 #141414，组件面 #1f1f1f，分割线/边框 #424242） */
+  --sc-bg-body: #141414;
+  --sc-bg-layout: #141414;
+
+  --sc-app-radial: rgba(99, 102, 241, 0.18);
+  --sc-app-gradient-start: #1a1a1a;
+  --sc-app-gradient-mid: #161616;
+  --sc-app-gradient-end: #141414;
+
+  --sc-header-bg: linear-gradient(90deg, #1f1f1f 0%, #141414 100%);
+  --sc-header-border: #303030;
+  --sc-header-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  --sc-header-menu-text: rgba(255, 255, 255, 0.65);
+  --sc-header-menu-text-hover: #ffffff;
+  --sc-header-menu-accent: #6366f1;
+
+  --sc-header-select-bg: rgba(255, 255, 255, 0.06);
+  --sc-header-select-border: #424242;
+  --sc-header-select-text: rgba(255, 255, 255, 0.85);
+
+  --sc-dash-section-title: rgba(255, 255, 255, 0.65);
+  --sc-dash-card-bg: rgba(255, 255, 255, 0.06);
+  --sc-dash-card-border: #303030;
+  --sc-dash-card-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --sc-dash-card-hover-border: rgba(99, 102, 241, 0.45);
+  --sc-dash-card-hover-shadow: 0 20px 48px rgba(0, 0, 0, 0.55);
+  --sc-dash-card-shine: rgba(99, 102, 241, 0.14);
+  --sc-dash-icon: #818cf8;
+
+  --sc-text-on-hero: rgba(255, 255, 255, 0.92);
+  --sc-text-on-hero-muted: rgba(255, 255, 255, 0.88);
+  --sc-text-on-hero-sub: rgba(255, 255, 255, 0.55);
+
+  /* —— Agent 子应用（暗色：霓虹深色，与原设计一致）—— */
+  --sc-agent-accent: #22d3ee;
+  --sc-agent-accent-dim: rgba(34, 211, 238, 0.35);
+  --sc-agent-page-text: #e2e8f0;
+  --sc-agent-page-muted: #94a3b8;
+  --sc-agent-title: #f8fafc;
+  --sc-agent-bg-radial-a: rgba(34, 211, 238, 0.15);
+  --sc-agent-bg-radial-b: rgba(139, 92, 246, 0.12);
+  --sc-agent-bg-linear-start: #020617;
+  --sc-agent-bg-linear-mid: #0f172a;
+  --sc-agent-bg-linear-end: #020617;
+  --sc-agent-surface: rgba(15, 23, 42, 0.72);
+  --sc-agent-border: rgba(148, 163, 184, 0.18);
+  --sc-agent-input-bg: rgba(2, 6, 23, 0.5);
+  --sc-agent-input-text: #e2e8f0;
+  --sc-agent-placeholder: #64748b;
+  --sc-agent-thread-bg: rgba(2, 6, 23, 0.45);
+  --sc-agent-thread-inset: rgba(255, 255, 255, 0.04);
+  --sc-agent-bubble-assistant-bg: rgba(30, 41, 59, 0.85);
+  --sc-agent-bubble-assistant-text: #e2e8f0;
+  --sc-agent-bubble-assistant-border: rgba(148, 163, 184, 0.18);
+  --sc-agent-bubble-user-start: rgba(34, 211, 238, 0.2);
+  --sc-agent-bubble-user-end: rgba(139, 92, 246, 0.25);
+  --sc-agent-bubble-user-border: rgba(34, 211, 238, 0.35);
+  --sc-agent-bubble-user-text: #f8fafc;
+  --sc-agent-card-shadow-outer: rgba(0, 0, 0, 0.35);
+  --sc-agent-card-shadow-ring: rgba(34, 211, 238, 0.08);
+  --sc-agent-bubble-shadow: rgba(0, 0, 0, 0.2);
+  --sc-agent-grid-line: rgba(148, 163, 184, 0.06);
+  --sc-agent-avatar-bot-start: #22d3ee;
+  --sc-agent-avatar-bot-end: #8b5cf6;
+  --sc-agent-avatar-user-start: #64748b;
+  --sc-agent-avatar-user-end: #334155;
+
+  /* —— Blog 子应用（暗色：暖色偏暗，贴合暗色规范）—— */
+  --sc-blog-ink: rgba(255, 255, 255, 0.88);
+  --sc-blog-muted: rgba(255, 255, 255, 0.45);
+  --sc-blog-bg-radial-a: rgba(251, 191, 36, 0.08);
+  --sc-blog-bg-radial-b: rgba(249, 115, 22, 0.06);
+  --sc-blog-bg-start: #1a1816;
+  --sc-blog-bg-mid: #1f1d1b;
+  --sc-blog-bg-end: #141414;
+  --sc-blog-card-border: #303030;
+  --sc-blog-card-bg: rgba(255, 255, 255, 0.06);
+  --sc-blog-card-shadow-inset: rgba(255, 255, 255, 0.04);
+  --sc-blog-card-shadow-outer: rgba(0, 0, 0, 0.35);
+  --sc-blog-card-hover-border: rgba(249, 115, 22, 0.35);
+  --sc-blog-card-hover-shadow: rgba(0, 0, 0, 0.45);
+  --sc-blog-title-icon: #fb923c;
+  --sc-blog-card-title: #fdba74;
+  --sc-blog-card-title-hover: #fed7aa;
+  --sc-blog-detail-border: #303030;
+  --sc-blog-detail-bg: rgba(255, 255, 255, 0.06);
+  --sc-blog-detail-shadow: rgba(0, 0, 0, 0.4);
+  --sc-blog-summary: rgba(255, 255, 255, 0.55);
+  --sc-blog-body-text: rgba(255, 255, 255, 0.82);
+  --sc-blog-grad-a: #ea580c;
+  --sc-blog-grad-b: #fb923c;
+  --sc-blog-grad-c: #fcd34d;
+}
