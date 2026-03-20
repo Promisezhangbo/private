@@ -1,8 +1,52 @@
-/* 主应用布局：顶栏主题选择与登录全屏内容区高度 */
 .main-header-theme-select {
   width: 96px;
 }
 
-.main-content--login-viewport {
-  height: 100vh;
+/*
+ * 微应用：在此层统一 overflow，避免 qiankun 子树高度链断裂。
+ * 子应用 #app-root 随内容增高，由本层滚动。
+ */
+.main-micro-scroll {
+  flex: 1 1 0%;
+  min-height: 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+
+  #sub-app {
+    display: block;
+    width: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+
+    #app-root {
+      min-height: 100%;
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+      flex: none !important;
+    }
+  }
+}
+
+.main-content {
+  overflow: hidden;
+  height: calc(100vh - 56px);
+  display: flex;
+
+  .main-content--flush {
+    overflow: auto;
+    flex: 1;
+  }
+
+  &--login-viewport {
+    flex: 1;
+    min-height: 0;
+    max-height: 100%;
+  }
 }
