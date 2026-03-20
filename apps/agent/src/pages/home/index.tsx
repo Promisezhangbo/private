@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Input, Button, Card, Space, Typography, Avatar } from 'antd';
 import { SendOutlined, RobotOutlined, UserOutlined } from '@ant-design/icons';
 import Markdown from '@ant-design/x-markdown';
+import './index.scss';
 const { TextArea } = Input;
 /** 单条对话 */
 type Msg = { role: 'user' | 'assistant'; content: string; id: string };
@@ -50,7 +51,7 @@ function Home() {
         </Typography.Text>
       </header>
       <Card className="agent-input-card" bordered={false}>
-        <Space orientation="vertical" style={{ width: '100%' }} size="middle">
+        <Space className="agent-form-stack" orientation="vertical" size="middle">
           <TextArea
             rows={4}
             value={value}
@@ -63,7 +64,7 @@ function Home() {
               }
             }}
           />
-          <div style={{ textAlign: 'right' }}>
+          <div className="agent-input-actions">
             <Button type="primary" icon={<SendOutlined />} loading={loading} onClick={send}>
               发送
             </Button>

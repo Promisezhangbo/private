@@ -1,0 +1,28 @@
+@use '@style-config/variables' as *;
+
+/* 列表 / 详情共用的版心与页头 */
+.blog-shell {
+  position: relative;
+  z-index: $z-content;
+  padding: $sub-app-shell-padding;
+  max-width: $sub-app-max-width-mid;
+  margin: 0 auto;
+}
+
+.blog-hero {
+  margin-bottom: 32px;
+}
+
+.blog-hero h1.ant-typography,
+.blog-hero h2.ant-typography {
+  letter-spacing: -0.03em;
+}
+
+.blog-hero .ant-typography {
+  color: var(--blog-muted) !important;
+}
+
+.blog-empty {
+  padding: 24px;
+  text-align: center;
+}

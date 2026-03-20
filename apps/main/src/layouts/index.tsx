@@ -1,3 +1,5 @@
+import { useAppTheme, type AppThemeMode } from '@/theme/useAppTheme';
+import './index.scss';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Layout, Menu, Select } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
@@ -5,6 +7,7 @@ const { Content, Header } = Layout;
 const MENU_KEYS = ['home', 'agent', 'blog', 'login'] as const;
 const MICRO_APP_KEYS = new Set<string>(['agent', 'blog', 'login']);
 function Layouts() {
+  const { mode, setMode } = useAppTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const [currentMenu, setCurrentMenu] = useState<string>('home');
@@ -44,18 +47,19 @@ function Layouts() {
           />
           <Select
             size="small"
-            defaultValue="K"
+            className="main-header-theme-select"
+            value={mode}
+            onChange={(v) => setMode(v as AppThemeMode)}
             options={[
-              { value: 'K', label: '主题 K' },
-              { value: 'M', label: '主题 M' },
+              { value: 'light', label: '浅色' },
+              { value: 'dark', label: '暗色' },
             ]}
-            style={{ width: 100 }}
+            aria-label="切换主题"
           />
         </Header>
       )}
       <Content
-        className={`main-content${isMicroShell ? ' main-content--flush' : ''}`}
-        style={{ height: showHeader ? undefined : '100vh' }}
+        className={`main-content${isMicroShell ? ' main-content--flush' : ''}${showHeader ? '' : ' main-content--login-viewport'}`}
       >
         <Outlet />
         <div id="sub-app" />

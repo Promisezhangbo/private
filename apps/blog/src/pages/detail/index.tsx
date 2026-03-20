@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { findPost } from '@/data/posts';
 import { Card, Typography, Button } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
+import './index.scss';
 const { Title, Paragraph, Link: TyLink } = Typography;
 function Detail() {
   const { id = '' } = useParams();
@@ -21,11 +22,11 @@ function Detail() {
   return (
     <div className="blog-shell">
       <Card className="blog-detail-card" bordered={false}>
-        <Title level={2} style={{ marginBottom: 8 }}>
+        <Title level={2} className="blog-detail-title">
           {post.title}
         </Title>
         {post.date ? <div className="blog-detail-meta">{post.date}</div> : null}
-        <Paragraph style={{ lineHeight: 1.9, fontSize: 16, color: '#292524' }}>{post.content}</Paragraph>
+        <Paragraph className="blog-detail-body">{post.content}</Paragraph>
         {post.source ? (
           <div style={{ marginTop: 20 }}>
             <TyLink href={post.source} target="_blank" rel="noreferrer">
@@ -33,7 +34,7 @@ function Detail() {
             </TyLink>
           </div>
         ) : null}
-        <div style={{ marginTop: 24 }}>
+        <div className="blog-detail-back">
           <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)}>
             返回
           </Button>

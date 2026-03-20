@@ -1,5 +1,6 @@
 import { Card, Typography, Space, Tag } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import './index.scss';
 import { RobotOutlined, BookOutlined, LoginOutlined, ArrowRightOutlined } from '@ant-design/icons';
 /** 控制台展示用：技术栈与架构关键词（与仓库依赖大致对应） */
 const TECH_TAGS = [
@@ -23,13 +24,13 @@ function Home() {
   return (
     <>
       <Card className="dash-hero" bordered={false}>
-        <Typography.Title level={3} style={{ marginBottom: 10 }}>
+        <Typography.Title level={3} className="dash-hero-title">
           控制台
         </Typography.Title>
         <Typography.Text className="dash-hero-lead">
-          本项目为基于 <strong style={{ color: '#fff' }}>qiankun</strong> 的微前端示例仓库：主应用（main）负责布局与路由壳层，
+          本项目为基于 <strong>qiankun</strong> 的微前端示例仓库：主应用（main）负责布局与路由壳层，
           子应用（Agent / Blog / Login）独立构建、独立部署目录，开发期通过 Vite 与{' '}
-          <strong style={{ color: '#fff' }}>vite-plugin-qiankun</strong> 接入微前端生命周期。
+          <strong>vite-plugin-qiankun</strong> 接入微前端生命周期。
           下方卡片可跳转至各子应用页面。
         </Typography.Text>
         <Typography.Text className="dash-hero-tech-title">技术要点</Typography.Text>
@@ -41,7 +42,7 @@ function Home() {
           ))}
         </Space>
       </Card>
-      <Typography.Title level={5} style={{ marginTop: 8, color: '#475569' }}>
+      <Typography.Title level={5} className="dash-section-title">
         子应用入口
       </Typography.Title>
       <div className="dash-grid">
@@ -55,11 +56,11 @@ function Home() {
             tabIndex={0}
             onKeyDown={(e) => e.key === 'Enter' && navigate(`/${app.key}`)}
           >
-            <Typography.Title level={5} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <span style={{ color: '#6366f1', fontSize: 22 }}>{app.icon}</span>
+            <Typography.Title level={5} className="dash-card-title-row">
+              <span className="dash-card-icon">{app.icon}</span>
               {app.title}
             </Typography.Title>
-            <Typography.Paragraph type="secondary" style={{ marginBottom: 12 }}>
+            <Typography.Paragraph type="secondary" className="dash-card-desc">
               {app.description}
             </Typography.Paragraph>
             <Typography.Link>

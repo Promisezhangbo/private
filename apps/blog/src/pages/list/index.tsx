@@ -3,6 +3,7 @@ import { posts } from '@/data/posts';
 import { Card, Typography, List as AntList, Button } from 'antd';
 import { ArrowRightOutlined, BookOutlined } from '@ant-design/icons';
 import type { Post } from '@/data/posts';
+import './index.scss';
 const { Title, Paragraph } = Typography;
 function List() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ function List() {
       <AntList
         dataSource={posts}
         renderItem={(p: Post) => (
-          <AntList.Item style={{ padding: 0, border: 'none', marginBottom: 16 }}>
+          <AntList.Item className="blog-list-item-wrap">
             <Card className="blog-card" bordered={false}>
               <div
                 className="blog-card-title"
@@ -25,11 +26,11 @@ function List() {
                 tabIndex={0}
                 onKeyDown={(e) => e.key === 'Enter' && goDetail(p.id)}
               >
-                <BookOutlined style={{ color: '#ea580c' }} />
+                <BookOutlined />
                 {p.title}
               </div>
-              <Paragraph style={{ margin: '10px 0 0', color: '#57534e' }}>{p.summary}</Paragraph>
-              <div style={{ marginTop: 14 }}>
+              <Paragraph className="blog-card-summary">{p.summary}</Paragraph>
+              <div className="blog-list-footer">
                 <Button type="link" onClick={() => goDetail(p.id)} icon={<ArrowRightOutlined />}>
                   阅读全文
                 </Button>

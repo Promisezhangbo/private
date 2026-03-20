@@ -1,13 +1,14 @@
-import { router } from "@/router";
-import { ConfigProvider } from "antd";
-import { RouterProvider } from "react-router-dom";
-import QiankunProvider from "./components/QiankunProvider";
-import zhCN from 'antd/locale/zh_CN';
+import { router } from '@/router';
+import QiankunProvider from './components/QiankunProvider';
+import { ThemeRoot } from './theme/ThemeRoot';
+import { RouterProvider } from 'react-router-dom';
 function App() {
-  return <ConfigProvider theme={{}} locale={zhCN}>
-    <QiankunProvider>
-      <RouterProvider router={router} />
-    </QiankunProvider>
-  </ConfigProvider>
+  return (
+    <ThemeRoot>
+      <QiankunProvider>
+        <RouterProvider router={router} />
+      </QiankunProvider>
+    </ThemeRoot>
+  );
 }
 export default App;

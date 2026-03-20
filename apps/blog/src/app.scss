@@ -1,12 +1,10 @@
-@use '@style-config/variables' as *;
 @use '@style-config/mixins' as m;
+@use '@style-config/semantic-palette';
 
-/* Blog：暖色纸张 + 渐变标题（嵌入主应用时勿写 html/body/#root，避免污染宿主） */
+/* Blog 应用级：仅 #app-root 背景；列表与详情样式在各自 pages 目录的 index.scss */
 #app-root {
-  --blog-accent: #{$orange-500};
-  --blog-accent-soft: rgba(249, 115, 22, 0.15);
-  --blog-ink: #1c1917;
-  --blog-muted: #78716c;
+  --blog-ink: var(--sc-blog-ink);
+  --blog-muted: var(--sc-blog-muted);
 
   @include m.sub-app-min-viewport;
   width: 100%;
@@ -14,88 +12,8 @@
   flex: 1 1 auto;
   color: var(--blog-ink);
   background:
-    radial-gradient(ellipse 100% 60% at 0% 0%, rgba(251, 191, 36, 0.18), transparent 55%),
-    radial-gradient(ellipse 80% 50% at 100% 20%, rgba(249, 115, 22, 0.12), transparent 50%),
-    linear-gradient(180deg, #fffbeb 0%, #fef3c7 35%, #fff7ed 100%);
-  /* fixed 在 qiankun 内容区内相对视口定位，易出现底部未铺满；scroll 随根节点高度绘制 */
+    radial-gradient(ellipse 100% 60% at 0% 0%, var(--sc-blog-bg-radial-a), transparent 55%),
+    radial-gradient(ellipse 80% 50% at 100% 20%, var(--sc-blog-bg-radial-b), transparent 50%),
+    linear-gradient(180deg, var(--sc-blog-bg-start) 0%, var(--sc-blog-bg-mid) 35%, var(--sc-blog-bg-end) 100%);
   background-attachment: scroll;
-}
-
-.blog-shell {
-  position: relative;
-  z-index: $z-content;
-  padding: $sub-app-shell-padding;
-  max-width: $sub-app-max-width-mid;
-  margin: 0 auto;
-}
-
-.blog-hero {
-  margin-bottom: 32px;
-}
-
-.blog-hero h1.ant-typography,
-.blog-hero h2.ant-typography {
-  color: var(--blog-ink) !important;
-  letter-spacing: -0.03em;
-  @include m.text-gradient-fill(linear-gradient(120deg, #c2410c, $orange-600, #d97706));
-}
-
-.blog-hero .ant-typography {
-  color: var(--blog-muted) !important;
-}
-
-.blog-card.ant-card {
-  border-radius: $radius-lg !important;
-  border: 1px solid rgba(251, 191, 36, 0.35) !important;
-  background: rgba(255, 255, 255, 0.72) !important;
-  backdrop-filter: blur(10px);
-  box-shadow:
-    0 1px 0 white-alpha(0.8) inset,
-    0 20px 40px rgba(180, 83, 9, 0.08);
-  transition:
-    transform $dur-normal $ease-out,
-    box-shadow $dur-normal $ease-out,
-    border-color $dur-normal $ease-out;
-
-  &:hover {
-    transform: translateY(-3px);
-    border-color: rgba(249, 115, 22, 0.45) !important;
-    box-shadow:
-      0 1px 0 white-alpha(0.9) inset,
-      0 28px 56px rgba(234, 88, 12, 0.14);
-  }
-}
-
-.blog-card-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: $orange-800;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  transition: color $dur-fast;
-
-  &:hover {
-    color: #c2410c;
-  }
-}
-
-.blog-detail-card.ant-card {
-  border-radius: $radius-xl !important;
-  border: 1px solid rgba(251, 191, 36, 0.4) !important;
-  background: rgba(255, 255, 255, 0.85) !important;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 24px 48px rgba(120, 53, 15, 0.1);
-}
-
-.blog-detail-meta {
-  color: var(--blog-muted);
-  font-size: 14px;
-  margin-bottom: 20px;
-}
-
-.blog-empty {
-  padding: 24px;
-  text-align: center;
 }

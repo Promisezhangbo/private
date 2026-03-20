@@ -1,7 +1,7 @@
 @use '@style-config/variables' as *;
 @use '@style-config/mixins' as m;
 
-/* Login：极光渐变 + 玻璃拟态 */
+/* Login 应用级：仅根节点背景（壳层与表单见 components / pages / styles） */
 #app-root {
   @include m.sub-app-min-viewport;
   background:
@@ -10,88 +10,4 @@
     radial-gradient(ellipse 50% 80% at 50% 100%, rgba(244, 114, 182, 0.2), transparent),
     linear-gradient(145deg, #0c1222 0%, #1e1b4b 50%, $slate-900 100%);
   background-attachment: fixed;
-}
-
-.login-auth-shell {
-  position: relative;
-  z-index: $z-content;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-}
-
-.login-auth-shell::before {
-  content: '';
-  position: fixed;
-  inset: -20%;
-  background: conic-gradient(
-    from 120deg at 50% 50%,
-    rgba(34, 211, 238, 0.08),
-    transparent,
-    rgba(167, 139, 250, 0.1),
-    transparent
-  );
-  animation: login-spin 28s linear infinite;
-  pointer-events: none;
-  z-index: $z-bg-grid;
-}
-
-@keyframes login-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.login-glass-card.ant-card {
-  position: relative;
-  z-index: $z-content;
-  width: 100%;
-  max-width: 420px;
-  border-radius: $radius-xl !important;
-  background: rgba(15, 23, 42, 0.55) !important;
-  backdrop-filter: blur(16px);
-  border: 1px solid white-alpha(0.12) !important;
-  box-shadow:
-    0 0 0 1px white-alpha(0.06) inset,
-    0 32px 64px black-alpha(0.45);
-}
-
-.login-glass-card .ant-card-body {
-  padding: 28px 28px 24px !important;
-}
-
-.login-glass-card .ant-typography,
-.login-glass-card .ant-form-item-label > label {
-  color: $slate-200 !important;
-}
-
-.login-glass-card .ant-input,
-.login-glass-card .ant-input-password {
-  border-color: rgba(148, 163, 184, 0.25) !important;
-  color: $slate-700 !important;
-}
-
-.login-glass-card .ant-input::placeholder {
-  color: $slate-500 !important;
-}
-
-.login-brand {
-  text-align: center;
-  margin-bottom: 8px;
-}
-
-.login-brand-title.ant-typography {
-  color: $slate-50 !important;
-  margin-top: 12px !important;
-  letter-spacing: -0.02em;
-}
-
-.login-sub {
-  color: $slate-400 !important;
-  font-size: 13px;
-  display: block;
-  text-align: center;
-  margin-bottom: 8px;
 }

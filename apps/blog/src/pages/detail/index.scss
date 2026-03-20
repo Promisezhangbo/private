@@ -1,0 +1,35 @@
+@use '@style-config/variables' as *;
+@use '@style-config/mixins' as m;
+@use '../../styles/blog-shared';
+
+.blog-detail-card.ant-card {
+  border-radius: $radius-xl !important;
+  border: 1px solid var(--sc-blog-detail-border) !important;
+  background: var(--sc-blog-detail-bg) !important;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 24px 48px var(--sc-blog-detail-shadow);
+}
+
+.blog-detail-title {
+  margin-bottom: 8px;
+}
+
+.blog-detail-meta {
+  color: var(--blog-muted);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.blog-detail-body {
+  line-height: 1.9;
+  font-size: 16px;
+  color: var(--sc-blog-body-text) !important;
+}
+
+.blog-detail-source {
+  margin-top: 20px;
+}
+
+.blog-detail-back {
+  margin-top: 24px;
+}
