@@ -45,7 +45,7 @@ export default defineConfig([
     },
 
     rules: {
-      // 只允许最多 1 个连续空行，文件末尾最多保留 1 个 EOF 空行
+      // 连续空行最多 1 行（多行会被压成一行）；不写空行则不强行插入（与 Prettier 一致）
       'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
       'set-state-in-effect': 'off',
       'react-hooks/set-state-in-effect': 'off',
@@ -104,13 +104,6 @@ export default defineConfig([
       '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/no-var-requires': 'error',
       '@typescript-eslint/no-require-imports': 'error',
-    },
-  },
-  // For TSX files, disallow any empty lines (useful to enforce compact JSX blocks)
-  {
-    files: ['**/*.tsx'],
-    rules: {
-      'no-multiple-empty-lines': ['error', { max: 0, maxEOF: 0 }],
     },
   },
 ]);
