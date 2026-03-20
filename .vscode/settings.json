@@ -9,11 +9,18 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   // 开启保存格式化，且仅触发 Prettier
   "editor.formatOnSave": true,
-  // 启用 ESLint 在保存时自动修复（会运行可修复的 ESLint 规则）
+  // 启用 ESLint / Stylelint 在保存时自动修复（需安装对应扩展）
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "always"
+    "source.fixAll.eslint": "always",
+    "source.fixAll.stylelint": "always"
   },
   // 确保 Prettier 优先于其他工具
   "prettier.enable": true,
@@ -22,5 +29,10 @@
   // ESLint 扩展设置：使用 pnpm，启用对 TSX/TS 文件的校验
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
   "eslint.alwaysShowStatus": true,
-  "editor.trimAutoWhitespace": true
+  "editor.trimAutoWhitespace": true,
+  // Stylelint（需安装扩展 stylelint.vscode-stylelint）；与 Prettier 分工：格式靠 Prettier，规则修复靠 Stylelint
+  "stylelint.validate": ["css", "scss"],
+  "stylelint.configFile": "${workspaceFolder}/stylelint.config.mjs",
+  "css.validate": false,
+  "scss.validate": false
 }

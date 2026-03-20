@@ -9,6 +9,8 @@
     "build": "cross-env NODE_ENV=production && rm -rf dist && pnpm --parall --filter \"./apps/*\" build",
     "dev": "cross-env NODE_ENV=development && pnpm --parall --filter \"./apps/*\" dev",
     "lint": "pnpm --parall --filter \"./apps/*\" lint",
+    "lint:style": "stylelint \"**/*.{css,scss}\" --allow-empty-input",
+    "lint:style:fix": "stylelint \"**/*.{css,scss}\" --fix --allow-empty-input",
     "format": "prettier --write .",
     "prepare": "husky",
     "postbuild": "cp dist/main/index.html dist/404.html && cp dist/main/index.html dist/index.html && echo '/*  /main/index.html  200' > dist/_redirects",
@@ -19,6 +21,7 @@
     "@commitlint/config-conventional": "^20.4.1",
     "@packages/eslint-config": "workspace:*",
     "@packages/prettier-config": "workspace:*",
+    "@packages/stylelint-config": "workspace:*",
     "@types/node": "^24.10.11",
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
@@ -27,6 +30,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
+    "stylelint": "^16.11.0",
     "typescript": "~5.9.3",
     "vite": "8.0.0-beta.13"
   },
@@ -34,7 +38,11 @@
     "**/*.{js,jsx,ts,tsx,vue}": [
       "eslint apps/ --ext .ts,.tsx,.js,.jsx"
     ],
-    "**/*.{json,md,css,scss}": [
+    "**/*.{css,scss}": [
+      "stylelint --fix --allow-empty-input",
+      "prettier --write"
+    ],
+    "**/*.{json,md}": [
       "prettier --write"
     ]
   },
