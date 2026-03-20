@@ -1,17 +1,20 @@
-/* Login 子应用：极光渐变 + 玻璃拟态面板 */
+@use '@style-config/variables' as *;
+@use '@style-config/mixins' as m;
+
+/* Login：极光渐变 + 玻璃拟态 */
 #app-root {
-  min-height: 100vh;
+  @include m.sub-app-min-viewport;
   background:
     radial-gradient(ellipse 80% 50% at 20% 40%, rgba(56, 189, 248, 0.35), transparent),
     radial-gradient(ellipse 60% 40% at 80% 60%, rgba(167, 139, 250, 0.35), transparent),
     radial-gradient(ellipse 50% 80% at 50% 100%, rgba(244, 114, 182, 0.2), transparent),
-    linear-gradient(145deg, #0c1222 0%, #1e1b4b 50%, #0f172a 100%);
+    linear-gradient(145deg, #0c1222 0%, #1e1b4b 50%, $slate-900 100%);
   background-attachment: fixed;
 }
 
 .login-auth-shell {
   position: relative;
-  z-index: 1;
+  z-index: $z-content;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -32,7 +35,7 @@
   );
   animation: login-spin 28s linear infinite;
   pointer-events: none;
-  z-index: 0;
+  z-index: $z-bg-grid;
 }
 
 @keyframes login-spin {
@@ -43,16 +46,16 @@
 
 .login-glass-card.ant-card {
   position: relative;
-  z-index: 1;
+  z-index: $z-content;
   width: 100%;
   max-width: 420px;
-  border-radius: 20px !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: $radius-xl !important;
   background: rgba(15, 23, 42, 0.55) !important;
   backdrop-filter: blur(16px);
+  border: 1px solid white-alpha(0.12) !important;
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
-    0 32px 64px rgba(0, 0, 0, 0.45);
+    0 0 0 1px white-alpha(0.06) inset,
+    0 32px 64px black-alpha(0.45);
 }
 
 .login-glass-card .ant-card-body {
@@ -61,18 +64,17 @@
 
 .login-glass-card .ant-typography,
 .login-glass-card .ant-form-item-label > label {
-  color: #e2e8f0 !important;
+  color: $slate-200 !important;
 }
 
 .login-glass-card .ant-input,
 .login-glass-card .ant-input-password {
-  background: rgba(2, 6, 23, 0.55) !important;
   border-color: rgba(148, 163, 184, 0.25) !important;
-  color: #f1f5f9 !important;
+  color: $slate-700 !important;
 }
 
 .login-glass-card .ant-input::placeholder {
-  color: #64748b !important;
+  color: $slate-500 !important;
 }
 
 .login-brand {
@@ -81,13 +83,13 @@
 }
 
 .login-brand-title.ant-typography {
-  color: #f8fafc !important;
+  color: $slate-50 !important;
   margin-top: 12px !important;
   letter-spacing: -0.02em;
 }
 
 .login-sub {
-  color: #94a3b8 !important;
+  color: $slate-400 !important;
   font-size: 13px;
   display: block;
   text-align: center;

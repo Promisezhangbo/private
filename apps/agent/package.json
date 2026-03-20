@@ -21,7 +21,9 @@
   },
   "devDependencies": {
     "@packages/eslint-config": "workspace:*",
-    "@packages/ts-config": "workspace:*"
+    "@packages/style-config": "workspace:*",
+    "@packages/ts-config": "workspace:*",
+    "sass": "^1.93.3"
   },
   "peerDependencies": {
     "eslint": ">=9.0.0"

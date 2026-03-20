@@ -3,12 +3,16 @@ import { Layout, Menu, Select } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 const { Content, Header } = Layout;
 const MENU_KEYS = ['home', 'agent', 'blog', 'login'] as const;
+const MICRO_APP_KEYS = new Set<string>(['agent', 'blog', 'login']);
 function Layouts() {
   const navigate = useNavigate();
   const location = useLocation();
   const [currentMenu, setCurrentMenu] = useState<string>('home');
   /** 登录子应用全屏展示时不渲染主应用顶栏 */
   const showHeader = currentMenu !== 'login';
+  /** 微前端子应用路由：内容区去 padding，背景铺满主应用可视区域 */
+  const segment = location.pathname.split('/')[1] || 'home';
+  const isMicroShell = MICRO_APP_KEYS.has(segment);
   const items = useMemo(
     () => [
       { key: 'home', label: '首页' },
@@ -20,8 +24,8 @@ function Layouts() {
   );
   /** 从 URL 第一段同步当前选中的菜单 */
   useEffect(() => {
-    const segment = location.pathname.split('/')[1] || 'home';
-    setCurrentMenu(MENU_KEYS.includes(segment as (typeof MENU_KEYS)[number]) ? segment : 'home');
+    const seg = location.pathname.split('/')[1] || 'home';
+    setCurrentMenu(MENU_KEYS.includes(seg as (typeof MENU_KEYS)[number]) ? seg : 'home');
   }, [location.pathname]);
   const onMenuSelect = (key: string) => {
     setCurrentMenu(key);
@@ -49,7 +53,10 @@ function Layouts() {
           />
         </Header>
       )}
-      <Content className="main-content" style={{ height: showHeader ? undefined : '100vh' }}>
+      <Content
+        className={`main-content${isMicroShell ? ' main-content--flush' : ''}`}
+        style={{ height: showHeader ? undefined : '100vh' }}
+      >
         <Outlet />
         <div id="sub-app" />
       </Content>

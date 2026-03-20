@@ -1,36 +1,31 @@
-/* Agent 子应用：深色霓虹 + 网格背景 */
+@use '@style-config/variables' as *;
+@use '@style-config/mixins' as m;
+
+/* Agent：深色霓虹 + 网格背景（变量与 mixin 来自 @packages/style-config） */
 #app-root {
-  --agent-accent: #22d3ee;
+  --agent-accent: #{$cyan-400};
   --agent-accent-dim: rgba(34, 211, 238, 0.35);
   --agent-surface: rgba(15, 23, 42, 0.72);
   --agent-border: rgba(148, 163, 184, 0.18);
-  min-height: 100vh;
-  color: #e2e8f0;
+
+  @include m.sub-app-min-viewport;
+  color: $slate-200;
   background:
     radial-gradient(ellipse 120% 80% at 50% -20%, rgba(34, 211, 238, 0.15), transparent 55%),
     radial-gradient(ellipse 80% 50% at 100% 50%, rgba(139, 92, 246, 0.12), transparent 50%),
-    linear-gradient(165deg, #020617 0%, #0f172a 45%, #020617 100%);
+    linear-gradient(165deg, $slate-950 0%, $slate-900 45%, $slate-950 100%);
   background-attachment: fixed;
 }
 
 #app-root::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black, transparent);
-  pointer-events: none;
-  z-index: 0;
+  @include m.mesh-grid-overlay;
 }
 
 .agent-page {
   position: relative;
-  z-index: 1;
-  padding: clamp(20px, 4vw, 40px);
-  max-width: 1040px;
+  z-index: $z-content;
+  padding: $sub-app-shell-padding;
+  max-width: $sub-app-max-width-wide;
   margin: 0 auto;
 }
 
@@ -39,14 +34,14 @@
 }
 
 .agent-hero h1.ant-typography {
-  color: #f8fafc !important;
+  color: $slate-50 !important;
   margin-bottom: 8px !important;
   letter-spacing: -0.02em;
   text-shadow: 0 0 40px var(--agent-accent-dim);
 }
 
 .agent-hero .ant-typography {
-  color: #94a3b8 !important;
+  color: $slate-400 !important;
   font-size: 14px;
   line-height: 1.6;
   max-width: 640px;
@@ -55,11 +50,11 @@
 .agent-input-card.ant-card {
   background: var(--agent-surface) !important;
   border: 1px solid var(--agent-border) !important;
-  border-radius: 16px !important;
+  border-radius: $radius-md !important;
   backdrop-filter: blur(12px);
   box-shadow:
     0 0 0 1px rgba(34, 211, 238, 0.08),
-    0 24px 48px rgba(0, 0, 0, 0.35);
+    0 24px 48px black-alpha(0.35);
   margin-bottom: 20px;
 }
 
@@ -67,30 +62,24 @@
 .agent-input-card textarea.ant-input {
   background: rgba(2, 6, 23, 0.5) !important;
   border-color: var(--agent-border) !important;
-  color: #e2e8f0 !important;
+  color: $slate-200 !important;
 }
 
 .agent-input-card .ant-input::placeholder {
-  color: #64748b !important;
+  color: $slate-500 !important;
 }
 
 .agent-thread {
   height: min(520px, 58vh);
   overflow: auto;
   padding: 16px;
-  border-radius: 16px;
+  border-radius: $radius-md;
   border: 1px solid var(--agent-border);
   background: rgba(2, 6, 23, 0.45);
   backdrop-filter: blur(8px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-}
+  box-shadow: inset 0 1px 0 white-alpha(0.04);
 
-.agent-thread::-webkit-scrollbar {
-  width: 8px;
-}
-.agent-thread::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.25);
-  border-radius: 4px;
+  @include m.thin-scrollbar;
 }
 
 .agent-row {
@@ -112,15 +101,15 @@
   word-break: break-word;
   border: 1px solid var(--agent-border);
   background: rgba(30, 41, 59, 0.85);
-  color: #e2e8f0;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  color: $slate-200;
+  box-shadow: 0 8px 24px black-alpha(0.2);
 }
 
 .agent-row--user .agent-bubble {
   border-radius: 16px 16px 6px 16px;
   background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(139, 92, 246, 0.25));
   border-color: rgba(34, 211, 238, 0.35);
-  color: #f8fafc;
+  color: $slate-50;
 }
 
 .agent-bubble .ant-typography,
@@ -129,11 +118,11 @@
 }
 
 .agent-avatar.ant-avatar {
-  background: linear-gradient(145deg, #22d3ee, #8b5cf6) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(145deg, $cyan-400, $violet-500) !important;
+  border: 1px solid white-alpha(0.2);
   flex-shrink: 0;
 }
 
 .agent-avatar--user.ant-avatar {
-  background: linear-gradient(145deg, #64748b, #334155) !important;
+  background: linear-gradient(145deg, $slate-500, $slate-700) !important;
 }

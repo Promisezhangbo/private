@@ -36,6 +36,7 @@ export default defineConfig((config) => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src'),
+        '@style-config': path.resolve(__dirname, '../../packages/style-config/scss'),
       },
     },
     define: {
