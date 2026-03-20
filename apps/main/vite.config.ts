@@ -1,3 +1,4 @@
+import { appManualChunks } from '@packages/vite-build-utils';
 import react from '@vitejs/plugin-react';
 import dayjs from 'dayjs';
 import path from 'path';
@@ -26,17 +27,13 @@ export default defineConfig((config) => {
     },
     build: {
       outDir: '../../dist/main',
+      chunkSizeWarningLimit: 900,
       rollupOptions: {
-        external: ['react', 'react-dom', 'antd'],
         output: {
           assetFileNames: '[ext]/[name]-[hash].[ext]',
           chunkFileNames: 'js/[name]-[hash].js',
           entryFileNames: 'jse/index-[name]-[hash].js',
-          globals: {
-            antd: 'antd',
-            react: 'React',
-            'react-dom': 'ReactDOM',
-          },
+          manualChunks: appManualChunks,
         },
       },
       target: 'es2015',
