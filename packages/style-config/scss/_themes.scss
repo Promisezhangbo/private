@@ -1,0 +1,17 @@
+// ---------------------------------------------------------------------------
+// 跨应用 CSS 自定义属性（可在运行时覆盖，便于与 Ant Design token 对齐）
+// 在入口 app.scss 中 @use … as * 后，对 :root 或 #app-root 使用
+// ---------------------------------------------------------------------------
+
+@use 'variables' as *;
+
+/// 主应用 / 布局层可用的基础 token（挂载在 :root）
+@mixin root-tokens {
+  :root {
+    --sc-header-height: #{$header-height-main};
+    --sc-radius-md: #{$radius-md};
+    --sc-radius-xl: #{$radius-xl};
+    --sc-indigo-500: #{$indigo-500};
+    --sc-slate-900: #{$slate-900};
+  }
+}

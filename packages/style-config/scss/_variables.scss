@@ -1,0 +1,56 @@
+// ---------------------------------------------------------------------------
+// 全局设计 token（颜色、圆角、层级、动效）— 子应用可按需 @use 并覆盖局部变量
+// ---------------------------------------------------------------------------
+
+// —— 中性色（Slate）——
+$slate-50: #f8fafc;
+$slate-100: #f1f5f9;
+$slate-200: #e2e8f0;
+$slate-300: #cbd5e1;
+$slate-400: #94a3b8;
+$slate-500: #64748b;
+$slate-600: #475569;
+$slate-700: #334155;
+$slate-800: #1e293b;
+$slate-900: #0f172a;
+$slate-950: #020617;
+
+// —— 品牌 / 强调（与主应用、子应用渐变对齐）——
+$indigo-500: #6366f1;
+$indigo-600: #4f46e5;
+$indigo-900: #312e81;
+$cyan-400: #22d3ee;
+$violet-500: #8b5cf6;
+$orange-500: #f97316;
+$orange-600: #ea580c;
+$orange-800: #9a3412;
+
+// —— 布局 ——
+$header-height-main: 56px;
+$sub-app-max-width-wide: 1040px;
+$sub-app-max-width-mid: 960px;
+$sub-app-shell-padding: clamp(20px, 4vw, 40px);
+
+// —— 圆角 ——
+$radius-md: 16px;
+$radius-lg: 18px;
+$radius-xl: 20px;
+$pill-radius: 999px;
+
+// —— 动效 ——
+$ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+$dur-fast: 0.2s;
+$dur-normal: 0.25s;
+
+// —— Z-index（子应用 #app-root 内）——
+$z-bg-grid: 0;
+$z-content: 1;
+
+// —— RGBA 工具：与白色描边/玻璃面板复用 ——
+@function white-alpha($a) {
+  @return rgba(255, 255, 255, $a);
+}
+
+@function black-alpha($a) {
+  @return rgba(0, 0, 0, $a);
+}

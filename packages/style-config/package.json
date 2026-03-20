@@ -1,0 +1,13 @@
+{
+  "name": "@packages/style-config",
+  "version": "1.0.0",
+  "description": "Workspace 公共 SCSS：变量、主题 token、mixin，供各子应用扩展",
+  "license": "MIT",
+  "files": [
+    "scss"
+  ],
+  "exports": {
+    ".": "./scss/index.scss",
+    "./scss/*": "./scss/*"
+  }
+}

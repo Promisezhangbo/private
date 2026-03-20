@@ -1,0 +1,71 @@
+// ---------------------------------------------------------------------------
+// 可复用样式片段：玻璃拟态、网格底纹、滚动条、渐变文字等
+// 使用：@use '@style-config/mixins' as m;  @include m.glass-surface(...);
+// ---------------------------------------------------------------------------
+
+@use 'sass:math' as math;
+@use 'variables' as *;
+
+/// 子应用根节点铺满视口高度（qiankun 挂载 #app-root 时常用）
+@mixin sub-app-min-viewport {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/// 玻璃质感面板
+@mixin glass-surface($bg, $blur: 12px, $border: white-alpha(0.12)) {
+  background: $bg;
+  backdrop-filter: blur($blur);
+  border: 1px solid $border;
+}
+
+/// 固定层网格线背景（配合 mask 做中间亮、边缘暗）
+@mixin mesh-grid-overlay(
+  $cell: 48px,
+  $line: rgba(148, 163, 184, 0.06),
+  $mask: radial-gradient(ellipse 90% 70% at 50% 40%, black, transparent)
+) {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: linear-gradient($line 1px, transparent 1px), linear-gradient(90deg, $line 1px, transparent 1px);
+  background-size: $cell $cell;
+  mask-image: $mask;
+  -webkit-mask-image: $mask;
+  pointer-events: none;
+  z-index: $z-bg-grid;
+}
+
+/// WebKit 细滚动条
+@mixin thin-scrollbar($width: 8px, $thumb: rgba(148, 163, 184, 0.25)) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb;
+    border-radius: math.div($width, 2);
+  }
+}
+
+/// 渐变填充文字（WebKit）
+@mixin text-gradient-fill($gradient) {
+  background: $gradient;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/// 卡片悬停轻微上浮 + 阴影增强
+@mixin card-lift-hover($lift: -4px, $shadow-focus: 0 20px 48px black-alpha(0.12)) {
+  transition:
+    transform $dur-fast $ease-out,
+    box-shadow $dur-fast $ease-out,
+    border-color $dur-fast $ease-out;
+
+  &:hover {
+    transform: translateY($lift);
+    box-shadow: $shadow-focus;
+  }
+}
