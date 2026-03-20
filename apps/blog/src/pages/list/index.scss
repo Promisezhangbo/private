@@ -2,38 +2,44 @@
 @use '@style-config/mixins' as m;
 @use '../../styles/blog-shared';
 
-.blog-hero h1.ant-typography,
-.blog-hero h2.ant-typography {
-  @include m.text-gradient-fill(
-    linear-gradient(120deg, var(--sc-blog-grad-a), var(--sc-blog-grad-b), var(--sc-blog-grad-c))
-  );
+.blog-hero {
+  h1.ant-typography,
+  h2.ant-typography {
+    @include m.text-gradient-fill(
+      linear-gradient(120deg, var(--sc-blog-grad-a), var(--sc-blog-grad-b), var(--sc-blog-grad-c))
+    );
+  }
 }
 
-.blog-list-item-wrap.ant-list-item {
-  padding: 0;
-  border: none;
-  margin-bottom: 16px;
+.blog-list-item-wrap {
+  &.ant-list-item {
+    padding: 0;
+    border: none;
+    margin-bottom: 16px;
+  }
 }
 
-.blog-card.ant-card {
-  border-radius: $radius-lg !important;
-  border: 1px solid var(--sc-blog-card-border) !important;
-  background: var(--sc-blog-card-bg) !important;
-  backdrop-filter: blur(10px);
-  box-shadow:
-    0 1px 0 var(--sc-blog-card-shadow-inset) inset,
-    0 20px 40px var(--sc-blog-card-shadow-outer);
-  transition:
-    transform $dur-normal $ease-out,
-    box-shadow $dur-normal $ease-out,
-    border-color $dur-normal $ease-out;
-
-  &:hover {
-    transform: translateY(-3px);
-    border-color: var(--sc-blog-card-hover-border) !important;
+.blog-card {
+  &.ant-card {
+    border-radius: $radius-lg !important;
+    border: 1px solid var(--sc-blog-card-border) !important;
+    background: var(--sc-blog-card-bg) !important;
+    backdrop-filter: blur(10px);
     box-shadow:
       0 1px 0 var(--sc-blog-card-shadow-inset) inset,
-      0 28px 56px var(--sc-blog-card-hover-shadow);
+      0 20px 40px var(--sc-blog-card-shadow-outer);
+    transition:
+      transform $dur-normal $ease-out,
+      box-shadow $dur-normal $ease-out,
+      border-color $dur-normal $ease-out;
+
+    &:hover {
+      transform: translateY(-3px);
+      border-color: var(--sc-blog-card-hover-border) !important;
+      box-shadow:
+        0 1px 0 var(--sc-blog-card-shadow-inset) inset,
+        0 28px 56px var(--sc-blog-card-hover-shadow);
+    }
   }
 }
 

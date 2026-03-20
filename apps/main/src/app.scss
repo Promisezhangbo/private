@@ -1,10 +1,14 @@
 @use '@style-config/variables' as *;
-@use '@style-config/mixins' as m;
 @use '@style-config/themes' as themes;
 @use '@style-config/semantic-palette';
 
 /* 主应用全局 CSS 变量（与 Ant Design / 布局对齐） */
 @include themes.root-tokens;
+
+/* 用 height 锁死视口链，避免子应用把整页撑高后被 body overflow:hidden 裁切且无滚动条 */
+html {
+  height: 100%;
+}
 
 html,
 body {
@@ -12,52 +16,68 @@ body {
   padding: 0;
   overflow-y: hidden;
   overflow-x: auto;
-  @include m.sub-app-min-viewport;
   background-color: var(--sc-bg-body);
 }
 
+body {
+  height: 100%;
+  min-height: 100dvh;
+}
+
 #root {
-  @include m.sub-app-min-viewport;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ConfigProvider 等可能包一层 DOM，需与 #root 一起撑满视口 */
-#root > * {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  @include m.sub-app-min-viewport;
-}
-
-/* QiankunProvider 的 Spin 外壳参与纵向撑满，便于子应用 #sub-app 用 flex:1 铺满 */
-#root .ant-spin-nested-loading {
-  flex: 1;
+  height: 100%;
+  max-height: 100%;
   min-height: 0;
   display: flex;
   flex-direction: column;
-}
 
-#root .ant-spin-nested-loading > .ant-spin-container {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-}
+  /* ConfigProvider 等可能包一层 DOM，需与 #root 一起撑满视口 */
+  > * {
+    flex: 1;
+    min-height: 0;
+    max-height: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 
-/* RouterProvider 根节点参与撑满，使 .main-app 能拿到剩余高度 */
-#root .ant-spin-container > * {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
+  /* QiankunProvider 的 Spin 外壳参与纵向撑满 */
+  .ant-spin-nested-loading {
+    flex: 1;
+    min-height: 0;
+    max-height: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    > .ant-spin-container {
+      flex: 1;
+      min-height: 0;
+      max-height: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  /* RouterProvider 根节点参与撑满，使 .main-app 能拿到剩余高度 */
+  .ant-spin-container > * {
+    flex: 1;
+    min-height: 0;
+    max-height: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 /* 主应用壳层背景随 --sc-* 主题变量切换（浅色 / 暗色） */
 .main-app {
-  @include m.sub-app-min-viewport;
   flex: 1;
+  min-height: 0;
+  max-height: 100%;
+  height: 100%;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   background:
@@ -68,80 +88,53 @@ body {
       var(--sc-app-gradient-mid) 40%,
       var(--sc-app-gradient-end) 100%
     );
+
+  /* 覆盖 ant-layout 可能自带的 min-height，保证整壳不随子应用内容无限增高 */
+  &.ant-layout {
+    min-height: 0 !important;
+  }
 }
 
-.main-header.ant-layout-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 0 20px !important;
-  height: $header-height-main !important;
-  line-height: $header-height-main !important;
-  background: var(--sc-header-bg) !important;
-  border-bottom: 1px solid var(--sc-header-border);
-  box-shadow: var(--sc-header-shadow);
-}
+.main-header {
+  &.ant-layout-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 20px !important;
+    height: $header-height-main !important;
+    line-height: $header-height-main !important;
+    background: var(--sc-header-bg) !important;
+    border-bottom: 1px solid var(--sc-header-border);
+    box-shadow: var(--sc-header-shadow);
+  }
 
-.main-header .ant-menu-horizontal {
-  flex: 1;
-  min-width: 0;
-  border-bottom: none !important;
-  background: transparent !important;
-  line-height: $header-height-main !important;
-}
+  .ant-menu-horizontal {
+    flex: 1;
+    min-width: 0;
+    border-bottom: none !important;
+    background: transparent !important;
+    line-height: $header-height-main !important;
+  }
 
-.main-header .ant-menu-item,
-.main-header .ant-menu-submenu-title {
-  color: var(--sc-header-menu-text) !important;
-}
+  .ant-menu-item,
+  .ant-menu-submenu-title {
+    color: var(--sc-header-menu-text) !important;
+  }
 
-.main-header .ant-menu-item-selected,
-.main-header .ant-menu-item:hover,
-.main-header .ant-menu-submenu-title:hover {
-  color: var(--sc-header-menu-text-hover) !important;
-}
+  .ant-menu-item-selected,
+  .ant-menu-item:hover,
+  .ant-menu-submenu-title:hover {
+    color: var(--sc-header-menu-text-hover) !important;
+  }
 
-.main-header .ant-menu-item-selected::after,
-.main-header .ant-menu-item:hover::after {
-  border-bottom-color: var(--sc-header-menu-accent) !important;
-}
+  .ant-menu-item-selected::after,
+  .ant-menu-item:hover::after {
+    border-bottom-color: var(--sc-header-menu-accent) !important;
+  }
 
-.main-header .ant-select-selector {
-  background: var(--sc-header-select-bg) !important;
-  border-color: var(--sc-header-select-border) !important;
-  color: var(--sc-header-select-text) !important;
-}
-
-/* 首页等内容区保留内边距；微应用路由见 .main-content--flush */
-.main-content.ant-layout-content {
-  flex: 1;
-  min-height: 0;
-  padding: clamp(16px, 3vw, 28px);
-  overflow: auto;
-  background: transparent !important;
-}
-
-/* agent / blog / login：去掉 Content padding，避免子应用背景露边；滚动交给子应用 #app-root */
-.main-content--flush.ant-layout-content {
-  padding: 0 !important;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.main-content--flush #sub-app {
-  flex: 1;
-  min-height: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-/* 嵌入时子应用根节点用 100% 贴齐 qiankun 容器，避免 100vh 与顶栏区域双重滚动 */
-.main-content--flush #sub-app #app-root {
-  flex: 1;
-  min-height: 0;
-  width: 100%;
-  height: 100% !important;
-  box-sizing: border-box;
+  .ant-select-selector {
+    background: var(--sc-header-select-bg) !important;
+    border-color: var(--sc-header-select-border) !important;
+    color: var(--sc-header-select-text) !important;
+  }
 }

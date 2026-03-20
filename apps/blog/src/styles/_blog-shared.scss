@@ -11,15 +11,15 @@
 
 .blog-hero {
   margin-bottom: 32px;
-}
 
-.blog-hero h1.ant-typography,
-.blog-hero h2.ant-typography {
-  letter-spacing: -0.03em;
-}
+  h1.ant-typography,
+  h2.ant-typography {
+    letter-spacing: -0.03em;
+  }
 
-.blog-hero .ant-typography {
-  color: var(--blog-muted) !important;
+  .ant-typography {
+    color: var(--blog-muted) !important;
+  }
 }
 
 .blog-empty {

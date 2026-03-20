@@ -16,18 +16,18 @@
       var(--sc-agent-bg-linear-end) 100%
     );
   background-attachment: scroll;
-}
 
-#app-root::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--sc-agent-grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--sc-agent-grid-line) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black, transparent);
-  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black, transparent);
-  pointer-events: none;
-  z-index: $z-bg-grid;
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--sc-agent-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--sc-agent-grid-line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black, transparent);
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black, transparent);
+    pointer-events: none;
+    z-index: $z-bg-grid;
+  }
 }

@@ -1,9 +1,11 @@
 @use '../../styles/auth-glass';
 
-.login-page--singin .login-form-row {
-  margin-block: 8px;
-}
+.login-page--singin {
+  .login-form-row {
+    margin-block: 8px;
+  }
 
-.login-page--singin .ant-btn-primary.ant-btn-lg {
-  width: 100%;
+  .ant-btn-primary.ant-btn-lg {
+    width: 100%;
+  }
 }

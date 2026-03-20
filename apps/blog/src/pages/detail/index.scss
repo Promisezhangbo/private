@@ -1,13 +1,14 @@
 @use '@style-config/variables' as *;
-@use '@style-config/mixins' as m;
 @use '../../styles/blog-shared';
 
-.blog-detail-card.ant-card {
-  border-radius: $radius-xl !important;
-  border: 1px solid var(--sc-blog-detail-border) !important;
-  background: var(--sc-blog-detail-bg) !important;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 24px 48px var(--sc-blog-detail-shadow);
+.blog-detail-card {
+  &.ant-card {
+    border-radius: $radius-xl !important;
+    border: 1px solid var(--sc-blog-detail-border) !important;
+    background: var(--sc-blog-detail-bg) !important;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 24px 48px var(--sc-blog-detail-shadow);
+  }
 }
 
 .blog-detail-title {

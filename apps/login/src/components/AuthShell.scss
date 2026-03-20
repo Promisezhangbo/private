@@ -9,22 +9,22 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
-}
 
-.login-auth-shell::before {
-  content: '';
-  position: fixed;
-  inset: -20%;
-  background: conic-gradient(
-    from 120deg at 50% 50%,
-    rgba(34, 211, 238, 0.08),
-    transparent,
-    rgba(167, 139, 250, 0.1),
-    transparent
-  );
-  animation: login-auth-shell-spin 28s linear infinite;
-  pointer-events: none;
-  z-index: $z-bg-grid;
+  &::before {
+    content: '';
+    position: fixed;
+    inset: -20%;
+    background: conic-gradient(
+      from 120deg at 50% 50%,
+      rgba(34, 211, 238, 0.08),
+      transparent,
+      rgba(167, 139, 250, 0.1),
+      transparent
+    );
+    animation: login-auth-shell-spin 28s linear infinite;
+    pointer-events: none;
+    z-index: $z-bg-grid;
+  }
 }
 
 @keyframes login-auth-shell-spin {
