@@ -1,4 +1,12 @@
 <!DOCTYPE html><html lang="en"><head>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('private-main-theme');
+          document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+        } catch (e) {}
+      })();
+    </script>
     <style>
       html,
       body {
@@ -15,7 +23,7 @@
     <link rel="icon" type="image/svg+xml" href="/blog/vite.svg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>blog</title>
-    <script crossorigin="">import('/blog/jse/index-index-DD7CO7ct.js').finally(() => {
+    <script crossorigin="">import('/blog/jse/index-index-BI9pMLmn.js').finally(() => {
             
     const qiankunLifeCycle = window.moudleQiankunAppLifeCycles && window.moudleQiankunAppLifeCycles['blog'];
     if (qiankunLifeCycle) {
@@ -26,7 +34,7 @@
     }
   
           })</script>
-    <link rel="stylesheet" crossorigin="" href="/blog/css/index-BeYUw0ud.css">
+    <link rel="stylesheet" crossorigin="" href="/blog/css/index-CHeI-PER.css">
   </head>
   <body>
     <div id="root"></div>
