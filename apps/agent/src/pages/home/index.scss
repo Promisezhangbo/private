@@ -343,6 +343,14 @@
   white-space: pre-wrap;
 }
 
+.agent-studio__typing-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  min-height: 28px;
+}
+
 .agent-studio__dot {
   width: 8px;
   height: 8px;

@@ -27,6 +27,7 @@ export default defineConfig((config) => {
     define: {
       // 优先读构建时的环境变量，兜底读生成的文件
       __BUILD_TIME__: isDev ? undefined : `"${dayjs().format('YYYY-MM-DD HH:mm:ss')}"`,
+      VITE_ARK_API_KEY: `'76a06905-671a-4b76-b17e-8d391d201bf8'`,
     },
     build: {
       outDir: '../../dist/agent',

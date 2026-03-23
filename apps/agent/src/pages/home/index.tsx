@@ -1,21 +1,19 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Input, Button } from 'antd';
+import { Input, Button, message as antdMessage } from 'antd';
 import { SendOutlined, RobotOutlined } from '@ant-design/icons';
 import Markdown from '@ant-design/x-markdown';
 import './index.scss';
+import { deltaToText, getLLMOutput } from '@/api';
 
 const { TextArea } = Input;
 
 type Msg = { role: 'user' | 'assistant'; content: string; id: string };
 
-function buildMockReply(question: string): string {
-  return `## 回答摘要\n\n针对你的问题，先做如下说明（当前为**前端模拟**，可替换为真实大模型接口）：\n\n> ${question}\n\n### 要点\n\n1. **上下文**：已收到完整问题文本\n2. **接入方式**：在 \`send\` 内改为 \`fetch\` / SSE / WebSocket 即可\n3. **流式输出**：建议用增量更新 \`messages\` 状态\n\n\`\`\`ts\nasync function ask(q: string) {\n  const res = await fetch('/api/chat', {\n    method: 'POST',\n    headers: { 'Content-Type': 'application/json' },\n    body: JSON.stringify({ message: q }),\n  });\n  return res.json();\n}\n\`\`\`\n\n如需表格示例：\n\n| 项 | 说明 |\n| --- | --- |\n| 模型 | 任选 |\n| 协议 | HTTP / SSE |\n`;
-}
-
 export default function Home() {
   const [value, setValue] = useState('');
   const [messages, setMessages] = useState<Msg[]>([]);
   const [loading, setLoading] = useState(false);
+  const [streamingAssistantId, setStreamingAssistantId] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = useCallback(() => {
@@ -23,20 +21,51 @@ export default function Home() {
     if (el) el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
   }, []);
 
-  const send = useCallback(() => {
+  const send = useCallback(async () => {
     const content = value.trim();
     if (!content || loading) return;
+
     const userMsg: Msg = { role: 'user', content, id: `u-${Date.now()}` };
-    setMessages((prev) => [...prev, userMsg]);
+    const assistantId = `a-${Date.now()}`;
+    setMessages((prev) => [...prev, userMsg, { role: 'assistant', content: '', id: assistantId }]);
     setValue('');
     setLoading(true);
-    window.setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { role: 'assistant', content: buildMockReply(content), id: `a-${Date.now()}` },
-      ]);
+    setStreamingAssistantId(assistantId);
+
+    try {
+      await getLLMOutput(content, (delta) => {
+        const piece = deltaToText(delta);
+        if (!piece) return;
+        setMessages((prev) =>
+          prev.map((m) => (m.id === assistantId ? { ...m, content: m.content + piece } : m)),
+        );
+      });
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === assistantId && !m.content.trim()
+            ? { ...m, content: '（未收到模型正文输出，请稍后重试或检查模型配置。）' }
+            : m,
+        ),
+      );
+    } catch (err) {
+      const errText = err instanceof Error ? err.message : String(err);
+      antdMessage.error(errText);
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === assistantId
+            ? {
+                ...m,
+                content:
+                  m.content ||
+                  `请求未能完成。\n\n**错误**：${errText}\n\n请检查网络、模型权限及 \`VITE_ARK_API_KEY\` 配置。`,
+              }
+            : m,
+        ),
+      );
+    } finally {
       setLoading(false);
-    }, 800);
+      setStreamingAssistantId(null);
+    }
   }, [value, loading]);
 
   useEffect(() => {
@@ -79,7 +108,15 @@ export default function Home() {
                 <div className="agent-studio__card">
                   {item.role === 'assistant' ? (
                     <div className="agent-studio__md">
-                      <Markdown>{item.content}</Markdown>
+                      {item.content ? (
+                        <Markdown>{item.content}</Markdown>
+                      ) : loading && streamingAssistantId === item.id ? (
+                        <div className="agent-studio__typing-inline" aria-hidden>
+                          <span className="agent-studio__dot" />
+                          <span className="agent-studio__dot" />
+                          <span className="agent-studio__dot" />
+                        </div>
+                      ) : null}
                     </div>
                   ) : (
                     <p className="agent-studio__user-text">{item.content}</p>
@@ -87,16 +124,6 @@ export default function Home() {
                 </div>
               </li>
             ))}
-            {loading && (
-              <li className="agent-studio__turn agent-studio__turn--assistant agent-studio__turn--pending">
-                <span className="agent-studio__role">模型回答</span>
-                <div className="agent-studio__card agent-studio__card--typing">
-                  <span className="agent-studio__dot" />
-                  <span className="agent-studio__dot" />
-                  <span className="agent-studio__dot" />
-                </div>
-              </li>
-            )}
           </ul>
         </div>
       </div>
