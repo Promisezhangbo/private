@@ -1,20 +1,17 @@
 @use '@style-config/variables' as *;
 @use '@style-config/mixins' as m;
-@use '@style-config/semantic-palette';
 
-/* Agent 应用级：仅根节点背景与网格（页面样式见各 route 下 index.scss） */
+/* Agent：浅蓝 / 浅紫清新底 + 轻网格；抵消主应用 #app-root height:auto，保证底部输入固定 */
 #app-root {
   @include m.sub-app-min-viewport;
-  color: var(--sc-agent-page-text);
+  position: relative;
+  isolation: isolate;
+  color: #334155;
   background:
-    radial-gradient(ellipse 120% 80% at 50% -20%, var(--sc-agent-bg-radial-a), transparent 55%),
-    radial-gradient(ellipse 80% 50% at 100% 50%, var(--sc-agent-bg-radial-b), transparent 50%),
-    linear-gradient(
-      165deg,
-      var(--sc-agent-bg-linear-start) 0%,
-      var(--sc-agent-bg-linear-mid) 45%,
-      var(--sc-agent-bg-linear-end) 100%
-    );
+    radial-gradient(ellipse 110% 85% at 8% -5%, rgb(191 219 254 / 0.55), transparent 52%),
+    radial-gradient(ellipse 100% 75% at 96% 8%, rgb(233 213 255 / 0.42), transparent 48%),
+    radial-gradient(ellipse 70% 50% at 50% 100%, rgb(224 231 255 / 0.35), transparent 55%),
+    linear-gradient(165deg, #f8fafc 0%, #eff6ff 42%, #f5f3ff 100%);
   background-attachment: scroll;
 
   &::before {
@@ -22,12 +19,74 @@
     position: fixed;
     inset: 0;
     background-image:
-      linear-gradient(var(--sc-agent-grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--sc-agent-grid-line) 1px, transparent 1px);
-    background-size: 48px 48px;
-    mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black, transparent);
-    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black, transparent);
+      linear-gradient(rgb(148 163 184 / 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(148 163 184 / 0.07) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 92% 72% at 50% 38%, black, transparent);
+    -webkit-mask-image: radial-gradient(ellipse 92% 72% at 50% 38%, black, transparent);
     pointer-events: none;
     z-index: $z-bg-grid;
   }
+}
+
+/* 嵌入主应用时：用 flex 接主布局链，避免 height:100% 父高为 0 */
+.main-content--micro #sub-app #root {
+  flex: 1 1 0;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content--micro #sub-app #app-root {
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-sizing: border-box !important;
+}
+
+.agent-shell {
+  position: relative;
+  z-index: $z-content;
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  > * {
+    flex: 1 1 0;
+    min-height: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.agent-app-root {
+  flex: 1 1 0;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+
+  > * {
+    flex: 1 1 0;
+    min-height: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.agent-route-root {
+  flex: 1 1 0;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
 }

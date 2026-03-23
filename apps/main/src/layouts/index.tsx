@@ -61,7 +61,9 @@ function Layouts() {
       <Content
         className={`main-content ${showHeader ? '' : ' main-content--login-viewport'}`}
       >
-        <div className='main-content--flush'>
+        <div
+          className={`main-content--flush${isMicroShell ? ' main-content--micro' : ''}`}
+        >
           <Outlet />
           <div id="sub-app" />
         </div>

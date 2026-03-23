@@ -13,13 +13,22 @@ function render(props: { container?: HTMLElement }) {
   }
   // 复用 root 实例调用 render 方法
   const embedded = qiankunWindow.__POWERED_BY_QIANKUN__;
+  const shell = {
+    boxSizing: 'border-box' as const,
+    display: 'flex' as const,
+    flexDirection: 'column' as const,
+    overflow: 'hidden' as const,
+  };
+  /* 嵌入时父链为 flex，用 flex:1 比 height:100% 更稳（父高曾为 0 会导致整页不可见） */
   const appRootStyle = embedded
-    ? { minHeight: 'calc(100vh - 56px)', overflow: 'auto' as const, boxSizing: 'border-box' as const }
-    : { height: '100vh', minHeight: '100vh', overflow: 'auto' as const, boxSizing: 'border-box' as const };
+    ? { flex: 1, minHeight: 0, minWidth: 0, ...shell }
+    : { height: '100vh', minHeight: '100vh', ...shell };
   root.render(
     <React.StrictMode>
       <div id="app-root" style={appRootStyle}>
-        <App />
+        <div className="agent-shell">
+          <App />
+        </div>
       </div>
     </React.StrictMode>
   );
