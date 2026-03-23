@@ -1,62 +1,115 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Input, Button, Card, Space, Typography, Avatar } from 'antd';
-import { SendOutlined, RobotOutlined, UserOutlined } from '@ant-design/icons';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Input, Button } from 'antd';
+import { SendOutlined, RobotOutlined } from '@ant-design/icons';
 import Markdown from '@ant-design/x-markdown';
 import './index.scss';
+
 const { TextArea } = Input;
-/** 单条对话 */
+
 type Msg = { role: 'user' | 'assistant'; content: string; id: string };
-/** 本地模拟回复（接入真实服务时替换为 fetch / SSE） */
+
 function buildMockReply(question: string): string {
-  return `**模拟回答**\n\n你问的是：\n> ${question}\n\n当前为前端模拟延迟回复，可在 \`send\` 中改为调用后端或第三方 API。`;
+  return `## 回答摘要\n\n针对你的问题，先做如下说明（当前为**前端模拟**，可替换为真实大模型接口）：\n\n> ${question}\n\n### 要点\n\n1. **上下文**：已收到完整问题文本\n2. **接入方式**：在 \`send\` 内改为 \`fetch\` / SSE / WebSocket 即可\n3. **流式输出**：建议用增量更新 \`messages\` 状态\n\n\`\`\`ts\nasync function ask(q: string) {\n  const res = await fetch('/api/chat', {\n    method: 'POST',\n    headers: { 'Content-Type': 'application/json' },\n    body: JSON.stringify({ message: q }),\n  });\n  return res.json();\n}\n\`\`\`\n\n如需表格示例：\n\n| 项 | 说明 |\n| --- | --- |\n| 模型 | 任选 |\n| 协议 | HTTP / SSE |\n`;
 }
-function Home() {
+
+export default function Home() {
   const [value, setValue] = useState('');
   const [messages, setMessages] = useState<Msg[]>([]);
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
   const scrollToBottom = useCallback(() => {
     const el = scrollRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
+    if (el) el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
   }, []);
-  /** 提交问题：入队用户消息 → 模拟 AI 延迟回复 */
+
   const send = useCallback(() => {
     const content = value.trim();
     if (!content || loading) return;
-    const userMsg: Msg = { role: 'user', content, id: `${Date.now()}` };
+    const userMsg: Msg = { role: 'user', content, id: `u-${Date.now()}` };
     setMessages((prev) => [...prev, userMsg]);
     setValue('');
     setLoading(true);
     window.setTimeout(() => {
       setMessages((prev) => [
         ...prev,
-        {
-          role: 'assistant',
-          content: buildMockReply(content),
-          id: `${Date.now()}_a`,
-        },
+        { role: 'assistant', content: buildMockReply(content), id: `a-${Date.now()}` },
       ]);
       setLoading(false);
-    }, 900);
+    }, 800);
   }, [value, loading]);
+
   useEffect(() => {
     scrollToBottom();
-  }, [messages, scrollToBottom]);
+  }, [messages, loading, scrollToBottom]);
+
   return (
-    <div className="agent-page">
-      <header className="agent-hero">
-        <Typography.Title level={2}>AI 工作台</Typography.Title>
-        <Typography.Text type="secondary">
-          多轮对话演示：输入问题后由本地模拟引擎返回 Markdown。样式为独立子应用主题，可与主应用壳层并存。
-        </Typography.Text>
-      </header>
-      <Card className="agent-input-card" bordered={false}>
-        <Space className="agent-form-stack" orientation="vertical" size="middle">
+    <div className="agent-studio">
+      <div ref={scrollRef} className="agent-studio__scroll" role="log" aria-live="polite">
+        <div className="agent-studio__inner">
+          <header className="agent-studio__masthead">
+            <div className="agent-studio__masthead-icon" aria-hidden>
+              <RobotOutlined />
+            </div>
+            <div className="agent-studio__masthead-copy">
+              <h1 className="agent-studio__title">智能对话</h1>
+              <p className="agent-studio__subtitle">
+                上方展示问题与回答；输入框固定在底部。Enter 发送，Shift+Enter 换行
+              </p>
+            </div>
+          </header>
+
+          {messages.length === 0 && !loading && (
+            <div className="agent-studio__empty">
+              <div className="agent-studio__empty-orb" aria-hidden />
+              <p className="agent-studio__empty-line1">从这里开始</p>
+              <p className="agent-studio__empty-line2">在底部输入你的问题，模型回答会出现在上方</p>
+            </div>
+          )}
+
+          <ul className="agent-studio__feed">
+            {messages.map((item) => (
+              <li
+                key={item.id}
+                className={`agent-studio__turn agent-studio__turn--${item.role}`}
+              >
+                <span className="agent-studio__role">
+                  {item.role === 'user' ? '你的问题' : '模型回答'}
+                </span>
+                <div className="agent-studio__card">
+                  {item.role === 'assistant' ? (
+                    <div className="agent-studio__md">
+                      <Markdown>{item.content}</Markdown>
+                    </div>
+                  ) : (
+                    <p className="agent-studio__user-text">{item.content}</p>
+                  )}
+                </div>
+              </li>
+            ))}
+            {loading && (
+              <li className="agent-studio__turn agent-studio__turn--assistant agent-studio__turn--pending">
+                <span className="agent-studio__role">模型回答</span>
+                <div className="agent-studio__card agent-studio__card--typing">
+                  <span className="agent-studio__dot" />
+                  <span className="agent-studio__dot" />
+                  <span className="agent-studio__dot" />
+                </div>
+              </li>
+            )}
+          </ul>
+        </div>
+      </div>
+
+      <footer className="agent-studio__dock">
+        <div className="agent-studio__composer">
           <TextArea
-            rows={4}
+            className="agent-studio__input"
+            variant="borderless"
             value={value}
+            placeholder="输入问题，Enter 发送"
+            autoSize={{ minRows: 1, maxRows: 6 }}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)}
-            placeholder="例如：如何用 React 做微前端子应用样式隔离？"
             onPressEnter={(e) => {
               if (!e.shiftKey) {
                 e.preventDefault();
@@ -64,39 +117,18 @@ function Home() {
               }
             }}
           />
-          <div className="agent-input-actions">
-            <Button type="primary" icon={<SendOutlined />} loading={loading} onClick={send}>
-              发送
-            </Button>
-          </div>
-        </Space>
-      </Card>
-      <div ref={scrollRef} className="agent-thread" role="log" aria-live="polite">
-        {messages.map((item) => {
-          const isUser = item.role === 'user';
-          return (
-            <div
-              key={item.id}
-              className={`agent-row ${isUser ? 'agent-row--user' : ''}`}
-            >
-              {!isUser && (
-                <Avatar size={40} icon={<RobotOutlined />} className="agent-avatar" />
-              )}
-              <div className="agent-bubble">
-                {item.role === 'assistant' ? (
-                  <Markdown>{item.content}</Markdown>
-                ) : (
-                  item.content
-                )}
-              </div>
-              {isUser && (
-                <Avatar size={40} icon={<UserOutlined />} className="agent-avatar agent-avatar--user" />
-              )}
-            </div>
-          );
-        })}
-      </div>
+          <Button
+            type="primary"
+            shape="circle"
+            size="large"
+            icon={<SendOutlined />}
+            loading={loading}
+            className="agent-studio__send"
+            aria-label="发送"
+            onClick={send}
+          />
+        </div>
+      </footer>
     </div>
   );
 }
-export default Home;
