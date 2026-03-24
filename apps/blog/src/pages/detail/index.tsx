@@ -28,9 +28,9 @@ function Detail() {
         {post.date ? <div className="blog-detail-meta">{post.date}</div> : null}
         <Paragraph className="blog-detail-body">{post.content}</Paragraph>
         {post.source ? (
-          <div style={{ marginTop: 20 }}>
+          <div className="blog-detail-source">
             <TyLink href={post.source} target="_blank" rel="noreferrer">
-              查看原文
+              查看原文 →
             </TyLink>
           </div>
         ) : null}

@@ -1,5 +1,14 @@
 @use '@style-config/variables' as *;
 
+/* 与 Blog / Agent 子应用对齐：最大宽度 + 居中 + 统一内边距 */
+.main-home-shell {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: $sub-app-max-width-mid;
+  margin: 0 auto;
+  padding: $sub-app-shell-padding;
+}
+
 /* 主应用控制台首页（语义色由 app.scss 引入的 semantic-palette 挂在 :root） */
 .dash-grid {
   display: grid;
@@ -93,7 +102,7 @@
 .dash-hero-lead {
   display: block;
   margin: 0 0 14px;
-  max-width: 820px;
+  max-width: 100%;
   font-size: 14px;
   line-height: 1.65;
   color: var(--sc-text-on-hero-muted) !important;

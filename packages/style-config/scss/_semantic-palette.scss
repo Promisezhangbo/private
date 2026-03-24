@@ -18,16 +18,20 @@ html[data-theme='light'] {
   --sc-app-gradient-mid: #eef2ff;
   --sc-app-gradient-end: #f1f5f9;
 
-  /* 顶栏：浅色主题 — 浅底 + 深色字（与 Ant 浅色导航一致） */
-  --sc-header-bg: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
-  --sc-header-border: #f0f0f0;
-  --sc-header-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-  --sc-header-menu-text: rgba(0, 0, 0, 0.65);
-  --sc-header-menu-text-hover: #1677ff;
-  --sc-header-menu-accent: #1677ff;
-  --sc-header-select-bg: #ffffff;
-  --sc-header-select-border: #d9d9d9;
-  --sc-header-select-text: rgba(0, 0, 0, 0.88);
+  /* 顶栏：浅色 — 延续子应用青蓝/靛紫科技渐变 + 轻玻璃顶边 */
+  --sc-header-bg:
+    linear-gradient(180deg, rgb(255 255 255 / 0.78) 0%, rgb(248 250 252 / 0.9) 100%),
+    radial-gradient(ellipse 110% 320% at 8% 120%, rgb(56 189 248 / 0.16), transparent 58%),
+    radial-gradient(ellipse 100% 300% at 96% -20%, rgb(129 140 248 / 0.14), transparent 52%),
+    linear-gradient(90deg, #f8fafc 0%, #eff6ff 48%, #f5f3ff 100%);
+  --sc-header-border: rgb(56 189 248 / 0.14);
+  --sc-header-shadow: 0 1px 0 rgb(255 255 255 / 0.85) inset, 0 4px 20px rgb(15 23 42 / 0.04);
+  --sc-header-menu-text: rgba(15, 23, 42, 0.72);
+  --sc-header-menu-text-hover: #0369a1;
+  --sc-header-menu-accent: #0284c7;
+  --sc-header-select-bg: rgb(255 255 255 / 0.72);
+  --sc-header-select-border: rgb(56 189 248 / 0.22);
+  --sc-header-select-text: rgba(15, 23, 42, 0.88);
 
   /* 控制台卡片区 */
   --sc-dash-section-title: #475569;
@@ -77,31 +81,31 @@ html[data-theme='light'] {
   --sc-agent-avatar-user-start: #64748b;
   --sc-agent-avatar-user-end: #475569;
 
-  /* —— Blog 子应用（浅色：暖色纸张，与现有一致）—— */
-  --sc-blog-ink: #1c1917;
-  --sc-blog-muted: #78716c;
-  --sc-blog-bg-radial-a: rgba(251, 191, 36, 0.18);
-  --sc-blog-bg-radial-b: rgba(249, 115, 22, 0.12);
-  --sc-blog-bg-start: #fffbeb;
-  --sc-blog-bg-mid: #fef3c7;
-  --sc-blog-bg-end: #fff7ed;
-  --sc-blog-card-border: rgba(251, 191, 36, 0.35);
-  --sc-blog-card-bg: rgba(255, 255, 255, 0.72);
-  --sc-blog-card-shadow-inset: rgba(255, 255, 255, 0.8);
-  --sc-blog-card-shadow-outer: rgba(180, 83, 9, 0.08);
-  --sc-blog-card-hover-border: rgba(249, 115, 22, 0.45);
-  --sc-blog-card-hover-shadow: rgba(234, 88, 12, 0.14);
-  --sc-blog-title-icon: #ea580c;
-  --sc-blog-card-title: #9a3412;
-  --sc-blog-card-title-hover: #c2410c;
-  --sc-blog-detail-border: rgba(251, 191, 36, 0.4);
-  --sc-blog-detail-bg: rgba(255, 255, 255, 0.85);
-  --sc-blog-detail-shadow: rgba(120, 53, 15, 0.1);
-  --sc-blog-summary: #57534e;
-  --sc-blog-body-text: #292524;
-  --sc-blog-grad-a: #c2410c;
-  --sc-blog-grad-b: #ea580c;
-  --sc-blog-grad-c: #d97706;
+  /* —— Blog 子应用（浅色：青蓝 / 靛紫科技风）—— */
+  --sc-blog-ink: #0f172a;
+  --sc-blog-muted: #64748b;
+  --sc-blog-bg-radial-a: rgba(56, 189, 248, 0.2);
+  --sc-blog-bg-radial-b: rgba(129, 140, 248, 0.16);
+  --sc-blog-bg-start: #f8fafc;
+  --sc-blog-bg-mid: #eff6ff;
+  --sc-blog-bg-end: #f5f3ff;
+  --sc-blog-card-border: rgba(56, 189, 248, 0.22);
+  --sc-blog-card-bg: rgba(255, 255, 255, 0.88);
+  --sc-blog-card-shadow-inset: rgba(255, 255, 255, 0.9);
+  --sc-blog-card-shadow-outer: rgba(15, 23, 42, 0.06);
+  --sc-blog-card-hover-border: rgba(99, 102, 241, 0.35);
+  --sc-blog-card-hover-shadow: rgba(79, 70, 229, 0.12);
+  --sc-blog-title-icon: #0284c7;
+  --sc-blog-card-title: #0f172a;
+  --sc-blog-card-title-hover: #0369a1;
+  --sc-blog-detail-border: rgba(99, 102, 241, 0.22);
+  --sc-blog-detail-bg: rgba(255, 255, 255, 0.92);
+  --sc-blog-detail-shadow: rgba(15, 23, 42, 0.08);
+  --sc-blog-summary: #475569;
+  --sc-blog-body-text: #1e293b;
+  --sc-blog-grad-a: #0284c7;
+  --sc-blog-grad-b: #4f46e5;
+  --sc-blog-grad-c: #7c3aed;
 }
 
 html[data-theme='dark'] {
@@ -114,16 +118,20 @@ html[data-theme='dark'] {
   --sc-app-gradient-mid: #161616;
   --sc-app-gradient-end: #141414;
 
-  --sc-header-bg: linear-gradient(90deg, #1f1f1f 0%, #141414 100%);
-  --sc-header-border: #303030;
-  --sc-header-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
-  --sc-header-menu-text: rgba(255, 255, 255, 0.65);
-  --sc-header-menu-text-hover: #ffffff;
-  --sc-header-menu-accent: #6366f1;
+  --sc-header-bg:
+    linear-gradient(180deg, rgb(15 23 42 / 0.94) 0%, rgb(12 18 34 / 0.92) 100%),
+    radial-gradient(ellipse 120% 340% at 12% 0%, rgb(34 211 238 / 0.1), transparent 55%),
+    radial-gradient(ellipse 100% 300% at 92% 110%, rgb(129 140 248 / 0.1), transparent 52%),
+    linear-gradient(90deg, #0f172a 0%, #0c1222 50%, #020617 100%);
+  --sc-header-border: rgb(56 189 248 / 0.12);
+  --sc-header-shadow: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 8px 32px rgb(0 0 0 / 0.45);
+  --sc-header-menu-text: rgba(226, 232, 240, 0.72);
+  --sc-header-menu-text-hover: #7dd3fc;
+  --sc-header-menu-accent: #38bdf8;
 
-  --sc-header-select-bg: rgba(255, 255, 255, 0.06);
-  --sc-header-select-border: #424242;
-  --sc-header-select-text: rgba(255, 255, 255, 0.85);
+  --sc-header-select-bg: rgba(15, 23, 42, 0.65);
+  --sc-header-select-border: rgb(99 102 241 / 0.28);
+  --sc-header-select-text: rgba(248, 250, 252, 0.88);
 
   --sc-dash-section-title: rgba(255, 255, 255, 0.65);
   --sc-dash-card-bg: rgba(255, 255, 255, 0.06);
@@ -172,29 +180,29 @@ html[data-theme='dark'] {
   --sc-agent-avatar-user-start: #64748b;
   --sc-agent-avatar-user-end: #334155;
 
-  /* —— Blog 子应用（暗色：暖色偏暗，贴合暗色规范）—— */
-  --sc-blog-ink: rgba(255, 255, 255, 0.88);
-  --sc-blog-muted: rgba(255, 255, 255, 0.45);
-  --sc-blog-bg-radial-a: rgba(251, 191, 36, 0.08);
-  --sc-blog-bg-radial-b: rgba(249, 115, 22, 0.06);
-  --sc-blog-bg-start: #1a1816;
-  --sc-blog-bg-mid: #1f1d1b;
-  --sc-blog-bg-end: #141414;
-  --sc-blog-card-border: #303030;
-  --sc-blog-card-bg: rgba(255, 255, 255, 0.06);
+  /* —— Blog 子应用（暗色：赛博青紫）—— */
+  --sc-blog-ink: rgba(248, 250, 252, 0.92);
+  --sc-blog-muted: rgba(148, 163, 184, 0.85);
+  --sc-blog-bg-radial-a: rgba(34, 211, 238, 0.12);
+  --sc-blog-bg-radial-b: rgba(129, 140, 248, 0.1);
+  --sc-blog-bg-start: #0c1222;
+  --sc-blog-bg-mid: #0f172a;
+  --sc-blog-bg-end: #020617;
+  --sc-blog-card-border: rgba(56, 189, 248, 0.15);
+  --sc-blog-card-bg: rgba(15, 23, 42, 0.55);
   --sc-blog-card-shadow-inset: rgba(255, 255, 255, 0.04);
-  --sc-blog-card-shadow-outer: rgba(0, 0, 0, 0.35);
-  --sc-blog-card-hover-border: rgba(249, 115, 22, 0.35);
-  --sc-blog-card-hover-shadow: rgba(0, 0, 0, 0.45);
-  --sc-blog-title-icon: #fb923c;
-  --sc-blog-card-title: #fdba74;
-  --sc-blog-card-title-hover: #fed7aa;
-  --sc-blog-detail-border: #303030;
-  --sc-blog-detail-bg: rgba(255, 255, 255, 0.06);
-  --sc-blog-detail-shadow: rgba(0, 0, 0, 0.4);
-  --sc-blog-summary: rgba(255, 255, 255, 0.55);
-  --sc-blog-body-text: rgba(255, 255, 255, 0.82);
-  --sc-blog-grad-a: #ea580c;
-  --sc-blog-grad-b: #fb923c;
-  --sc-blog-grad-c: #fcd34d;
+  --sc-blog-card-shadow-outer: rgba(0, 0, 0, 0.4);
+  --sc-blog-card-hover-border: rgba(129, 140, 248, 0.4);
+  --sc-blog-card-hover-shadow: rgba(34, 211, 238, 0.08);
+  --sc-blog-title-icon: #38bdf8;
+  --sc-blog-card-title: rgba(248, 250, 252, 0.95);
+  --sc-blog-card-title-hover: #7dd3fc;
+  --sc-blog-detail-border: rgba(99, 102, 241, 0.25);
+  --sc-blog-detail-bg: rgba(15, 23, 42, 0.65);
+  --sc-blog-detail-shadow: rgba(0, 0, 0, 0.45);
+  --sc-blog-summary: rgba(148, 163, 184, 0.9);
+  --sc-blog-body-text: rgba(226, 232, 240, 0.92);
+  --sc-blog-grad-a: #22d3ee;
+  --sc-blog-grad-b: #818cf8;
+  --sc-blog-grad-c: #a78bfa;
 }

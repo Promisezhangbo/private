@@ -4,7 +4,6 @@ import { message, Card, Typography, Image, Button, Flex } from 'antd';
 import { ProForm, ProFormText, ProFormCheckbox } from '@ant-design/pro-components';
 import AuthShell from '@/components/AuthShell';
 import { delay } from '@/utils/mockRequest';
-import './index.scss';
 function Singin() {
   const navigate = useNavigate();
   /** 提交登录：此处为假请求，接入真实接口时替换为 API 调用 */
@@ -23,19 +22,20 @@ function Singin() {
   return (
     <AuthShell>
       <div className="login-page login-page--singin">
-        <Card className="login-glass-card" bordered={false}>
+        <Card className="login-glass-card" variant='borderless'>
           <div className="login-brand">
             <Image src={reactLogo} alt="" width={56} preview={false} />
             <Typography.Title level={4} className="login-brand-title">
               欢迎回来
             </Typography.Title>
-            <span className="login-sub">登录以进入主应用与子应用</span>
+            <Typography.Text className="login-brand-subtitle">登录以继续使用</Typography.Text>
           </div>
           <ProForm
             onFinish={onFinish}
             initialValues={{ remember: true }}
             submitter={{
               searchConfig: { submitText: '登录' },
+              resetButtonProps: { style: { display: 'none' } },
               submitButtonProps: { type: 'primary', size: 'large' },
             }}
           >

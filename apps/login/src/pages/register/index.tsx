@@ -4,7 +4,6 @@ import { ProForm, ProFormText, type ProFormInstance } from '@ant-design/pro-comp
 import { useRef } from 'react';
 import AuthShell from '@/components/AuthShell';
 import { delay } from '@/utils/mockRequest';
-import './index.scss';
 function Register() {
   const navigate = useNavigate();
   const formRef = useRef<ProFormInstance>(null);
@@ -24,11 +23,13 @@ function Register() {
   return (
     <AuthShell>
       <div className="login-page login-page--register">
-        <Card className="login-glass-card" bordered={false}>
-          <Typography.Title level={4} className="login-brand-title login-register-title">
-            创建账号
-          </Typography.Title>
-          <span className="login-sub">填写基本信息即可完成注册（演示环境）</span>
+        <Card className="login-glass-card" variant='borderless'>
+          <div className="login-brand">
+            <Typography.Title level={4} className="login-brand-title login-register-title">
+              创建账号
+            </Typography.Title>
+            <Typography.Text className="login-brand-subtitle">填写信息完成注册</Typography.Text>
+          </div>
           <ProForm
             formRef={formRef}
             onFinish={onFinish}
@@ -38,21 +39,29 @@ function Register() {
               submitButtonProps: { type: 'primary', size: 'large' },
             }}
           >
-            <ProFormText name="username" label="用户名" rules={[{ required: true, message: '请输入用户名' }]} />
+            <ProFormText
+              name="username"
+              label="用户名"
+              placeholder="请输入用户名"
+              rules={[{ required: true, message: '请输入用户名' }]}
+            />
             <ProFormText
               name="email"
               label="邮箱"
+              placeholder="name@example.com"
               rules={[{ required: true, type: 'email', message: '请输入正确的邮箱' }]}
             />
             <ProFormText
               name="password"
               label="密码"
+              placeholder="至少 8 位字符"
               fieldProps={{ type: 'password' }}
               rules={[{ required: true, message: '请输入密码' }]}
             />
             <ProFormText
               name="confirm"
               label="确认密码"
+              placeholder="再次输入密码"
               fieldProps={{ type: 'password' }}
               dependencies={['password']}
               rules={[

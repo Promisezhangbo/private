@@ -1,13 +1,33 @@
 @use '@style-config/variables' as *;
 @use '@style-config/mixins' as m;
+@use './styles/auth-form';
 
-/* Login 应用级：仅根节点背景（壳层与表单见 components / pages / styles） */
+/* Login 应用级：赛博朋克底景 + 轻微扫描线（内容区 z-index 高于 ::after） */
 #app-root {
   @include m.sub-app-min-viewport;
+  position: relative;
   background:
-    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(56, 189, 248, 0.35), transparent),
-    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(167, 139, 250, 0.35), transparent),
-    radial-gradient(ellipse 50% 80% at 50% 100%, rgba(244, 114, 182, 0.2), transparent),
-    linear-gradient(145deg, #0c1222 0%, #1e1b4b 50%, $slate-900 100%);
+    radial-gradient(ellipse 70% 45% at 15% 35%, rgba(34, 211, 238, 0.22), transparent 55%),
+    radial-gradient(ellipse 55% 40% at 88% 55%, rgba(232, 121, 249, 0.2), transparent 50%),
+    radial-gradient(ellipse 45% 35% at 50% 8%, rgba(244, 114, 182, 0.12), transparent 45%),
+    radial-gradient(ellipse 50% 80% at 50% 100%, rgba(79, 70, 229, 0.18), transparent 55%),
+    linear-gradient(155deg, #050810 0%, #0f0a1a 38%, #12082a 72%, #0a0f1c 100%);
   background-attachment: fixed;
+
+  &::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      black-alpha(0.045) 2px,
+      black-alpha(0.045) 4px
+    );
+    opacity: 0.65;
+    mix-blend-mode: overlay;
+  }
 }

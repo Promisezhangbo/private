@@ -48,6 +48,7 @@ function Layouts() {
           <Select
             size="small"
             className="main-header-theme-select"
+            variant="borderless"
             value={mode}
             onChange={(v) => setMode(v as AppThemeMode)}
             options={[

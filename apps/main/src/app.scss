@@ -27,14 +27,14 @@ body {
 #root {
   height: 100%;
   max-height: 100%;
-  min-height: 0;
+
   display: flex;
   flex-direction: column;
 
   /* ConfigProvider 等可能包一层 DOM，需与 #root 一起撑满视口 */
   > * {
     flex: 1;
-    min-height: 0;
+
     max-height: 100%;
     height: 100%;
     display: flex;
@@ -44,7 +44,7 @@ body {
   /* QiankunProvider 的 Spin 外壳参与纵向撑满 */
   .ant-spin-nested-loading {
     flex: 1;
-    min-height: 0;
+
     max-height: 100%;
     height: 100%;
     display: flex;
@@ -52,7 +52,7 @@ body {
 
     > .ant-spin-container {
       flex: 1;
-      min-height: 0;
+
       max-height: 100%;
       height: 100%;
       display: flex;
@@ -63,7 +63,7 @@ body {
   /* RouterProvider 根节点参与撑满，使 .main-app 能拿到剩余高度 */
   .ant-spin-container > * {
     flex: 1;
-    min-height: 0;
+
     max-height: 100%;
     height: 100%;
     display: flex;
@@ -74,7 +74,7 @@ body {
 /* 主应用壳层背景随 --sc-* 主题变量切换（浅色 / 暗色） */
 .main-app {
   flex: 1;
-  min-height: 0;
+
   max-height: 100%;
   height: 100%;
   overflow: hidden;
@@ -88,11 +88,6 @@ body {
       var(--sc-app-gradient-mid) 40%,
       var(--sc-app-gradient-end) 100%
     );
-
-  /* 覆盖 ant-layout 可能自带的 min-height，保证整壳不随子应用内容无限增高 */
-  &.ant-layout {
-    min-height: 0 !important;
-  }
 }
 
 .main-header {
@@ -100,10 +95,9 @@ body {
     display: flex;
     align-items: center;
     gap: 16px;
-    padding: 0 20px !important;
-    height: $header-height-main !important;
-    line-height: $header-height-main !important;
-    background: var(--sc-header-bg) !important;
+    padding: 0 20px;
+    height: $header-height-main;
+    line-height: $header-height-main;
     border-bottom: 1px solid var(--sc-header-border);
     box-shadow: var(--sc-header-shadow);
   }

@@ -12,10 +12,7 @@ function render(props: { container?: HTMLElement }) {
     root = createRoot(rootContainer);
   }
   // 复用 root 实例调用 render 方法
-  const embedded = qiankunWindow.__POWERED_BY_QIANKUN__;
-  const appRootStyle = embedded
-    ? { height: '100%', minHeight: '100%', overflow: 'auto' as const, boxSizing: 'border-box' as const }
-    : { height: '100vh', minHeight: '100vh', overflow: 'auto' as const, boxSizing: 'border-box' as const };
+  const appRootStyle = { height: '100vh', minHeight: '100vh', overflow: 'auto' as const, boxSizing: 'border-box' as const };
   root.render(
     <React.StrictMode>
       <div id="app-root" style={appRootStyle}>
@@ -25,12 +22,6 @@ function render(props: { container?: HTMLElement }) {
   );
 }
 if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
-  // When running standalone, prevent body/html scrolling and use app-level scroll
-  try {
-    document.documentElement.style.height = '100%';
-    document.body.style.height = '100%';
-    document.body.style.overflow = 'hidden';
-  } catch (err) { void err; }
   render({});
 } else {
   renderWithQiankun({

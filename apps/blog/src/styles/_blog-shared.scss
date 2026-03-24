@@ -1,6 +1,6 @@
 @use '@style-config/variables' as *;
 
-/* 列表 / 详情共用的版心与页头 */
+/* 列表 / 详情：版心 + 科技风页眉 */
 .blog-shell {
   position: relative;
   z-index: $z-content;
@@ -10,7 +10,9 @@
 }
 
 .blog-hero {
-  margin-bottom: 32px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(56 189 248 / 0.15);
 
   h1.ant-typography,
   h2.ant-typography {
@@ -22,7 +24,53 @@
   }
 }
 
+.blog-hero__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #0284c7;
+  background: linear-gradient(135deg, rgb(224 242 254 / 0.9) 0%, rgb(237 233 254 / 0.85) 100%);
+  border: 1px solid rgb(56 189 248 / 0.25);
+  border-radius: 999px;
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.8) inset;
+}
+
+html[data-theme='dark'] .blog-hero__kicker {
+  color: #7dd3fc;
+  background: rgb(15 23 42 / 0.6);
+  border-color: rgb(56 189 248 / 0.2);
+  box-shadow: 0 0 20px rgb(34 211 238 / 0.06) inset;
+}
+
+.blog-hero__kicker-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22d3ee;
+  box-shadow: 0 0 8px rgb(34 211 238 / 0.8);
+  animation: blog-kicker-pulse 2s ease-in-out infinite;
+}
+
+@keyframes blog-kicker-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.55;
+    transform: scale(0.85);
+  }
+}
+
 .blog-empty {
-  padding: 24px;
+  padding: 48px 24px;
   text-align: center;
 }

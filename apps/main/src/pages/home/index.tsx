@@ -22,7 +22,7 @@ const apps = [
 function Home() {
   const navigate = useNavigate();
   return (
-    <>
+    <div className="main-home-shell">
       <Card className="dash-hero" variant='outlined'>
         <Typography.Title level={3} className="dash-hero-title">
           控制台
@@ -69,7 +69,7 @@ function Home() {
           </Card>
         ))}
       </div>
-    </>
+    </div>
   );
 }
 export default Home;

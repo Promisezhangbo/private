@@ -32,35 +32,21 @@
 /* 嵌入主应用时：用 flex 接主布局链，避免 height:100% 父高为 0 */
 .main-content--micro #sub-app #root {
   flex: 1 1 0;
-  min-height: 0;
   min-width: 0;
   display: flex;
   flex-direction: column;
-}
-
-.main-content--micro #sub-app #app-root {
-  flex: 1 1 0 !important;
-  min-height: 0 !important;
-  height: auto !important;
-  max-height: none !important;
-  overflow: hidden !important;
-  display: flex !important;
-  flex-direction: column !important;
-  box-sizing: border-box !important;
 }
 
 .agent-shell {
   position: relative;
   z-index: $z-content;
   flex: 1 1 0;
-  min-height: 0;
   display: flex;
   flex-direction: column;
   width: 100%;
 
   > * {
     flex: 1 1 0;
-    min-height: 0;
     min-width: 0;
     display: flex;
     flex-direction: column;
@@ -69,14 +55,12 @@
 
 .agent-app-root {
   flex: 1 1 0;
-  min-height: 0;
   min-width: 0;
   display: flex;
   flex-direction: column;
 
   > * {
     flex: 1 1 0;
-    min-height: 0;
     min-width: 0;
     display: flex;
     flex-direction: column;
@@ -85,7 +69,7 @@
 
 .agent-route-root {
   flex: 1 1 0;
-  min-height: 0;
+
   min-width: 0;
   display: flex;
   flex-direction: column;

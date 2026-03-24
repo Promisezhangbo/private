@@ -28,7 +28,9 @@ $orange-800: #9a3412;
 // —— 布局 ——
 $header-height-main: 56px;
 $sub-app-max-width-wide: 1040px;
-$sub-app-max-width-mid: 960px;
+
+/* 主应用首页、Blog、Agent 等内容区统一最大宽度，居中 */
+$sub-app-max-width-mid: 800px;
 $sub-app-shell-padding: clamp(20px, 4vw, 40px);
 
 // —— 圆角 ——
