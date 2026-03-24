@@ -2,8 +2,13 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: '部署的分支（默认main）'
+        required: true
+        default: 'main'
+        type: string
 
 jobs:
   deploy:
@@ -12,44 +17,48 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          # 关键：拉取完整历史，避免 git 推送时的历史冲突
           fetch-depth: 0
+          ref: ${{ github.event.inputs.branch }}
 
-      # 关键修复：使用官方 pnpm 安装 action（比手动 npm install -g 更稳定）
       - name: Setup Node.js and pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: latest # 自动安装最新版 pnpm
-          run_install: false # 先不安装依赖，后续手动装
+          version: latest
+          run_install: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          cache: "pnpm" # 缓存 pnpm 依赖，加速下次构建
-
-      # 安装依赖（此时 pnpm 已在 PATH 中）
+          node-version: '20'
+          cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
-
-      # 构建应用（确认 package.json 中的脚本是 "build"，不是 "build:all"）
-      - name: Build all apps
-        run: pnpm run build
-
-      # 部署到 gh-pages 分支
+      # ========== 原有 Build 步骤 ==========
+      - name: Build all apps (with Asia/Shanghai timezone)
+        run: TZ='Asia/Shanghai' pnpm run build
+        # ========== 核心：执行独立的预构建脚本 ==========
+      - name: Run build info script (generate files in dist)
+        env:
+          # 传递 CI 分支参数到 Node 脚本（关键）
+          BUILD_BRANCH: ${{ github.event.inputs.branch }}
+        run: |
+          # 执行独立的 Node.js 脚本
+          node ../../scripts/build_info.js
+      # ========== 验证：打印 dist 目录文件（可选） ==========
+      - name: Verify dist files
+        run: |
+          echo "📂 dist 目录文件列表："
+          ls -la ./dist
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          user_name: "github-actions[bot]" # 关键修复1：配置 git 提交身份（必填）
-          user_email: "github-actions[bot]@users.noreply.github.com"
-          # 关键修复2：强制推送，覆盖旧的 gh-pages 分支（解决冲突）
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
           force_orphan: true
-          # 关键修复3：清空 gh-pages 分支历史，避免缓存冲突
           clean: true
-          clean_keep: ".git" # 保留 git 目录，避免重新初始化
-          # 新增：排除 README.md 等无关文件，只保留 dist 内容
+          clean_keep: '.git'
           exclude_assets: |
             README.md
             LICENSE

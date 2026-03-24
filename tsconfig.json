@@ -1,0 +1,15 @@
+{
+  "extends": "@packages/ts-config",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "allowJs": true,
+    "checkJs": false,
+    "lib": ["ESNext"],
+    "types": ["node"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmit": true
+  },
+  "include": ["scripts/**/*.js"],
+  "exclude": ["node_modules", "dist"]
+}

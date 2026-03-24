@@ -27,6 +27,9 @@ importers:
       '@packages/stylelint-config':
         specifier: workspace:*
         version: link:packages/stylelint-config
+      '@packages/ts-config':
+        specifier: workspace:*
+        version: link:packages/ts-config
       '@types/node':
         specifier: ^24.10.11
         version: 24.12.0
