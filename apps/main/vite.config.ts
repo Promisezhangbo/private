@@ -11,6 +11,8 @@ export default defineConfig((config) => {
   const env = loadEnv(mode, process.cwd(), '');
   const isDev = env.NODE_ENV === 'development';
 
+  console.log(dayjs().format('YYYY-MM-DD HH:mm:ss'), '000000000');
+
   return {
     base: isDev ? '/' : '/main/',
     plugins: [react()],
@@ -23,7 +25,7 @@ export default defineConfig((config) => {
     define: {
       // 优先读构建时的环境变量，兜底读生成的文件
       // 使用 __BUILD_TIME__ 与其它子应用保持一致
-      __BUILD_TIME__: isDev ? undefined : `"${dayjs().format('YYYY-MM-DD HH:mm:ss')}"`,
+      __BUILD_TIME__: isDev ? undefined : `"${dayjs().format('YYYYMMDDHHmm')}"`,
     },
     build: {
       outDir: '../../dist/main',
