@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="en"><head>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('private-main-theme');
+          document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+        } catch (e) {}
+      })();
+    </script>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/agent/vite.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>agent</title>
+    <script crossorigin="">import('/agent/jse/index-index-DkJt5Jbh.js').finally(() => {
+            
+    const qiankunLifeCycle = window.moudleQiankunAppLifeCycles && window.moudleQiankunAppLifeCycles['agent'];
+    if (qiankunLifeCycle) {
+      window.proxy.vitemount((props) => qiankunLifeCycle.mount(props));
+      window.proxy.viteunmount((props) => qiankunLifeCycle.unmount(props));
+      window.proxy.vitebootstrap(() => qiankunLifeCycle.bootstrap());
+      window.proxy.viteupdate((props) => qiankunLifeCycle.update(props));
+    }
+  
+          })</script>
+    <link rel="modulepreload" crossorigin="" href="/agent/js/rolldown-runtime-CIMjf7vo.js">
+    <link rel="modulepreload" crossorigin="" href="/agent/js/antd-vendor-C1xxJj2r.js">
+    <link rel="modulepreload" crossorigin="" href="/agent/js/vendor-gVZ8dedz.js">
+    <link rel="modulepreload" crossorigin="" href="/agent/js/react-router-BqrLWa6f.js">
+    <link rel="modulepreload" crossorigin="" href="/agent/js/antd-x-vendor--y9JVIH5.js">
+    <link rel="modulepreload" crossorigin="" href="/agent/js/react-vendor-CrDwLVjY.js">
+    <link rel="modulepreload" crossorigin="" href="/agent/js/qiankun-BMTlZKJi.js">
+    <link rel="stylesheet" crossorigin="" href="/agent/css/antd-x-vendor-CwNmDlbp.css">
+    <link rel="stylesheet" crossorigin="" href="/agent/css/index-BN3nUftP.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  
+
+<script>
+  const createDeffer = (hookName) => {
+    const d = new Promise((resolve, reject) => {
+      window.proxy && (window.proxy[`vite${hookName}`] = resolve)
+    })
+    return props => d.then(fn => fn(props));
+  }
+  const bootstrap = createDeffer('bootstrap');
+  const mount = createDeffer('mount');
+  const unmount = createDeffer('unmount');
+  const update = createDeffer('update');
+
+  ;(global => {
+    global.qiankunName = 'agent';
+    global['agent'] = {
+      bootstrap,
+      mount,
+      unmount,
+      update
+    };
+  })(window);
+</script></body></html>
