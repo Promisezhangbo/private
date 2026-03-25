@@ -28,7 +28,6 @@ function Singin() {
             <Typography.Title level={4} className="login-brand-title">
               欢迎回来
             </Typography.Title>
-            <Typography.Text className="login-brand-subtitle">登录以继续使用</Typography.Text>
           </div>
           <ProForm
             onFinish={onFinish}

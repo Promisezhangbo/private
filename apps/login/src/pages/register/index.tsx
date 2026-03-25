@@ -28,7 +28,6 @@ function Register() {
             <Typography.Title level={4} className="login-brand-title login-register-title">
               创建账号
             </Typography.Title>
-            <Typography.Text className="login-brand-subtitle">填写信息完成注册</Typography.Text>
           </div>
           <ProForm
             formRef={formRef}
