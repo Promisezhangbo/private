@@ -31,32 +31,15 @@ function formatShanghaiBuildTime() {
 }
 
 const buildTime = formatShanghaiBuildTime();
-// 读取环境变量中的分支（CI 传入）
-const branch = process.env.BUILD_BRANCH || 'main';
-
-// 4. 定义要新增的文件内容
-const buildInfo = {
-  buildTime,
-  branch,
-  env: 'production',
-  timestamp: Date.now(),
-  nodeVersion: process.version,
-};
-
-// 5. 新增 build-info.json（核心文件）
-const buildInfoPath = path.resolve(distDir, 'build-info.json');
-fs.writeFileSync(buildInfoPath, JSON.stringify(buildInfo, null, 2), 'utf8');
-console.log(`✅ 生成文件：${buildInfoPath}`);
 
 const jsPath = path.resolve(distDir, 'deploy-success.js');
+
 fs.writeFileSync(
   jsPath,
-  `// 项目初始化脚本（部署后自动执行）
+  `
 console.log('🎉 项目部署成功！');
 console.log('构建时间："${buildTime}"');
-console.log('部署分支："${branch}"');`,
+console.log('部署分支："${process.env.BUILD_BRANCH || ''}"');`,
   'utf8',
 );
 console.log(`✅ 生成文件：${jsPath}`);
-
-console.log('\n📌 所有预构建文件已生成到 dist 目录！');
