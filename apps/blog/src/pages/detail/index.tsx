@@ -30,7 +30,7 @@ function Detail() {
         {post.source ? (
           <div className="blog-detail-source">
             <TyLink href={post.source} target="_blank" rel="noreferrer">
-              查看原文 →
+              查看原文 1111111111
             </TyLink>
           </div>
         ) : null}

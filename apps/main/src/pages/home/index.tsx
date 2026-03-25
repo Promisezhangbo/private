@@ -25,7 +25,7 @@ function Home() {
     <div className="main-home-shell">
       <Card className="dash-hero" variant='outlined'>
         <Typography.Title level={3} className="dash-hero-title">
-          控制台
+          控制台 2222222222222
         </Typography.Title>
         <Typography.Text className="dash-hero-lead">
           本项目为基于 <strong>qiankun</strong> 的微前端示例仓库：主应用（main）负责布局与路由壳层，
