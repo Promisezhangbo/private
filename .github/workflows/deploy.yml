@@ -1,14 +1,22 @@
-# .github/workflows/deploy.yml
+# 部署到 GitHub Pages（仅手动触发：仓库 → Actions → 本工作流 → Run workflow）
+# 说明：工作流文件须存在于仓库的默认分支（如 main），才能在 Actions 列表里看到「Run workflow」。
 name: Deploy to GitHub Pages
 
 on:
   workflow_dispatch:
     inputs:
       branch:
-        description: '部署的分支（默认main）'
+        description: '要检出并部署的分支名（须已推送到远程）'
         required: true
-        default: 'main'
+        default: main
         type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -20,7 +28,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.inputs.branch }}
 
-      - name: Setup Node.js and pnpm
+      - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: latest
@@ -31,24 +39,23 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
+
       - name: Install dependencies
         run: pnpm install
-      # ========== 原有 Build 步骤 ==========
-      - name: Build all apps (with Asia/Shanghai timezone)
+
+      - name: Build all apps (Asia/Shanghai)
         run: TZ='Asia/Shanghai' pnpm run build
-        # ========== 核心：执行独立的预构建脚本 ==========
-      - name: Run build info script (generate files in dist)
+
+      - name: Generate build-info & deploy banner
         env:
-          # 传递 CI 分支参数到 Node 脚本（关键）
           BUILD_BRANCH: ${{ github.event.inputs.branch }}
+        run: node scripts/build_info.js
+
+      - name: Verify dist
         run: |
-          # 执行独立的 Node.js 脚本
-          node ../../scripts/build_info.js
-      # ========== 验证：打印 dist 目录文件（可选） ==========
-      - name: Verify dist files
-        run: |
-          echo "📂 dist 目录文件列表："
+          echo '📂 dist 目录：'
           ls -la ./dist
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
