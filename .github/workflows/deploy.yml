@@ -1,15 +1,28 @@
-# 部署到 GitHub Pages（仅手动触发：仓库 → Actions → 本工作流 → Run workflow）
-# 说明：工作流文件须存在于仓库的默认分支（如 main），才能在 Actions 列表里看到「Run workflow」。
-name: Deploy to GitHub Pages
+# 部署到 GitHub Pages（手动触发）
+# - 全部：与本地 pnpm run build + postbuild 一致，整站 dist 上传。
+# - 单个子应用：拉取当前 gh-pages，只覆盖 dist/<app>/，其它子应用目录保留（适合热修某个微应用）。
+# 说明：工作流文件须在默认分支上，Actions 里才会出现「Run workflow」。
+name: 部署到github pages
 
 on:
   workflow_dispatch:
     inputs:
       branch:
-        description: '要检出并部署的分支名（须已推送到远程）'
+        description: '要检出并构建的分支（须已推送）'
         required: true
         default: main
         type: string
+      scope:
+        description: '部署范围'
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - main
+          - login
+          - blog
+          - agent
 
 permissions:
   contents: write
@@ -43,10 +56,27 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build all apps (Asia/Shanghai)
+      - name: Build（全部子应用）
+        if: github.event.inputs.scope == 'all'
         run: TZ='Asia/Shanghai' pnpm run build
 
-      - name: Generate build-info & deploy banner
+      - name: Post-build（根目录 index / 404 / _redirects）
+        if: github.event.inputs.scope == 'all'
+        run: pnpm run postbuild
+
+      - name: Build（单个子应用）
+        if: github.event.inputs.scope != 'all'
+        run: TZ='Asia/Shanghai' pnpm --filter ${{ github.event.inputs.scope }} build
+
+      - name: Post-build（仅单应用 main，生成根 index / 404 / _redirects）
+        if: github.event.inputs.scope == 'main'
+        run: pnpm run postbuild
+
+      - name: 合并 gh-pages（仅单应用部署）
+        if: github.event.inputs.scope != 'all'
+        run: bash scripts/merge-gh-pages-app.sh "${{ github.event.inputs.scope }}"
+
+      - name: Generate deploy banner
         env:
           BUILD_BRANCH: ${{ github.event.inputs.branch }}
         run: node scripts/build_info.js
