@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint . --fix",
+    "lint": "oxlint --fix",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -22,13 +22,12 @@
     "vite-plugin-qiankun": "^1.0.15"
   },
   "devDependencies": {
-    "@packages/eslint-config": "workspace:*",
     "@packages/style-config": "workspace:*",
     "@packages/ts-config": "workspace:*",
     "@packages/vite-build-utils": "workspace:*",
     "sass": "^1.93.3"
   },
   "peerDependencies": {
-    "eslint": ">=9.0.0"
+    "oxlint": "^1.57.0"
   }
 }

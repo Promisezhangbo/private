@@ -13,5 +13,8 @@
   },
   "dependencies": {
     "stylelint-config-standard-scss": "^14.0.0"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.42.0"
   }
 }

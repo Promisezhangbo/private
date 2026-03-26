@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [],
+  "categories": {},
+  "rules": {
+    "no-console": "warn",
+    "no-empty-sequence": "error",
+    "eol-last": "error",
+    "eslint/no-unused-vars": "warn"
+  },
+  "globals": {},
+  "ignorePatterns": [],
+}

@@ -9,5 +9,8 @@
   "exports": {
     ".": "./scss/index.scss",
     "./scss/*": "./scss/*"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.42.0"
   }
 }

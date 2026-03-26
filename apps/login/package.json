@@ -6,27 +6,26 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint . --fix",
+    "lint": "oxlint --fix",
     "preview": "vite preview"
   },
   "dependencies": {
-    "antd": "^6.3.0",
     "@ant-design/icons": "^6.1.0",
+    "@ant-design/pro-components": "^2.8.10",
+    "antd": "^6.3.0",
     "dayjs": "^1.11.19",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.0",
-    "@ant-design/pro-components": "^2.8.10",
     "vite-plugin-qiankun": "^1.0.15"
   },
   "devDependencies": {
-    "@packages/vite-build-utils": "workspace:*",
-    "@packages/eslint-config": "workspace:*",
     "@packages/style-config": "workspace:*",
     "@packages/ts-config": "workspace:*",
+    "@packages/vite-build-utils": "workspace:*",
     "sass": "^1.93.3"
   },
   "peerDependencies": {
-    "eslint": ">=9.0.0"
+    "oxlint": "^1.57.0"
   }
 }

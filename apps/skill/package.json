@@ -1,5 +1,5 @@
 {
-  "name": "main",
+  "name": "skill",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,20 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@ant-design/icons": "^6.1.0",
-    "antd": "^6.3.0",
-    "dayjs": "^1.11.19",
-    "qiankun": "^2.10.16",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-router-dom": "^7.13.0"
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
     "@packages/style-config": "workspace:*",
     "@packages/ts-config": "workspace:*",
     "@packages/vite-build-utils": "workspace:*",
-    "oxfmt": "^0.42.0",
-    "sass": "^1.93.3"
+    "@vitejs/plugin-react": "^6.0.1"
   },
   "peerDependencies": {
     "oxlint": "^1.57.0"

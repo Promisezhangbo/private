@@ -1,37 +1,29 @@
 {
-  // 强制当前项目所有 JS/TS/Vue 等文件用 Prettier 格式化
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   // 开启保存格式化，且仅触发 Prettier
   "editor.formatOnSave": true,
-  // 启用 ESLint / Stylelint 在保存时自动修复（需安装对应扩展）
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "always",
-    "source.fixAll.stylelint": "always"
-  },
-  // 确保 Prettier 优先于其他工具
-  "prettier.enable": true,
-  // 保持 Prettier 作为默认格式化器，但允许 ESLint 执行 codeActionsOnSave 修复
-  "eslint.format.enable": false,
-  // ESLint 扩展设置：使用 pnpm，启用对 TSX/TS 文件的校验
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
-  "eslint.alwaysShowStatus": true,
-  "editor.trimAutoWhitespace": true,
   // Stylelint（需安装扩展 stylelint.vscode-stylelint）；与 Prettier 分工：格式靠 Prettier，规则修复靠 Stylelint
-  "stylelint.validate": ["css", "scss"],
+  "stylelint.validate": [
+    "css",
+    "scss"
+  ],
   "stylelint.configFile": "${workspaceFolder}/stylelint.config.mjs",
   "css.validate": false,
   "scss.validate": false
