@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "antd": "^6.3.0",
+    "framer-motion": "^12.23.12",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.13.2",
@@ -20,7 +22,8 @@
     "@packages/ts-config": "workspace:*",
     "@packages/vite-build-utils": "workspace:*",
     "@vitejs/plugin-react": "^6.0.1",
-    "dayjs": "^1.11.20"
+    "dayjs": "^1.11.20",
+    "sass": "^1.93.3"
   },
   "peerDependencies": {
     "oxlint": "^1.57.0"

@@ -2,8 +2,5 @@
   "name": "@packages/ts-config",
   "version": "1.0.0",
   "license": "ISC",
-  "packageManager": "pnpm@10.13.1",
-  "devDependencies": {
-    "oxfmt": "^0.42.0"
-  }
+  "packageManager": "pnpm@10.13.1"
 }

@@ -8,8 +8,5 @@
       "types": "./manualChunks.d.ts",
       "default": "./manualChunks.mjs"
     }
-  },
-  "devDependencies": {
-    "oxfmt": "^0.42.0"
   }
 }
