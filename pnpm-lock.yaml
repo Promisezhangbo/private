@@ -233,6 +233,46 @@ importers:
         specifier: ^1.93.3
         version: 1.98.0
 
+  apps/resume:
+    dependencies:
+      antd:
+        specifier: ^6.3.0
+        version: 6.3.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      oxlint:
+        specifier: ^1.57.0
+        version: 1.57.0
+      react:
+        specifier: ^19.2.4
+        version: 19.2.4
+      react-dom:
+        specifier: ^19.2.4
+        version: 19.2.4(react@19.2.4)
+      react-router-dom:
+        specifier: ^7.13.2
+        version: 7.13.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      vite-plugin-qiankun:
+        specifier: ^1.0.15
+        version: 1.0.15(typescript@5.9.3)(vite@8.0.3(@types/node@24.12.0)(jiti@2.6.1)(sass@1.98.0)(yaml@2.8.3))
+    devDependencies:
+      '@packages/style-config':
+        specifier: workspace:*
+        version: link:../../packages/style-config
+      '@packages/ts-config':
+        specifier: workspace:*
+        version: link:../../packages/ts-config
+      '@packages/vite-build-utils':
+        specifier: workspace:*
+        version: link:../../packages/vite-build-utils
+      '@vitejs/plugin-react':
+        specifier: ^6.0.1
+        version: 6.0.1(vite@8.0.3(@types/node@24.12.0)(jiti@2.6.1)(sass@1.98.0)(yaml@2.8.3))
+      dayjs:
+        specifier: ^1.11.20
+        version: 1.11.20
+      sass:
+        specifier: ^1.93.3
+        version: 1.98.0
+
   apps/skill:
     dependencies:
       antd:

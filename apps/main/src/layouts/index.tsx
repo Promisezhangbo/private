@@ -8,7 +8,8 @@ const { Content, Header } = Layout;
 const menuMap = [
   { key: "home", label: "首页", sub: false },
   { key: "skill", label: "技能", sub: true },
-  { key: "agent", label: "Agent", sub: true },
+  { key: "resume", label: "简历", sub: true },
+  { key: "agent", label: "AI", sub: true },
   { key: "blog", label: "Blog", sub: true },
   { key: "login", label: "登录", sub: true },
 ];
@@ -42,7 +43,7 @@ function Layouts() {
           <Menu
             mode="horizontal"
             selectedKeys={[currentMenu]}
-            items={menuMap}
+            items={menuMap.map((k) => ({ key: k.key, label: k.label }))}
             onClick={({ key }) => onMenuSelect(String(key))}
           />
           <Select

@@ -1,4 +1,4 @@
-import { Breadcrumb, Progress, Typography } from "antd";
+import { Progress, Typography } from "antd";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import "./index.scss";

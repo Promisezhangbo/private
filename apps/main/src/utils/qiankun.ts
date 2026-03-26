@@ -32,6 +32,13 @@ export const apps = [
     activeRule: "/skill",
     props: {},
   },
+  {
+    name: "resume",
+    entry: isDev ? "//localhost:9005" : "/resume/",
+    container: "#sub-app",
+    activeRule: "/resume",
+    props: {},
+  },
 ];
 
 export function registerAppsFn() {
