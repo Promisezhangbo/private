@@ -40,9 +40,9 @@ export default defineConfig((config) => {
       // 优先读构建时的环境变量，兜底读生成的文件
       __BUILD_TIME__: isDev ? undefined : `"${dayjs().format("YYYY-MM-DD HH:mm:ss")}"`,
     },
-    base: isDev ? "/" : "/login/",
+    base: isDev ? "/" : "/skill/",
     server: {
-      port: 9003,
+      port: 9004,
       host: true,
       cors: true,
       headers: {
