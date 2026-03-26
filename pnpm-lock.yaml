@@ -100,9 +100,6 @@ importers:
         specifier: ^1.0.15
         version: 1.0.15(typescript@5.9.3)(vite@8.0.3(@types/node@24.12.0)(jiti@2.6.1)(sass@1.98.0)(yaml@2.8.3))
     devDependencies:
-      '@packages/eslint-config':
-        specifier: workspace:*
-        version: link:../../packages/eslint-config
       '@packages/style-config':
         specifier: workspace:*
         version: link:../../packages/style-config
@@ -143,9 +140,6 @@ importers:
         specifier: ^1.0.15
         version: 1.0.15(typescript@5.9.3)(vite@8.0.3(@types/node@24.12.0)(jiti@2.6.1)(sass@1.98.0)(yaml@2.8.3))
     devDependencies:
-      '@packages/eslint-config':
-        specifier: workspace:*
-        version: link:../../packages/eslint-config
       '@packages/style-config':
         specifier: workspace:*
         version: link:../../packages/style-config
@@ -189,9 +183,6 @@ importers:
         specifier: ^1.0.15
         version: 1.0.15(typescript@5.9.3)(vite@8.0.3(@types/node@24.12.0)(jiti@2.6.1)(sass@1.98.0)(yaml@2.8.3))
     devDependencies:
-      '@packages/eslint-config':
-        specifier: workspace:*
-        version: link:../../packages/eslint-config
       '@packages/style-config':
         specifier: workspace:*
         version: link:../../packages/style-config
@@ -232,9 +223,6 @@ importers:
         specifier: ^7.13.0
         version: 7.13.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
     devDependencies:
-      '@packages/eslint-config':
-        specifier: workspace:*
-        version: link:../../packages/eslint-config
       '@packages/style-config':
         specifier: workspace:*
         version: link:../../packages/style-config
@@ -262,6 +250,12 @@ importers:
       react-dom:
         specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
+      react-router-dom:
+        specifier: ^7.13.2
+        version: 7.13.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      vite-plugin-qiankun:
+        specifier: ^1.0.15
+        version: 1.0.15(typescript@5.9.3)(vite@8.0.3(@types/node@24.12.0)(jiti@2.6.1)(sass@1.98.0)(yaml@2.8.3))
     devDependencies:
       '@packages/style-config':
         specifier: workspace:*
@@ -275,6 +269,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^6.0.1
         version: 6.0.1(vite@8.0.3(@types/node@24.12.0)(jiti@2.6.1)(sass@1.98.0)(yaml@2.8.3))
+      dayjs:
+        specifier: ^1.11.20
+        version: 1.11.20
 
   packages/eslint-config:
     devDependencies:
