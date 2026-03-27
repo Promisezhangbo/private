@@ -36,6 +36,36 @@
   z-index: $z-bg-grid;
 }
 
+/// Blog 系子应用 #app-root：--sc-blog-bg-* 渐变底 + 青蓝轻网格（需 `@use` semantic-palette）
+/// `$stack-children`：Skill / Resume 等为 true，子节点纵向撑满；Blog 保持 false 与现有布局一致
+@mixin sub-app-root-blog-surface($stack-children: false) {
+  @include sub-app-min-viewport;
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+
+  @if $stack-children {
+    display: flex;
+    flex-direction: column;
+  }
+
+  background:
+    radial-gradient(ellipse 110% 70% at 8% -10%, var(--sc-blog-bg-radial-a), transparent 52%),
+    radial-gradient(ellipse 90% 60% at 96% 12%, var(--sc-blog-bg-radial-b), transparent 48%),
+    linear-gradient(180deg, var(--sc-blog-bg-start) 0%, var(--sc-blog-bg-mid) 42%, var(--sc-blog-bg-end) 100%);
+  background-attachment: scroll;
+
+  &::before {
+    @include mesh-grid-overlay(
+      44px,
+      rgb(56 189 248 / 0.06),
+      radial-gradient(ellipse 92% 72% at 50% 36%, black, transparent)
+    );
+  }
+}
+
 /// WebKit 细滚动条
 @mixin thin-scrollbar($width: 8px, $thumb: rgba(148, 163, 184, 0.25)) {
   &::-webkit-scrollbar {
