@@ -37,27 +37,15 @@
   flex-direction: column;
 }
 
-.agent-shell {
+.agent-shell,
+.agent-app-root {
   position: relative;
   z-index: $z-content;
-  flex: 1 1 0;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-
-  > * {
-    flex: 1 1 0;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-.agent-app-root {
   flex: 1 1 0;
   min-width: 0;
   display: flex;
   flex-direction: column;
+  width: 100%;
 
   > * {
     flex: 1 1 0;

@@ -1,4 +1,3 @@
-@use '@style-config/variables' as *;
 @use '@style-config/mixins' as m;
 @use '@style-config/semantic-palette';
 
@@ -7,24 +6,6 @@
   --blog-ink: var(--sc-blog-ink);
   --blog-muted: var(--sc-blog-muted);
 
-  @include m.sub-app-min-viewport;
-  position: relative;
-  isolation: isolate;
-  width: 100%;
-  box-sizing: border-box;
-  flex: 1 1 auto;
+  @include m.sub-app-root-blog-surface;
   color: var(--blog-ink);
-  background:
-    radial-gradient(ellipse 110% 70% at 8% -10%, var(--sc-blog-bg-radial-a), transparent 52%),
-    radial-gradient(ellipse 90% 60% at 96% 12%, var(--sc-blog-bg-radial-b), transparent 48%),
-    linear-gradient(180deg, var(--sc-blog-bg-start) 0%, var(--sc-blog-bg-mid) 42%, var(--sc-blog-bg-end) 100%);
-  background-attachment: scroll;
-
-  &::before {
-    @include m.mesh-grid-overlay(
-      44px,
-      rgb(56 189 248 / 0.06),
-      radial-gradient(ellipse 92% 72% at 50% 36%, black, transparent)
-    );
-  }
 }

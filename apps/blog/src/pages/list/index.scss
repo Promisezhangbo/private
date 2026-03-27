@@ -7,7 +7,6 @@
   overflow: auto;
 
   .blog-hero {
-    h1.ant-typography,
     h2.ant-typography {
       @include m.text-gradient-fill(
         linear-gradient(120deg, var(--sc-blog-grad-a), var(--sc-blog-grad-b), var(--sc-blog-grad-c))

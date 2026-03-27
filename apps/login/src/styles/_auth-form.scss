@@ -10,7 +10,6 @@ $c-text: $slate-700;
 $c-text-muted: $slate-500;
 $c-input-bg: $slate-50;
 $c-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.08);
-$c-shadow-hover: 0 28px 55px -12px rgba(15, 23, 42, 0.1);
 
 .login-page {
   position: relative;
@@ -18,7 +17,6 @@ $c-shadow-hover: 0 28px 55px -12px rgba(15, 23, 42, 0.1);
   width: 100%;
   max-width: 440px;
   margin-inline: auto;
-  filter: none;
 
   .login-glass-card.ant-card {
     position: relative;
@@ -29,7 +27,6 @@ $c-shadow-hover: 0 28px 55px -12px rgba(15, 23, 42, 0.1);
     -webkit-backdrop-filter: blur(20px) saturate(130%);
     border: 1px solid $c-card-border !important;
     box-shadow: $c-shadow;
-    animation: none;
 
     &::before,
     &::after {
@@ -74,22 +71,13 @@ $c-shadow-hover: 0 28px 55px -12px rgba(15, 23, 42, 0.1);
       box-shadow: 0 2px 12px rgba(45, 212, 191, 0.2);
     }
 
-    .ant-image-img {
-      filter: none;
-    }
-
     .login-brand-title,
     .login-register-title {
       margin: 0 !important;
       font-weight: 700 !important;
       letter-spacing: 0.02em;
       line-height: 1.35 !important;
-      text-transform: none;
-      background: none;
-      -webkit-text-fill-color: unset;
       color: $c-text !important;
-      animation: none;
-      filter: none;
     }
   }
 
