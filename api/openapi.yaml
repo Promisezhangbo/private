@@ -1,0 +1,2887 @@
+openapi: 3.0.0
+info:
+  title: 知识库管理页面API
+  version: 1.0.0
+servers:
+  - url: http://api.yuniverse.com #替换实际
+    description: 生产环境
+paths:
+  /yuniverse/api/v1/ragms/login:
+    post:
+      summary: 用户登陆
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+  /yuniverse/api/v1/ragms/loginout:
+    get:
+      summary: 用户登出
+      description: 注销当前登录用户清理登录态
+      parameters:
+        - name: requestId
+          in: query
+          required: false
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginoutResponse'
+  /yuniverse/api/v1/ragms/register:
+    post:
+      summary: 用户注册
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterResponse'
+  /yuniverse/dataset/list:
+    post:
+      summary: 获取大知识库列表
+      operationId: listDataset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListDatasetRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDatasetResponse'
+  /yuniverse/kb/create:
+    post:
+      summary: 创建知识库
+      operationId: createKnowledgeBase
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateKnowledgeBaseRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateKnowledgeBaseResponse'
+  /yuniverse/kb/update:
+    post:
+      summary: 修改知识库
+      operationId: updateKnowledgeBase
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateKnowledgeBaseRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateKnowledgeBaseResponse'
+  /yuniverse/kb/{kb_id}:
+    delete:
+      summary: 删除知识库
+      operationId: deleteKnowledgeBase
+      parameters:
+        - name: kb_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 知识库id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteKnowledgeBaseRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteKnowledgeBaseResponse'
+    get:
+      summary: 查询知识库
+      operationId: getKnowledgeBase
+      parameters:
+        - name: kb_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 知识库id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetKnowledgeBaseRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetKnowledgeBaseResponse'
+  /yuniverse/kb/list:
+    post:
+      summary: 知识库列表
+      operationId: listKnowledgeBases
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListKnowledgeBasesRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListKnowledgeBasesResponse'
+
+  /yuniverse/kb/file/create:
+    post:
+      summary: 创建文件
+      operationId: createFile
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateFileRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateFileResponse'
+  /yuniverse/kb/file/{file_id}:
+    get:
+      summary: 查询文件
+      operationId: getFile
+      parameters:
+        - name: file_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetFileRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFileResponse'
+    delete:
+      summary: 删除文件
+      operationId: deleteFile
+      parameters:
+        - name: file_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteFileRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteFileResponse'
+
+  /yuniverse/kb/file/list:
+    post:
+      summary: 文件列表
+      operationId: listFiles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListFileRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListFileResponse'
+  /yuniverse/kb/file/move:
+    post:
+      summary: 移动文件
+      operationId: moveFile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoveFileRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoveFileResponse'
+  /yuniverse/kb/file/update:
+    post:
+      summary: 更新文件
+      operationId: updateFile
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateFileRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateFileResponse'
+  /yuniverse/kb/file/download:
+    post:
+      summary: 下载源文件（图片/pdf）
+      description: 根据文件ID下载文件，直接返回文件内容流。支持的文件类型包括PDF等。响应头包含Content-Disposition，浏览器会自动下载文件。
+      operationId: downloadFile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DownloadFileRequest'
+      responses:
+        '200':
+          description: 成功返回文件内容
+          content:
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/DownloadFileResponse'
+  /yuniverse/kb/file/download_json:
+    post:
+      summary: 下载文件对
+      description: 根据文件ID下载json文件。
+      operationId: downloadFileJson
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DownloadFileJsonRequest'
+      responses:
+        '200':
+          description: 成功返回文件内容
+          content:
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/DownloadFileJsonResponse'
+  /yuniverse/kb/file/update_download:
+    post:
+      summary: 更新文件下载权限
+      description: 更新文件的是否可下载状态
+      operationId: updateFileDownload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFileDownloadRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateFileDownloadResponse'
+  /yuniverse/kb/task/create:
+    post:
+      summary: 创建文件处理任务
+      operationId: createFileTask
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateFileTaskRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateFileTaskResponse'
+  /yuniverse/kb/task/cancel:
+    post:
+      summary: 取消文件处理任务
+      operationId: cancelFileTask
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelFileTaskRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelFileTaskResponse'
+  /yuniverse/kb/task/{task_id}:
+    get:
+      summary: 查询文件处理任务
+      operationId: getFileTask
+      parameters:
+        - name: task_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 任务id
+        - name: request_id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: 请求id
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 1
+          description: 文件列表页码（从1开始计数）
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 20
+          description: 每页文件数量
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFileTaskResponse'
+  /yuniverse/kb/task/list:
+    post:
+      summary: 文件处理任务列表
+      operationId: listFileTasks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListFileTasksRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListFileTasksResponse'
+  /yuniverse/kb/file/metadata/update:
+    post:
+      summary: 更新文档元数据
+      operationId: updateFileMetadata
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFileMetadataRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateFileMetadataResponse'
+  /yuniverse/kb/file/metadata/{file_metadata_id}:
+    get:
+      summary: 查询文档元数据
+      operationId: getFileMetadata
+      parameters:
+        - name: file_metadata_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFileMetadataResponse'
+    delete:
+      summary: 删除文档元数据
+      operationId: deleteFileMetadata
+      parameters:
+        - name: file_metadata_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteFileMetadataRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteFileMetadataResponse'
+
+  /yuniverse/kb/file/chunk/delete_qa_by_qaid:
+    post:
+      summary: 根据 qaid 删除 QA
+      operationId: deleteQaByQaid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteQaByQaidRequest'
+      responses:
+        '200':
+          description: 成功（包含业务成功/失败两种情况，业务状态看 code/message）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteQaByQaidResponse'
+
+  /yuniverse/kb/file/chunk/list_qa:
+    post:
+      summary: 查询 QA 列表
+      operationId: listQa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListQaRequest'
+      responses:
+        '200':
+          description: 成功（包含业务成功/失败两种情况，业务状态以 code/message 为准）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListQaResponse'
+
+  /yuniverse/kb/file/chunk/create:
+    post:
+      summary: 创建Chunk及其元数据
+      description: 创建chunk，包括chunk内容(content)和元数据(metadata)。元数据包含type、level_0-3、keywords、summary、majority_language、page_num、questions等字段
+      operationId: createChunk
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateChunkRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateChunkResponse'
+  /yuniverse/kb/file/chunk/{chunk_id}:
+    get:
+      summary: 查询Chunk信息
+      description: 查询单个chunk的完整信息，包括内容(content)和元数据(metadata)
+      operationId: getChunk
+      parameters:
+        - name: chunk_id
+          in: path
+          required: true
+          description: chunk的唯一标识符
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetChunkResponse'
+  /yuniverse/kb/file/chunk/list:
+    post:
+      summary: 查询Chunk列表
+      description: 分页查询指定文件的chunk列表，返回每个chunk的内容和元数据。支持通过filter参数过滤
+      operationId: listChunks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListChunkRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListChunkResponse'
+  /yuniverse/kb/file/chunk/update:
+    post:
+      summary: 更新Chunk元数据
+      description: 批量更新chunk的元数据字段（type、level_0-3、keywords、summary等）。注意：chunk的内容(content)不支持修改
+      operationId: updateChunk
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateChunkRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateChunkResponse'
+
+  /yuniverse/rag/searchKnowledge:
+    post:
+      tags:
+        - RAG Search
+      summary: 知识库检索
+      description: |
+        在指定知识库中，根据关键词与检索参数返回相关chunk。
+        接口成功后会自动写入检索历史。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchKnowledgeRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchKnowledgeResponse'
+
+  /yuniverse/rag/search/history/list:
+    post:
+      tags:
+        - RAG Search History
+      summary: 检索历史列表
+      description: 查询当前用户在当前租户下的检索历史列表。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchHistoryListRequest'
+            example:
+              request_id: 'req-20240118-002'
+              limit: 30
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchHistoryListResponse'
+
+  /yuniverse/rag/search/history/detail:
+    get:
+      tags:
+        - RAG Search History
+      summary: 检索历史回放
+      description: 根据 search_id 显示历史快照。
+      parameters:
+        - name: search_id
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: request_id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: 请求id
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchKnowledgeResponse'
+
+  /yuniverse/rag/search/history/delete:
+    delete:
+      tags:
+        - RAG Search History
+      summary: 删除检索历史
+      description: 删除当前用户在当前租户下的一条检索历史记录。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchHistoryDeleteRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+
+  /yuniverse/kb/file/metadata/update_mask:
+    post:
+      summary: 更新文件元数据的掩码状态
+      description: |
+        更新文件元数据的掩码状态(is_masked)，并同步到向量数据库。
+
+        业务逻辑：
+        - 如果is_masked没有变化，直接返回成功
+        - 如果从False变为True（从未遮蔽到遮蔽）：删除向量数据库中的数据，然后更新数据库字段
+        - 如果从True变为False（从遮蔽到未遮蔽）：更新数据库字段，然后重新添加未遮蔽的chunks到向量数据库
+      operationId: updateFileMetadataMask
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFileMetadataMaskRequest'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateFileMetadataMaskResponse'
+
+  /yuniverse/kb/file/chunk/get_qa:
+    post:
+      summary: 根据 qaid 查询单个 QA
+      operationId: getQaByQaid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetQaRequest'
+      responses:
+        '200':
+          description: 成功（包含业务成功 / 失败两种情况，业务状态以 code / message 为准）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetQaResponse'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    LoginRequest:
+      type: object
+      properties:
+        userName:
+          type: string
+        passwd:
+          type: string
+          description: 登录密码
+        tenant_id:
+          type: integer
+          format: int32
+          description: 租户id,默认公共租户
+          default: 1
+        requestId:
+          type: string
+          description: 请求id
+      required:
+        - userName
+        - passwd
+        - requestId
+    LoginResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+    LoginoutResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+    RegisterRequest:
+      type: object
+      properties:
+        requestId:
+          type: string
+        userName:
+          type: string
+        passwd:
+          type: string
+          description: 登录密码
+        confirmPasswd:
+          type: string
+          description: 确认密码
+        email:
+          type: string
+        phone:
+          type: string
+        info:
+          type: string
+        role:
+          type: string
+          description: (默认normal)
+        userType:
+          type: string
+          description: (默认public)
+        userLevel:
+          type: integer
+          format: int32
+          description: 用户等级(默认3)
+      required:
+        - requestId
+        - userName
+        - passwd
+        - confirmPasswd
+    RegisterResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            userId:
+              type: integer
+              format: int32
+              description: 新注册用户ID
+    BaseApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: 错误码
+          example: '200为成功'
+        message:
+          type: string
+          description: 错误信息
+          example: 'Success'
+        request_id:
+          type: string
+          description: 请求id
+      required:
+        - code
+        - message
+        - request_id
+    KnowledgeBase:
+      type: object
+      description: 知识库表
+      properties:
+        tenant_id:
+          type: integer
+          format: int32
+          description: 租户id
+          example: 1
+        user_id:
+          type: integer
+          format: int32
+          description: 用户id
+        kb_id:
+          type: string
+          description: 知识库id
+        kb_name:
+          type: string
+          description: 知识库名字
+        kb_describe:
+          type: string
+          description: 知识库描述
+        kb_type:
+          type: string
+          description: 知识库类型
+        dataset_name:
+          type: string
+          description: 大知识库名称
+        kb_embedding_model:
+          type: string
+          description: 向量模型
+        kb_slice_type:
+          type: string
+          description: 切片方式
+        kb_max_slice_length:
+          type: integer
+          format: int32
+          description: 最大分段长度
+        kb_slice_symbol:
+          type: string
+          description: 分段分割符号，VARCHAR(64)
+        create_time:
+          type: string
+          format: date-time
+          description: 创建时间
+        update_time:
+          type: string
+          format: date-time
+          description: 更新时间
+      required:
+        - tenant_id
+        - user_id
+        - kb_id
+        - kb_name
+        - kb_describe
+        - kb_type
+        - kb_embedding_model
+        - kb_slice_type
+        - create_time
+        - update_time
+    File:
+      type: object
+      description: 文件表
+      properties:
+        tenant_id:
+          type: integer
+          format: int32
+          description: 租户id
+        user_id:
+          type: integer
+          format: int32
+          description: 用户id
+        kb_id:
+          type: string
+          description: 知识库id
+        folder_id:
+          type: integer
+          format: int32
+          description: 文件夹id，默认为-1
+        task_id:
+          type: string
+          description: 任务id
+        file_id:
+          type: string
+          description: 文件id，主键
+        file_name:
+          type: string
+          description: 文件名称，kb_id/folder_id下唯一（仅对SUCCESS状态的文件）
+        file_size:
+          type: integer
+          format: int64
+          description: 文件大小，默认0
+        file_url:
+          type: string
+          description: 文件下载链接，默认空字符串
+        file_token:
+          type: integer
+          format: int32
+          description: 文件token数，默认0
+        file_status:
+          type: string
+          description: 文件解析状态，可能的值：PROCESSING, SUCCESS, FAILED, ERROR
+        create_time:
+          type: string
+          format: date-time
+          description: 创建时间
+        update_time:
+          type: string
+          format: date-time
+          description: 修改时间
+        is_download:
+          type: boolean
+          description: 是否可下载，默认true
+      required:
+        - tenant_id
+        - user_id
+        - kb_id
+        - task_id
+        - file_id
+        - file_name
+        - file_size
+        - file_url
+        - file_token
+        - file_status
+        - is_download
+    FileTask:
+      type: object
+      description: 文件任务表
+      properties:
+        tenant_id:
+          type: integer
+          format: int32
+          description: 租户id
+        user_id:
+          type: integer
+          format: int32
+          description: 用户id
+        task_id:
+          type: string
+          description: 文件任务id
+        task_status:
+          type: string
+          description: 文件任务状态，可能的值：PROCESSING, SUCCESS, FAILED, CANCELLED
+        kb_id:
+          type: string
+          description: 知识库id
+        folder_id:
+          type: integer
+          format: int32
+          description: 文件夹id，默认为-1
+        create_time:
+          type: string
+          format: date-time
+          description: 创建时间
+        source_type:
+          type: string
+          description: 文件来源，默认LOCAL
+        file_total_num:
+          type: integer
+          format: int32
+          description: 文件总数
+        finished_file_num:
+          type: integer
+          format: int32
+          description: 已解析文件数量
+      required:
+        - tenant_id
+        - user_id
+        - task_id
+        - task_status
+        - kb_id
+        - create_time
+        - source_type
+        - file_total_num
+        - finished_file_num
+    FileMetadata:
+      type: object
+      description: 文档元数据表(filemetadataTable)
+      properties:
+        file_id:
+          type: string
+          description: 文件id
+        type:
+          type: string
+          description: 类型
+        origin_file_name:
+          type: string
+          description: 原始文件名
+        origin_file_path:
+          type: string
+          description: 原始文件路径
+        business_unique_id:
+          type: integer
+          format: int32
+          description: 序号
+        time:
+          type: string
+          description: 时间
+        scope:
+          type: string
+          description: 适用范围
+        kb_category_large:
+          type: string
+          description: 知识库-大类
+        kb_category_medium:
+          type: string
+          description: 知识库-中类
+        kb_category_small:
+          type: string
+          description: 知识库-小类
+        knowledge_domain_group:
+          type: string
+          description: 知识领域-组别
+        knowledge_domain_level1:
+          type: string
+          description: 知识领域-一级分类
+        knowledge_domain_level2:
+          type: string
+          description: 知识领域-二级分类
+        knowledge_domain_level3:
+          type: string
+          description: 知识领域-三级分类
+        policy_status_abolished:
+          type: string
+          description: 政策法规时效状态（是否废止）
+        policy_publisher:
+          type: string
+          description: 政策法规发布机构
+        tech_standard_status_abolished:
+          type: string
+          description: 技术标准状态（是否废止）
+        file_name:
+          type: string
+          description: 文件名
+        priority:
+          type: string
+          description: 优先级
+        tech_responsible_unit:
+          type: string
+          description: 技术归口单位
+        approval_department:
+          type: string
+          description: 批准发布部门
+        review_responsible_office:
+          type: string
+          description: 审核责任处室
+        tech_standard_effective_date:
+          type: string
+          description: 技术标准实施日期
+        is_shared_training_field:
+          type: string
+          description: 是否共享实训场
+        standard_number:
+          type: string
+          description: 标准号
+        collection_unit:
+          type: string
+          description: 采集单位
+        collection_department_office:
+          type: string
+          description: 采集部门/处室/科室
+        tech_standard_release_date:
+          type: string
+          description: 技术标准发布日期
+        policy_document_number:
+          type: string
+          description: 政策法规文号
+        create_time:
+          type: string
+          format: date-time
+          description: 创建时间
+        modify_time:
+          type: string
+          format: date-time
+          description: 修改时间
+      required:
+        - file_id
+        - file_name
+    ListDatasetRequest:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: 请求id
+      required:
+        - request_id
+    ListDatasetResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse' # 继承通用字段
+        - type: object
+          properties:
+            dataset_name:
+              type: string
+              description: 大知识库id
+            dataset_title:
+              type: string
+              description: 大知识库展示名称
+    CreateKnowledgeBaseRequest:
+      type: object
+      properties:
+        tenant_id:
+          type: integer
+          format: int32
+          description: 租户id
+          default: 1
+        user_id:
+          type: integer
+          format: int32
+          description: 用户id
+          default: 1
+        request_id:
+          type: string
+          description: 请求id
+        kb_name:
+          type: string
+          description: 知识库名字
+          uniqueItems: true # 表示名字全局唯一
+        kb_describe:
+          type: string
+          description: 知识库描述
+        kb_type:
+          type: string
+          description: 知识库类型
+          enum:
+            - unstructured # 只支持 非结构化
+        dataset_name:
+          type: string
+          description: 大知识库名称
+        kb_embedding_model:
+          type: string
+          description: 向量模型
+          enum:
+            - default
+        kb_slice_type:
+          type: string
+          description: 切片方式
+          enum:
+            - unsliced # 只支持 不切片
+        kb_max_slice_length:
+          type: integer
+          format: int32
+          description: 最大分段长度
+        kb_slice_symbol:
+          type: array
+          items:
+            type: string
+          description: 分段分割符号
+      required:
+        - request_id
+        - kb_name
+        - kb_describe
+        - kb_type
+        - kb_embedding_model
+        - kb_slice_type
+        - dataset_name
+    CreateKnowledgeBaseResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse' # 继承通用字段
+        - type: object
+          properties:
+            kb_id:
+              type: string
+              description: 知识库id
+    UpdateKnowledgeBaseRequest:
+      type: object
+      properties:
+        tenant_id:
+          type: integer
+          format: int32
+          description: 租户id，默认公共租户
+          default: 1
+        user_id:
+          type: integer
+          format: int32
+          description: 用户id，默认公共用户
+          default: 1
+        request_id:
+          type: string
+          description: 请求id
+        kb_id:
+          type: string
+          description: 知识库id
+        kb_name:
+          type: string
+          description: 知识库名字
+          uniqueItems: true # 表示名字全局唯一
+        kb_describe:
+          type: string
+          description: 知识库描述
+      required:
+        - request_id
+        - kb_id
+    UpdateKnowledgeBaseResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+    DeleteKnowledgeBaseRequest:
+      type: object
+      properties:
+        tenant_id:
+          type: integer
+          format: int32
+          description: 租户id
+          default: 1
+        user_id:
+          type: integer
+          format: int32
+          description: 用户id
+          default: 1
+        request_id:
+          type: string
+          description: 请求id
+        kb_id:
+          type: string
+          description: 知识库id
+      required:
+        - request_id
+        - kb_id
+    DeleteKnowledgeBaseResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+    GetKnowledgeBaseRequest:
+      type: object
+      properties:
+        tenant_id:
+          type: integer
+          format: int32
+          description: 租户id,默认公共租户
+          default: 1
+        user_id:
+          type: integer
+          format: int32
+          description: 用户id,默认公共用户
+          default: 1
+        request_id:
+          type: string
+          description: 请求id
+        kb_id:
+          type: string
+          description: 知识库id
+      required:
+        - request_id
+        - kb_id
+    GetKnowledgeBaseResponse:
+      allOf:
+        - $ref: '#/components/schemas/KnowledgeBase'
+        - type: object
+          properties:
+            kb_id:
+              type: string
+              description: 知识库id
+            tenant_id:
+              type: integer
+              format: int32
+              description: 租户id
+            user_id:
+              type: integer
+              format: int32
+              description: 用户id
+            kb_name:
+              type: string
+              description: 知识库名字
+            kb_describe:
+              type: string
+              description: 知识库描述
+            kb_type:
+              type: string
+              description: 知识库类型
+            dataset_name:
+              type: string
+              description: 大知识库名称
+            kb_embedding_model:
+              type: string
+              description: 向量模型
+            kb_slice_type:
+              type: string
+              description: 切片方式
+            kb_max_slice_length:
+              type: integer
+              format: int32
+              description: 最大分段长度
+            kb_slice_symbol:
+              type: string
+              description: 分段分割符号
+            create_time:
+              type: string
+              format: date-time
+              description: 创建时间
+            update_time:
+              type: string
+              format: date-time
+              description: 更新时间
+    ListKnowledgeBasesRequest:
+      type: object
+      properties:
+        tenant_id:
+          type: integer
+          format: int32
+          description: 租户id，默认公共租户
+          default: 1
+        user_id:
+          type: integer
+          format: int32
+          description: 用户id，默认公共用户
+          default: 1
+        request_id:
+          type: string
+          description: 请求id
+        page:
+          type: integer
+          format: int32
+          description: 第几页（从1开始计数）
+          default: 1
+        limit:
+          type: integer
+          format: int32
+          description: 每页数量
+          default: 20
+        filter:
+          type: object
+          description: |
+            过滤条件（key==value）。
+            允许的过滤字段：
+            - tenant_id (integer): 租户id
+            - user_id (integer): 用户id
+            - kb_name (string): 知识库名字
+            - kb_type (string): 知识库类型
+            - kb_embedding_model (string): 向量模型
+            - kb_slice_type (string): 切片方式
+            - dataset_name(string): 大知识库名称
+          additionalProperties:
+            oneOf:
+              - type: string
+              - type: integer
+          example:
+            kb_type: unstructured
+            kb_embedding_model: default
+        sort_by:
+          type: string
+          description: 时间排序方式
+          enum:
+            - create_time
+            - update_time
+        sort_order:
+          type: string
+          description: 降序/升序
+          enum:
+            - desc
+            - asc
+          default: desc
+      required:
+        - request_id
+    ListKnowledgeBasesResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            total:
+              type: integer
+              format: int32
+              description: 知识库总量
+            results:
+              type: array
+              items:
+                type: object
+                properties:
+                  kb_id:
+                    type: string
+                    description: 知识库id
+                  kb_describe:
+                    type: string
+                    description: 知识库描述
+                  kb_name:
+                    type: string
+                    description: 知识库名字
+                  file_size:
+                    type: integer
+                    format: int64
+                    description: 文件总大小（字节，状态为SUCCESS的文件）
+                  user_name:
+                    type: string
+                    nullable: true
+                    description: 用户名
+                  tenant_id:
+                    type: integer
+                    format: int32
+                    nullable: true
+                    description: 租户id
+                  create_time:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: 创建时间
+                  update_time:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: 更新时间
+              description: 知识库列表
+
+    CreateFileRequest:
+      type: object
+      properties:
+        tenant_id:
+          type: integer
+          format: int32
+          description: 租户id
+          example: 1
+        user_id:
+          type: integer
+          format: int32
+          description: 用户id
+        request_id:
+          type: string
+          description: 请求id
+        kb_id:
+          type: string
+          description: 知识库id
+        folder_id:
+          type: integer
+          format: int32
+          description: 文件夹id，可选，默认为-1
+        task_id:
+          type: string
+          description: 任务id，必填
+        pdf_file:
+          type: string
+          format: binary
+          description: PDF文件
+        json_file:
+          type: string
+          format: binary
+          description: JSON元数据文件，文件名需与PDF文件匹配（除扩展名外）
+      required:
+        - request_id
+        - kb_id
+        - task_id
+        - pdf_file
+        - json_file
+    CreateFileResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            task_id:
+              type: string
+              description: 文件处理任务id
+            file_id:
+              type: string
+              description: 文件id
+    GetFileRequest:
+      type: object
+      properties:
+        tenant_id:
+          type: integer
+          format: int32
+          description: 租户id
+          example: 1
+        user_id:
+          type: integer
+          format: int32
+          description: 用户id
+        request_id:
+          type: string
+          description: 请求id
+        kb_id:
+          type: string
+          description: 知识库id
+        folder_id:
+          type: integer
+          format: int32
+          description: 文件夹id
+      required:
+        - request_id
+    GetFileResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            tenant_id:
+              type: integer
+              description: 租户id
+            user_id:
+              type: integer
+              description: 用户id
+            kb_id:
+              type: string
+              description: 知识库id
+            dataset_name:
+              type: string
+              description: 大知识库名称
+            folder_id:
+              type: integer
+              description: 文件夹id
+            task_id:
+              type: string
+              description: 任务id
+            file_id:
+              type: string
+              description: 文件id
+            file_name:
+              type: string
+              description: 文件名称
+            file_size:
+              type: integer
+              description: 文件大小
+            file_url:
+              type: string
+              description: 文件下载链接
+            file_token:
+              type: integer
+              description: 文件token数
+            file_status:
+              type: string
+              description: 文件解析状态，可能的值：PROCESSING, SUCCESS, FAILED, ERROR
+            create_time:
+              type: string
+              format: date-time
+              description: 创建时间
+            update_time:
+              type: string
+              format: date-time
+              description: 修改时间
+            is_download:
+              type: boolean
+              description: 是否可下载
+    ListFileRequest:
+      type: object
+      properties:
+        tenant_id:
+          type: integer
+          description: 租户id
+        user_id:
+          type: integer
+          description: 用户id
+        request_id:
+          type: string
+          description: 请求id
+        kb_id:
+          type: string
+          description: 知识库id
+        folder_id:
+          type: integer
+          description: 文件夹id
+        page:
+          type: integer
+          description: 第几页
+        limit:
+          type: integer
+          description: 每页数量
+          default: 20
+        filter:
+          type: object
+          description: |
+            过滤条件（key==value）。
+            允许的过滤字段：
+            - task_id (string): 任务id
+            - file_name (string): 文件名（支持模糊匹配，使用 LIKE）
+            - file_status (list[string]): 文件状态，可能的值：PROCESSING, SUCCESS, FAILED, DELETING, ERROR
+            - is_download (boolean): 是否可下载
+          additionalProperties:
+            oneOf:
+              - type: string
+              - type: integer
+              - type: boolean
+          example:
+            file_status:
+              - SUCCESS
+              - DELETING
+            file_name: test
+        sort_by:
+          type: string
+          description: 时间排序方式
+          enum:
+            - create_time
+            - update_time
+            - file_name
+        sort_order:
+          type: string
+          description: 降序/升序
+          enum:
+            - desc
+            - asc
+          default: desc
+        chunk_page:
+          type: integer
+          format: int32
+          description: chunks 分页页码（从1开始计数）
+          default: 1
+        chunk_limit:
+          type: integer
+          format: int32
+          description: 每页 chunks 数量
+          default: 10
+      required:
+        - request_id
+        - kb_id
+    ListFileResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            total:
+              type: integer
+              format: int32
+              description: 文件总量
+            results:
+              type: array
+              items:
+                type: object
+                properties:
+                  file_id:
+                    type: string
+                    description: 文件id
+                  file_name:
+                    type: string
+                    description: 文件名称
+                  tenant_id:
+                    type: integer
+                    format: int32
+                    nullable: true
+                    description: 租户id
+                  kb_id:
+                    type: string
+                    nullable: true
+                    description: 知识库id
+                  folder_id:
+                    type: integer
+                    format: int32
+                    nullable: true
+                    description: 文件夹id
+                  task_id:
+                    type: string
+                    nullable: true
+                    description: 任务id
+                  create_time:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: 创建时间
+                  update_time:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: 更新时间
+                  is_masked:
+                    type: boolean
+                    nullable: false
+                    description: 是否检索状态被遮蔽，true为不可检索
+                  is_download:
+                    type: boolean
+                    nullable: true
+                    description: 是否可下载
+                  chunk_count:
+                    type: integer
+                    format: int32
+                    nullable: true
+                    description: chunk数量
+                  source_type:
+                    type: string
+                    description: 文件来源，default：LOCAL
+                  file_type:
+                    type: string
+                    description: 文件类型
+              description: 文件列表
+    MoveFileRequest:
+      type: object
+      properties:
+        tenant_id:
+          type: integer
+          description: 租户id
+        user_id:
+          type: integer
+          description: 用户id
+        request_id:
+          type: string
+          description: 请求id
+        file_id:
+          type: string
+          description: 待移动文件id
+        target_kb_id:
+          type: string
+          description: 目标知识库id
+        target_folder_id:
+          type: integer
+          description: 目标文件夹id
+      required:
+        - request_id
+        - file_id
+        - target_kb_id
+    MoveFileResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+    UpdateFileRequest:
+      type: object
+      properties:
+        tenant_id:
+          type: integer
+          description: 租户id
+        user_id:
+          type: integer
+          description: 用户id
+        request_id:
+          type: string
+          description: 请求id
+        file_id:
+          type: string
+          description: 文件id
+        kb_id:
+          type: string
+          description: 知识库id
+        folder_id:
+          type: integer
+          description: 文件夹id
+        source_file:
+          type: string
+          format: binary
+          description: PDF文件/IMG文件
+      required:
+        - request_id
+        - file_id
+        - source_file
+    UpdateFileResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+    DownloadFileRequest:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: 请求id
+        file_id:
+          type: string
+          description: 文件id
+      required:
+        - request_id
+        - file_id
+    DownloadFileResponse:
+      type: string
+      format: binary
+      description: 文件内容流
+    UpdateFileDownloadRequest:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: 请求id
+        file_id:
+          type: string
+          description: 文件id
+        is_download:
+          type: boolean
+          description: 是否可下载
+      required:
+        - request_id
+        - file_id
+        - is_download
+    DownloadFileJsonRequest:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: 请求id
+        file_id:
+          type: string
+          description: 文件id
+      required:
+        - request_id
+        - file_id
+    DownloadFileJsonResponse:
+      type: string
+      format: binary
+      description: 文件内容流
+    UpdateFileDownloadResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+    DeleteFileRequest:
+      type: object
+      properties:
+        tenant_id:
+          type: integer
+          format: int32
+          description: 租户id
+          example: 1
+        user_id:
+          type: integer
+          format: int32
+          description: 用户id
+        request_id:
+          type: string
+          description: 请求id
+        kb_id:
+          type: string
+          description: 知识库id
+        folder_id:
+          type: integer
+          format: int32
+          description: 文件夹id
+      required:
+        - request_id
+        - file_id
+    DeleteFileResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+    CreateFileTaskRequest:
+      type: object
+      properties:
+        tenant_id:
+          type: integer
+          description: 租户id，可选，默认1
+        user_id:
+          type: integer
+          format: int32
+          description: 用户id，可选，默认1
+        request_id:
+          type: string
+          description: 请求id
+        kb_id:
+          type: string
+          description: 知识库id
+        folder_id:
+          type: integer
+          description: 文件夹id，可选，默认为-1
+        file_type:
+          type: string
+          description: 文件类型：文档对PDF、图片对IMG、问答QA
+          enum:
+            - QA
+            - PDF
+            - IMG
+        files:
+          type: array
+          items:
+            type: string
+            format: binary
+          description: 文件列表，仅支持成对上传多个PDF和JSON文件，每对文件必须同名
+      required:
+        - request_id
+        - kb_id
+        - files
+    CreateFileTaskResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            task_id:
+              type: string
+              description: 文件处理任务id
+    CancelFileTaskRequest:
+      type: object
+      properties:
+        tenant_id:
+          type: integer
+          format: int32
+          description: 租户id，可选
+        user_id:
+          type: integer
+          format: int32
+          description: 用户id，可选
+        request_id:
+          type: string
+          description: 请求id
+        task_id:
+          type: string
+          description: 文件处理任务id
+      required:
+        - request_id
+        - task_id
+    CancelFileTaskResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+    GetFileTaskRequest:
+      type: object
+      properties:
+        tenant_id:
+          type: integer
+          description: 租户id
+        user_id:
+          type: integer
+          description: 用户id
+        request_id:
+          type: string
+          description: 请求id
+        task_id:
+          type: string
+          description: 文件处理任务id
+        kb_id:
+          type: string
+          description: 知识库id
+        folder_id:
+          type: integer
+          description: 文件夹id
+      required:
+        - request_id
+    GetFileTaskResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            task_id:
+              type: string
+              description: 任务id
+            kb_id:
+              type: string
+              nullable: true
+              description: 知识库id
+            folder_id:
+              type: integer
+              format: int32
+              nullable: true
+              description: 文件夹id
+            task_status:
+              type: string
+              description: 任务状态，可能的值：PROCESSING, SUCCESS, FAILED, CANCELLED
+            user_id:
+              type: integer
+              format: int32
+              nullable: true
+              description: 用户id
+            user_name:
+              type: string
+              nullable: true
+              description: 用户名
+            tenant_id:
+              type: integer
+              format: int32
+              nullable: true
+              description: 租户id
+            create_time:
+              type: string
+              format: date-time
+              nullable: true
+              description: 创建时间
+            update_time:
+              type: string
+              format: date-time
+              nullable: true
+              description: 更新时间
+            source_type:
+              type: string
+              nullable: true
+              description: 文件来源，默认LOCAL
+            file_total_num:
+              type: integer
+              format: int32
+              nullable: true
+              description: 文件总数
+            finished_file_num:
+              type: integer
+              format: int32
+              nullable: true
+              description: 已完成文件数
+            total_success_file_size:
+              type: integer
+              format: int64
+              description: 成功文件的总大小（字节）
+            files:
+              type: array
+              description: 分页的文件列表
+              items:
+                type: object
+                properties:
+                  file_id:
+                    type: string
+                    nullable: true
+                    description: 文件id
+                  file_name:
+                    type: string
+                    description: 文件名
+                  file_size:
+                    type: integer
+                    format: int64
+                    nullable: true
+                    description: 文件大小（字节）
+                  file_status:
+                    type: string
+                    description: 文件状态，可能的值：PROCESSING, SUCCESS, FAILED, ERROR
+                  user_name:
+                    type: string
+                    nullable: true
+                    description: 用户名
+                  create_time:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: 创建时间
+                  update_time:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: 更新时间
+                  is_download:
+                    type: boolean
+                    nullable: true
+                    description: 是否可下载
+    ListFileTasksRequest:
+      type: object
+      properties:
+        tenant_id:
+          type: integer
+          description: 租户id
+        user_id:
+          type: integer
+          description: 用户id
+        request_id:
+          type: string
+          description: 请求id
+        kb_id:
+          type: string
+          description: 知识库id
+        folder_id:
+          type: integer
+          description: 文件夹id
+        page:
+          type: integer
+          description: 第几页
+        limit:
+          type: integer
+          description: 每页数量
+        filter:
+          type: object
+          description: |
+            过滤条件（key==value）。
+            允许的过滤字段：
+            - tenant_id (integer): 租户id
+            - user_id (integer): 用户id
+            - kb_id (string): 知识库id（注意：此字段也会从请求参数中获取，filter中的值会覆盖参数值）
+            - folder_id (integer): 文件夹id（注意：此字段也会从请求参数中获取，filter中的值会覆盖参数值）
+            - task_status (string): 任务状态，可能的值：PROCESSING, SUCCESS, FAILED, CANCELLED
+            - source_type (string): 文件来源，默认LOCAL
+          additionalProperties:
+            oneOf:
+              - type: string
+              - type: integer
+          example:
+            task_status: SUCCESS
+            source_type: LOCAL
+      required:
+        - request_id
+        - kb_id
+    ListFileTasksResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            total:
+              type: integer
+              format: int32
+              description: 文件处理任务总量
+            results:
+              type: array
+              items:
+                type: object
+                properties:
+                  task_id:
+                    type: string
+                    description: 任务id
+                  kb_id:
+                    type: string
+                    nullable: true
+                    description: 知识库id
+                  task_status:
+                    type: string
+                    description: 任务状态，可能的值：PROCESSING, SUCCESS, FAILED, CANCELLED
+                  file_total_num:
+                    type: integer
+                    format: int32
+                    nullable: true
+                    description: 文件总数
+                  finished_file_num:
+                    type: integer
+                    format: int32
+                    nullable: true
+                    description: 已完成文件数
+                  user_name:
+                    type: string
+                    nullable: true
+                    description: 用户名
+                  file_count:
+                    type: integer
+                    format: int32
+                    description: 文件数量（状态为SUCCESS的文件）
+                  file_size:
+                    type: integer
+                    format: int64
+                    description: 文件总大小（字节，状态为SUCCESS的文件）
+                  create_time:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: 创建时间
+                  source_type:
+                    type: string
+                    nullable: true
+                    description: 文件来源，默认LOCAL
+              description: 文件处理任务列表
+
+    UpdateFileMetadataRequest:
+      type: object
+      description: 更新文件元数据
+      properties:
+        file_id:
+          type: string
+          description: 文件id
+        dataset_name:
+          type: string
+        file_metadata:
+          $ref: '#/components/schemas/FileMetadata'
+      required:
+        - file_id
+        - file_metadata
+    UpdateFileMetadataResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                file_id:
+                  type: string
+    DeleteFileMetadataRequest:
+      type: object
+      properties:
+        dataset_name:
+          type: string
+      required:
+        - dataset_name
+    DeleteFileMetadataResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                file_id:
+                  type: string
+    GetFileMetadataResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/FileMetadata'
+    CreateChunkRequest:
+      type: object
+      description: 创建chunk请求
+      properties:
+        dataset_name:
+          type: string
+        chunks:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              type:
+                type: string
+              level_0:
+                type: string
+              level_1:
+                type: string
+              level_2:
+                type: string
+              level_3:
+                type: string
+              keywords:
+                type: array
+                items: { type: string }
+              summary:
+                type: string
+              majority_language:
+                type: string
+              page_num:
+                type: integer
+              questions:
+                type: array
+                items: { type: string }
+
+        file_meta_data:
+          type: object
+          additionalProperties: true
+
+        file_name:
+          type: string
+
+        file_id:
+          type: string
+
+        overwrite:
+          type: boolean
+          description: 是否覆盖
+          default: true
+
+        chunk_type:
+          type: string
+
+      required:
+        - dataset_name
+        - chunks
+        - file_id
+    CreateChunkResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                chunk_ids:
+                  type: array
+                  items:
+                    type: string
+                  description: 创建的chunk id列表
+    GetChunkResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              description: chunk完整信息，包含内容和元数据
+              properties:
+                chunkId:
+                  type: string
+                content:
+                  type: string
+                file_id:
+                  type: string
+                createTime:
+                  type: string
+                  format: date-time
+                modifyTime:
+                  type: string
+                  format: date-time
+                metadata:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    level_0:
+                      type: string
+                    level_1:
+                      type: string
+                    level_2:
+                      type: string
+                    level_3:
+                      type: string
+                    keywords:
+                      type: array
+                      items:
+                        type: string
+                    summary:
+                      type: string
+                    majority_language:
+                      type: string
+                    page_num:
+                      type: integer
+                    questions:
+                      type: array
+                      items:
+                        type: string
+                    file_id:
+                      type: string
+                    createTime:
+                      type: string
+                      format: date-time
+                    modifyTime:
+                      type: string
+                      format: date-time
+    ListChunkRequest:
+      type: object
+      description: |
+        查询Chunk列表
+      properties:
+        file_id:
+          type: string
+        page:
+          type: integer
+          format: int32
+          description: 第几页,默认0
+          default: 0
+          minimum: 0
+        limit:
+          type: integer
+          format: int32
+          description: 每页数量,默认20
+          default: 20
+        filter:
+          type: object
+          description: |
+            过滤条件（key==value）。
+            仅允许字段：
+            - chunktable: chunkId, content, file_id
+            - chunkmetadataTable: type, level_0, level_1, level_2, level_3, summary, majority_language, page_num
+            不支持：keywords, questions
+          additionalProperties:
+            type: string
+          example:
+            type: some_type
+            level_0: some_level
+
+        tenant_id:
+          type: integer
+          format: int32
+          description: 租户id（当前接口实现未使用）
+        user_id:
+          type: integer
+          format: int32
+          description: 用户id（当前接口实现未使用）
+        request_id:
+          type: string
+          description: 请求id（当前实现从header返回，不从body读取）
+
+      required:
+        - file_id
+    ListChunkResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            request_id:
+              type: string
+              description: 请求id
+            total:
+              type: integer
+              format: int32
+              description: 总数量
+            results:
+              type: array
+              description: chunk列表
+              items:
+                type: object
+                properties:
+                  chunkId:
+                    type: string
+                    description: chunk id
+                  content:
+                    type: string
+                    description: chunk内容
+                  file_id:
+                    type: string
+                    description: 文件id
+                  createTime:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: 创建时间
+                  modifyTime:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: 更新时间
+                  metadata:
+                    type: object
+                    description: chunk元数据
+                    properties:
+                      type:
+                        type: string
+                      level_0:
+                        type: string
+                      level_1:
+                        type: string
+                      level_2:
+                        type: string
+                      level_3:
+                        type: string
+                      keywords:
+                        nullable: true
+                        description: 关键词
+                        oneOf:
+                          - type: array
+                            items: { type: string }
+                          - type: string
+                      summary:
+                        type: string
+                      majority_language:
+                        type: string
+                      page_num:
+                        type: integer
+                        format: int32
+                        nullable: true
+                      questions:
+                        nullable: true
+                        description: 问题列表
+                        oneOf:
+                          - type: array
+                            items: { type: string }
+                          - type: string
+                      file_id:
+                        type: string
+                      createTime:
+                        type: string
+                        format: date-time
+                        nullable: true
+                      modifyTime:
+                        type: string
+                        format: date-time
+                        nullable: true
+    UpdateChunkRequest:
+      type: object
+      properties:
+        dataset_name:
+          type: string
+        chunk_ids:
+          type: array
+          items:
+            type: string
+        chunks:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              type:
+                type: string
+              level_0:
+                type: string
+              level_1:
+                type: string
+              level_2:
+                type: string
+              level_3:
+                type: string
+              keywords:
+                type: array
+                items:
+                  type: string
+              summary:
+                type: string
+              majority_language:
+                type: string
+              page_num:
+                type: integer
+                format: int32
+              questions:
+                type: array
+                items:
+                  type: string
+        overwrite:
+          type: boolean
+          default: true
+      required:
+        - dataset_name
+        - chunk_ids
+        - chunks
+
+    UpdateChunkResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                chunk_ids:
+                  type: array
+                  items:
+                    type: string
+                  description: 更新成功的chunk ID列表
+              required:
+                - chunk_ids
+    SearchKnowledgeRequest:
+      type: object
+      required:
+        - request_id
+        - keyword
+      properties:
+        request_id:
+          type: string
+        keyword:
+          type: string
+          description: 搜索关键词
+        top_k:
+          type: integer
+          default: 5
+        confidence:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+        dataset_name:
+          type: string
+          description: 知识库名称
+
+    SearchKnowledgeResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            search_id:
+              type: string
+              format: uuid
+              nullable: true
+            results:
+              type: array
+              description: 检索结果列表。每一项会根据 dataset_type 返回 default 或 qa 两种结构之一。
+              items:
+                oneOf:
+                  - $ref: '#/components/schemas/DefaultSearchResult'
+                  - $ref: '#/components/schemas/QaSearchResult'
+                discriminator:
+                  propertyName: dataset_type
+                  mapping:
+                    default: '#/components/schemas/DefaultSearchResult'
+                    qa: '#/components/schemas/QaSearchResult'
+    SearchResultBase:
+      type: object
+      required:
+        - chunk_id
+        - dataset_type
+      properties:
+        chunk_id:
+          type: string
+        dataset_type:
+          type: string
+          enum: [default, qa]
+        similarity:
+          type: number
+          format: float
+        docnm_name:
+          type: string
+        keywords:
+          type: array
+          items:
+            type: string
+
+    DefaultSearchResult:
+      allOf:
+        - $ref: '#/components/schemas/SearchResultBase'
+        - type: object
+          properties:
+            dataset_type:
+              type: string
+              enum: [default]
+            cid:
+              type: string
+            file_id:
+              type: string
+            level_0:
+              type: string
+            level_1:
+              type: string
+            level_2:
+              type: string
+            level_3:
+              type: string
+            summary:
+              type: string
+            majority_language:
+              type: string
+            page_num:
+              type: integer
+            chunk_content:
+              type: string
+            create_time:
+              type: string
+              format: date-time
+              nullable: true
+            update_time:
+              type: string
+              format: date-time
+              nullable: true
+            kb_id:
+              type: string
+              nullable: true
+            kb_name:
+              type: string
+              nullable: true
+
+    QaSearchResult:
+      allOf:
+        - $ref: '#/components/schemas/SearchResultBase'
+        - type: object
+          description: QA 检索结果
+          properties:
+            dataset_type:
+              type: string
+              enum: [qa]
+            file_id:
+              type: string
+            question:
+              type: string
+            questions:
+              type: array
+              items:
+                type: string
+            answer:
+              type: string
+            source:
+              type: array
+              items:
+                type: string
+            deleted_questions:
+              type: array
+              items:
+                type: string
+
+    SearchHistoryListRequest:
+      type: object
+      required:
+        - request_id
+      properties:
+        request_id:
+          type: string
+        limit:
+          type: integer
+          default: 30
+        dataset_name:
+          type: string
+          description: 数据库名称
+
+    SearchHistoryListResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/SearchHistoryItem'
+
+    SearchHistoryItem:
+      type: object
+      properties:
+        search_id:
+          type: string
+          format: uuid
+        keyword:
+          type: string
+        top_k:
+          type: integer
+          format: int32
+        confidence:
+          type: number
+          format: float
+        create_time:
+          type: string
+          format: date-time
+
+    SearchHistoryDeleteRequest:
+      type: object
+      required:
+        - request_id
+        - search_id
+      properties:
+        request_id:
+          type: string
+        search_id:
+          type: string
+          format: uuid
+    SearchHistoryDeleteResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+
+    UpdateFileMetadataMaskRequest:
+      type: object
+      description: 更新文件元数据掩码状态请求
+      properties:
+        file_id:
+          type: string
+          description: 文件ID
+          example: 'file-uuid-123'
+        is_masked:
+          type: boolean
+          description: 新的掩码状态。true表示遮蔽，false表示未遮蔽，已弃用，当且接口自动状态切换
+          example: false
+        dataset_name:
+          type: string
+          description: 数据集名称（选填）
+          example: 'my_dataset'
+      required:
+        - file_id
+
+    UpdateFileMetadataMaskResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                file_id:
+                  type: string
+                  description: 文件ID
+                is_masked:
+                  type: boolean
+                  description: 更新后的掩码状态
+                updated:
+                  type: boolean
+                  description: 是否已更新
+                  example: true
+              required:
+                - file_id
+                - is_masked
+                - updated
+
+    DeleteQaByQaidRequest:
+      type: object
+      properties:
+        qaid:
+          type: string
+        dataset_name:
+          type: string
+      required:
+        - qaid
+
+    DeleteQaByQaidResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        data:
+          type: object
+          nullable: true
+          description: 成功时返回数据
+          properties:
+            qaid:
+              type: string
+              description: 被删除的 QA ID
+      required:
+        - code
+        - message
+
+    ListQaRequest:
+      type: object
+      description: 查询 QA 列表的请求体
+      properties:
+        file_id:
+          type: string
+        page:
+          type: integer
+          description: 页码，从 1 开始，默认 1
+        limit:
+          type: integer
+          description: 每页数量，默认 20
+        filter:
+          type: object
+          description: 过滤条件（可选）
+          properties:
+            answer:
+              type: string
+              description: 按 answer 模糊匹配
+            file_name:
+              type: string
+              description: 按 file_name 模糊匹配
+      required:
+        - file_id
+
+    ListQaResponse:
+      type: object
+      description: 查询 QA 列表的响应体
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+          description: 业务状态描述
+        total:
+          type: integer
+          description: 满足条件的 QA 总数
+        results:
+          type: array
+          description: QA 列表
+          items:
+            $ref: '#/components/schemas/QaItem'
+      required:
+        - code
+        - message
+        - total
+        - results
+
+    QaItem:
+      type: object
+      description: QA 条目
+      properties:
+        qaid:
+          type: string
+          description: QA ID
+        keyword:
+          type: array
+          items:
+            type: string
+        source:
+          type: array
+          items:
+            type: string
+        deleted_questions:
+          type: array
+          items:
+            type: string
+        questions:
+          type: array
+          items:
+            type: string
+        answer:
+          type: string
+        questions_ids:
+          type: array
+          items:
+            type: string
+        file_id:
+          type: string
+        file_name:
+          type: string
+        createTime:
+          type: string
+          format: date-time
+        modifyTime:
+          type: string
+          format: date-time
+
+    GetQaRequest:
+      type: object
+      properties:
+        qaid:
+          type: string
+      required:
+        - qaid
+
+    GetQaResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        data:
+          type: object
+          nullable: true
+          properties:
+            keyword:
+              type: array
+              items:
+                type: string
+            source:
+              type: array
+              items:
+                type: string
+            deleted_questions:
+              type: array
+              items:
+                type: string
+            questions:
+              type: array
+              items:
+                type: string
+            answer:
+              type: string
+      required:
+        - code
+        - message

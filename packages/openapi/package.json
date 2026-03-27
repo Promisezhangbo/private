@@ -1,0 +1,30 @@
+{
+  "name": "@packages/openapi",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "api/openapi.yaml → @hey-api/openapi-ts 生成 SDK；OpenApiFn / openApiHttpClient / openApiSilent。单独 dev 前可先 pnpm --filter @packages/openapi run generate",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "generate": "node ./scripts/generate.mjs",
+    "prepare": "pnpm run generate",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "form-data": "^4.0.5"
+  },
+  "devDependencies": {
+    "@apidevtools/swagger-parser": "^12.1.0",
+    "@hey-api/client-axios": "0.9.1",
+    "@hey-api/openapi-ts": "0.94.5",
+    "glob": "^11.0.0",
+    "typescript": "~5.9.3"
+  }
+}

@@ -6,6 +6,8 @@
   "author": "zhangbo <zhangbo3.vendor@sensetime.com>",
   "license": "MIT",
   "scripts": {
+    "prebuild": "pnpm --filter @packages/openapi run generate",
+    "predev": "pnpm --filter @packages/openapi run generate",
     "build": "cross-env NODE_ENV=production && rm -rf dist && pnpm --parall --filter \"./apps/*\" build",
     "dev": "cross-env NODE_ENV=development && pnpm --parall --filter \"./apps/*\" dev",
     "lint": "pnpm --parall --filter \"./apps/*\" lint",
