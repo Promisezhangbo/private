@@ -1,4 +1,4 @@
-const norm = (id) => id.replace(/\\/g, '/');
+const norm = (id) => id.replace(/\\/g, "/");
 
 /**
  * 子应用生产构建共用：将 React / 路由 / qiankun / Ant Design 等拆成独立 chunk，
@@ -7,7 +7,7 @@ const norm = (id) => id.replace(/\\/g, '/');
  * @returns {string | undefined}
  */
 export function appManualChunks(id) {
-  if (!id.includes('node_modules')) return;
+  if (!id.includes("node_modules")) return;
   const p = norm(id);
 
   if (
@@ -15,31 +15,28 @@ export function appManualChunks(id) {
     /\/node_modules\/react-dom\//.test(p) ||
     /\/node_modules\/scheduler\//.test(p)
   ) {
-    return 'react-vendor';
+    return "react-vendor";
   }
 
-  if (/\/node_modules\/(react-router|react-router-dom)\//.test(p)) {
-    return 'react-router';
-  }
+  // if (/\/node_modules\/(react-router|react-router-dom)\//.test(p)) {
+  //   return "react-router";
+  // }
 
-  if (
-    /\/node_modules\/qiankun\//.test(p) ||
-    /\/node_modules\/vite-plugin-qiankun\//.test(p)
-  ) {
-    return 'qiankun';
-  }
+  // if (/\/node_modules\/qiankun\//.test(p) || /\/node_modules\/vite-plugin-qiankun\//.test(p)) {
+  //   return "qiankun";
+  // }
 
-  if (/\/node_modules\/@ant-design\/pro-/.test(p)) {
-    return 'antd-pro-vendor';
-  }
+  // if (/\/node_modules\/@ant-design\/pro-/.test(p)) {
+  //   return 'antd-pro-vendor';
+  // }
 
-  if (/\/node_modules\/@ant-design\/x-markdown\//.test(p)) {
-    return 'antd-x-vendor';
-  }
+  // if (/\/node_modules\/@ant-design\/x-markdown\//.test(p)) {
+  //   return 'antd-x-vendor';
+  // }
 
-  if (/\/node_modules\/antd\//.test(p) || /\/node_modules\/@ant-design\//.test(p)) {
-    return 'antd-vendor';
-  }
+  // if (/\/node_modules\/antd\//.test(p) || /\/node_modules\/@ant-design\//.test(p)) {
+  //   return 'antd-vendor';
+  // }
 
-  return 'vendor';
+  return "vendor";
 }
