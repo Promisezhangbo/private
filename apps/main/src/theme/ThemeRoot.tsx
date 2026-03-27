@@ -28,6 +28,10 @@ export function ThemeRoot({ children }: { children: ReactNode }) {
         locale={zhCN}
         theme={{
           algorithm: mode === 'dark' ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
+          token: {
+            colorPrimary: '#14b8a6',
+            borderRadius: 10,
+          },
         }}
       >
         {children}

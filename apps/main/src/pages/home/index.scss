@@ -1,138 +1,60 @@
 @use '@style-config/variables' as *;
 
-/* 与 Blog / Agent 子应用对齐：最大宽度 + 居中 + 统一内边距 */
 .main-home-shell {
   box-sizing: border-box;
   width: 100%;
   max-width: $sub-app-max-width-mid;
   margin: 0 auto;
   padding: $sub-app-shell-padding;
-}
 
-/* 主应用控制台首页（语义色由 app.scss 引入的 semantic-palette 挂在 :root） */
-.dash-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
+  .dash-hero.ant-card {
+    margin-bottom: 0;
+    border: 1px solid var(--sc-home-hero-border) !important;
+    border-radius: $radius-xl !important;
+    background: var(--sc-home-hero-bg) !important;
+    box-shadow: var(--sc-home-hero-shadow);
 
-.dash-card.ant-card {
-  position: relative;
-  border-radius: $radius-md !important;
-  border: 1px solid var(--sc-dash-card-border) !important;
-  background: var(--sc-dash-card-bg) !important;
-  backdrop-filter: blur(10px);
-  box-shadow: var(--sc-dash-card-shadow);
-  cursor: pointer;
-  overflow: hidden;
-  transition:
-    transform $dur-fast $ease-out,
-    box-shadow $dur-fast $ease-out,
-    border-color $dur-fast $ease-out;
+    .dash-hero-title {
+      margin: 0 0 12px !important;
+      color: var(--sc-home-hero-title) !important;
+    }
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--sc-dash-card-shine), transparent 55%);
-    opacity: 0;
-    transition: opacity $dur-normal $ease-out;
-    pointer-events: none;
+    .dash-hero-lead {
+      margin: 0 0 14px !important;
+      max-width: 60ch;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--sc-home-hero-lead) !important;
+
+      strong {
+        color: var(--sc-home-hero-lead-strong) !important;
+        font-weight: 600;
+      }
+    }
+
+    .dash-hero-tech-title {
+      display: block;
+      margin: 4px 0 10px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sc-home-hero-tech-label) !important;
+    }
+
+    .dash-hero-tags.ant-space {
+      flex-wrap: wrap;
+    }
+
+    .dash-hero-tag.ant-tag {
+      margin: 0 !important;
+      padding: 4px 11px;
+      font-size: 13px;
+      line-height: 1.4;
+      border-radius: $pill-radius;
+      background: var(--sc-home-hero-tag-bg) !important;
+      border-color: var(--sc-home-hero-tag-border) !important;
+      color: var(--sc-home-hero-tag-text) !important;
+    }
   }
-
-  &:hover {
-    transform: translateY(-4px);
-    border-color: var(--sc-dash-card-hover-border) !important;
-    box-shadow: var(--sc-dash-card-hover-shadow);
-  }
-
-  &:hover::before {
-    opacity: 1;
-  }
-}
-
-.dash-section-title {
-  margin-top: 8px;
-  color: var(--sc-dash-section-title) !important;
-}
-
-.dash-card-icon {
-  color: var(--sc-dash-icon);
-  font-size: 22px;
-}
-
-.dash-card .ant-card-body {
-  position: relative;
-  z-index: $z-content;
-}
-
-.dash-card-title-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.dash-card-desc {
-  margin-bottom: 12px;
-}
-
-.dash-hero.ant-card {
-  border: none !important;
-  border-radius: $radius-xl !important;
-  background: linear-gradient(125deg, $indigo-900 0%, $indigo-600 45%, $indigo-500 100%) !important;
-  color: #fff;
-  box-shadow: 0 24px 48px rgba(79, 70, 229, 0.35);
-  margin-bottom: 8px;
-}
-
-.dash-hero-title {
-  margin-bottom: 10px;
-}
-
-.dash-hero .ant-typography {
-  color: var(--sc-text-on-hero) !important;
-}
-
-.dash-hero h3.ant-typography,
-.dash-hero h4.ant-typography {
-  color: #fff !important;
-}
-
-.dash-hero-lead {
-  display: block;
-  margin: 0 0 14px;
-  max-width: 100%;
-  font-size: 14px;
-  line-height: 1.65;
-  color: var(--sc-text-on-hero-muted) !important;
-}
-
-.dash-hero-lead strong {
-  color: #fff !important;
-}
-
-.dash-hero-tech-title {
-  display: block;
-  margin: 4px 0 10px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--sc-text-on-hero-sub) !important;
-}
-
-.dash-hero-tags.ant-space {
-  flex-wrap: wrap;
-}
-
-.dash-hero-tags .ant-tag {
-  margin: 0 !important;
-  padding: 4px 11px;
-  font-size: 13px;
-  line-height: 1.4;
-  border-radius: $pill-radius;
-  background: rgba(255, 255, 255, 0.12) !important;
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
-  color: #fff !important;
 }
