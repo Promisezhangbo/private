@@ -1,0 +1,1 @@
+import"./rolldown-runtime-CIMjf7vo.js";import{i as e,t}from"./react-vendor-0vJ_QKZc.js";e();var n=t();function r(){return(0,n.jsx)(`div`,{children:`ResumeHome`})}export{r as default};
