@@ -29,8 +29,11 @@ $orange-800: #9a3412;
 $header-height-main: 56px;
 $sub-app-max-width-wide: 1040px;
 
-/* 主应用首页、Blog、Agent 等内容区统一最大宽度，居中 */
-$sub-app-max-width-mid: 800px;
+/// 视口宽度黄金分割比（login 子应用不使用）
+$sub-app-golden-ratio: 0.618;
+
+/* 主应用与各子应用（除 login）内容区最大宽度：0.618×视口，限制在 320px～1280px */
+$sub-app-content-max-width: clamp(320px, #{$sub-app-golden-ratio * 100}vw, 1280px);
 $sub-app-shell-padding: clamp(20px, 4vw, 40px);
 
 // —— 圆角 ——

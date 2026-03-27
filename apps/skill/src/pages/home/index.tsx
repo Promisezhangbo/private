@@ -31,6 +31,14 @@ const listVariants = {
   },
 };
 
+const listVariantsRight = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06, delayChildren: 0.22 },
+  },
+};
+
 const rowVariants = {
   hidden: { opacity: 0, x: -20 },
   show: {
@@ -39,6 +47,30 @@ const rowVariants = {
     transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
+
+const MID = Math.ceil(SKILLS.length / 2);
+const SKILLS_LEFT = SKILLS.slice(0, MID);
+const SKILLS_RIGHT = SKILLS.slice(MID);
+
+function SkillRow({ skill, fill }: { skill: (typeof SKILLS)[number]; fill: number }) {
+  return (
+    <motion.li className="skill-page__row" variants={rowVariants}>
+      <div className="skill-page__row-head">
+        <span className="skill-page__name">{skill.name}</span>
+        <span className="skill-page__pct">{skill.percent}%</span>
+      </div>
+      <div className="skill-page__bar">
+        <Progress
+          percent={fill}
+          showInfo={false}
+          strokeLinecap="round"
+          strokeColor={skill.percent >= 80 ? GREEN : AMBER}
+          size={{ height: 10 }}
+        />
+      </div>
+    </motion.li>
+  );
+}
 
 function SkillHome() {
   const [fills, setFills] = useState<number[]>(() => SKILLS.map(() => 0));
@@ -74,28 +106,28 @@ function SkillHome() {
           </Typography.Title>
 
           <div className="skill-page__list-wrap">
-            <motion.ul
-              className="skill-page__list"
-              variants={listVariants}
-              initial="hidden"
-              animate="show"
-            >
-              {SKILLS.map((skill, i) => (
-                <motion.li key={skill.name} className="skill-page__row" variants={rowVariants}>
-                  <span className="skill-page__name">{skill.name}</span>
-                  <div className="skill-page__bar">
-                    <Progress
-                      percent={fills[i]}
-                      showInfo={false}
-                      strokeLinecap="round"
-                      strokeColor={skill.percent >= 80 ? GREEN : AMBER}
-                      size={{ height: 10 }}
-                    />
-                  </div>
-                  <span className="skill-page__pct">{skill.percent}%</span>
-                </motion.li>
-              ))}
-            </motion.ul>
+            <div className="skill-page__columns">
+              <motion.ul
+                className="skill-page__list"
+                variants={listVariants}
+                initial="hidden"
+                animate="show"
+              >
+                {SKILLS_LEFT.map((skill, j) => (
+                  <SkillRow key={skill.name} skill={skill} fill={fills[j]} />
+                ))}
+              </motion.ul>
+              <motion.ul
+                className="skill-page__list"
+                variants={listVariantsRight}
+                initial="hidden"
+                animate="show"
+              >
+                {SKILLS_RIGHT.map((skill, j) => (
+                  <SkillRow key={skill.name} skill={skill} fill={fills[MID + j]} />
+                ))}
+              </motion.ul>
+            </div>
           </div>
         </div>
       </motion.div>

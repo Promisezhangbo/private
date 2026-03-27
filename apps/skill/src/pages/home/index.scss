@@ -26,21 +26,45 @@
 
 .skill-page__inner {
   width: 100%;
-  max-width: $sub-app-max-width-mid;
+  max-width: $sub-app-content-max-width;
   margin: 0 auto;
   padding: 0 $sub-app-shell-padding;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .skill-page__title {
+    width: 100%;
+    max-width: min(960px, 100%);
     margin-top: 0 !important;
     margin-bottom: 24px !important;
     font-weight: 600 !important;
     color: var(--skill-ink, #{$slate-900}) !important;
   }
 
-  /* 进度列表收窄，接近设计稿比例 */
+  /* 双栏：左 / 右各一列技能；窄屏单列 */
   .skill-page__list-wrap {
-    max-width: min(640px, 100%);
+    width: 100%;
+    max-width: min(960px, 100%);
+
+    .skill-page__columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 clamp(24px, 5vw, 48px);
+      align-items: start;
+    }
+
+    @media (width <= 720px) {
+      .skill-page__columns {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .skill-page__list + .skill-page__list {
+        margin-top: 8px;
+      }
+    }
 
     .skill-page__list {
       list-style: none;
@@ -49,34 +73,38 @@
 
       .skill-page__row {
         display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 18px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        margin-bottom: 20px;
+
+        .skill-page__row-head {
+          display: flex;
+          align-items: baseline;
+          justify-content: space-between;
+          gap: 12px;
+        }
 
         .skill-page__name {
-          width: 76px;
-          flex-shrink: 0;
           font-weight: 500;
           font-size: 14px;
           color: var(--skill-ink, #{$slate-800});
         }
 
+        .skill-page__pct {
+          flex-shrink: 0;
+          font-size: 13px;
+          color: var(--skill-muted, #{$slate-500});
+          font-variant-numeric: tabular-nums;
+        }
+
         .skill-page__bar {
-          flex: 1;
+          width: 100%;
           min-width: 0;
 
           .ant-progress-inner {
             background-color: rgb(148 163 184 / 0.12) !important;
           }
-        }
-
-        .skill-page__pct {
-          width: 44px;
-          flex-shrink: 0;
-          text-align: right;
-          font-size: 14px;
-          color: var(--skill-muted, #{$slate-500});
-          font-variant-numeric: tabular-nums;
         }
       }
     }
