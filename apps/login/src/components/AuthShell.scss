@@ -1,4 +1,4 @@
-@use '@style-config/variables' as *;
+@use "@style-config/variables" as *;
 
 /* 登录/注册外壳：透视网格 + 旋转霓虹锥光 */
 .login-auth-shell {
@@ -11,7 +11,7 @@
   padding: 24px;
 
   &::before {
-    content: '';
+    content: "";
     position: fixed;
 
     // 1. 尺寸优化：最小化动画元素像素量
@@ -21,14 +21,14 @@
     transform: translate(-50%, -50%) rotate(0deg);
 
     // 2. 渐变优化：简化计算逻辑
+    // 28% * 360 = 100.8°
+    // 52% * 360 = 187.2°
+    // 72% * 360 = 259.2°
     background: conic-gradient(
       from 120deg at center,
       rgba(34, 211, 238, 0.14) 0deg 100.8deg,
-      // 28% * 360 = 100.8°
       transparent 100.8deg 187.2deg,
-      // 52% * 360 = 187.2°
       rgba(232, 121, 249, 0.12) 187.2deg 259.2deg,
-      // 72% * 360 = 259.2°
       transparent 259.2deg 360deg
     );
 
@@ -46,7 +46,7 @@
   }
 
   &::after {
-    content: '';
+    content: "";
     position: fixed;
     inset: 0;
     z-index: $z-bg-grid;
