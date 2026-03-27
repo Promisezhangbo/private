@@ -1,5 +1,8 @@
-import ResumeHome from "@/pages/home";
+import { lazy } from "react";
 import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
+
+const ResumeHome = lazy(() => import("@/pages/home"));
+
 const router = [
   {
     path: "/resume",

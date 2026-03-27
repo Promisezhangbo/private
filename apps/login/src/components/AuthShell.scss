@@ -1,6 +1,19 @@
 @use "@style-config/variables" as *;
 
-/* 登录/注册外壳：透视网格 + 旋转霓虹锥光 */
+/* 柔和光斑缓慢漂移，无高对比霓虹 */
+@keyframes login-shell-blob-drift {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: translate(-48%, -52%) scale(1.04) rotate(4deg);
+    opacity: 0.7;
+  }
+}
+
 .login-auth-shell {
   position: relative;
   z-index: $z-content;
@@ -13,36 +26,20 @@
   &::before {
     content: "";
     position: fixed;
-
-    // 1. 尺寸优化：最小化动画元素像素量
     inset: 50%;
-    width: 200vw;
-    height: 200vw;
-    transform: translate(-50%, -50%) rotate(0deg);
-
-    // 2. 渐变优化：简化计算逻辑
-    // 28% * 360 = 100.8°
-    // 52% * 360 = 187.2°
-    // 72% * 360 = 259.2°
-    background: conic-gradient(
-      from 120deg at center,
-      rgba(34, 211, 238, 0.14) 0deg 100.8deg,
-      transparent 100.8deg 187.2deg,
-      rgba(232, 121, 249, 0.12) 187.2deg 259.2deg,
-      transparent 259.2deg 360deg
-    );
-
-    // 3. 极致GPU加速：强制合成层 + 预渲染
-    transform-origin: center;
-    will-change: transform;
-    backface-visibility: hidden;
-    perspective: 1000px;
-    contain: layout paint; // 限制渲染范围
-    isolation: isolate; // 独立合成层
-    // 4. 动画：多帧插值 + 匀速 + 硬件加速
-    animation: login-auth-shell-spin 768s linear infinite;
+    width: min(120vw, 900px);
+    height: min(120vw, 900px);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 35% 40%, rgba(45, 212, 191, 0.14), transparent 55%),
+      radial-gradient(circle at 70% 60%, rgba(125, 211, 252, 0.16), transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(196, 181, 253, 0.1), transparent 58%);
+    filter: blur(40px);
+    animation: login-shell-blob-drift 28s $ease-out infinite;
     pointer-events: none;
     z-index: $z-bg-grid;
+    will-change: transform;
   }
 
   &::after {
@@ -51,64 +48,6 @@
     inset: 0;
     z-index: $z-bg-grid;
     pointer-events: none;
-    background-image:
-      linear-gradient(rgba(34, 211, 238, 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(232, 121, 249, 0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
-    mask-image: radial-gradient(ellipse 75% 65% at 50% 48%, black 12%, transparent 72%);
-  }
-}
-
-@keyframes login-auth-shell-spin {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-
-  8.33% {
-    transform: translate(-50%, -50%) rotate(30deg);
-  }
-
-  16.66% {
-    transform: translate(-50%, -50%) rotate(60deg);
-  }
-
-  25% {
-    transform: translate(-50%, -50%) rotate(90deg);
-  }
-
-  33.33% {
-    transform: translate(-50%, -50%) rotate(120deg);
-  }
-
-  41.66% {
-    transform: translate(-50%, -50%) rotate(150deg);
-  }
-
-  50% {
-    transform: translate(-50%, -50%) rotate(180deg);
-  }
-
-  58.33% {
-    transform: translate(-50%, -50%) rotate(210deg);
-  }
-
-  66.66% {
-    transform: translate(-50%, -50%) rotate(240deg);
-  }
-
-  75% {
-    transform: translate(-50%, -50%) rotate(270deg);
-  }
-
-  83.33% {
-    transform: translate(-50%, -50%) rotate(300deg);
-  }
-
-  91.66% {
-    transform: translate(-50%, -50%) rotate(330deg);
-  }
-
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
+    background: radial-gradient(ellipse 85% 70% at 50% 45%, transparent 30%, rgba(248, 250, 252, 0.5) 100%);
   }
 }

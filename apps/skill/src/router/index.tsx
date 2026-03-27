@@ -1,5 +1,8 @@
-import SkillHome from "@/pages/home";
+import { lazy } from "react";
 import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
+
+const SkillHome = lazy(() => import("@/pages/home"));
+
 const router = [
   {
     path: "/skill",

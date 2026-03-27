@@ -5,7 +5,7 @@ import AuthShell from "@/components/AuthShell";
 function Layouts() {
   return (
     <AuthShell>
-      <RouterProvider router={routers} />;
+      <RouterProvider router={routers} />
     </AuthShell>
   );
 }

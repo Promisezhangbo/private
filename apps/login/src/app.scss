@@ -2,16 +2,16 @@
 @use '@style-config/mixins' as m;
 @use './styles/auth-form';
 
-/* Login 应用级：赛博朋克底景 + 轻微扫描线（内容区 z-index 高于 ::after） */
+/* Login：小清新底景 — 薄荷 / 天蓝 / 淡紫的柔和渐变 */
 #app-root {
   @include m.sub-app-min-viewport;
   position: relative;
   background:
-    radial-gradient(ellipse 70% 45% at 15% 35%, rgba(34, 211, 238, 0.22), transparent 55%),
-    radial-gradient(ellipse 55% 40% at 88% 55%, rgba(232, 121, 249, 0.2), transparent 50%),
-    radial-gradient(ellipse 45% 35% at 50% 8%, rgba(244, 114, 182, 0.12), transparent 45%),
-    radial-gradient(ellipse 50% 80% at 50% 100%, rgba(79, 70, 229, 0.18), transparent 55%),
-    linear-gradient(155deg, #050810 0%, #0f0a1a 38%, #12082a 72%, #0a0f1c 100%);
+    radial-gradient(ellipse 85% 55% at 12% 28%, rgba(186, 230, 253, 0.75), transparent 52%),
+    radial-gradient(ellipse 70% 50% at 92% 18%, rgba(233, 213, 255, 0.55), transparent 48%),
+    radial-gradient(ellipse 65% 45% at 78% 88%, rgba(167, 243, 208, 0.45), transparent 50%),
+    radial-gradient(ellipse 55% 40% at 8% 85%, rgba(254, 215, 170, 0.28), transparent 45%),
+    linear-gradient(168deg, #f0fdf4 0%, #f8fafc 32%, #ecfeff 62%, #faf5ff 100%);
   background-attachment: fixed;
 
   &::after {
@@ -20,14 +20,8 @@
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      black-alpha(0.045) 2px,
-      black-alpha(0.045) 4px
-    );
-    opacity: 0.65;
-    mix-blend-mode: overlay;
+    opacity: 0.4;
+    background-image: radial-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
 }

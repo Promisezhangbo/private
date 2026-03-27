@@ -1,43 +1,16 @@
 @use "@style-config/variables" as *;
 
-/* 赛博朋克：深色霓虹面板、输入高亮、主 CTA 光晕 */
-$c-neon-cyan: #22d3ee;
-$c-neon-magenta: #e879f9;
-$c-neon-pink: #f472b6;
-$c-panel-bg: rgba(6, 10, 22, 0.78);
-$c-panel-border: rgba(34, 211, 238, 0.42);
-$c-text-bright: #f1f5f9;
-$c-text-dim: #94a3b8;
-$c-mono: ui-monospace, "SF Mono", "Cascadia Code", "Consolas", monospace;
-
-@keyframes login-neon-border-pulse {
-  0%,
-  100% {
-    box-shadow:
-      0 0 0 1px rgba(232, 121, 249, 0.2),
-      0 0 28px rgba(34, 211, 238, 0.14),
-      0 0 56px rgba(232, 121, 249, 0.08),
-      inset 0 0 50px rgba(34, 211, 238, 0.04);
-  }
-
-  50% {
-    box-shadow:
-      0 0 0 1px rgba(232, 121, 249, 0.35),
-      0 0 36px rgba(34, 211, 238, 0.22),
-      0 0 72px rgba(232, 121, 249, 0.12),
-      inset 0 0 60px rgba(232, 121, 249, 0.06);
-  }
-}
-
-@keyframes login-title-shimmer {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  100% {
-    background-position: 200% 50%;
-  }
-}
+/* 小清新：白卡片、柔和描边、薄荷/天蓝点缀 */
+$c-mint: #14b8a6;
+$c-mint-light: #5eead4;
+$c-sky: #38bdf8;
+$c-card: rgba(255, 255, 255, 0.88);
+$c-card-border: rgba(148, 163, 184, 0.22);
+$c-text: $slate-700;
+$c-text-muted: $slate-500;
+$c-input-bg: $slate-50;
+$c-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.08);
+$c-shadow-hover: 0 28px 55px -12px rgba(15, 23, 42, 0.1);
 
 .login-page {
   position: relative;
@@ -45,71 +18,38 @@ $c-mono: ui-monospace, "SF Mono", "Cascadia Code", "Consolas", monospace;
   width: 100%;
   max-width: 440px;
   margin-inline: auto;
-  filter: drop-shadow(0 0 28px rgba(34, 211, 238, 0.12))
-    drop-shadow(0 0 48px rgba(232, 121, 249, 0.08));
+  filter: none;
 
-  /* 玻璃卡片 + 霓虹边框 */
   .login-glass-card.ant-card {
     position: relative;
-    overflow: visible !important;
-    border-radius: 6px !important;
-    background: $c-panel-bg !important;
-    backdrop-filter: blur(20px) saturate(140%);
-    -webkit-backdrop-filter: blur(20px) saturate(140%);
-    border: 1px solid $c-panel-border !important;
-    animation: login-neon-border-pulse 5s $ease-out infinite;
+    overflow: hidden !important;
+    border-radius: $radius-md !important;
+    background: $c-card !important;
+    backdrop-filter: blur(20px) saturate(130%);
+    -webkit-backdrop-filter: blur(20px) saturate(130%);
+    border: 1px solid $c-card-border !important;
+    box-shadow: $c-shadow;
+    animation: none;
 
     &::before,
     &::after {
-      content: "";
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    &::before {
-      top: -1px;
-      left: -1px;
-      border-top: 2px solid $c-neon-cyan;
-      border-left: 2px solid $c-neon-cyan;
-      box-shadow: -1px -1px 10px rgba(34, 211, 238, 0.55);
-    }
-
-    &::after {
-      right: -1px;
-      bottom: -1px;
-      border-right: 2px solid $c-neon-magenta;
-      border-bottom: 2px solid $c-neon-magenta;
-      box-shadow: 1px 1px 10px rgba(232, 121, 249, 0.5);
+      display: none;
     }
 
     .ant-card-body {
       position: relative;
-      padding: clamp(28px, 5vw, 42px) !important;
-      border-radius: 6px;
+      padding: clamp(28px, 5vw, 40px) !important;
+      border-radius: $radius-md;
       overflow: hidden;
       background: linear-gradient(
         165deg,
-        rgba(34, 211, 238, 0.04) 0%,
-        transparent 42%,
-        rgba(232, 121, 249, 0.05) 100%
+        rgba(240, 253, 250, 0.35) 0%,
+        transparent 45%,
+        rgba(224, 242, 254, 0.25) 100%
       );
 
       &::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        opacity: 0.35;
-        background: repeating-linear-gradient(
-          0deg,
-          transparent,
-          transparent 3px,
-          rgba(34, 211, 238, 0.03) 3px,
-          rgba(34, 211, 238, 0.03) 4px
-        );
+        display: none;
       }
     }
   }
@@ -120,46 +60,36 @@ $c-mono: ui-monospace, "SF Mono", "Cascadia Code", "Consolas", monospace;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 0;
+    gap: 10px;
+    margin-bottom: 4px;
 
     &::before {
       content: "";
-      width: min(200px, 55vw);
+      width: min(120px, 40vw);
       height: 3px;
       margin-bottom: 2px;
-      border-radius: 2px;
-      background: linear-gradient(90deg, transparent, $c-neon-cyan, $c-neon-magenta, transparent);
-      box-shadow:
-        0 0 12px rgba(34, 211, 238, 0.65),
-        0 0 20px rgba(232, 121, 249, 0.35);
+      border-radius: $pill-radius;
+      background: linear-gradient(90deg, $c-mint-light, $c-sky, rgba(196, 181, 253, 0.9));
+      opacity: 0.85;
+      box-shadow: 0 2px 12px rgba(45, 212, 191, 0.2);
     }
 
     .ant-image-img {
-      filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.45)) hue-rotate(-8deg) saturate(1.15);
+      filter: none;
     }
 
     .login-brand-title,
     .login-register-title {
       margin: 0 !important;
-      font-weight: 800 !important;
-      letter-spacing: 0.06em;
-      line-height: 1.25 !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.02em;
+      line-height: 1.35 !important;
       text-transform: none;
-      background: linear-gradient(
-        92deg,
-        $c-neon-cyan 0%,
-        #a5f3fc 22%,
-        $c-neon-magenta 48%,
-        #f9a8d4 72%,
-        $c-neon-cyan 100%
-      );
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: login-title-shimmer 10s linear infinite;
-      filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.25));
+      background: none;
+      -webkit-text-fill-color: unset;
+      color: $c-text !important;
+      animation: none;
+      filter: none;
     }
   }
 
@@ -168,44 +98,45 @@ $c-mono: ui-monospace, "SF Mono", "Cascadia Code", "Consolas", monospace;
   }
 
   .ant-form-item {
-    margin-bottom: 20px;
+    margin-bottom: 18px;
   }
 
   .ant-form-item-label > label {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 14px;
-    letter-spacing: 0.02em;
-    color: #a5f3fc !important;
+    letter-spacing: 0.01em;
+    color: $slate-600 !important;
     height: auto !important;
-    text-shadow: 0 0 10px rgba(34, 211, 238, 0.2);
+    text-shadow: none;
   }
 
   .ant-form-item-required .ant-form-item-label > label::before {
-    color: $c-neon-pink !important;
-    text-shadow: 0 0 8px rgba(244, 114, 182, 0.85);
+    color: #f472b6 !important;
+    text-shadow: none;
   }
 
   .ant-input,
   .ant-input-affix-wrapper,
   .ant-input-password {
-    border-radius: 4px;
+    border-radius: 12px;
     padding: 10px 14px;
     font-size: 15px;
     line-height: 1.45;
-    color: $c-text-bright !important;
-    background: rgba(2, 6, 18, 0.92) !important;
+    color: $slate-800 !important;
+    background: $c-input-bg !important;
+    border-color: $slate-200 !important;
     transition:
       border-color $dur-fast $ease-out,
       box-shadow $dur-fast $ease-out,
       background-color $dur-fast $ease-out;
 
     &::placeholder {
-      color: rgba(148, 163, 184, 0.55) !important;
+      color: $slate-400 !important;
     }
 
     &:hover {
-      border-color: rgba(34, 211, 238, 0.45) !important;
-      background: rgba(8, 12, 28, 0.95) !important;
+      border-color: rgba(45, 212, 191, 0.45) !important;
+      background: white !important;
     }
   }
 
@@ -215,10 +146,10 @@ $c-mono: ui-monospace, "SF Mono", "Cascadia Code", "Consolas", monospace;
   }
 
   .ant-input-password-icon {
-    color: rgba(34, 211, 238, 0.5) !important;
+    color: $slate-400 !important;
 
     &:hover {
-      color: $c-neon-magenta !important;
+      color: $c-mint !important;
     }
   }
 
@@ -226,42 +157,39 @@ $c-mono: ui-monospace, "SF Mono", "Cascadia Code", "Consolas", monospace;
   .ant-input:focus,
   .ant-input-focused,
   .ant-input-password-focused {
-    border-color: $c-neon-cyan !important;
-    box-shadow:
-      0 0 0 1px rgba(232, 121, 249, 0.35),
-      0 0 16px rgba(34, 211, 238, 0.28),
-      0 0 28px rgba(232, 121, 249, 0.12) !important;
-    background: rgba(10, 14, 32, 0.98) !important;
+    border-color: rgba(45, 212, 191, 0.65) !important;
+    box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.12) !important;
+    background: white !important;
   }
 
   .ant-form-item-explain-error {
-    font-family: $c-mono;
+    font-family: inherit;
     font-size: 12px;
     margin-top: 6px;
-    color: #fda4af !important;
-    text-shadow: 0 0 8px rgba(244, 114, 182, 0.35);
+    color: #e11d48 !important;
+    text-shadow: none;
   }
 
   .ant-checkbox-wrapper {
     font-size: 13px;
-    color: $c-text-dim !important;
-    font-weight: 500;
+    color: $c-text-muted !important;
+    font-weight: 400;
   }
 
   .ant-checkbox-inner {
-    border-radius: 2px !important;
-    border-color: rgba(34, 211, 238, 0.45) !important;
-    background: rgba(2, 6, 18, 0.9) !important;
+    border-radius: 6px !important;
+    border-color: $slate-300 !important;
+    background: white !important;
   }
 
   .ant-checkbox-checked .ant-checkbox-inner {
-    background: linear-gradient(135deg, $c-neon-cyan, $c-neon-magenta) !important;
-    border-color: transparent !important;
-    box-shadow: 0 0 10px rgba(34, 211, 238, 0.45);
+    border-color: $c-mint !important;
+    background: $c-mint !important;
+    box-shadow: none;
   }
 
   .ant-checkbox:hover .ant-checkbox-inner {
-    border-color: $c-neon-magenta !important;
+    border-color: $c-mint-light !important;
   }
 
   .ant-btn-primary.ant-btn-lg {
@@ -269,47 +197,29 @@ $c-mono: ui-monospace, "SF Mono", "Cascadia Code", "Consolas", monospace;
     width: 100%;
     height: 48px;
     font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    font-weight: 600;
+    letter-spacing: 0.04em;
     border: none;
-    border-radius: 4px;
-    color: #0f172a !important;
-    background: linear-gradient(
-      105deg,
-      $c-neon-cyan 0%,
-      #67e8f9 35%,
-      #f0abfc 70%,
-      $c-neon-magenta 100%
-    ) !important;
-    box-shadow:
-      0 0 22px rgba(34, 211, 238, 0.45),
-      0 0 40px rgba(232, 121, 249, 0.25),
-      inset 0 1px 0 white-alpha(0.35);
+    border-radius: 12px;
+    color: white !important;
+    background: linear-gradient(135deg, $c-mint 0%, #0d9488 100%) !important;
+    box-shadow: 0 8px 24px -6px rgba(20, 184, 166, 0.45);
     transition:
       transform $dur-fast $ease-out,
       box-shadow $dur-fast $ease-out,
       filter $dur-fast $ease-out;
 
     &:hover {
-      transform: translateY(-2px) scale(1.01);
-      filter: brightness(1.08) saturate(1.05);
-      box-shadow:
-        0 0 30px rgba(34, 211, 238, 0.55),
-        0 0 52px rgba(232, 121, 249, 0.35),
-        inset 0 1px 0 white-alpha(0.45);
-      color: #0f172a !important;
-      background: linear-gradient(
-        105deg,
-        $c-neon-cyan 0%,
-        #67e8f9 35%,
-        #f0abfc 70%,
-        $c-neon-magenta 100%
-      ) !important;
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 12px 28px -6px rgba(20, 184, 166, 0.5);
+      color: white !important;
+      background: linear-gradient(135deg, #0d9488 0%, $c-mint 100%) !important;
     }
 
     &:active {
-      transform: translateY(0) scale(0.99);
-      filter: brightness(0.97);
+      transform: translateY(0);
+      filter: brightness(0.98);
     }
   }
 
@@ -324,21 +234,20 @@ $c-mono: ui-monospace, "SF Mono", "Cascadia Code", "Consolas", monospace;
 
     .ant-btn-default {
       font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      border-radius: 4px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      border-radius: 10px;
       height: 36px;
       padding-inline: 16px;
-      color: $c-neon-cyan !important;
-      border: 1px solid rgba(34, 211, 238, 0.45) !important;
-      background: rgba(2, 6, 18, 0.85) !important;
-      box-shadow: 0 0 12px rgba(34, 211, 238, 0.12);
+      color: $slate-600 !important;
+      border: 1px solid $slate-200 !important;
+      background: white !important;
+      box-shadow: none;
 
       &:hover {
-        border-color: $c-neon-magenta !important;
-        color: $c-neon-magenta !important;
-        background: rgba(20, 8, 32, 0.9) !important;
-        box-shadow: 0 0 18px rgba(232, 121, 249, 0.2);
+        border-color: rgba(45, 212, 191, 0.4) !important;
+        color: $c-mint !important;
+        background: $slate-50 !important;
       }
     }
   }
@@ -349,31 +258,28 @@ $c-mono: ui-monospace, "SF Mono", "Cascadia Code", "Consolas", monospace;
     margin-block: 4px 10px;
   }
 
-  /* 基态在前、:hover 在后，满足 no-descending-specificity（两处 .ant-btn-link 互不重叠） */
   .login-register-footer .ant-btn-link {
     font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    color: $c-neon-cyan !important;
-    text-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: $c-sky !important;
+    text-shadow: none;
   }
 
   .login-form-row .ant-btn-link {
     padding-inline: 8px;
     font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    color: $c-neon-magenta !important;
-    text-shadow: 0 0 12px rgba(232, 121, 249, 0.35);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: $c-mint !important;
+    text-shadow: none;
   }
 
   .login-register-footer .ant-btn-link:hover {
-    color: $c-neon-magenta !important;
-    text-shadow: 0 0 12px rgba(232, 121, 249, 0.35);
+    color: $c-mint !important;
   }
 
   .login-form-row .ant-btn-link:hover {
-    color: $c-neon-cyan !important;
-    text-shadow: 0 0 14px rgba(34, 211, 238, 0.45);
+    color: #0d9488 !important;
   }
 }
