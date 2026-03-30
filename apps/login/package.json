@@ -21,9 +21,10 @@
     "@packages/style-config": "workspace:*",
     "@packages/ts-config": "workspace:*",
     "@packages/vite-build-utils": "workspace:*",
-    "sass": "^1.93.3"
+    "@packages/openapi": "workspace:*"
   },
   "peerDependencies": {
+    "sass": "^1.93.3",
     "oxlint": "^1.57.0"
   }
 }

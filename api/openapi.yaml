@@ -890,6 +890,309 @@ components:
         - kb_slice_type
         - create_time
         - update_time
+    KnowledgeBaseListItem:
+      type: object
+      description: 知识库列表接口中单条记录（列表类响应 results 元素）
+      properties:
+        kb_id:
+          type: string
+          description: 知识库id
+        kb_describe:
+          type: string
+          description: 知识库描述
+        kb_name:
+          type: string
+          description: 知识库名字
+        file_size:
+          type: integer
+          format: int64
+          description: 文件总大小（字节，状态为SUCCESS的文件）
+        user_name:
+          type: string
+          nullable: true
+          description: 用户名
+        tenant_id:
+          type: integer
+          format: int32
+          nullable: true
+          description: 租户id
+        create_time:
+          type: string
+          format: date-time
+          nullable: true
+          description: 创建时间
+        update_time:
+          type: string
+          format: date-time
+          nullable: true
+          description: 更新时间
+    FileListItem:
+      type: object
+      description: 文件列表接口中单条记录
+      properties:
+        file_id:
+          type: string
+          description: 文件id
+        file_name:
+          type: string
+          description: 文件名称
+        tenant_id:
+          type: integer
+          format: int32
+          nullable: true
+          description: 租户id
+        kb_id:
+          type: string
+          nullable: true
+          description: 知识库id
+        folder_id:
+          type: integer
+          format: int32
+          nullable: true
+          description: 文件夹id
+        task_id:
+          type: string
+          nullable: true
+          description: 任务id
+        create_time:
+          type: string
+          format: date-time
+          nullable: true
+          description: 创建时间
+        update_time:
+          type: string
+          format: date-time
+          nullable: true
+          description: 更新时间
+        is_masked:
+          type: boolean
+          nullable: false
+          description: 是否检索状态被遮蔽，true为不可检索
+        is_download:
+          type: boolean
+          nullable: true
+          description: 是否可下载
+        chunk_count:
+          type: integer
+          format: int32
+          nullable: true
+          description: chunk数量
+        source_type:
+          type: string
+          description: 文件来源，default：LOCAL
+        file_type:
+          type: string
+          description: 文件类型
+    GetFileTaskFileItem:
+      type: object
+      description: 文件任务详情中分页文件列表的单条记录
+      properties:
+        file_id:
+          type: string
+          nullable: true
+          description: 文件id
+        file_name:
+          type: string
+          description: 文件名
+        file_size:
+          type: integer
+          format: int64
+          nullable: true
+          description: 文件大小（字节）
+        file_status:
+          type: string
+          description: 文件状态，可能的值：PROCESSING, SUCCESS, FAILED, ERROR
+        user_name:
+          type: string
+          nullable: true
+          description: 用户名
+        create_time:
+          type: string
+          format: date-time
+          nullable: true
+          description: 创建时间
+        update_time:
+          type: string
+          format: date-time
+          nullable: true
+          description: 更新时间
+        is_download:
+          type: boolean
+          nullable: true
+          description: 是否可下载
+    FileTaskListItem:
+      type: object
+      description: 文件处理任务列表中单条记录
+      properties:
+        task_id:
+          type: string
+          description: 任务id
+        kb_id:
+          type: string
+          nullable: true
+          description: 知识库id
+        task_status:
+          type: string
+          description: 任务状态，可能的值：PROCESSING, SUCCESS, FAILED, CANCELLED
+        file_total_num:
+          type: integer
+          format: int32
+          nullable: true
+          description: 文件总数
+        finished_file_num:
+          type: integer
+          format: int32
+          nullable: true
+          description: 已完成文件数
+        user_name:
+          type: string
+          nullable: true
+          description: 用户名
+        file_count:
+          type: integer
+          format: int32
+          description: 文件数量（状态为SUCCESS的文件）
+        file_size:
+          type: integer
+          format: int64
+          description: 文件总大小（字节，状态为SUCCESS的文件）
+        create_time:
+          type: string
+          format: date-time
+          nullable: true
+          description: 创建时间
+        source_type:
+          type: string
+          nullable: true
+          description: 文件来源，默认LOCAL
+    CreateChunkRequestItem:
+      type: object
+      description: 创建 chunk 时单条 chunk 数据
+      properties:
+        content:
+          type: string
+        type:
+          type: string
+        level_0:
+          type: string
+        level_1:
+          type: string
+        level_2:
+          type: string
+        level_3:
+          type: string
+        keywords:
+          type: array
+          items: { type: string }
+        summary:
+          type: string
+        majority_language:
+          type: string
+        page_num:
+          type: integer
+        questions:
+          type: array
+          items: { type: string }
+    ChunkListItemMetadata:
+      type: object
+      description: chunk 列表项中的元数据
+      properties:
+        type:
+          type: string
+        level_0:
+          type: string
+        level_1:
+          type: string
+        level_2:
+          type: string
+        level_3:
+          type: string
+        keywords:
+          nullable: true
+          description: 关键词
+          oneOf:
+            - type: array
+              items: { type: string }
+            - type: string
+        summary:
+          type: string
+        majority_language:
+          type: string
+        page_num:
+          type: integer
+          format: int32
+          nullable: true
+        questions:
+          nullable: true
+          description: 问题列表
+          oneOf:
+            - type: array
+              items: { type: string }
+            - type: string
+        file_id:
+          type: string
+        createTime:
+          type: string
+          format: date-time
+          nullable: true
+        modifyTime:
+          type: string
+          format: date-time
+          nullable: true
+    ChunkListItem:
+      type: object
+      description: chunk 列表接口中单条记录
+      properties:
+        chunkId:
+          type: string
+          description: chunk id
+        content:
+          type: string
+          description: chunk内容
+        file_id:
+          type: string
+          description: 文件id
+        createTime:
+          type: string
+          format: date-time
+          nullable: true
+          description: 创建时间
+        modifyTime:
+          type: string
+          format: date-time
+          nullable: true
+          description: 更新时间
+        metadata:
+          $ref: '#/components/schemas/ChunkListItemMetadata'
+    UpdateChunkRequestItem:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+        level_0:
+          type: string
+        level_1:
+          type: string
+        level_2:
+          type: string
+        level_3:
+          type: string
+        keywords:
+          type: array
+          items:
+            type: string
+        summary:
+          type: string
+        majority_language:
+          type: string
+        page_num:
+          type: integer
+          format: int32
+        questions:
+          type: array
+          items:
+            type: string
     File:
       type: object
       description: 文件表
@@ -1393,40 +1696,7 @@ components:
             results:
               type: array
               items:
-                type: object
-                properties:
-                  kb_id:
-                    type: string
-                    description: 知识库id
-                  kb_describe:
-                    type: string
-                    description: 知识库描述
-                  kb_name:
-                    type: string
-                    description: 知识库名字
-                  file_size:
-                    type: integer
-                    format: int64
-                    description: 文件总大小（字节，状态为SUCCESS的文件）
-                  user_name:
-                    type: string
-                    nullable: true
-                    description: 用户名
-                  tenant_id:
-                    type: integer
-                    format: int32
-                    nullable: true
-                    description: 租户id
-                  create_time:
-                    type: string
-                    format: date-time
-                    nullable: true
-                    description: 创建时间
-                  update_time:
-                    type: string
-                    format: date-time
-                    nullable: true
-                    description: 更新时间
+                $ref: '#/components/schemas/KnowledgeBaseListItem'
               description: 知识库列表
 
     CreateFileRequest:
@@ -1638,61 +1908,7 @@ components:
             results:
               type: array
               items:
-                type: object
-                properties:
-                  file_id:
-                    type: string
-                    description: 文件id
-                  file_name:
-                    type: string
-                    description: 文件名称
-                  tenant_id:
-                    type: integer
-                    format: int32
-                    nullable: true
-                    description: 租户id
-                  kb_id:
-                    type: string
-                    nullable: true
-                    description: 知识库id
-                  folder_id:
-                    type: integer
-                    format: int32
-                    nullable: true
-                    description: 文件夹id
-                  task_id:
-                    type: string
-                    nullable: true
-                    description: 任务id
-                  create_time:
-                    type: string
-                    format: date-time
-                    nullable: true
-                    description: 创建时间
-                  update_time:
-                    type: string
-                    format: date-time
-                    nullable: true
-                    description: 更新时间
-                  is_masked:
-                    type: boolean
-                    nullable: false
-                    description: 是否检索状态被遮蔽，true为不可检索
-                  is_download:
-                    type: boolean
-                    nullable: true
-                    description: 是否可下载
-                  chunk_count:
-                    type: integer
-                    format: int32
-                    nullable: true
-                    description: chunk数量
-                  source_type:
-                    type: string
-                    description: 文件来源，default：LOCAL
-                  file_type:
-                    type: string
-                    description: 文件类型
+                $ref: '#/components/schemas/FileListItem'
               description: 文件列表
     MoveFileRequest:
       type: object
@@ -1989,41 +2205,7 @@ components:
               type: array
               description: 分页的文件列表
               items:
-                type: object
-                properties:
-                  file_id:
-                    type: string
-                    nullable: true
-                    description: 文件id
-                  file_name:
-                    type: string
-                    description: 文件名
-                  file_size:
-                    type: integer
-                    format: int64
-                    nullable: true
-                    description: 文件大小（字节）
-                  file_status:
-                    type: string
-                    description: 文件状态，可能的值：PROCESSING, SUCCESS, FAILED, ERROR
-                  user_name:
-                    type: string
-                    nullable: true
-                    description: 用户名
-                  create_time:
-                    type: string
-                    format: date-time
-                    nullable: true
-                    description: 创建时间
-                  update_time:
-                    type: string
-                    format: date-time
-                    nullable: true
-                    description: 更新时间
-                  is_download:
-                    type: boolean
-                    nullable: true
-                    description: 是否可下载
+                $ref: '#/components/schemas/GetFileTaskFileItem'
     ListFileTasksRequest:
       type: object
       properties:
@@ -2081,49 +2263,7 @@ components:
             results:
               type: array
               items:
-                type: object
-                properties:
-                  task_id:
-                    type: string
-                    description: 任务id
-                  kb_id:
-                    type: string
-                    nullable: true
-                    description: 知识库id
-                  task_status:
-                    type: string
-                    description: 任务状态，可能的值：PROCESSING, SUCCESS, FAILED, CANCELLED
-                  file_total_num:
-                    type: integer
-                    format: int32
-                    nullable: true
-                    description: 文件总数
-                  finished_file_num:
-                    type: integer
-                    format: int32
-                    nullable: true
-                    description: 已完成文件数
-                  user_name:
-                    type: string
-                    nullable: true
-                    description: 用户名
-                  file_count:
-                    type: integer
-                    format: int32
-                    description: 文件数量（状态为SUCCESS的文件）
-                  file_size:
-                    type: integer
-                    format: int64
-                    description: 文件总大小（字节，状态为SUCCESS的文件）
-                  create_time:
-                    type: string
-                    format: date-time
-                    nullable: true
-                    description: 创建时间
-                  source_type:
-                    type: string
-                    nullable: true
-                    description: 文件来源，默认LOCAL
+                $ref: '#/components/schemas/FileTaskListItem'
               description: 文件处理任务列表
 
     UpdateFileMetadataRequest:
@@ -2183,32 +2323,7 @@ components:
         chunks:
           type: array
           items:
-            type: object
-            properties:
-              content:
-                type: string
-              type:
-                type: string
-              level_0:
-                type: string
-              level_1:
-                type: string
-              level_2:
-                type: string
-              level_3:
-                type: string
-              keywords:
-                type: array
-                items: { type: string }
-              summary:
-                type: string
-              majority_language:
-                type: string
-              page_num:
-                type: integer
-              questions:
-                type: array
-                items: { type: string }
+            $ref: '#/components/schemas/CreateChunkRequestItem'
 
         file_meta_data:
           type: object
@@ -2363,73 +2478,7 @@ components:
               type: array
               description: chunk列表
               items:
-                type: object
-                properties:
-                  chunkId:
-                    type: string
-                    description: chunk id
-                  content:
-                    type: string
-                    description: chunk内容
-                  file_id:
-                    type: string
-                    description: 文件id
-                  createTime:
-                    type: string
-                    format: date-time
-                    nullable: true
-                    description: 创建时间
-                  modifyTime:
-                    type: string
-                    format: date-time
-                    nullable: true
-                    description: 更新时间
-                  metadata:
-                    type: object
-                    description: chunk元数据
-                    properties:
-                      type:
-                        type: string
-                      level_0:
-                        type: string
-                      level_1:
-                        type: string
-                      level_2:
-                        type: string
-                      level_3:
-                        type: string
-                      keywords:
-                        nullable: true
-                        description: 关键词
-                        oneOf:
-                          - type: array
-                            items: { type: string }
-                          - type: string
-                      summary:
-                        type: string
-                      majority_language:
-                        type: string
-                      page_num:
-                        type: integer
-                        format: int32
-                        nullable: true
-                      questions:
-                        nullable: true
-                        description: 问题列表
-                        oneOf:
-                          - type: array
-                            items: { type: string }
-                          - type: string
-                      file_id:
-                        type: string
-                      createTime:
-                        type: string
-                        format: date-time
-                        nullable: true
-                      modifyTime:
-                        type: string
-                        format: date-time
-                        nullable: true
+                $ref: '#/components/schemas/ChunkListItem'
     UpdateChunkRequest:
       type: object
       properties:
@@ -2442,34 +2491,7 @@ components:
         chunks:
           type: array
           items:
-            type: object
-            additionalProperties: false
-            properties:
-              type:
-                type: string
-              level_0:
-                type: string
-              level_1:
-                type: string
-              level_2:
-                type: string
-              level_3:
-                type: string
-              keywords:
-                type: array
-                items:
-                  type: string
-              summary:
-                type: string
-              majority_language:
-                type: string
-              page_num:
-                type: integer
-                format: int32
-              questions:
-                type: array
-                items:
-                  type: string
+            $ref: '#/components/schemas/UpdateChunkRequestItem'
         overwrite:
           type: boolean
           default: true
