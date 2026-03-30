@@ -15,7 +15,6 @@ const menuMap = [
 ];
 
 const MENU_KEYS = menuMap.map((k) => k.key);
-const MICRO_APP_KEYS = new Set<string>(menuMap.filter((k) => k.sub).map((t) => t.key));
 
 function Layouts() {
   const { mode, setMode } = useAppTheme();
@@ -26,7 +25,12 @@ function Layouts() {
   const showHeader = currentMenu !== "login";
   /** 微前端子应用路由：内容区去 padding，背景铺满主应用可视区域 */
   const segment = location.pathname.split("/")[1] || "home";
-  const isMicroShell = MICRO_APP_KEYS.has(segment);
+  const isMicroShell = menuMap
+    .filter((k) => k.sub)
+    .map((t) => t.key)
+    .includes(segment);
+  /** 与对应子应用 #app-root 使用同一套 Blog 底纹变量，避免子应用 JS 未到前内容区短暂露出主壳渐变 */
+  const microBlogSurface = isMicroShell && ["resume", "blog", "skill"].includes(segment);
   /** 从 URL 第一段同步当前选中的菜单 */
   useEffect(() => {
     const seg = location.pathname.split("/")[1] || "home";
@@ -61,8 +65,10 @@ function Layouts() {
         </Header>
       )}
       <Content className={`main-content ${showHeader ? "" : " main-content--login-viewport"}`}>
-        <div className={`main-content--flush${isMicroShell ? " main-content--micro" : ""}`}>
-          <Outlet />
+        <div
+          className={`main-content--flush${isMicroShell ? " main-content--micro" : ""}${microBlogSurface ? " main-content--micro-placeholder-blog" : ""}`}
+        >
+          {segment === "home" && <Outlet />}
           <div id="sub-app" />
         </div>
       </Content>

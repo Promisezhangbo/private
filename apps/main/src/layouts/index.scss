@@ -40,6 +40,19 @@
           box-sizing: border-box;
         }
 
+        /* resume / blog / skill：占位与子应用 #app-root 渐变同源（网格仍由子应用挂载后画） */
+        &.main-content--micro-placeholder-blog #sub-app {
+          background:
+            radial-gradient(ellipse 110% 70% at 8% -10%, var(--sc-blog-bg-radial-a), transparent 52%),
+            radial-gradient(ellipse 90% 60% at 96% 12%, var(--sc-blog-bg-radial-b), transparent 48%),
+            linear-gradient(
+              180deg,
+              var(--sc-blog-bg-start) 0%,
+              var(--sc-blog-bg-mid) 42%,
+              var(--sc-blog-bg-end) 100%
+            );
+        }
+
         /* qiankun 包一层 wrapper，需参与 flex 高度传递 */
         #sub-app > * {
           flex: 1 1 0;
