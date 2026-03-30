@@ -133,6 +133,268 @@ export type KnowledgeBase = {
 };
 
 /**
+ * 知识库列表接口中单条记录（列表类响应 results 元素）
+ */
+export type KnowledgeBaseListItem = {
+    /**
+     * 知识库id
+     */
+    kb_id?: string;
+    /**
+     * 知识库描述
+     */
+    kb_describe?: string;
+    /**
+     * 知识库名字
+     */
+    kb_name?: string;
+    /**
+     * 文件总大小（字节，状态为SUCCESS的文件）
+     */
+    file_size?: number;
+    /**
+     * 用户名
+     */
+    user_name?: string | null;
+    /**
+     * 租户id
+     */
+    tenant_id?: number | null;
+    /**
+     * 创建时间
+     */
+    create_time?: string | null;
+    /**
+     * 更新时间
+     */
+    update_time?: string | null;
+};
+
+/**
+ * 文件列表接口中单条记录
+ */
+export type FileListItem = {
+    /**
+     * 文件id
+     */
+    file_id?: string;
+    /**
+     * 文件名称
+     */
+    file_name?: string;
+    /**
+     * 租户id
+     */
+    tenant_id?: number | null;
+    /**
+     * 知识库id
+     */
+    kb_id?: string | null;
+    /**
+     * 文件夹id
+     */
+    folder_id?: number | null;
+    /**
+     * 任务id
+     */
+    task_id?: string | null;
+    /**
+     * 创建时间
+     */
+    create_time?: string | null;
+    /**
+     * 更新时间
+     */
+    update_time?: string | null;
+    /**
+     * 是否检索状态被遮蔽，true为不可检索
+     */
+    is_masked?: boolean;
+    /**
+     * 是否可下载
+     */
+    is_download?: boolean | null;
+    /**
+     * chunk数量
+     */
+    chunk_count?: number | null;
+    /**
+     * 文件来源，default：LOCAL
+     */
+    source_type?: string;
+    /**
+     * 文件类型
+     */
+    file_type?: string;
+};
+
+/**
+ * 文件任务详情中分页文件列表的单条记录
+ */
+export type GetFileTaskFileItem = {
+    /**
+     * 文件id
+     */
+    file_id?: string | null;
+    /**
+     * 文件名
+     */
+    file_name?: string;
+    /**
+     * 文件大小（字节）
+     */
+    file_size?: number | null;
+    /**
+     * 文件状态，可能的值：PROCESSING, SUCCESS, FAILED, ERROR
+     */
+    file_status?: string;
+    /**
+     * 用户名
+     */
+    user_name?: string | null;
+    /**
+     * 创建时间
+     */
+    create_time?: string | null;
+    /**
+     * 更新时间
+     */
+    update_time?: string | null;
+    /**
+     * 是否可下载
+     */
+    is_download?: boolean | null;
+};
+
+/**
+ * 文件处理任务列表中单条记录
+ */
+export type FileTaskListItem = {
+    /**
+     * 任务id
+     */
+    task_id?: string;
+    /**
+     * 知识库id
+     */
+    kb_id?: string | null;
+    /**
+     * 任务状态，可能的值：PROCESSING, SUCCESS, FAILED, CANCELLED
+     */
+    task_status?: string;
+    /**
+     * 文件总数
+     */
+    file_total_num?: number | null;
+    /**
+     * 已完成文件数
+     */
+    finished_file_num?: number | null;
+    /**
+     * 用户名
+     */
+    user_name?: string | null;
+    /**
+     * 文件数量（状态为SUCCESS的文件）
+     */
+    file_count?: number;
+    /**
+     * 文件总大小（字节，状态为SUCCESS的文件）
+     */
+    file_size?: number;
+    /**
+     * 创建时间
+     */
+    create_time?: string | null;
+    /**
+     * 文件来源，默认LOCAL
+     */
+    source_type?: string | null;
+};
+
+/**
+ * 创建 chunk 时单条 chunk 数据
+ */
+export type CreateChunkRequestItem = {
+    content?: string;
+    type?: string;
+    level_0?: string;
+    level_1?: string;
+    level_2?: string;
+    level_3?: string;
+    keywords?: Array<string>;
+    summary?: string;
+    majority_language?: string;
+    page_num?: number;
+    questions?: Array<string>;
+};
+
+/**
+ * chunk 列表项中的元数据
+ */
+export type ChunkListItemMetadata = {
+    type?: string;
+    level_0?: string;
+    level_1?: string;
+    level_2?: string;
+    level_3?: string;
+    /**
+     * 关键词
+     */
+    keywords?: Array<string> | string | null;
+    summary?: string;
+    majority_language?: string;
+    page_num?: number | null;
+    /**
+     * 问题列表
+     */
+    questions?: Array<string> | string | null;
+    file_id?: string;
+    createTime?: string | null;
+    modifyTime?: string | null;
+};
+
+/**
+ * chunk 列表接口中单条记录
+ */
+export type ChunkListItem = {
+    /**
+     * chunk id
+     */
+    chunkId?: string;
+    /**
+     * chunk内容
+     */
+    content?: string;
+    /**
+     * 文件id
+     */
+    file_id?: string;
+    /**
+     * 创建时间
+     */
+    createTime?: string | null;
+    /**
+     * 更新时间
+     */
+    modifyTime?: string | null;
+    metadata?: ChunkListItemMetadata;
+};
+
+export type UpdateChunkRequestItem = {
+    type?: string;
+    level_0?: string;
+    level_1?: string;
+    level_2?: string;
+    level_3?: string;
+    keywords?: Array<string>;
+    summary?: string;
+    majority_language?: string;
+    page_num?: number;
+    questions?: Array<string>;
+};
+
+/**
  * 文件表
  */
 export type File = {
@@ -620,40 +882,7 @@ export type ListKnowledgeBasesResponse = BaseApiResponse & {
     /**
      * 知识库列表
      */
-    results?: Array<{
-        /**
-         * 知识库id
-         */
-        kb_id?: string;
-        /**
-         * 知识库描述
-         */
-        kb_describe?: string;
-        /**
-         * 知识库名字
-         */
-        kb_name?: string;
-        /**
-         * 文件总大小（字节，状态为SUCCESS的文件）
-         */
-        file_size?: number;
-        /**
-         * 用户名
-         */
-        user_name?: string | null;
-        /**
-         * 租户id
-         */
-        tenant_id?: number | null;
-        /**
-         * 创建时间
-         */
-        create_time?: string | null;
-        /**
-         * 更新时间
-         */
-        update_time?: string | null;
-    }>;
+    results?: Array<KnowledgeBaseListItem>;
 };
 
 export type CreateFileRequest = {
@@ -855,60 +1084,7 @@ export type ListFileResponse = BaseApiResponse & {
     /**
      * 文件列表
      */
-    results?: Array<{
-        /**
-         * 文件id
-         */
-        file_id?: string;
-        /**
-         * 文件名称
-         */
-        file_name?: string;
-        /**
-         * 租户id
-         */
-        tenant_id?: number | null;
-        /**
-         * 知识库id
-         */
-        kb_id?: string | null;
-        /**
-         * 文件夹id
-         */
-        folder_id?: number | null;
-        /**
-         * 任务id
-         */
-        task_id?: string | null;
-        /**
-         * 创建时间
-         */
-        create_time?: string | null;
-        /**
-         * 更新时间
-         */
-        update_time?: string | null;
-        /**
-         * 是否检索状态被遮蔽，true为不可检索
-         */
-        is_masked?: boolean;
-        /**
-         * 是否可下载
-         */
-        is_download?: boolean | null;
-        /**
-         * chunk数量
-         */
-        chunk_count?: number | null;
-        /**
-         * 文件来源，default：LOCAL
-         */
-        source_type?: string;
-        /**
-         * 文件类型
-         */
-        file_type?: string;
-    }>;
+    results?: Array<FileListItem>;
 };
 
 export type MoveFileRequest = {
@@ -1189,40 +1365,7 @@ export type GetFileTaskResponse = BaseApiResponse & {
     /**
      * 分页的文件列表
      */
-    files?: Array<{
-        /**
-         * 文件id
-         */
-        file_id?: string | null;
-        /**
-         * 文件名
-         */
-        file_name?: string;
-        /**
-         * 文件大小（字节）
-         */
-        file_size?: number | null;
-        /**
-         * 文件状态，可能的值：PROCESSING, SUCCESS, FAILED, ERROR
-         */
-        file_status?: string;
-        /**
-         * 用户名
-         */
-        user_name?: string | null;
-        /**
-         * 创建时间
-         */
-        create_time?: string | null;
-        /**
-         * 更新时间
-         */
-        update_time?: string | null;
-        /**
-         * 是否可下载
-         */
-        is_download?: boolean | null;
-    }>;
+    files?: Array<GetFileTaskFileItem>;
 };
 
 export type ListFileTasksRequest = {
@@ -1278,48 +1421,7 @@ export type ListFileTasksResponse = BaseApiResponse & {
     /**
      * 文件处理任务列表
      */
-    results?: Array<{
-        /**
-         * 任务id
-         */
-        task_id?: string;
-        /**
-         * 知识库id
-         */
-        kb_id?: string | null;
-        /**
-         * 任务状态，可能的值：PROCESSING, SUCCESS, FAILED, CANCELLED
-         */
-        task_status?: string;
-        /**
-         * 文件总数
-         */
-        file_total_num?: number | null;
-        /**
-         * 已完成文件数
-         */
-        finished_file_num?: number | null;
-        /**
-         * 用户名
-         */
-        user_name?: string | null;
-        /**
-         * 文件数量（状态为SUCCESS的文件）
-         */
-        file_count?: number;
-        /**
-         * 文件总大小（字节，状态为SUCCESS的文件）
-         */
-        file_size?: number;
-        /**
-         * 创建时间
-         */
-        create_time?: string | null;
-        /**
-         * 文件来源，默认LOCAL
-         */
-        source_type?: string | null;
-    }>;
+    results?: Array<FileTaskListItem>;
 };
 
 /**
@@ -1359,19 +1461,7 @@ export type GetFileMetadataResponse = BaseApiResponse & {
  */
 export type CreateChunkRequest = {
     dataset_name: string;
-    chunks: Array<{
-        content?: string;
-        type?: string;
-        level_0?: string;
-        level_1?: string;
-        level_2?: string;
-        level_3?: string;
-        keywords?: Array<string>;
-        summary?: string;
-        majority_language?: string;
-        page_num?: number;
-        questions?: Array<string>;
-    }>;
+    chunks: Array<CreateChunkRequestItem>;
     file_meta_data?: {
         [key: string]: unknown;
     };
@@ -1472,69 +1562,13 @@ export type ListChunkResponse = BaseApiResponse & {
     /**
      * chunk列表
      */
-    results?: Array<{
-        /**
-         * chunk id
-         */
-        chunkId?: string;
-        /**
-         * chunk内容
-         */
-        content?: string;
-        /**
-         * 文件id
-         */
-        file_id?: string;
-        /**
-         * 创建时间
-         */
-        createTime?: string | null;
-        /**
-         * 更新时间
-         */
-        modifyTime?: string | null;
-        /**
-         * chunk元数据
-         */
-        metadata?: {
-            type?: string;
-            level_0?: string;
-            level_1?: string;
-            level_2?: string;
-            level_3?: string;
-            /**
-             * 关键词
-             */
-            keywords?: Array<string> | string | null;
-            summary?: string;
-            majority_language?: string;
-            page_num?: number | null;
-            /**
-             * 问题列表
-             */
-            questions?: Array<string> | string | null;
-            file_id?: string;
-            createTime?: string | null;
-            modifyTime?: string | null;
-        };
-    }>;
+    results?: Array<ChunkListItem>;
 };
 
 export type UpdateChunkRequest = {
     dataset_name: string;
     chunk_ids: Array<string>;
-    chunks: Array<{
-        type?: string;
-        level_0?: string;
-        level_1?: string;
-        level_2?: string;
-        level_3?: string;
-        keywords?: Array<string>;
-        summary?: string;
-        majority_language?: string;
-        page_num?: number;
-        questions?: Array<string>;
-    }>;
+    chunks: Array<UpdateChunkRequestItem>;
     overwrite?: boolean;
 };
 

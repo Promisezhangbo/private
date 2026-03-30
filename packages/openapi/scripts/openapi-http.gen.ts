@@ -11,7 +11,7 @@ export type OpenApiAuthState = {
 };
 
 export const openApiSettings: OpenApiAuthState = {
-  BASE: 'http://api.yuniverse.com',
+  BASE: '',
   WITH_CREDENTIALS: false,
 };
 
@@ -65,10 +65,30 @@ export function openApiSilent<T>(fn: () => T | Promise<T>): Promise<T> {
   return Promise.resolve().then(fn).finally(() => silent--);
 }
 
+/** 仅当 `url` 尚未包含 BASE 的路径前缀时才设 axios `baseURL`，避免 Hey API 已把 `client.baseURL` 拼进 `url` 后重复一段（如 `/proxy/proxy/...`）。 */
+function shouldApplyAxiosBaseURL(url: string, base: string): boolean {
+  if (!url || /^https?:\/\//i.test(url) || !base) return false;
+  const path = url.startsWith('/') ? url : `/${url}`;
+  if (/^https?:\/\//i.test(base)) {
+    try {
+      const p = new URL(base).pathname.replace(/\/$/, '');
+      if (p && p !== '/' && (path === p || path.startsWith(`${p}/`))) return false;
+    } catch {
+      /* ignore */
+    }
+    return true;
+  }
+  const b = base.replace(/\/$/, '');
+  if (!b) return true;
+  return !(path === b || path.startsWith(`${b}/`));
+}
+
 async function applyAuth(config: InternalAxiosRequestConfig): Promise<void> {
   config.withCredentials = openApiSettings.WITH_CREDENTIALS;
   const url = config.url ?? '';
-  if (url && !/^https?:\/\//i.test(url)) config.baseURL = openApiSettings.BASE;
+  if (shouldApplyAxiosBaseURL(url, openApiSettings.BASE)) {
+    config.baseURL = openApiSettings.BASE;
+  }
   if (!config.headers) config.headers = new AxiosHeaders();
   const h = config.headers instanceof AxiosHeaders ? config.headers : AxiosHeaders.from(config.headers);
   const tok = openApiSettings.TOKEN;

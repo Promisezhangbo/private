@@ -2,7 +2,7 @@
 
 import { type ClientOptions, type Config, createClient, createConfig } from './client/index.js';
 import type { ClientOptions as ClientOptions2 } from './types.gen.js';
-import { openApiHttpClient } from '../open-api-http-client';
+import { openApiHttpClient } from './openapi-http.gen.js';
 
 /**
  * The `createClientConfig()` function will be called on client initialization
