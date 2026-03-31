@@ -1,8 +1,13 @@
+/**
+ * Axios 运行时模板（会被复制到每个 `*-gen/openapi-http.gen.ts`）。
+ * 目的：每个 YAML 独立一套 axios/settings/client，不串 BASE/token/headers。
+ */
 import axios, { AxiosHeaders, type AxiosError, type InternalAxiosRequestConfig } from 'axios';
 
 type Headers = Record<string, string>;
 type MaybeFn<T> = T | ((x: unknown) => T | Promise<T>);
 
+/** 每个 spec 独立维护的“可变运行时配置”（被请求拦截器读取）。 */
 export type OpenApiAuthState = {
   BASE: string;
   WITH_CREDENTIALS: boolean;
@@ -10,15 +15,16 @@ export type OpenApiAuthState = {
   HEADERS?: Headers | MaybeFn<Headers | undefined>;
 };
 
+/** 运行时配置容器（`*-gen/index.ts` 会在初始化时写入这些字段）。 */
 export const openApiSettings: OpenApiAuthState = {
   BASE: '',
   WITH_CREDENTIALS: false,
 };
 
 export type OpenApiErrorReporter = (e: unknown) => void;
-
 export type OpenApiErrorHandlingOptions = { reporter?: OpenApiErrorReporter; debounceMs?: number };
 
+// --- 全局错误上报（去抖） ---
 let reporter: OpenApiErrorReporter | undefined;
 let debounceMs = 200;
 let pending: unknown;
@@ -50,14 +56,17 @@ function report(error: unknown): void {
   }, debounceMs);
 }
 
+// --- axios 扩展：允许单次请求跳过全局错误上报 ---
 declare module 'axios' {
   export interface AxiosRequestConfig {
     skipGlobalErrorHandler?: boolean;
   }
 }
 
+/** 该 spec 专属的 axios 实例（SDK 的 client.gen 会被注入使用它）。 */
 export const openApiHttpClient = axios.create();
 
+// --- 静默区间：执行期间不触发全局 error reporter ---
 let silent = 0;
 
 export function openApiSilent<T>(fn: () => T | Promise<T>): Promise<T> {
@@ -65,7 +74,7 @@ export function openApiSilent<T>(fn: () => T | Promise<T>): Promise<T> {
   return Promise.resolve().then(fn).finally(() => silent--);
 }
 
-/** 仅当 `url` 尚未包含 BASE 的路径前缀时才设 axios `baseURL`，避免 Hey API 已把 `client.baseURL` 拼进 `url` 后重复一段（如 `/proxy/proxy/...`）。 */
+/** 避免重复拼接 baseURL 导致路径重复。 */
 function shouldApplyAxiosBaseURL(url: string, base: string): boolean {
   if (!url || /^https?:\/\//i.test(url) || !base) return false;
   const path = url.startsWith('/') ? url : `/${url}`;
@@ -83,19 +92,24 @@ function shouldApplyAxiosBaseURL(url: string, base: string): boolean {
   return !(path === b || path.startsWith(`${b}/`));
 }
 
+/** 将 token/headers/baseURL/withCredentials 注入到每一次 axios 请求配置里。 */
 async function applyAuth(config: InternalAxiosRequestConfig): Promise<void> {
   config.withCredentials = openApiSettings.WITH_CREDENTIALS;
+
   const url = config.url ?? '';
   if (shouldApplyAxiosBaseURL(url, openApiSettings.BASE)) {
     config.baseURL = openApiSettings.BASE;
   }
+
   if (!config.headers) config.headers = new AxiosHeaders();
   const h = config.headers instanceof AxiosHeaders ? config.headers : AxiosHeaders.from(config.headers);
+
   const tok = openApiSettings.TOKEN;
   const token = typeof tok === 'function' ? await tok(undefined) : tok;
   if (!h.get('Authorization') && typeof token === 'string' && token.length > 0) {
     h.set('Authorization', `Bearer ${token}`);
   }
+
   const hdrSrc = openApiSettings.HEADERS;
   const extra = typeof hdrSrc === 'function' ? await hdrSrc(undefined) : hdrSrc;
   if (extra && typeof extra === 'object') {
@@ -119,3 +133,4 @@ openApiHttpClient.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+

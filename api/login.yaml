@@ -1,0 +1,4802 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+  title: ""
+  version: 0.0.1
+paths:
+  /v1/dataset/algos:
+    get:
+      tags:
+        - DatasetService
+      summary: list algos
+      operationId: DatasetService_ListAlgos
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListAlgosResponse"
+  /v1/dataset/tags:
+    get:
+      tags:
+        - DatasetService
+      summary: get all dataset tags
+      description: Update the knowledge base, currently supporting updates to the name,
+      operationId: DatasetService_AllDatasetTags
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllDatasetTagsResponse"
+  /v1/datasets:
+    get:
+      tags:
+        - DatasetService
+      summary: list datasets
+      description: |-
+        Get the list of knowledge bases accessible to you，
+              and filter quickly to find a specific knowledge base.
+      operationId: DatasetService_ListDatasets
+      parameters:
+        - name: page_token
+          in: query
+          description: The starting value of the current page. Token received from previous response to continue pagination. Leave empty for the first page.
+          schema:
+            type: string
+        - name: page_size
+          in: query
+          description: Page size for this request. Maximum number of datasets to return per page. Must be less than or equal to 100 for performance reasons.
+          schema:
+            type: integer
+            format: int32
+        - name: order_by
+          in: query
+          description: 'Sorting keyword, like: create_time desc. Field to sort by and direction. Examples: "create_time desc", "display_name asc", "update_time desc"'
+          schema:
+            type: string
+        - name: keyword
+          in: query
+          description: Filter by keyword. Search term to filter datasets by name or description. Performs text search across dataset metadata.
+          schema:
+            type: string
+        - name: tags
+          in: query
+          description: Filter by tag list. Only return datasets that have all specified tags. Multiple tags create an AND condition for filtering.
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListDatasetsResponse"
+    post:
+      tags:
+        - DatasetService
+      summary: create dataset
+      description: |-
+        Create a knowledge base dataset, including name, description, and
+         cover.
+      operationId: DatasetService_CreateDataset
+      parameters:
+        - name: dataset_id
+          in: query
+          description: Dataset id. Optional custom identifier for the dataset. If not provided, the system will generate a unique ID automatically.
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Dataset"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dataset"
+  /v1/datasets/{dataset}:
+    get:
+      tags:
+        - DatasetService
+      summary: get dataset
+      description: Get knowledge base details.
+      operationId: DatasetService_GetDataset
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dataset"
+    delete:
+      tags:
+        - DatasetService
+      summary: delete dataset
+      description: The manager can delete knowledge bases that are no longer needed.
+      operationId: DatasetService_DeleteDataset
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content: {}
+    patch:
+      tags:
+        - DatasetService
+      summary: update dataset
+      description: |-
+        Update the knowledge base, currently supporting updates to the name,
+         description, and cover image.
+      operationId: DatasetService_UpdateDataset
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: update_mask
+          in: query
+          description: UThe mechanism used to indicate which fields are to be modified in an update operation.
+          schema:
+            type: string
+            format: field-mask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Dataset"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dataset"
+  /v1/datasets/{dataset}/documents:
+    get:
+      tags:
+        - DocumentService
+      summary: get document list
+      description: |-
+        Get the list of document. Display the knowledge directory structure
+          within the knowledge base,
+          supporting multi-level directory presentation of knowledge.
+      operationId: DocumentService_ListDocuments
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: order_by
+          in: query
+          description: Sorting criteria, e.g., "create_time desc"
+          schema:
+            type: string
+        - name: page_token
+          in: query
+          description: Pagination token for the next page
+          schema:
+            type: string
+        - name: page_size
+          in: query
+          description: Number of documents per page (max 1000)
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListDocumentsResponse"
+    post:
+      tags:
+        - DocumentService
+      summary: create document
+      description: Create a document, currently supports creating folders.
+      operationId: DocumentService_CreateDocument
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: document_id
+          in: query
+          description: Document ID, if not provided will be auto-generated
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Doc"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Doc"
+  /v1/datasets/{dataset}/documents/{document}:
+    get:
+      tags:
+        - DocumentService
+      summary: get document
+      description: |-
+        Get knowledge document details,
+         including knowledge name, type, size, token count, updater,
+         last updated time, and actions.
+      operationId: DocumentService_GetDocument
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: document
+          in: path
+          description: The document id.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Doc"
+    delete:
+      tags:
+        - DocumentService
+      summary: delete document
+      description: |-
+        Deleting this knowledge file triggers a confirmation popup.
+          When deleting the parent knowledge, all associated child knowledge
+          will also be removed.
+      operationId: DocumentService_DeleteDocument
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: document
+          in: path
+          description: The document id.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content: {}
+    patch:
+      tags:
+        - DocumentService
+      summary: update document
+      description: |-
+        Update existing knowledge content, with support for replacing files by
+         reuploading for file types, and for synchronously replacing
+         individual web pages for web page types.
+      operationId: DocumentService_UpdateDocument
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: document
+          in: path
+          description: The document id.
+          required: true
+          schema:
+            type: string
+        - name: update_mask
+          in: query
+          description: Field mask indicating which fields to update
+          schema:
+            type: string
+            format: field-mask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Doc"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Doc"
+  /v1/datasets/{dataset}/documents/{document}/segments:
+    get:
+      tags:
+        - SegmentService
+      summary: get segment list
+      description: |-
+        Get detailed information about the segment list of specified knowledge
+         document in the knowledge base.
+      operationId: SegmentService_ListSegments
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: document
+          in: path
+          description: The document id.
+          required: true
+          schema:
+            type: string
+        - name: page_token
+          in: query
+          description: The starting value of the current page.
+          schema:
+            type: string
+        - name: page_size
+          in: query
+          description: Page size for this request.
+          schema:
+            type: integer
+            format: int32
+        - name: order_by
+          in: query
+          description: "Sorting keyword, like: create_time desc."
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListSegmentsResponse"
+  /v1/datasets/{dataset}/documents/{document}/segments/{segment}:
+    get:
+      tags:
+        - SegmentService
+      summary: get segment
+      description: |-
+        Get detailed information about the segment of knowledge document in
+         the knowledge base.
+      operationId: SegmentService_GetSegment
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: document
+          in: path
+          description: The document id.
+          required: true
+          schema:
+            type: string
+        - name: segment
+          in: path
+          description: The segment id.
+          required: true
+          schema:
+            type: string
+        - name: group
+          in: query
+          description: group
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Segment"
+  /v1/datasets/{dataset}/documents/{document}/segments/{segment}:edit:
+    post:
+      tags:
+        - SegmentService
+      summary: Edit a segment
+      description: Edit a segment's details.
+      operationId: SegmentService_EditSegment
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: document
+          in: path
+          description: The document id.
+          required: true
+          schema:
+            type: string
+        - name: segment
+          in: path
+          description: The segment id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditSegmentRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EditSegmentResponse"
+  /v1/datasets/{dataset}/documents/{document}/segments/{segment}:modifyStatus:
+    post:
+      tags:
+        - SegmentService
+      summary: update segment state
+      description: Update the state of a segment.
+      operationId: SegmentService_ModifyStatus
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: document
+          in: path
+          description: The document id.
+          required: true
+          schema:
+            type: string
+        - name: segment
+          in: path
+          description: The segment id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ModifyStatusRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/datasets/{dataset}/documents/{document}/segments:search:
+    post:
+      tags:
+        - SegmentService
+      summary: search segment list
+      description: |-
+        Search detailed information about the segment list of specified knowledge
+         document in the knowledge base.
+      operationId: SegmentService_SearchSegments
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: document
+          in: path
+          description: The document id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchSegmentsRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListSegmentsResponse"
+  /v1/datasets/{dataset}/documents/{document}/table/meta:
+    get:
+      tags:
+        - TableService
+      summary: get table meta
+      description: Get table meta details,
+      operationId: TableService_GetMeta
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: document
+          in: path
+          description: The document id.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Meta"
+  /v1/datasets/{dataset}/documents/{document}/table:add:
+    post:
+      tags:
+        - DocumentService
+      summary: add table data
+      description: Add new row data to document table
+      operationId: DocumentService_AddTableData
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: document
+          in: path
+          description: The document id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddTableDataRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/datasets/{dataset}/documents/{document}/table:batchDelete:
+    post:
+      tags:
+        - DocumentService
+      summary: batch delete table data
+      description: Batch delete rows from document table
+      operationId: DocumentService_BatchDeleteTableData
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: document
+          in: path
+          description: The document id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BatchDeleteTableDataRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/datasets/{dataset}/documents/{document}/table:modify:
+    post:
+      tags:
+        - DocumentService
+      summary: update table data
+      description: Modify existing row data in document table
+      operationId: DocumentService_ModifyTableData
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: document
+          in: path
+          description: The document id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ModifyTableDataRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/datasets/{dataset}/documents/{document}/table:search:
+    get:
+      tags:
+        - DocumentService
+      summary: search table data
+      description: Search document table data
+      operationId: DocumentService_SearchTableData
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: document
+          in: path
+          description: The document id.
+          required: true
+          schema:
+            type: string
+        - name: keyword
+          in: query
+          description: Search keyword for filtering table rows
+          schema:
+            type: string
+        - name: page_token
+          in: query
+          description: Pagination token for the next page
+          schema:
+            type: string
+        - name: page_size
+          in: query
+          description: Number of rows per page (max 1000)
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchTableDataResponse"
+  /v1/datasets/{dataset}/documents:search:
+    post:
+      tags:
+        - DocumentService
+      summary: search documents list
+      description: |-
+        Search the job list for importing knowledge, including in-progress,
+         completed, and failed knowledge import jobs.
+      operationId: DocumentService_SearchDocuments
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchDocumentsRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListDocumentsResponse"
+  /v1/datasets/{dataset}/group/{group}/documents/{document}/segments/{segment}:
+    delete:
+      tags:
+        - SegmentService
+      summary: delete segment
+      description: |-
+        The knowledge base manager can delete segments of knowledge that are
+         no longer needed.
+      operationId: SegmentService_DeleteSegment
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: group
+          in: path
+          description: The group id.
+          required: true
+          schema:
+            type: string
+        - name: document
+          in: path
+          description: The document id.
+          required: true
+          schema:
+            type: string
+        - name: segment
+          in: path
+          description: The segment id.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/datasets/{dataset}/jobs:
+    get:
+      tags:
+        - JobService
+      summary: get job list
+      description: |-
+        Get the job list for importing knowledge, including in-progress,
+         completed, and failed knowledge import jobs.
+      operationId: JobService_ListJobs
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: order_by
+          in: query
+          description: "Sorting keyword, like: create_time desc."
+          schema:
+            type: string
+        - name: page_token
+          in: query
+          description: The starting value of the current page.
+          schema:
+            type: string
+        - name: page_size
+          in: query
+          description: Page size for this request.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListJobsResponse"
+    post:
+      tags:
+        - JobService
+      summary: create job
+      description: |-
+        Create a knowledge import job where users can import local knowledge,
+         web knowledge, Notion knowledge, Ones knowledge, and Feishu knowledge.
+         The system will automatically extract the content of files as knowledge
+         entries.
+      operationId: JobService_CreateJob
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: job_id
+          in: query
+          description: Job id
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Job"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+  /v1/datasets/{dataset}/jobs/{job}:
+    get:
+      tags:
+        - JobService
+      summary: get job detail
+      description: |-
+        Get knowledge import job details to check the progress of knowledge
+         parsing.
+      operationId: JobService_GetJob
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: job
+          in: path
+          description: The job id.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+    delete:
+      tags:
+        - JobService
+      summary: delete job
+      operationId: JobService_DeleteJob
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: job
+          in: path
+          description: The job id.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/datasets/{dataset}/jobs/{job}:callback:
+    post:
+      tags:
+        - JobService
+      summary: callback job
+      description: |-
+        Callback for knowledge import tasks, provided to the data processing
+         service for returning parsing information once the knowledge parsing task
+         is completed.
+      operationId: JobService_CallbackJob
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: job
+          in: path
+          description: The job id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CallbackJobRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/datasets/{dataset}/jobs/{job}:cancel:
+    post:
+      tags:
+        - JobService
+      summary: cancel job
+      description: |-
+        Cancel the knowledge import job; ongoing parsing tasks can be selected
+         for cancellation.
+      operationId: JobService_CancelJob
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: job
+          in: path
+          description: The job id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CancelJobRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/datasets/{dataset}/jobs/{job}:preview:
+    post:
+      tags:
+        - JobService
+      summary: preview job files
+      description: Preview uploaded file.
+      operationId: JobService_PreviewJobFile
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: job
+          in: path
+          description: The job id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PreviewJobFileRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PreviewJobFileResponse"
+  /v1/datasets/{dataset}/jobs/{job}:resume:
+    post:
+      tags:
+        - JobService
+      summary: resume job
+      description: Resume the knowledge import job; failed tasks can be selected
+      operationId: JobService_ResumeJob
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: job
+          in: path
+          description: The job id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResumeJobRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/datasets/{dataset}/jobs/{job}:start:
+    post:
+      tags:
+        - JobService
+      summary: start task
+      description: |-
+        Start the knowledge import task. After collecting data or
+         uploading local files, this will initiate the relevant parsing tasks.
+      operationId: JobService_StartJob
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: job
+          in: path
+          description: The job id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StartJobRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/datasets/{dataset}/jobs/{job}:suspend:
+    post:
+      tags:
+        - JobService
+      summary: suspend job
+      description: Suspend the knowledge import job; ongoing parsing tasks can be selected
+      operationId: JobService_SuspendJob
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: job
+          in: path
+          description: The job id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuspendJobRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/datasets/{dataset}/jobs:search:
+    post:
+      tags:
+        - JobService
+      summary: get job list
+      description: |-
+        Search the job list for importing knowledge, including in-progress,
+         completed, and failed knowledge import jobs.
+      operationId: JobService_SearchJobs
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchJobsRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListJobsResponse"
+  /v1/datasets/{dataset}/members:
+    get:
+      tags:
+        - DatasetMemberService
+      summary: List members of dataset
+      description: List the member of a dataset.
+      operationId: DatasetMemberService_ListDatasetMembers
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: page_token
+          in: query
+          description: Page token.
+          schema:
+            type: string
+        - name: page_size
+          in: query
+          description: Page size for this request.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListDatasetMembersResponse"
+  /v1/datasets/{dataset}/members/{member}:
+    get:
+      tags:
+        - DatasetMemberService
+      summary: Get member
+      description: Get the member of a dataset.
+      operationId: DatasetMemberService_GetDatasetMember
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: member
+          in: path
+          description: The member id.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatasetMember"
+    delete:
+      tags:
+        - DatasetMemberService
+      summary: Delete member from dataset
+      description: Delete the member of a dataset.
+      operationId: DatasetMemberService_DeleteDatasetMember
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: member
+          in: path
+          description: The member id.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content: {}
+    patch:
+      tags:
+        - DatasetMemberService
+      summary: Update member role in dataset
+      description: Update the member of a dataset.
+      operationId: DatasetMemberService_UpdateDatasetMember
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: member
+          in: path
+          description: The member id.
+          required: true
+          schema:
+            type: string
+        - name: update_mask
+          in: query
+          description: Update mask only role can be changed
+          schema:
+            type: string
+            format: field-mask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DatasetMember"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatasetMember"
+  /v1/datasets/{dataset}/members:search:
+    get:
+      tags:
+        - DatasetMemberService
+      summary: Search members of dataset
+      description: Search the member of a dataset.
+      operationId: DatasetMemberService_SearchDatasetMember
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: name_prefix
+          in: query
+          description: Prefix of user/group name.
+          schema:
+            type: string
+        - name: is_all
+          in: query
+          description: Is all members.
+          schema:
+            type: boolean
+        - name: page_token
+          in: query
+          description: Page token.
+          schema:
+            type: string
+        - name: page_size
+          in: query
+          description: Page size for this request.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchDatasetMemberResponse"
+  /v1/datasets/{dataset}/tasks:callback:
+    post:
+      tags:
+        - DatasetService
+      summary: callback task
+      description: |-
+        Callback task interface provided to collection services and knowledge
+         base services for returning task-related information after tasks such as
+         data collection, deletion of knowledge bases, deletion of knowledge,
+         deletion of segments, etc., are completed.
+      operationId: DatasetService_CallbackTask
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CallbackTaskRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/datasets/{dataset}:batchAddMember:
+    post:
+      tags:
+        - DatasetMemberService
+      summary: Add member to dataset
+      description: Batch add member to the dataset.
+      operationId: DatasetMemberService_BatchAddDatasetMember
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BatchAddDatasetMemberRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BatchAddDatasetMemberResponse"
+  /v1/datasets/{dataset}:batchDelete:
+    post:
+      tags:
+        - DocumentService
+      summary: batch delete document
+      description: batch delete documents.
+      operationId: DocumentService_BatchDeleteDocument
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BatchDeleteDocumentRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/datasets/{dataset}:setDefault:
+    post:
+      tags:
+        - DatasetService
+      summary: set default dataset
+      operationId: DatasetService_SetDefaultDataset
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetDefaultDatasetRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/datasets/{dataset}:unsetDefault:
+    post:
+      tags:
+        - DatasetService
+      summary: unset default dataset
+      operationId: DatasetService_UnsetDefaultDataset
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnsetDefaultDatasetRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/datasets:allDefaultDatasets:
+    get:
+      tags:
+        - DatasetService
+      summary: all default datasets
+      operationId: DatasetService_AllDefaultDatasets
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllDefaultDatasetsResponse"
+  /v1/datasets:presignUploadCoverImageUrl:
+    post:
+      tags:
+        - DatasetService
+      summary: presign upload cover image url
+      description: presign upload cover iamge file url
+      operationId: DatasetService_PresignUploadCoverImageURL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PresignUploadCoverImageURLRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PresignUploadCoverImageURLResponse"
+  /v1/datasets:search:
+    post:
+      tags:
+        - DatasetService
+      summary: search dataset list
+      description: |-
+        Search the list of knowledge bases accessible to you，
+              and filter quickly to find a specific knowledge base.
+      operationId: DatasetService_SearchDatasets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchDatasetsRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListDatasetsResponse"
+  /v1/document/creators:
+    get:
+      tags:
+        - DocumentService
+      summary: get all document creators
+      description: Get all document Creators in the dataset.
+      operationId: DocumentService_AllDocumentCreators
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllDocumentCreatorsResponse"
+  /v1/document/tags:
+    get:
+      tags:
+        - DocumentService
+      summary: get all document tags
+      description: Get all document tags in the dataset.
+      operationId: DocumentService_AllDocumentTags
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllDocumentTagsResponse"
+  /v1/documents:search:
+    post:
+      tags:
+        - DocumentService
+      summary: search all documents across all accessible datasets
+      description: Search documents across all datasets that the user has access to. The search is performed on document name, tags, and creator.
+      operationId: DocumentService_SearchAllDocuments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchAllDocumentsRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListDocumentsResponse"
+  /v1/inner/datasets/{dataset}:internal:
+    get:
+      tags:
+        - InternalDatasetService
+      summary: get internal dataset
+      description: Get knowledge base details.
+      operationId: InternalDatasetService_InternalGetDataset
+      parameters:
+        - name: dataset
+          in: path
+          description: The dataset id.
+          required: true
+          schema:
+            type: string
+        - name: tenant_id
+          in: query
+          description: tenant id of the dataset
+          schema:
+            type: string
+        - name: user_id
+          in: query
+          description: User ID.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dataset"
+  /v1/inner/rag:knowledgeRetrieve:
+    post:
+      tags:
+        - InternalRetrivalService
+      summary: retrieve knowledge
+      description: Retrieve knowledge.
+      operationId: InternalRetrivalService_KnowledgeRetrieve
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/KnowledgeRetrieveRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KnowledgeRetrieveResponse"
+  /v1/jobs/{job}/files:batchPresign:
+    post:
+      tags:
+        - JobService
+      summary: batch presign upload file url
+      description: Generate presigned URLs for batch uploading multiple files to the job
+      operationId: JobService_BatchPresignUploadFileURL
+      parameters:
+        - name: job
+          in: path
+          description: The job id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BatchPresignUploadFileURLRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BatchPresignUploadFileURLResponse"
+  /v1/jobs/{job}/files:completeMultipartUploadFile:
+    post:
+      tags:
+        - JobService
+      summary: complete multipart upload file
+      description: Complete a multipart file upload by combining all uploaded parts
+      operationId: JobService_CompleteMultipartUploadFile
+      parameters:
+        - name: job
+          in: path
+          description: The job id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompleteMultipartUploadFileRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/jobs/{job}/files:presignMultipartUploadFileUrl:
+    post:
+      tags:
+        - JobService
+      summary: presign multipart upload file url
+      description: Generate presigned URLs for multipart file upload to the job
+      operationId: JobService_PresignMultipartUploadFileURL
+      parameters:
+        - name: job
+          in: path
+          description: The job id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PresignMultipartUploadFileURLRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PresignMultipartUploadFileURLResponse"
+  /v1/jobs/{job}/files:presignUploadFileUrl:
+    post:
+      tags:
+        - JobService
+      summary: presign upload file url
+      description: Generate a presigned URL for uploading a single file to the job
+      operationId: JobService_PresignUploadFileURL
+      parameters:
+        - name: job
+          in: path
+          description: The job id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PresignUploadFileURLRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PresignUploadFileURLResponse"
+  /v1/rag/database/tags:
+    get:
+      tags:
+        - DatabaseService
+      summary: Get all unique database tags for the current user
+      description: Retrieve all unique database tags owned by the current user.
+      operationId: DatabaseService_GetUserDatabaseTags
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetUserDatabaseTagsResponse"
+  /v1/rag/databases:
+    post:
+      tags:
+        - DatabaseService
+      summary: Get the database list owned by the user id
+      description: Get list of databases owned by the specified user.
+      operationId: DatabaseService_GetUserDatabases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetUserDatabasesRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetUserDatabasesResponse"
+  /v1/rag/databases/create:
+    post:
+      tags:
+        - DatabaseService
+      summary: Create a new database
+      description: Create a new database.
+      operationId: DatabaseService_CreateDatabase
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDatabaseRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateDatabaseResponse"
+  /v1/rag/databases/summary:
+    get:
+      tags:
+        - DatabaseService
+      summary: Get all databases summary owned by the current user
+      description: Retrieve all databases of the current user (summary only)
+      operationId: DatabaseService_GetUserDatabaseSummaries
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetUserDatabaseSummariesResponse"
+  /v1/rag/databases/validate-connection:
+    post:
+      tags:
+        - DatabaseService
+      summary: Validate the database connection
+      description: Validate database connection information
+      operationId: DatabaseService_ValidateDatabaseConnection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ValidateDatabaseConnectionRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidateDatabaseConnectionResponse"
+  /v1/rag/databases/{database_id}:
+    delete:
+      tags:
+        - DatabaseService
+      summary: Delete a database
+      description: Delete a database
+      operationId: DatabaseService_DeleteDatabase
+      parameters:
+        - name: database_id
+          in: path
+          description: Unique identifier of the database to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteDatabaseResponse"
+  /v1/rag/databases/{database_id}/tables:
+    post:
+      tags:
+        - DatabaseService
+      summary: Get the list of data tables
+      description: Get list of tables for a specific database belonging to a user.
+      operationId: DatabaseService_GetDatabaseTables
+      parameters:
+        - name: database_id
+          in: path
+          description: Identifier of the target database
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetDatabaseTablesRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetDatabaseTablesResponse"
+  /v1/rag/databases/{database_id}/tables/{table_id}/cell:
+    post:
+      tags:
+        - DatabaseService
+      summary: Update the value of a cell in the table
+      description: Update a single cell in a table row identified by primary key(s).
+      operationId: DatabaseService_UpdateTableCell
+      parameters:
+        - name: database_id
+          in: path
+          description: ID of the database containing the table
+          required: true
+          schema:
+            type: string
+        - name: table_id
+          in: path
+          description: ID of the table containing the cell to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTableCellRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateTableCellResponse"
+  /v1/rag/databases/{database_id}/tables/{table_id}/preview:
+    post:
+      tags:
+        - DatabaseService
+      summary: "List table rows data specified table "
+      description: Retrieve paginated rows from a specific table.
+      operationId: DatabaseService_ListTableRows
+      parameters:
+        - name: database_id
+          in: path
+          description: ID of the database containing the table
+          required: true
+          schema:
+            type: string
+        - name: table_id
+          in: path
+          description: ID of the table to query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListTableRowsRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListTableRowsResponse"
+  /v1/rag/databases/{database_id}/update:
+    post:
+      tags:
+        - DatabaseService
+      summary: Update database info
+      description: Update database base information
+      operationId: DatabaseService_UpdateDatabase
+      parameters:
+        - name: database_id
+          in: path
+          description: Unique identifier of the database to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDatabaseRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateDatabaseResponse"
+  /v1/search:allSearchHistory:
+    get:
+      tags:
+        - RetrievalService
+      summary: All search history
+      description: Retrieve all search history.
+      operationId: RetrievalService_AllSearchHistory
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllSearchHistoryResponse"
+  /v1/search:searchKnowledge:
+    post:
+      tags:
+        - RetrievalService
+      summary: Search dataset with rag
+      description: Dataset rag search.
+      operationId: RetrievalService_SearchKnowledge
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchKnowledgeRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchKnowledgeResponse"
+  /v1/searchHistories/{searchHistory}:
+    delete:
+      tags:
+        - RetrievalService
+      summary: Delete search history
+      description: Delete search history.
+      operationId: RetrievalService_DeleteSearchHistory
+      parameters:
+        - name: searchHistory
+          in: path
+          description: The searchHistory id.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/segment/imageURIs:batchSign:
+    post:
+      tags:
+        - SegmentService
+      summary: batch sign image uri
+      description: Batch sign image URIs for images stored in AOSS within segments.
+      operationId: SegmentService_BatchSignImageURI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BatchSignImageURIRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BatchSignImageURIResponse"
+  /v1/segments:bulkDelete:
+    post:
+      tags:
+        - SegmentService
+      summary: hybrid delete segments by datasetIDs, documentIDs, segmentIDs, groups
+      description: Hybrid delete segments
+      operationId: SegmentService_BulkDelete
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BulkDeleteRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content: {}
+  /v1/segments:hybrid:
+    post:
+      tags:
+        - SegmentService
+      summary: search segment list
+      description: |-
+        Search detailed information about the segment list of specified knowledge
+         document in the knowledge base.
+      operationId: SegmentService_HybridSearchSegments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HybridSearchSegmentsRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListSegmentsResponse"
+  /v1/segments:scroll:
+    post:
+      tags:
+        - SegmentService
+      summary: scroll get all segments
+      description: Scroll pagination to retrieve all data
+      operationId: SegmentService_ScrollSegments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ScrollSegmentsRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ScrollSegmentsResponse"
+  /v1/table:findMeta:
+    post:
+      tags:
+        - TableService
+      summary: Search table meta
+      description: find table meta
+      operationId: TableService_FindMeta
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FindMetaRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindMetaResponse"
+  /v1/table:query:
+    post:
+      tags:
+        - TableService
+      summary: Query table when llm gen sql
+      description: Query table when llm gen sql
+      operationId: TableService_QueryTable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueryTableRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QueryTableResponse"
+  /v1/writerSegmentJob:submit:
+    post:
+      tags:
+        - JobService
+      summary: submit writer segment job
+      description: Submit a task for storing the cleaned segments.
+      operationId: JobService_SubmitWriterSegmentJob
+      parameters:
+        - name: writer_segment_job_id
+          in: query
+          description: Writer task ID
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WriterSegmentJob"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WriterSegmentJob"
+  /v1/writerSegmentJobs/{writerSegmentJob}:
+    get:
+      tags:
+        - JobService
+      summary: get writer segment job detail
+      description: Get writer segment job detail.
+      operationId: JobService_GetWriterSegmentJob
+      parameters:
+        - name: writerSegmentJob
+          in: path
+          description: The writerSegmentJob id.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WriterSegmentJob"
+components:
+  schemas:
+    AddTableDataRequest:
+      required:
+        - parent
+      type: object
+      properties:
+        parent:
+          type: string
+          description: "Document containing the table. Format: datasets/{dataset_id}/documents/{document_id}"
+        params:
+          type: object
+          additionalProperties:
+            type: string
+          description: New row data as column name to value mapping
+      description: Request message for adding table data
+    Algo:
+      type: object
+      properties:
+        algo_id:
+          readOnly: true
+          type: string
+          description: Algo id. Unique identifier for the algorithm. Used internally to reference specific algorithm implementations.
+        description:
+          readOnly: true
+          type: string
+          description: Algo description. Detailed explanation of what the algorithm does. Describes the processing steps and expected outcomes.
+        display_name:
+          readOnly: true
+          type: string
+          description: Algo display name. Human-readable name for the algorithm. Shown in the UI to help users understand what processing is applied.
+      description: Algo info. Information about the algorithm used for processing this dataset.
+    AllDatasetTagsResponse:
+      required:
+        - tags
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tag list.
+      description: Response of AllDatasetTags API.
+    AllDefaultDatasetsResponse:
+      type: object
+      properties:
+        default_datasets:
+          readOnly: true
+          type: array
+          items:
+            $ref: "#/components/schemas/Dataset"
+          description: Default dataset list.
+      description: Response of AllDefaultDatasets API.
+    AllDocumentCreatorsResponse:
+      required:
+        - creators
+      type: object
+      properties:
+        creators:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserInfo"
+          description: List of all document creators
+      description: Response message containing all document creators
+    AllDocumentTagsResponse:
+      required:
+        - tags
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            type: string
+          description: List of all available tags
+      description: Response message containing all document tags
+    AllSearchHistoryResponse:
+      type: object
+      properties:
+        list:
+          type: array
+          items:
+            $ref: "#/components/schemas/AllSearchHistoryResponse_SearchHistory"
+          description: List of history
+      description: Definition of all search history
+    AllSearchHistoryResponse_SearchHistory:
+      type: object
+      properties:
+        id:
+          type: string
+          description: History id
+        request:
+          $ref: "#/components/schemas/SearchKnowledgeRequest"
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentSearchResult"
+          description: Search result of history
+        tokens:
+          type: array
+          items:
+            type: string
+          description: Token list for segmentation.
+      description: Definition of search histroy
+    BatchAddDatasetMemberRequest:
+      required:
+        - parent
+        - role
+      type: object
+      properties:
+        parent:
+          type: string
+          description: Specify in which dataset to add a new member. When using HTTP/JSON, this field is automatically populated based on the URI, because of the `{parent=datasets/*}` syntax.
+        user_name_list:
+          type: array
+          items:
+            type: string
+          description: The list of cloud management usernames
+        group_name_list:
+          type: array
+          items:
+            type: string
+          description: The list of cloud management groupnames.
+        role:
+          $ref: "#/components/schemas/Role"
+        user_id_list:
+          type: array
+          items:
+            type: string
+          description: The list of cloud management user IDs.
+        group_id_list:
+          type: array
+          items:
+            type: string
+          description: The list of cloud management group IDs.
+      description: The request body for bulk adding members to the dataset.
+    BatchAddDatasetMemberResponse:
+      type: object
+      properties:
+        dataset_members:
+          readOnly: true
+          type: array
+          items:
+            $ref: "#/components/schemas/DatasetMember"
+          description: The list of successfully created members.
+      description: The response body for bulk adding members to the dataset.
+    BatchDeleteDocumentRequest:
+      required:
+        - parent
+        - names
+      type: object
+      properties:
+        parent:
+          type: string
+          description: "Parent dataset. Format: datasets/{dataset_id}"
+        names:
+          type: array
+          items:
+            type: string
+          description: List of document IDs to delete
+      description: Request message for batch deleting documents
+    BatchDeleteTableDataRequest:
+      required:
+        - parent
+        - names
+      type: object
+      properties:
+        parent:
+          type: string
+          description: "Document containing the table. Format: datasets/{dataset_id}/documents/{document_id}"
+        names:
+          type: array
+          items:
+            type: string
+          description: List of segment IDs to delete
+      description: Request message for batch deleting table data
+    BatchPresignUploadFileURLRequest:
+      required:
+        - job
+      type: object
+      properties:
+        job:
+          type: string
+          description: Parent param of url, format is jobs/{job_id}.
+        rel_path:
+          type: array
+          items:
+            type: string
+          description: file rel path .
+      description: request of BatchPresignUploadFileURL api
+    BatchPresignUploadFileURLResponse:
+      type: object
+      properties:
+        result:
+          type: object
+          additionalProperties:
+            type: string
+          description: presign url
+      description: response of BatchPresignUploadFileURL api
+    BatchSignImageURIRequest:
+      required:
+        - image_keys
+      type: object
+      properties:
+        image_keys:
+          type: array
+          items:
+            type: string
+          description: Aoss image keys
+      description: Batch sign image uris request.
+    BatchSignImageURIResponse:
+      type: object
+      properties:
+        image_uri_map:
+          type: object
+          additionalProperties:
+            type: string
+          description: Map for aoss image uris
+      description: Response of Batch sign image uris.
+    BulkDeleteRequest:
+      required:
+        - dataset_id
+      type: object
+      properties:
+        dataset_id:
+          type: string
+          description: dataset_ids
+        document_ids:
+          type: array
+          items:
+            type: string
+          description: document_ids
+        segment_ids:
+          type: array
+          items:
+            type: string
+          description: segment_ids
+        group:
+          type: string
+          description: group
+      description: Bulk delete Segment request.
+    CallbackJobRequest:
+      required:
+        - name
+        - job_state
+      type: object
+      properties:
+        name:
+          type: string
+          description: "The name of callback job. Format: datasets/{dataset_id}/jobs/{job_id}"
+        job_state:
+          enum:
+            - STAGE_UNSPECIFIED
+            - CREATING
+            - PARSING
+            - SUCCEEDED
+            - FAILED
+            - CANCELLED
+            - PARTIAL_SUCCESS
+            - SUSPENDED
+          type: string
+          description: the job state
+          format: enum
+        error_msg:
+          type: string
+          description: error message.
+        job_info:
+          $ref: "#/components/schemas/JobInfo"
+        document_info:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentInfo"
+          description: List of information about parsed knowledge
+      description: Callback Job Request.
+    CallbackTaskRequest:
+      required:
+        - parent
+        - task_id
+        - is_succeed
+      type: object
+      properties:
+        parent:
+          type: string
+          description: The parent of the task to callback. Format:datasets/{dataset_id}.
+        task_id:
+          enum:
+            - TASK_TYPE_UNSPECIFIED
+            - DELETE_DATASET
+            - DELETE_DOCUMENT
+            - DELETE_SEGMENT
+            - COLLECTION_DOCUMENT
+          type: string
+          description: Task type.
+          format: enum
+        task_type:
+          enum:
+            - TASK_TYPE_UNSPECIFIED
+            - DELETE_DATASET
+            - DELETE_DOCUMENT
+            - DELETE_SEGMENT
+            - COLLECTION_DOCUMENT
+          type: string
+          description: Task type.
+          format: enum
+        is_succeed:
+          type: boolean
+          description: Is the task succeed.
+        error_msg:
+          type: string
+          description: error message.
+      description: Callback Job Request.
+    CancelJobRequest:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: "The name of cancel job. Format: datasets/{dataset_id}/jobs/{job_id}"
+      description: CancelJobRequest.
+    ChildrenList:
+      type: object
+      properties:
+        ids:
+          readOnly: true
+          type: array
+          items:
+            type: string
+          description: children ids
+      description: Segment childrenList
+    CompleteMultipartUploadFileRequest:
+      required:
+        - job
+        - upload_id
+        - relpath
+      type: object
+      properties:
+        job:
+          type: string
+          description: "Job identifier, format: jobs/{job_id}"
+        upload_id:
+          type: string
+          description: Unique identifier for the multipart upload session
+        relpath:
+          type: string
+          description: Relative path of the file within the job
+        list:
+          type: array
+          items:
+            $ref: "#/components/schemas/MultipartUploadPart"
+          description: List of completed upload parts with their ETags
+      description: Request to complete a multipart file upload
+    CreateDatabaseRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Human-readable name for the database
+        description:
+          type: string
+          description: Optional description of the database
+        source_type:
+          type: string
+          description: Type of data source (e.g., "mysql", "postgresql", "oracle")
+        db_type:
+          type: string
+          description: Database engine type (e.g., "mysql", "postgresql")
+        tags:
+          type: array
+          items:
+            type: string
+          description: Custom tags for categorization
+        username:
+          type: string
+          description: Database connection username
+        password:
+          type: string
+          description: Database connection password
+        host:
+          type: string
+          description: Database server hostname or IP address
+        port:
+          type: integer
+          description: Database server port number
+          format: int32
+        db_name:
+          type: string
+          description: Name of the specific database to connect to
+      description: Request body for CreateDatabase. Contains all necessary information to create a new database connection
+    CreateDatabaseResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Success or error message
+        database_id:
+          type: string
+          description: Unique identifier of the newly created database
+      description: Response body for CreateDatabase. Confirms successful database creation
+    Dataset:
+      required:
+        - type
+      type: object
+      properties:
+        name:
+          type: string
+          description: "The resource name of the dataset. Full resource path in the format: datasets/{dataset} This is the canonical identifier used in API calls and resource references."
+        dataset_id:
+          readOnly: true
+          type: string
+          description: ID of the dataset. Unique identifier for the dataset. This field is automatically generated by the system and cannot be modified.
+        display_name:
+          type: string
+          description: Display name of the dataset. Human-readable name shown in the UI. This is the friendly name users see when browsing datasets.
+        desc:
+          type: string
+          description: Description of the dataset. Detailed description explaining the purpose, content, and usage of this dataset.
+        cover_image:
+          type: string
+          description: Cover image of the dataset. URL or path to the cover image file. Used for visual representation of the dataset in the UI.
+        state:
+          readOnly: true
+          enum:
+            - STATE_UNSPECIFIED
+            - CREATING
+            - AVAILABLE
+            - UNAVAILABLE
+          type: string
+          description: Dataset state. Current operational status of the dataset. Indicates whether the dataset is being created, available for use, or unavailable.
+          format: enum
+        is_empty:
+          readOnly: true
+          type: boolean
+          description: Is the dataset empty. Indicates whether the dataset contains any documents. This field is automatically calculated based on document_count.
+        document_count:
+          readOnly: true
+          type: integer
+          description: Doc count. Total number of documents uploaded to this dataset. This field is automatically calculated and updated by the system.
+          format: int64
+        document_size:
+          readOnly: true
+          type: integer
+          description: Doc size. Total size of all documents in the dataset in bytes. This field is automatically calculated and updated by the system.
+          format: int64
+        segment_count:
+          readOnly: true
+          type: integer
+          description: Segment count. Total number of text segments created from documents. Segments are the atomic units used for retrieval and processing.
+          format: int64
+        token_count:
+          readOnly: true
+          type: integer
+          description: Token count. Total number of tokens across all documents in the dataset. This field is automatically calculated and updated by the system.
+          format: int64
+        parsers:
+          type: array
+          items:
+            $ref: "#/components/schemas/ParserConfig"
+          description: Parse Doc config. Configuration for document parsing and processing. Defines how documents are parsed, split, and converted into segments. Multiple parsers can be configured for different document types.
+        algo:
+          $ref: "#/components/schemas/Algo"
+        creator:
+          readOnly: true
+          type: string
+          description: Creator. User ID or username who created this dataset. This field is automatically set by the system and cannot be modified.
+        create_time:
+          readOnly: true
+          type: string
+          description: Create time. Timestamp when the dataset was first created. This field is automatically set by the system and cannot be modified.
+          format: date-time
+        update_time:
+          readOnly: true
+          type: string
+          description: Update time. Timestamp when the dataset was last modified. This field is automatically updated by the system whenever any field is changed.
+          format: date-time
+        acl:
+          readOnly: true
+          type: array
+          items:
+            enum:
+              - DATASET_ACTION_UNSPECIFIED
+              - DATASET_READ
+              - DATASET_WRITE
+              - DATASET_UPLOAD
+            type: string
+            format: enum
+          description: ACL (Access Control List). List of permissions granted to users or groups. Defines who can read, write, or manage this dataset.
+        share_type:
+          enum:
+            - SHARE_TYPE_UNSPECIFIED
+            - SHARE_TYPE_MAINTAINER_IN_TENANT
+            - SHARE_TYPE_USER_IN_TENANT
+            - SHARE_TYPE_MAINTAINER_ALL
+            - SHARE_TYPE_USER_ALL
+            - SHARE_TYPE_UPLOADER_IN_TENANT
+            - SHARE_TYPE_UPLOADER_ALL
+          type: string
+          description: Share type. Defines how the dataset is shared across the organization. Controls whether all users have maintainer or user permissions.
+          format: enum
+        type:
+          enum:
+            - DATASET_TYPE_UNSPECIFIED
+            - DATASET_TYPE_TEXT
+            - DATASET_TYPE_TABLE
+            - DATASET_TYPE_GRAPH
+          type: string
+          description: Dataset type. Specifies the type of data contained in this dataset. Determines how the data is processed and what algorithms can be applied.
+          format: enum
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tag list. User-defined tags for categorizing and organizing datasets. Tags help users find and filter datasets more easily.
+        default_dataset:
+          type: boolean
+          description: Is the dataset the default dataset for chat.
+      description: dataset params.
+    DatasetMember:
+      required:
+        - role
+      type: object
+      properties:
+        name:
+          type: string
+          description: "Dataset member name. Format: {name=datasets/{dataset}/members/type/[group|user]/id/{id}/role/{role}}"
+        dataset_id:
+          readOnly: true
+          type: string
+          description: Dataset ID.
+        user_id:
+          readOnly: true
+          type: string
+          description: User ID.
+        user:
+          type: string
+          description: The cloud management user_name is unique within the tenant and cannot be changed.
+        group:
+          type: string
+          description: The cloud management group_name is unique within the tenant and cannot be changed.
+        role:
+          $ref: "#/components/schemas/Role"
+        create_time:
+          readOnly: true
+          type: string
+          description: Create time of the member.
+          format: date-time
+        group_id:
+          type: string
+          description: Group ID.
+      description: Dataset member information.
+    DatasetSelector:
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: dataset id
+        display_name:
+          readOnly: true
+          type: string
+          description: Display name of dataset.
+        type:
+          readOnly: true
+          enum:
+            - DATASET_TYPE_UNSPECIFIED
+            - DATASET_TYPE_TEXT
+            - DATASET_TYPE_TABLE
+            - DATASET_TYPE_GRAPH
+          type: string
+          description: Type of dataset.
+          format: enum
+      description: Dataset selector
+    DeleteDatabaseResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: True if deletion was successful, false otherwise
+        message:
+          type: string
+          description: Success message or error description
+      description: Response body for DeleteDatabase. Confirms successful database deletion
+    Doc:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "The resource name of the document. Format: datasets/{dataset_id}/documents/{document_id}."
+        document_id:
+          readOnly: true
+          type: string
+          description: Doc ID
+        display_name:
+          type: string
+          description: Document display name
+        document_size:
+          readOnly: true
+          type: integer
+          description: Document size in bytes
+          format: int64
+        dataset_id:
+          readOnly: true
+          type: string
+          description: Dataset ID that contains this document
+        dataset_display:
+          readOnly: true
+          type: string
+          description: Dataset display name
+        p_id:
+          type: string
+          description: Parent document ID for hierarchical structure
+        creator:
+          readOnly: true
+          type: string
+          description: Document creator/author
+        uri:
+          readOnly: true
+          type: string
+          description: Presigned URI for accessing the document from object storage
+        columns:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentTableColumn"
+          description: Table column information if document type is DATASET_TYPE_TABLE
+        create_time:
+          readOnly: true
+          type: string
+          description: Document creation timestamp
+          format: date-time
+        update_time:
+          readOnly: true
+          type: string
+          description: Document last update timestamp
+          format: date-time
+        tags:
+          type: array
+          items:
+            type: string
+          description: Document tags for categorization
+        file_id:
+          type: string
+          description: File ID in the file system
+        data_source_type:
+          readOnly: true
+          enum:
+            - DATA_SOURCE_TYPE_UNSPECIFIED
+            - LOCAL_FILE
+            - FILE_SYSTEM
+          type: string
+          description: Document data source type
+          format: enum
+        file_system_path:
+          readOnly: true
+          type: string
+          description: File system path where document is stored
+        type:
+          readOnly: true
+          enum:
+            - DOCUMENT_TYPE_UNSPECIFIED
+            - WEBPAGE
+            - FOLDER
+            - TXT
+            - PDF
+            - HTML
+            - XLSX
+            - XLS
+            - DOCX
+            - CSV
+            - PPTX
+            - PPT
+            - XML
+            - MARKDOWN
+            - JSON
+          type: string
+          description: Document type (file format or folder)
+          format: enum
+        convert_file_uri:
+          readOnly: true
+          type: string
+          description: Presigned URI for accessing the converted document if the document is docx.
+        rel_path:
+          readOnly: true
+          type: string
+          description: Relative path of the document.
+        document_stage:
+          readOnly: true
+          enum:
+            - DOCUMENT_STAGE_UNSPECIFIED
+            - DOCUMENT_PARSING
+            - DOCUMENT_PARSE_SUCCESSFULLY
+            - DOCUMENT_PARSING_FAILED
+            - DOCUMENT_PARSING_CANCELLED
+            - DOCUMENT_QUEUED
+            - DOCUMENT_CRAWLING
+            - DOCUMENT_CRAWLING_FAILED
+            - DOCUMENT_FAILED
+            - DOCUMENT_CRAWLING_QUEUED
+            - DOCUMENT_UPLOADED
+          type: string
+          description: DocumentStage
+          format: enum
+      description: Details of the document.
+    DocumentInfo:
+      type: object
+      properties:
+        document_id:
+          type: string
+          description: ID of the document
+        display_name:
+          type: string
+          description: Knowledge name
+        segment_count:
+          type: integer
+          description: Number of segments in the document
+          format: int64
+        document_token:
+          type: integer
+          description: Total token count in the document
+          format: int64
+        document_state:
+          enum:
+            - DOCUMENT_STAGE_UNSPECIFIED
+            - DOCUMENT_PARSING
+            - DOCUMENT_PARSE_SUCCESSFULLY
+            - DOCUMENT_PARSING_FAILED
+            - DOCUMENT_PARSING_CANCELLED
+            - DOCUMENT_QUEUED
+            - DOCUMENT_CRAWLING
+            - DOCUMENT_CRAWLING_FAILED
+            - DOCUMENT_FAILED
+            - DOCUMENT_CRAWLING_QUEUED
+            - DOCUMENT_UPLOADED
+          type: string
+          description: Current processing state of the document
+          format: enum
+        document_error:
+          enum:
+            - DOCUMENT_ERROR_UNSPECIFIED
+            - UNSUPPORTED_FORMAT
+            - UNSUPPORTED_WEBSITE_CRAWLING
+            - OTHER_TECHNICAL_REASONS
+            - DOWNLOAD_FAILURE
+            - STORAGE_FAILURE
+            - STORAGE_TIMEOUT
+            - UPLOAD_FAILURE
+            - DATABASE_EXCEPTION
+            - OSS_EXCEPTION
+            - DOCUMENT_STORAGE_ACCESS_EXCEPTION
+            - FILE_CONTENT_EXCEPTION
+          type: string
+          description: Error information if document processing failed
+          format: enum
+        document_size:
+          type: integer
+          description: Size of the document in bytes
+          format: int64
+        group_name:
+          type: string
+          description: Name of the group this document belongs to
+      description: Doc info
+    DocumentSearchResult:
+      type: object
+      properties:
+        page_content:
+          type: string
+          description: Page content.
+        document:
+          $ref: "#/components/schemas/Doc"
+        confidence:
+          type: number
+          description: Confidence of result
+          format: float
+        token_count:
+          type: integer
+          description: Token count of content
+          format: int64
+        segment_number:
+          type: integer
+          description: Number of segment
+          format: int32
+        words:
+          type: integer
+          description: Word count of segment
+          format: int32
+        type:
+          enum:
+            - SEGMENT_TYPE_UNSPECIFIED
+            - SEGMENT_TYPE_TEXT
+            - SEGMENT_TYPE_IMAGE
+            - SEGMENT_TYPE_TABLE
+            - SEGMENT_TYPE_WEB_IMAGE
+            - SEGMENT_TYPE_STRUCTURED_DATA
+            - SEGMENT_TYPE_QA
+            - SEGMENT_TYPE_ONLINE_SEARCH
+          type: string
+          description: Segment type
+          format: enum
+        display_type:
+          enum:
+            - DISPLAY_TYPE_UNSPECIFIED
+            - DISPLAY_TYPE_TEXT
+            - DISPLAY_TYPE_MARKDOWN
+            - DISPLAY_TYPE_TABLE
+          type: string
+          description: Display type
+          format: enum
+        table_content:
+          type: string
+          description: Table content
+        image_uri:
+          type: string
+          description: Image uri
+        image_key:
+          type: string
+          description: Image key
+        image_keys:
+          readOnly: true
+          type: array
+          items:
+            type: string
+          description: Image keys
+        display_content:
+          readOnly: true
+          type: string
+          description: Display content
+        structured_data:
+          $ref: "#/components/schemas/DocumentTableRow"
+        metadata:
+          $ref: "#/components/schemas/SegmentMetadata"
+      description: Doc search result.
+    DocumentTableColumn:
+      required:
+        - id
+        - display_name
+        - type
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Column identifier
+          format: int32
+        display_name:
+          type: string
+          description: Column display name
+        type:
+          enum:
+            - DOCUMENT_TABLE_COLUMN_TYPE_UNSPECIFIED
+            - DOCUMENT_TABLE_COLUMN_TYPE_STRING
+            - DOCUMENT_TABLE_COLUMN_TYPE_INTEGER
+            - DOCUMENT_TABLE_COLUMN_TYPE_FLOAT
+            - DOCUMENT_TABLE_COLUMN_TYPE_DATE
+            - DOCUMENT_TABLE_COLUMN_TYPE_TIME
+            - DOCUMENT_TABLE_COLUMN_TYPE_BOOLEAN
+          type: string
+          description: Column data type
+          format: enum
+        desc:
+          type: string
+          description: Column description
+        sample:
+          type: string
+          description: Sample data for the column
+        source_column:
+          readOnly: true
+          type: string
+          description: Original column name from source file
+        index_type:
+          enum:
+            - INDEX_TYPE_UNSPECIFIED
+            - INDEX_TYPE_COMMON
+            - INDEX_TYPE_MULTI_QUESTION
+          type: string
+          description: Column indexing type for search optimization
+          format: enum
+      description: Doc table column
+    DocumentTableRow:
+      required:
+        - values
+      type: object
+      properties:
+        values:
+          type: array
+          items:
+            type: string
+          description: Values of the row.
+      description: Table row
+    EditSegmentRequest:
+      required:
+        - name
+        - group
+      type: object
+      properties:
+        name:
+          type: string
+          description: "The name of the segment to edit. Format: datasets/{dataset_id}/documents/{document_id}/segments/{segment_id}"
+        group:
+          type: string
+          description: The new group for the segment.
+        content:
+          type: string
+          description: The new content for the segment.
+      description: Request to edit a segment.
+    EditSegmentResponse:
+      type: object
+      properties:
+        segment:
+          $ref: "#/components/schemas/Segment"
+      description: Response for editing a segment.
+    FileInfo:
+      type: object
+      properties:
+        file_id:
+          type: string
+          description: Unique identifier of the file in the file system
+        target_path:
+          type: string
+          description: Relative path of the file within the dataset
+    FindMetaRequest:
+      required:
+        - keyword
+        - dataset_ids
+        - top_k
+      type: object
+      properties:
+        keyword:
+          type: string
+          description: The text want to search.
+        dataset_ids:
+          type: array
+          items:
+            type: string
+          description: The ids of dataset
+        top_k:
+          type: integer
+          description: Top k of result.
+          format: int32
+      description: The request of search meta
+    FindMetaResponse:
+      type: object
+      properties:
+        metas:
+          type: array
+          items:
+            $ref: "#/components/schemas/Meta"
+          description: The list of tableMeta
+      description: The response of search meta
+    FusionQuery:
+      type: object
+      properties:
+        input_type:
+          type: string
+          description: The content of search
+        text:
+          type: string
+          description: Query text
+        uri:
+          type: string
+          description: uri for Media
+        input_base64:
+          type: string
+          description: Media from base64 encode
+          format: bytes
+      description: Fusion query of search
+    GetDatabaseTablesRequest:
+      type: object
+      properties:
+        database_id:
+          type: string
+          description: Identifier of the target database
+        page:
+          type: integer
+          description: Page number (starting from 1)
+          format: int32
+        page_size:
+          type: integer
+          description: Number of items per page
+          format: int32
+      description: Request body for GetDatabaseTables. Used to retrieve a list of tables within a specific database
+    GetDatabaseTablesResponse:
+      type: object
+      properties:
+        database:
+          $ref: "#/components/schemas/UserDatabase"
+        page:
+          type: integer
+          description: Current page number
+          format: int32
+        page_size:
+          type: integer
+          description: Items per page
+          format: int32
+        total:
+          type: integer
+          description: Total number of tables in the database
+          format: int64
+        tables:
+          type: array
+          items:
+            $ref: "#/components/schemas/TableInfo"
+          description: List of table metadata
+      description: Response body for GetDatabaseTables. Contains paginated results of tables within a database
+    GetUserDatabaseSummariesResponse:
+      type: object
+      properties:
+        databases:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserDatabaseSummary"
+          description: List of database summaries
+      description: Response body for GetUserDatabaseSummaries. Contains simplified database information for quick overview
+    GetUserDatabaseTagsResponse:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            type: string
+          description: tag list
+      description: Response body for GetUserDatabaseTags.
+    GetUserDatabasesRequest:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: Page number (starting from 1)
+          format: int32
+        page_size:
+          type: integer
+          description: Number of items per page
+          format: int32
+        search:
+          type: string
+          description: Keyword to fuzzy match database name or description
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags for precise filtering (intersection)
+        creator_user_id:
+          type: string
+          description: Creator user ID for filtering
+        sort_by:
+          type: string
+          description: Field to sort by (e.g., "updated_time", "created_time", "name")
+        sort_order:
+          type: string
+          description: 'Sort order: "asc" or "desc"'
+      description: Request body for GetUserDatabases. Used to retrieve a paginated list of databases owned by a specific user
+    GetUserDatabasesResponse:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: Current page number.
+          format: int32
+        page_size:
+          type: integer
+          description: Items per page.
+          format: int32
+        total:
+          type: integer
+          description: Total number of databases.
+          format: int64
+        databases:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserDatabase"
+          description: List of database info.
+      description: Response body for GetUserDatabases. Contains paginated results of user databases
+    HybridSearchDataset:
+      type: object
+      properties:
+        dataset_id:
+          type: string
+          description: Dataset ID
+        hybrid_search_documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/HybridSearchDocument"
+          description: Hybrid search documents
+      description: Info of dataset when search by number
+    HybridSearchDocument:
+      type: object
+      properties:
+        document_id:
+          type: string
+          description: Doc ID
+        numbers:
+          type: array
+          items:
+            type: integer
+            format: int32
+          description: Segment Numbers
+      description: Info of document when search by number
+    HybridSearchSegmentsRequest:
+      type: object
+      properties:
+        hybrid_search_datasets:
+          type: array
+          items:
+            $ref: "#/components/schemas/HybridSearchDataset"
+          description: Hybrid search datasets
+        query:
+          type: string
+          description: Query of search
+        top_k:
+          type: integer
+          description: TopK
+          format: int32
+        score_threshold:
+          type: number
+          description: Score threshold
+          format: float
+        hybrid_search_type:
+          enum:
+            - HYBRID_SEARCH_TYPE_UNSPECIFIED
+            - HYBRID_SEARCH_TYPE_FULL_TEXT
+            - HYBRID_SEARCH_TYPE_SEMANTIC
+            - HYBRID_SEARCH_SEGMENT_NUM
+          type: string
+          description: Hybrid search type
+          format: enum
+        segment_types:
+          type: array
+          items:
+            enum:
+              - SEGMENT_TYPE_UNSPECIFIED
+              - SEGMENT_TYPE_TEXT
+              - SEGMENT_TYPE_IMAGE
+              - SEGMENT_TYPE_TABLE
+              - SEGMENT_TYPE_WEB_IMAGE
+              - SEGMENT_TYPE_STRUCTURED_DATA
+              - SEGMENT_TYPE_QA
+              - SEGMENT_TYPE_ONLINE_SEARCH
+            type: string
+            format: enum
+          description: Filter by segment type list.
+        fusion_query:
+          $ref: "#/components/schemas/FusionQuery"
+        fusion_queries:
+          type: array
+          items:
+            $ref: "#/components/schemas/FusionQuery"
+          description: Fusion queries of search
+        group:
+          type: string
+          description: gourp_name
+        embedding_model:
+          type: string
+          description: embedding_model
+        filters:
+          type: string
+          description: milvus filters
+      description: Hybrid Search segments request.
+    Job:
+      required:
+        - data_source_type
+      type: object
+      properties:
+        name:
+          type: string
+          description: "The resource name of the document. Format: datasets/{dataset}/jobs/{job}."
+        job_id:
+          readOnly: true
+          type: string
+          description: Job ID
+        data_source_type:
+          enum:
+            - DATA_SOURCE_TYPE_UNSPECIFIED
+            - LOCAL_FILE
+            - FILE_SYSTEM
+          type: string
+          description: Data source
+          format: enum
+        job_state:
+          readOnly: true
+          enum:
+            - STAGE_UNSPECIFIED
+            - CREATING
+            - PARSING
+            - SUCCEEDED
+            - FAILED
+            - CANCELLED
+            - PARTIAL_SUCCESS
+            - SUSPENDED
+          type: string
+          description: Current state of the job
+          format: enum
+        creator:
+          readOnly: true
+          type: string
+          description: Creator username
+        oss_temp_path:
+          readOnly: true
+          type: string
+          description: OSS temporary path, temporary path for uploading local knowledge
+        err_msg:
+          readOnly: true
+          type: string
+          description: Error message
+        job_info:
+          $ref: "#/components/schemas/JobInfo"
+        document_info:
+          readOnly: true
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentInfo"
+          description: List of information about parsed knowledge
+        create_time:
+          readOnly: true
+          type: string
+          description: Creation time
+          format: date-time
+        finish_time:
+          readOnly: true
+          type: string
+          description: Finish time
+          format: date-time
+        target_path:
+          type: string
+          description: Target path of knowledge import
+        document_pid:
+          type: string
+          description: ID of the target path where knowledge will be imported
+        segment_strategy:
+          $ref: "#/components/schemas/SegmentStrategy"
+        document_ids:
+          type: array
+          items:
+            type: string
+          description: Doc id list.
+        files:
+          type: array
+          items:
+            $ref: "#/components/schemas/FileInfo"
+          description: File list in file system.
+        reparse:
+          type: boolean
+          description: Whether this is a re-parse operation
+        document_tags:
+          type: array
+          items:
+            type: string
+          description: Tags associated with the document
+        reparse_groups:
+          type: array
+          items:
+            type: string
+          description: Groups for re-parse operations
+        display_name:
+          type: string
+          description: Display name of the job
+        start_time:
+          type: string
+          description: Start time of the job
+          format: date-time
+        end_time:
+          type: string
+          description: End time of the job , if the job is not ended, the value is empty
+          format: date-time
+        job_type:
+          enum:
+            - JOB_TYPE_UNSPECIFIED
+            - JOB_TYPE_PARSE
+            - JOB_TYPE_REPARSE
+            - JOB_TYPE_COPY
+            - JOB_TYPE_PARSE_UPLOADED
+            - JOB_TYPE_MOVE
+          type: string
+          description: Job type
+          format: enum
+        target_dataset_id:
+          type: string
+          description: Target dataset id
+      description: Job details
+    JobInfo:
+      type: object
+      properties:
+        total_document_size:
+          type: integer
+          description: Total file size
+          format: int64
+        total_document_count:
+          type: integer
+          description: Total number of files
+          format: int64
+        succeed_document_size:
+          type: integer
+          description: Total size of successfully parsed documents
+          format: int64
+        succeed_document_count:
+          type: integer
+          description: Total number of successfully parsed documents
+          format: int64
+        succeed_token_count:
+          type: integer
+          description: Total number of tokens successfully parsed
+          format: int64
+        failed_document_size:
+          type: integer
+          description: Total size of documents that failed to parse
+          format: int64
+        failed_document_count:
+          type: integer
+          description: Total number of documents that failed to parse
+          format: int64
+        filtered_document_count:
+          type: integer
+          description: Total number of filtered documents (e.g., unsupported format, invalid path level in ZIP)
+          format: int64
+      description: Job file-related information such as size, quantity, etc.
+    KnowledgeBaseRetrieveConfig:
+      required:
+        - dataset_id
+        - threshold
+      type: object
+      properties:
+        dataset_id:
+          type: string
+          description: dataset id
+        threshold:
+          type: number
+          description: Retrieval confidence threshold, with confidence ranging between 0 and 1.
+          format: float
+      description: KnowledgeBaseRetrieveConfig retrieve config
+    KnowledgeRetrieveRequest:
+      required:
+        - tenant_id
+        - config
+        - top_k
+        - retrieval_config
+      type: object
+      properties:
+        query:
+          type: string
+          description: query text
+        tenant_id:
+          type: string
+          description: tenant id
+        config:
+          type: array
+          items:
+            $ref: "#/components/schemas/KnowledgeBaseRetrieveConfig"
+          description: "Deprecated: Use retrieval_config instead."
+        top_k:
+          type: integer
+          description: "Deprecated: Use retrieval_config instead."
+          format: int32
+        retrieval_config:
+          $ref: "#/components/schemas/SearchKnowledgeConfig"
+        user_id:
+          type: string
+          description: User id
+        query2:
+          $ref: "#/components/schemas/Query"
+      description: Request of KnowledgeRetrieve api
+    KnowledgeRetrieveResponse:
+      type: object
+      properties:
+        docs:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentSearchResult"
+          description: Doc result list
+      description: Response of KnowledgeRetrieve api
+    ListAlgosResponse:
+      type: object
+      properties:
+        algos:
+          readOnly: true
+          type: array
+          items:
+            $ref: "#/components/schemas/Algo"
+          description: Algo list.
+      description: Response of ListAlgos API.
+    ListDatasetMembersResponse:
+      type: object
+      properties:
+        dataset_members:
+          type: array
+          items:
+            $ref: "#/components/schemas/DatasetMember"
+          description: Members of dataset.
+        next_page_token:
+          type: string
+          description: Next page token field used for pagination.
+      description: Response of list dataset members
+    ListDatasetsResponse:
+      type: object
+      properties:
+        datasets:
+          type: array
+          items:
+            $ref: "#/components/schemas/Dataset"
+          description: List of datasets.
+        total_size:
+          type: integer
+          description: total count of dataset.
+          format: int32
+        next_page_token:
+          type: string
+          description: next_page_token field used for pagination.
+      description: Response of list datasets.
+    ListDocumentsResponse:
+      required:
+        - documents
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/Doc"
+          description: List of documents
+        total_size:
+          readOnly: true
+          type: integer
+          description: Total count of documents matching the request
+          format: int32
+        next_page_token:
+          type: string
+          description: Token for retrieving the next page of results
+      description: Response message for listing documents
+    ListJobsResponse:
+      type: object
+      properties:
+        jobs:
+          type: array
+          items:
+            $ref: "#/components/schemas/Job"
+          description: list of transfer job
+        total_size:
+          type: integer
+          description: total number
+          format: int32
+        next_page_token:
+          type: string
+          description: next_page_token field used for pagination.
+      description: response of ListJob api
+    ListSegmentsResponse:
+      type: object
+      properties:
+        segments:
+          type: array
+          items:
+            $ref: "#/components/schemas/Segment"
+          description: List of segments
+        total_size:
+          type: integer
+          description: Total count
+          format: int32
+        next_page_token:
+          type: string
+          description: next_page_token field used for pagination.
+      description: Response of list segments.
+    ListTableRowsRequest:
+      type: object
+      properties:
+        database_id:
+          type: string
+          description: ID of the database containing the table
+        table_id:
+          type: string
+          description: ID of the table to query
+        page:
+          type: integer
+          description: Page number (starting from 1)
+          format: int32
+        page_size:
+          type: integer
+          description: Number of rows per page (10–100 recommended)
+          format: int32
+      description: Request body for ListTableRows. Used to retrieve paginated data from a specific table
+    ListTableRowsResponse:
+      type: object
+      properties:
+        columns:
+          type: array
+          items:
+            $ref: "#/components/schemas/TableColumn"
+          description: Metadata for each column in the table
+        rows:
+          type: array
+          items:
+            $ref: "#/components/schemas/TableRow"
+          description: List of actual table rows with data
+        page:
+          type: integer
+          description: Current page number
+          format: int32
+        page_size:
+          type: integer
+          description: Rows per page
+          format: int32
+        total_rows:
+          type: integer
+          description: Total number of rows in the table
+          format: int64
+        table:
+          $ref: "#/components/schemas/TableInfo"
+      description: Response body for ListTableRows. Contains paginated table data with column metadata
+    Meta:
+      type: object
+      properties:
+        dataset_id:
+          readOnly: true
+          type: string
+          description: Dataset ID
+        document_id:
+          readOnly: true
+          type: string
+          description: Doc ID
+        document:
+          type: string
+          description: Doc name
+        filename:
+          type: string
+          description: File Name
+        content:
+          type: string
+          description: Search content
+        columns:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentTableColumn"
+          description: Table column info if dateset type is DATASET_TYPE_TABLE
+        ddl:
+          type: string
+          description: DDL of table
+        score:
+          type: number
+          description: Score
+          format: float
+      description: Meta info
+    ModifyStatusRequest:
+      required:
+        - name
+        - is_active
+        - group
+      type: object
+      properties:
+        name:
+          type: string
+          description: "The name of the segment to update. Format: datasets/{dataset_id}/documents/{document_id}/segments/{segment_id}"
+        is_active:
+          type: boolean
+          description: The new is_active for the segment.
+        group:
+          type: string
+          description: group
+      description: Request to update segment state.
+    ModifyTableDataRequest:
+      required:
+        - parent
+        - params
+        - segment_id
+      type: object
+      properties:
+        parent:
+          type: string
+          description: "Document containing the table. Format: datasets/{dataset_id}/documents/{document_id}"
+        params:
+          type: object
+          additionalProperties:
+            type: string
+          description: Updated row data as column name to value mapping
+        segment_id:
+          type: string
+          description: Segment ID of the row to modify
+      description: Request message for modifying table data
+    MultipartUploadFileURL:
+      type: object
+      properties:
+        uri:
+          type: string
+          description: presign url
+        part_num:
+          type: integer
+          description: part num
+          format: int64
+        part_size:
+          type: integer
+          description: part size
+          format: int64
+        file_offset:
+          type: integer
+          description: offset
+          format: int64
+      description: multipart upload file url
+    MultipartUploadPart:
+      type: object
+      properties:
+        etag:
+          type: string
+          description: complete multipart upload part etag
+        part_num:
+          type: integer
+          description: part num
+          format: int64
+      description: complete multipart upload part
+    ParserConfig:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of parser. Unique identifier for the parser configuration. Used to distinguish between different parser setups.
+        params:
+          type: object
+          additionalProperties:
+            type: string
+          description: "Params for parser. Key-value pairs containing parser-specific parameters. Examples: chunk_size, chunk_overlap, separators, etc."
+        type:
+          enum:
+            - PARSE_TYPE_UNSPECIFIED
+            - PARSE_TYPE_CONVERT
+            - PARSE_TYPE_SPLIT
+            - PARSE_TYPE_QA
+            - PARSE_TYPE_SUMMARY
+            - PARSE_TYPE_IMAGE_CAPTION
+          type: string
+          description: Parse type. Specifies what kind of parsing operation this config performs. Determines how documents are processed and what output is generated.
+          format: enum
+      description: Parse document config. Configuration for document parsing and processing.
+    PresignMultipartUploadFileURLRequest:
+      required:
+        - job
+        - relpath
+        - file_size
+      type: object
+      properties:
+        job:
+          type: string
+          description: "Job identifier, format: jobs/{job_id}"
+        relpath:
+          type: string
+          description: Relative path of the file within the job
+        file_size:
+          type: integer
+          description: Total size of the file in bytes
+          format: int64
+      description: Request for generating presigned URLs for multipart file upload
+    PresignMultipartUploadFileURLResponse:
+      type: object
+      properties:
+        upload_id:
+          type: string
+          description: Unique identifier for the multipart upload session
+        list:
+          readOnly: true
+          type: array
+          items:
+            $ref: "#/components/schemas/MultipartUploadFileURL"
+          description: List of presigned URLs for each part of the multipart upload
+      description: Response containing multipart upload URLs and upload ID
+    PresignUploadCoverImageURLRequest:
+      type: object
+      properties:
+        cover_image:
+          type: string
+          description: cover image file name of the dataset.
+      description: presign upload cover iamge file url.
+    PresignUploadCoverImageURLResponse:
+      type: object
+      properties:
+        uri:
+          type: string
+          description: presign url
+        cover_image:
+          type: string
+          description: Returns the key stored in the cover image object
+      description: response of PresignUploadCoverImageURL api
+    PresignUploadFileURLRequest:
+      required:
+        - job
+      type: object
+      properties:
+        job:
+          type: string
+          description: Parent param of url, format is jobs/{job_id}.
+        rel_path:
+          type: string
+          description: file relpath，default is root path.
+      description: request of PresignUploadFileURL api
+    PresignUploadFileURLResponse:
+      type: object
+      properties:
+        uri:
+          type: string
+          description: presign url
+      description: response of PresignUploadFileURL api
+    PreviewJobFileRequest:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: "The name of start job. Format: datasets/{dataset_id}/jobs/{job_id}"
+      description: Request of PreviewJobFile API.
+    PreviewJobFileResponse:
+      required:
+        - columns
+        - rows
+      type: object
+      properties:
+        columns:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentTableColumn"
+          description: Column information obtained from parsing the uploaded file.
+        rows:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentTableRow"
+          description: Rows in the uploaded file.
+        total:
+          type: integer
+          description: Total number of row.
+          format: int32
+      description: Response of PreviewJobFile API.
+    PrimaryKeyItem:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Column name that is part of the primary key
+        value:
+          type: string
+          description: Value of the primary key field
+      description: Represents a single primary key column/value pair. Used to uniquely identify a specific row for updates
+    Query:
+      type: object
+      properties:
+        input_type:
+          type: string
+          description: "Type of input, eg: `image`,`text`,`audio`,`file`. Default is `text`."
+        text:
+          type: string
+          description: Query text.
+        uri:
+          type: string
+          description: URL of image/audio.
+        input_base64:
+          type: string
+          description: Encoded input text.
+        file_id:
+          type: string
+          description: file id.
+      description: Query message
+    QueryTableRequest:
+      required:
+        - dataset_id
+        - sql
+      type: object
+      properties:
+        dataset_id:
+          type: string
+          description: The id of dataset
+        sql:
+          type: string
+          description: The sql from llm
+      description: The request of query table
+    QueryTableResponse:
+      type: object
+      properties:
+        dataset_id:
+          type: string
+          description: The id of dataset
+        sql:
+          type: string
+          description: The sql from llm
+        result:
+          type: string
+          description: The result of query
+        error:
+          type: string
+          description: The error when query fail
+      description: The response of query table
+    ResumeJobRequest:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: "Job identifier, format: datasets/{dataset_id}/jobs/{job_id}"
+      description: Request to resume a job
+    Role:
+      required:
+        - role
+      type: object
+      properties:
+        role:
+          type: string
+          description: English name of the role.
+        display_name:
+          readOnly: true
+          type: string
+          description: Chinese name of the role.
+      description: Role of datasets.
+    ScrollSegmentsRequest:
+      required:
+        - group
+      type: object
+      properties:
+        dataset_id:
+          type: string
+          description: The group name of the segments to scroll.
+        document_id:
+          type: string
+          description: The group name of the segments to scroll.
+        group:
+          type: string
+          description: The group name of the segments to scroll.
+        page_size:
+          type: integer
+          description: Page size for this request.
+          format: int32
+        page_token:
+          type: string
+          description: The starting value of the current page.
+        segment_ids:
+          type: array
+          items:
+            type: string
+          description: SegmentIDs
+      description: Request for scrolling segments.
+    ScrollSegmentsResponse:
+      type: object
+      properties:
+        segments:
+          type: array
+          items:
+            $ref: "#/components/schemas/Segment"
+          description: List of segments
+        next_page_token:
+          type: string
+          description: The next page token for pagination.
+        has_more:
+          type: boolean
+          description: Whether there are more segments to scroll
+      description: Response for scrolling segments.
+    SearchAllDocumentsRequest:
+      required:
+        - keyword
+      type: object
+      properties:
+        keyword:
+          type: string
+          description: Search keyword (document name, tags, creator)
+        page_size:
+          type: integer
+          description: "Page size (default: 10, max: 100)"
+          format: int32
+        page_token:
+          type: string
+          description: Page token for pagination
+      description: Request message for searching all documents across all accessible datasets
+    SearchDatasetMemberResponse:
+      type: object
+      properties:
+        dataset_members:
+          type: array
+          items:
+            $ref: "#/components/schemas/DatasetMember"
+          description: Members of dataset.
+        next_page_token:
+          type: string
+          description: Next page token field used for pagination.
+      description: Response of search dataset members
+    SearchDatasetsRequest:
+      type: object
+      properties:
+        keyword:
+          type: string
+          description: keyword
+        dataset_filter_type:
+          enum:
+            - DATASET_FILTER_TYPE_UNSPECIFIED
+            - CREATED_BY_ME
+            - MANAGED_BY_ME
+            - ACCESSIBLE_BY_ME
+            - DEMONSTRATION
+          type: string
+          description: Enumeration for repo filter types
+          format: enum
+        page_token:
+          type: string
+          description: The starting value of the current page.
+        page_size:
+          type: integer
+          description: Page size for this request.
+          format: int32
+        order_by:
+          type: string
+          description: "Sorting keyword, like: create_time desc."
+        tags:
+          type: array
+          items:
+            type: string
+          description: Filter by tags.
+      description: Search dataset request.
+    SearchDocumentsRequest:
+      required:
+        - parent
+      type: object
+      properties:
+        parent:
+          type: string
+          description: "Parent dataset. Format: datasets/{dataset_id}"
+        p_id:
+          type: string
+          description: ID of the parent document for hierarchical search
+        dir_path:
+          type: string
+          description: Directory path for path-based search
+        order_by:
+          type: string
+          description: Sorting criteria, e.g., "create_time desc"
+        page_token:
+          type: string
+          description: Pagination token for the next page
+        page_size:
+          type: integer
+          description: Number of documents per page (max 1000)
+          format: int32
+        keyword:
+          type: string
+          description: Search keyword for content-based search
+        recursive:
+          type: boolean
+          description: Whether to search recursively in subfolders
+      description: Request message for searching documents
+    SearchJobsRequest:
+      required:
+        - parent
+      type: object
+      properties:
+        parent:
+          type: string
+          description: "Parent dataset identifier, format: datasets/{dataset_id}"
+        job_status:
+          type: array
+          items:
+            enum:
+              - STAGE_UNSPECIFIED
+              - CREATING
+              - PARSING
+              - SUCCEEDED
+              - FAILED
+              - CANCELLED
+              - PARTIAL_SUCCESS
+              - SUSPENDED
+            type: string
+            format: enum
+          description: List of job states to filter by
+        start_time:
+          type: string
+          description: Start time for filtering jobs
+          format: date-time
+        end_time:
+          type: string
+          description: End time for filtering jobs
+          format: date-time
+        page_size:
+          type: integer
+          description: Maximum number of jobs to return
+          format: int32
+        page_token:
+          type: string
+          description: Token for pagination to the next page
+      description: Request to search for jobs with filtering criteria
+    SearchKnowledgeConfig:
+      required:
+        - dataset_list
+        - top_k
+        - confidence
+        - weight
+      type: object
+      properties:
+        dataset_list:
+          type: array
+          items:
+            $ref: "#/components/schemas/DatasetSelector"
+          description: List of datasets to be searched.
+        top_k:
+          type: integer
+          description: Top k of result.
+          format: int32
+        confidence:
+          type: number
+          description: Confidence.
+          format: float
+        weight:
+          type: number
+          description: "Semantic Retrieval: Returns content that matches the meaning of the query rather than the literal meaning of the query. It is recommended for scenarios that require contextual relevance and intent relevance. Full-Text Retrieval: Uses an inverted index strategy for retrieval, recommended for scenarios where precise keyword matching is needed. Weight: The weight represents the proportion between the two methods, with valid values ranging from 0 to 1. The larger the value, the greater the weight given to full-text retrieval, and the smaller the weight for semantic retrieval."
+          format: float
+        open_window:
+          type: boolean
+          description: Should the preceding and following segments of the retrieved segment be included in the prompt? If so, the retrieval will be more comprehensive but consume more tokens.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Filter by tag list.
+        creators:
+          type: array
+          items:
+            type: string
+          description: Filter by creators.
+        database_ids:
+          type: array
+          items:
+            type: string
+          description: With databases.
+      description: Configuration of knowledge searching.
+    SearchKnowledgeRequest:
+      required:
+        - page_size
+        - page_token
+      type: object
+      properties:
+        config:
+          $ref: "#/components/schemas/SearchKnowledgeConfig"
+        page_size:
+          type: integer
+          description: Size per page
+          format: int32
+        page_token:
+          type: string
+          description: Paging token; do not pass if starting from the beginning.
+        keyword:
+          type: string
+          description: The text want to retrieve.
+        query:
+          $ref: "#/components/schemas/Query"
+      description: Rag search request.
+    SearchKnowledgeResponse:
+      type: object
+      properties:
+        docs:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentSearchResult"
+          description: Doc result list
+        next_page_token:
+          type: string
+          description: next_page_token field used for pagination.
+        tokens:
+          type: array
+          items:
+            type: string
+          description: Token list for segmentation.
+      description: Dataset rag search response.
+    SearchSegmentsRequest:
+      required:
+        - parent
+      type: object
+      properties:
+        parent:
+          type: string
+          description: "The parent of the segment to retrieve. Format: datasets/{dataset_id}/documents/{document_id}."
+        keyword:
+          type: string
+          description: Support keyword search
+        page_token:
+          type: string
+          description: The starting value of the current page.
+        page_size:
+          type: integer
+          description: Page size for this request.
+          format: int32
+        order_by:
+          type: string
+          description: "Sorting keyword, like: create_time desc."
+        group:
+          type: string
+          description: group
+      description: Search segments request.
+    SearchTableDataResponse:
+      type: object
+      properties:
+        columns:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentTableColumn"
+          description: Table column information
+        rows:
+          type: array
+          items:
+            $ref: "#/components/schemas/Segment"
+          description: List of table rows
+        total_size:
+          type: integer
+          description: Total count of matching rows
+          format: int32
+        next_page_token:
+          type: string
+          description: Token for retrieving the next page of results
+      description: Response message for searching table data
+    Segment:
+      type: object
+      properties:
+        segment_id:
+          readOnly: true
+          type: string
+          description: Segment ID
+        dataset_id:
+          readOnly: true
+          type: string
+          description: Dataset ID
+        document_id:
+          readOnly: true
+          type: string
+          description: Doc ID
+        content:
+          readOnly: true
+          type: string
+          description: Segment content
+        token_count:
+          readOnly: true
+          type: integer
+          description: Token count
+          format: int32
+        number:
+          readOnly: true
+          type: integer
+          description: Segment num
+          format: int32
+        metadata:
+          $ref: "#/components/schemas/SegmentMetadata"
+        words:
+          readOnly: true
+          type: integer
+          description: Word count
+          format: int32
+        segment_type:
+          readOnly: true
+          enum:
+            - SEGMENT_TYPE_UNSPECIFIED
+            - SEGMENT_TYPE_TEXT
+            - SEGMENT_TYPE_IMAGE
+            - SEGMENT_TYPE_TABLE
+            - SEGMENT_TYPE_WEB_IMAGE
+            - SEGMENT_TYPE_STRUCTURED_DATA
+            - SEGMENT_TYPE_QA
+            - SEGMENT_TYPE_ONLINE_SEARCH
+          type: string
+          description: Segment type
+          format: enum
+        table_content:
+          readOnly: true
+          type: string
+          description: Table content
+        image_key:
+          readOnly: true
+          type: string
+          description: Image key
+        image_uri:
+          readOnly: true
+          type: string
+          description: Image URI
+        display_type:
+          readOnly: true
+          enum:
+            - DISPLAY_TYPE_UNSPECIFIED
+            - DISPLAY_TYPE_TEXT
+            - DISPLAY_TYPE_MARKDOWN
+            - DISPLAY_TYPE_TABLE
+          type: string
+          description: Display type
+          format: enum
+        image_keys:
+          readOnly: true
+          type: array
+          items:
+            type: string
+          description: Image keys
+        display_content:
+          readOnly: true
+          type: string
+          description: Display content
+        structured_data:
+          $ref: "#/components/schemas/DocumentTableRow"
+        answer:
+          readOnly: true
+          type: string
+          description: Segment answer for type of QA
+        excluded_embed_metadata_keys:
+          readOnly: true
+          type: array
+          items:
+            type: string
+          description: excluded_embed_metadata_keys (list[string])
+        excluded_llm_metadata_keys:
+          readOnly: true
+          type: array
+          items:
+            type: string
+          description: excluded_llm_metadata_keys (list[string])
+        parent:
+          readOnly: true
+          type: string
+          description: parent id
+        children:
+          readOnly: true
+          type: object
+          additionalProperties:
+            $ref: "#/components/schemas/ChildrenList"
+          description: children ids
+        meta:
+          readOnly: true
+          type: string
+          description: meta is json
+        global_meta:
+          readOnly: true
+          type: string
+          description: global_meta is json
+        is_active:
+          type: boolean
+          description: Segment Status
+        group:
+          type: string
+          description: group
+      description: Segment details
+    SegmentMetadata:
+      type: object
+      properties:
+        key_words:
+          readOnly: true
+          type: array
+          items:
+            type: string
+          description: Key words
+        image_name_value:
+          readOnly: true
+          type: string
+          description: Image name
+        image_size:
+          readOnly: true
+          type: integer
+          description: Image size
+          format: int32
+        table_name_value:
+          readOnly: true
+          type: string
+          description: Table name
+        table_rows:
+          readOnly: true
+          type: integer
+          description: Table rows
+          format: int32
+        table_columns:
+          readOnly: true
+          type: array
+          items:
+            type: string
+          description: Table columns
+        score:
+          readOnly: true
+          type: number
+          description: Score
+          format: float
+        src:
+          readOnly: true
+          type: string
+          description: Source url if from online search
+        title:
+          readOnly: true
+          type: string
+          description: Web page title.
+        white_src:
+          readOnly: true
+          type: string
+          description: Web source name.
+        icon:
+          readOnly: true
+          type: string
+          description: Web source icon.
+      description: Metadata details
+    SegmentStrategy:
+      type: object
+      properties:
+        chunk_size:
+          type: integer
+          description: chunk_size is the maximum number of tokens allowed in a segment. Larger chunks provide more context but may be less focused for retrieval.
+          format: int32
+        chunk_overlap:
+          type: integer
+          description: chunk_overlap is the number of tokens allowed to overlap between segments. Overlap helps maintain context continuity across segment boundaries.
+          format: int32
+        separators:
+          type: array
+          items:
+            type: string
+          description: 'separators is the list of separators used for segmenting the text. Common separators include: ".", "!", "?", "\n\n", etc.'
+      description: Segment strategy parameters, adjustable for the knowledge segmentation method. Controls how documents are broken down into smaller, manageable pieces.
+    SetDefaultDatasetRequest:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Dataset name.
+      description: Request of SetDefaultDataset API.
+    StartJobRequest:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: "The name of start job. Format: datasets/{dataset_id}/jobs/{job_id}"
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentInfo"
+          description: The fileList of failed files uploaded to aoss temporary path.
+        failed_file_size:
+          type: integer
+          description: The size of failed files uploaded to aoss temporary path.
+          format: int64
+        failed_file_count:
+          type: integer
+          description: The count of failed files uploaded to aoss temporary path.
+          format: int64
+        document_id:
+          type: string
+          description: Doc ID to which data is appended
+        start_mode:
+          enum:
+            - DEFAULT
+            - UPLOAD
+          type: string
+          description: Start mode
+          format: enum
+      description: Start Task Request.
+    SuspendJobRequest:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: "Job identifier, format: datasets/{dataset_id}/jobs/{job_id}"
+      description: Request to suspend a job
+    TableColumn:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Column identifier/name
+        type:
+          type: string
+          description: Data type (e.g. "STRING", "INT64", "FLOAT")
+        role:
+          enum:
+            - COLUMN_ROLE_UNSPECIFIED
+            - PRIMARY_KEY
+            - FOREIGN_KEY
+            - INDEX
+            - NORMAL
+          type: string
+          description: Semantic role of the column in the table
+          format: enum
+        reference_table:
+          type: string
+          description: Referenced table name, if this is a foreign key column
+        reference_column:
+          type: string
+          description: Referenced column name, if this is a foreign key column
+        nullable:
+          type: boolean
+          description: Whether the column allows NULL values
+        default_value:
+          type: string
+          description: Default value for the column, if any
+        is_primary_key:
+          type: boolean
+          description: True if this column is part of the primary key
+        display_name:
+          type: string
+          description: Optional human-readable label for display purposes
+      description: Metadata for one column/field in a table. Describes the structure and properties of a table column
+    TableField:
+      type: object
+      properties:
+        columnname:
+          type: string
+          description: Name
+        column_number:
+          type: integer
+          description: Column number
+          format: int32
+        datatype:
+          type: integer
+          description: Data type identifier for the field
+          format: int32
+        desc:
+          type: string
+          description: Description of the field
+        sample:
+          type: string
+          description: Sample value for the field
+        index_key:
+          type: boolean
+          description: Whether this field is an index key
+      description: TableField message
+    TableInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique table identifier
+        name:
+          type: string
+          description: Table name
+        database_name:
+          type: string
+          description: Parent database name
+        database_id:
+          type: string
+          description: Parent database ID
+        row_count:
+          type: integer
+          description: Total number of rows in the table
+          format: int64
+        created_time:
+          type: string
+          description: Creation timestamp (ISO 8601)
+        updated_time:
+          type: string
+          description: Last update timestamp (ISO 8601)
+        creator_user_id:
+          type: string
+          description: ID of the user who created this table
+        creator_user_name:
+          type: string
+          description: Creator's name
+      description: Metadata for a single table within a database. Contains essential information about a table structure
+    TableRow:
+      type: object
+      properties:
+        cells:
+          type: object
+          additionalProperties:
+            type: string
+          description: "Key: column name; Value: cell content as string"
+      description: Represents a row's column-value mapping. Contains the actual data for one table row
+    UnsetDefaultDatasetRequest:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Dataset name.
+      description: Request of UnsetDefaultDataset API.
+    UpdateDatabaseRequest:
+      type: object
+      properties:
+        database_id:
+          type: string
+          description: Unique identifier of the database to update
+        name:
+          type: string
+          description: New name for the database
+        description:
+          type: string
+          description: New description for the database
+        tags:
+          type: array
+          items:
+            type: string
+          description: New list of tags for the database
+      description: Request body for UpdateDatabase. Used to modify existing database metadata
+    UpdateDatabaseResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Success or error message
+      description: Response body for UpdateDatabase. Confirms successful database update
+    UpdateTableCellRequest:
+      type: object
+      properties:
+        database_id:
+          type: string
+          description: ID of the database containing the table
+        table_id:
+          type: string
+          description: ID of the table containing the cell to update
+        primary_key_columns:
+          type: array
+          items:
+            $ref: "#/components/schemas/PrimaryKeyItem"
+          description: List of primary key columns to identify the specific row
+        column_name:
+          type: string
+          description: Name of the target column to update
+        new_value:
+          type: string
+          description: New value to set (serialized as string)
+      description: Request body for updating a table cell. Used to modify a single cell value in a table row
+    UpdateTableCellResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: True if update was successful, false otherwise
+        message:
+          type: string
+          description: Optional status message or error description
+      description: Response body after attempting to update a cell. Confirms whether the cell update operation was successful
+    UserDatabase:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique database identifier.
+        name:
+          type: string
+          description: Human-readable database name.
+        description:
+          type: string
+          description: Optional description text.
+        table_count:
+          type: integer
+          description: Number of tables in this database.
+          format: int32
+        size_in_bytes:
+          type: integer
+          description: Total size on disk (in bytes).
+          format: int64
+        tags:
+          type: array
+          items:
+            type: string
+          description: Custom tags/categories.
+        type:
+          type: string
+          description: Source type (e.g. local, third-party).
+        created_time:
+          type: string
+          description: Creation timestamp (ISO 8601 e.g. "2025-06-18T12:34:56Z").
+        updated_time:
+          type: string
+          description: Last update timestamp (ISO 8601).
+        creator_user_id:
+          type: string
+          description: ID of the user who created this database.
+        creator_user_name:
+          type: string
+          description: Name of the creator.
+      description: Basic metadata for a user-owned database. Represents essential information about a database instance
+    UserDatabaseSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique database identifier
+        name:
+          type: string
+          description: Name of the database
+        description:
+          type: string
+          description: Optional description
+        tags:
+          type: array
+          items:
+            type: string
+          description: List of tags associated with the database
+      description: Summary information of a single database. Lightweight version of UserDatabase for list views
+    UserInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: User identifier
+        name:
+          type: string
+          description: User display name
+      description: User information
+    ValidateDatabaseConnectionRequest:
+      type: object
+      properties:
+        db_type:
+          type: string
+          description: Database engine type (e.g., "mysql", "postgresql")
+        username:
+          type: string
+          description: Database connection username
+        password:
+          type: string
+          description: Database connection password
+        host:
+          type: string
+          description: Database server hostname or IP address
+        port:
+          type: integer
+          description: Database server port number
+          format: int32
+        db_name:
+          type: string
+          description: Name of the specific database to connect to
+      description: Request body for ValidateDatabaseConnection. Used to test database connectivity before creation
+    ValidateDatabaseConnectionResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: True if connection was successful, false otherwise
+        message:
+          type: string
+          description: Success message or error description
+      description: Response body for ValidateDatabaseConnection. Indicates whether the connection test was successful
+    WriterSegmentJob:
+      required:
+        - dataset_id
+        - callback_uri
+        - file_key
+      type: object
+      properties:
+        dataset_id:
+          type: string
+          description: Dataset ID
+        callback_uri:
+          type: string
+          description: Callback uri
+        file_key:
+          type: string
+          description: AOSS key of the cleaned segments
+        tenant_id:
+          type: string
+          description: Tenant ID
+        filename:
+          type: string
+          description: File name
+        documentname:
+          type: string
+          description: Doc name
+        dataset_type:
+          enum:
+            - DATASET_TYPE_UNSPECIFIED
+            - DATASET_TYPE_TEXT
+            - DATASET_TYPE_TABLE
+            - DATASET_TYPE_GRAPH
+          type: string
+          description: Type for dataset
+          format: enum
+        document_id:
+          type: string
+          description: Table id for document
+        fields:
+          type: array
+          items:
+            $ref: "#/components/schemas/TableField"
+          description: Table field for table type
+        state:
+          readOnly: true
+          enum:
+            - STATE_UNSPECIFIED
+            - STATE_RUNNING
+            - STATE_SUCCESS
+            - STATE_FAILED
+          type: string
+          description: Job State
+          format: enum
+        embedding_model:
+          type: string
+          description: embedding model
+      description: Writer task info
+tags:
+  - name: DatabaseService
+    description: |-
+      ----------------------------------------------------------
+       Database gRPC service for retrieving and modifying data
+       ----------------------------------------------------------
+  - name: DatasetMemberService
+    description: Dataset member service.
+  - name: DatasetService
+    description: dataset service.
+  - name: DocumentService
+    description: document service.
+  - name: InternalDatasetService
+    description: internal dataset service.
+  - name: InternalRetrivalService
+    description: InternalRetrivalService internal retrieve service
+  - name: JobService
+    description: job service.
+  - name: RetrievalService
+    description: Retrieval service.
+  - name: SegmentService
+    description: segment service.
+  - name: TableService
+    description: TableService definition.
