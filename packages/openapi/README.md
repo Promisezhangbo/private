@@ -8,16 +8,16 @@
 
 | 入口 | 作用 |
 |------|------|
-| `@packages/openapi/<name>-gen` | 某份 YAML 的 SDK + `OpenApi<Name>Fn({ BASE, token... })` 初始化入口（**一份 yaml 一套 axios/settings/client**，互不串） |
-| `@packages/openapi/<name>-gen-types` | 仅类型（无 axios 运行时） |
-| `@packages/openapi` / `@packages/openapi/request` | 公共初始化器（生成的 `*-gen/index.ts` 内部复用，业务一般不需要直接用） |
+| `@packages/openapi` | 聚合导出所有 `OpenApi<Name>Fn`（来自 `src/clients.ts`，自动生成），用于 VSCode 自动导入 |
+| `@packages/openapi/request` | 公共初始化器（生成的 `*-gen/index.ts` 内部复用，业务一般不需要直接用） |
+| `@packages/openapi/<name>-gen` |（可选）不再对外导出，避免 `package.json` 过长；推荐统一从根入口导入 |
 
 生成时把 `scripts/openapi-http.gen.ts` 拷入每个 `*-gen/` 的 `openapi-http.gen.ts`，并删除 Hey API 自动生成的无用 `index.ts`。
 
 ## 示例：初始化并调用
 
 ```ts
-import { OpenApiBlogFn } from '@packages/openapi/blog-gen';
+import { OpenApiBlogFn } from '@packages/openapi';
 
 export const blogApi = OpenApiBlogFn({
   BASE: 'https://blog-api.example.com',
@@ -28,7 +28,7 @@ export const blogApi = OpenApiBlogFn({
 const { data } = await blogApi.listKnowledgeBases({ body: { request_id: crypto.randomUUID() } });
 ```
 
-## 类型优先：`@packages/openapi/<name>-gen-types`（无 axios）
+## 类型优先（无 axios）
 
 若你**主要想要类型**，希望在应用里**自己封装 axios**（拦截器、baseURL、错误处理全在业务侧），可从子路径**只引生成类型**，不经过 `OpenApiFn` / `openApiHttpClient`：
 
