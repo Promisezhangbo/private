@@ -1,5 +1,5 @@
 import { api } from "@/utils/request";
-import type { KnowledgeBaseListItem, ListDatasetResponse } from "@packages/openapi";
+import type { KnowledgeBaseListItem, ListDatasetResponse } from "@packages/openapi/blog-gen-types";
 import React, { useEffect, useState } from "react";
 
 function ResumeHome() {
@@ -13,11 +13,9 @@ function ResumeHome() {
     console.log(data?.results, "data===data888888");
     setDataList(data?.results ?? []);
 
-    // const { data } = await api.listDataset({
-    //   body: { request_id: crypto.randomUUID() },
-    // });
-    // console.log(data, "data===data");
-    // setDataset(data);
+    // const res1 = await loginApi.datasetServiceAllDatasetTags({});
+
+    // console.log(res1);
   }
 
   useEffect(() => {
