@@ -8,12 +8,12 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: '要检出并构建的分支（须已推送）'
+        description: "要检出并构建的分支（须已推送）"
         required: true
         default: main
         type: string
       scope:
-        description: '部署范围'
+        description: "部署范围"
         required: true
         default: all
         type: choice
@@ -50,11 +50,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'pnpm'
+          node-version: "20"
+          cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install -no-frozen-lockfile
 
       - name: Build（全部子应用）
         if: github.event.inputs.scope == 'all'
@@ -91,11 +91,11 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
           force_orphan: true
           clean: true
-          clean_keep: '.git'
+          clean_keep: ".git"
           exclude_assets: |
             README.md
             LICENSE
