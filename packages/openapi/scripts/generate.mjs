@@ -16,17 +16,8 @@ import SwaggerParser from '@apidevtools/swagger-parser';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import {
-  buildCacheKey,
-  canUseCache,
-  listYamlFiles,
-  writeCache,
-} from './cache-utils.mjs';
-import {
-  patchGeneratedClientGen,
-  writeClientsBarrel,
-  writeGenWrappers,
-} from './codegen-utils.mjs';
+import { buildCacheKey, canUseCache, listYamlFiles, writeCache } from './cache-utils.mjs';
+import { patchGeneratedClientGen, writeClientsBarrel, writeGenWrappers } from './codegen-utils.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const pkgRoot = path.resolve(__dirname, '..');

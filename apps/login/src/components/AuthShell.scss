@@ -1,4 +1,4 @@
-@use "@style-config/variables" as *;
+@use '@style-config/variables' as *;
 
 /* 柔和光斑缓慢漂移，无高对比霓虹 */
 @keyframes login-shell-blob-drift {
@@ -24,7 +24,7 @@
   padding: 24px;
 
   &::before {
-    content: "";
+    content: '';
     position: fixed;
     inset: 50%;
     width: min(120vw, 900px);
@@ -43,7 +43,7 @@
   }
 
   &::after {
-    content: "";
+    content: '';
     position: fixed;
     inset: 0;
     z-index: $z-bg-grid;

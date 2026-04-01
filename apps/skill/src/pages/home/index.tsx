@@ -1,27 +1,27 @@
-import { Progress, Typography } from "antd";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import "./index.scss";
+import { Progress, Typography } from 'antd';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import './index.scss';
 
 const SKILLS: { name: string; percent: number }[] = [
-  { name: "HTML", percent: 90 },
-  { name: "CSS", percent: 90 },
-  { name: "JS", percent: 85 },
-  { name: "TS", percent: 85 },
-  { name: "React", percent: 85 },
-  { name: "Git", percent: 80 },
-  { name: "Nextjs", percent: 75 },
-  { name: "Taro", percent: 70 },
-  { name: "Webpack", percent: 70 },
-  { name: "Vue2", percent: 65 },
-  { name: "Vue3", percent: 65 },
-  { name: "Vite", percent: 60 },
-  { name: "Umijs", percent: 60 },
-  { name: "Jest", percent: 55 },
+  { name: 'HTML', percent: 90 },
+  { name: 'CSS', percent: 90 },
+  { name: 'JS', percent: 85 },
+  { name: 'TS', percent: 85 },
+  { name: 'React', percent: 85 },
+  { name: 'Git', percent: 80 },
+  { name: 'Nextjs', percent: 75 },
+  { name: 'Taro', percent: 70 },
+  { name: 'Webpack', percent: 70 },
+  { name: 'Vue2', percent: 65 },
+  { name: 'Vue3', percent: 65 },
+  { name: 'Vite', percent: 60 },
+  { name: 'Umijs', percent: 60 },
+  { name: 'Jest', percent: 55 },
 ];
 
-const GREEN = "#52c41a";
-const AMBER = "#faad14";
+const GREEN = '#52c41a';
+const AMBER = '#faad14';
 
 const listVariants = {
   hidden: { opacity: 0 },
@@ -107,22 +107,12 @@ function SkillHome() {
 
           <div className="skill-page__list-wrap">
             <div className="skill-page__columns">
-              <motion.ul
-                className="skill-page__list"
-                variants={listVariants}
-                initial="hidden"
-                animate="show"
-              >
+              <motion.ul className="skill-page__list" variants={listVariants} initial="hidden" animate="show">
                 {SKILLS_LEFT.map((skill, j) => (
                   <SkillRow key={skill.name} skill={skill} fill={fills[j]} />
                 ))}
               </motion.ul>
-              <motion.ul
-                className="skill-page__list"
-                variants={listVariantsRight}
-                initial="hidden"
-                animate="show"
-              >
+              <motion.ul className="skill-page__list" variants={listVariantsRight} initial="hidden" animate="show">
                 {SKILLS_RIGHT.map((skill, j) => (
                   <SkillRow key={skill.name} skill={skill} fill={fills[MID + j]} />
                 ))}

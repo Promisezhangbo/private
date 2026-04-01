@@ -9,5 +9,5 @@
     "eslint/no-unused-vars": "warn"
   },
   "globals": {},
-  "ignorePatterns": [],
+  "ignorePatterns": []
 }

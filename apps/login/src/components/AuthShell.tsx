@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
-import "./AuthShell.scss";
+import type { ReactNode } from 'react';
+import './AuthShell.scss';
 
 type AuthShellProps = {
   children: ReactNode;

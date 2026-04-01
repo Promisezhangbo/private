@@ -1,1 +1,1 @@
-import "@packages/ts-config/common";
+import '@packages/ts-config/common';

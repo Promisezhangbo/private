@@ -134,4 +134,3 @@ export function writeClientsBarrel({ genRoot, names }) {
   lines.push('');
   fs.writeFileSync(outPath, `${lines.join('\n')}\n`, 'utf8');
 }
-

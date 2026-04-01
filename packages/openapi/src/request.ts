@@ -5,7 +5,9 @@ export type OpenApiCommonSettings = {
   BASE: string;
   WITH_CREDENTIALS: boolean;
   TOKEN?: string | ((x: unknown) => string | Promise<string | undefined> | undefined);
-  HEADERS?: Record<string, string> | ((x: unknown) => Record<string, string> | Promise<Record<string, string> | undefined> | undefined);
+  HEADERS?:
+    | Record<string, string>
+    | ((x: unknown) => Record<string, string> | Promise<Record<string, string> | undefined> | undefined);
 };
 
 /** 全局错误上报（由 `openapi-http.gen.ts` 实现；这里仅透传配置结构）。 */
@@ -48,7 +50,10 @@ export function createOpenApiInitializer<TSdk>(deps: {
   /** 该 spec 的 SDK（`sdk.gen.ts` 全量导出对象） */
   sdk: TSdk;
   /** 该 spec 的 Hey API client（用于写入 baseURL/withCredentials/responseType 等） */
-  client: { setConfig: (c: { baseURL?: string; withCredentials?: boolean; responseType?: ResponseType }) => void; getConfig: () => { baseURL?: unknown } };
+  client: {
+    setConfig: (c: { baseURL?: string; withCredentials?: boolean; responseType?: ResponseType }) => void;
+    getConfig: () => { baseURL?: unknown };
+  };
   /** 该 spec 的运行时 settings（来自注入的 `openapi-http.gen.ts`） */
   settings: OpenApiCommonSettings;
   /** 可选：对接全局错误上报设置（来自注入的 `openapi-http.gen.ts`） */
@@ -96,4 +101,3 @@ export function createOpenApiInitializer<TSdk>(deps: {
     return sdk;
   };
 }
-

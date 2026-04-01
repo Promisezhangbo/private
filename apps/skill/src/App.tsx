@@ -1,8 +1,8 @@
-import { ConfigProvider } from "antd";
-import zhCN from "antd/locale/zh_CN";
-import { motion } from "framer-motion";
-import { RouterProvider } from "react-router-dom";
-import { routers } from "./router";
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/locale/zh_CN';
+import { motion } from 'framer-motion';
+import { RouterProvider } from 'react-router-dom';
+import { routers } from './router';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       locale={zhCN}
       theme={{
         token: {
-          colorBgLayout: "transparent",
+          colorBgLayout: 'transparent',
           borderRadiusLG: 10,
         },
       }}
@@ -23,8 +23,8 @@ function App() {
           flex: 1,
           minHeight: 0,
           minWidth: 0,
-          display: "flex",
-          flexDirection: "column",
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
         <RouterProvider router={routers} />

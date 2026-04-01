@@ -71,7 +71,9 @@ let silent = 0;
 
 export function openApiSilent<T>(fn: () => T | Promise<T>): Promise<T> {
   silent++;
-  return Promise.resolve().then(fn).finally(() => silent--);
+  return Promise.resolve()
+    .then(fn)
+    .finally(() => silent--);
 }
 
 /** 避免重复拼接 baseURL 导致路径重复。 */
@@ -133,4 +135,3 @@ openApiHttpClient.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-

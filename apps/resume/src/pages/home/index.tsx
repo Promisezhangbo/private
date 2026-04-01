@@ -1,6 +1,6 @@
-import { api } from "@/utils/request";
-import type { KnowledgeBaseListItem, ListDatasetResponse } from "@packages/openapi/blog-gen-types";
-import React, { useEffect, useState } from "react";
+import { api } from '@/utils/request';
+import type { KnowledgeBaseListItem, ListDatasetResponse } from '@packages/openapi/blog-gen-types';
+import React, { useEffect, useState } from 'react';
 
 function ResumeHome() {
   const [dataset, setDataset] = useState<ListDatasetResponse>();
@@ -10,7 +10,7 @@ function ResumeHome() {
     const { data } = await api.listKnowledgeBases({
       body: { request_id: crypto.randomUUID() },
     });
-    console.log(data?.results, "data===data888888");
+    console.log(data?.results, 'data===data888888');
     setDataList(data?.results ?? []);
 
     // const res1 = await loginApi.datasetServiceAllDatasetTags({});
@@ -25,7 +25,7 @@ function ResumeHome() {
   return (
     <div>
       <div>ResumeHome</div>
-      {dataset ? <p>{dataset.dataset_title ?? dataset.dataset_name ?? "—"}</p> : null}
+      {dataset ? <p>{dataset.dataset_title ?? dataset.dataset_name ?? '—'}</p> : null}
     </div>
   );
 }

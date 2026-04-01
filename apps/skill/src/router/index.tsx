@@ -1,15 +1,15 @@
-import { lazy } from "react";
-import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
+import { lazy } from 'react';
+import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 
-const SkillHome = lazy(() => import("@/pages/home"));
+const SkillHome = lazy(() => import('@/pages/home'));
 
 const router = [
   {
-    path: "/skill",
+    path: '/skill',
     element: <Outlet />,
     children: [
       { index: true, element: <Navigate to="home" replace /> },
-      { path: "home", element: <SkillHome /> },
+      { path: 'home', element: <SkillHome /> },
     ],
   },
 ];

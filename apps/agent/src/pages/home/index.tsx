@@ -39,7 +39,11 @@ export default function Home() {
 
     const userId = `u-${Date.now()}`;
     const botId = `a-${Date.now()}`;
-    setMessages((p) => [...p, { role: 'user', content: text, id: userId }, { role: 'assistant', content: '', id: botId }]);
+    setMessages((p) => [
+      ...p,
+      { role: 'user', content: text, id: userId },
+      { role: 'assistant', content: '', id: botId },
+    ]);
     setInput('');
     setBusy(true);
     setStreamId(botId);
@@ -48,18 +52,14 @@ export default function Home() {
       await getLLMOutput(text, (delta) => {
         const piece = deltaToText(delta);
         if (!piece) return;
-        setMessages((prev) =>
-          prev.map((m) => (m.id === botId ? { ...m, content: m.content + piece } : m)),
-        );
+        setMessages((prev) => prev.map((m) => (m.id === botId ? { ...m, content: m.content + piece } : m)));
       });
       setMessages((prev) =>
         prev.map((m) => (m.id === botId && !m.content.trim() ? { ...m, content: EMPTY_REPLY } : m)),
       );
     } catch (err) {
       antdMessage.error(err instanceof Error ? err.message : String(err));
-      setMessages((prev) =>
-        prev.map((m) => (m.id === botId ? { ...m, content: m.content || formatError(err) } : m)),
-      );
+      setMessages((prev) => prev.map((m) => (m.id === botId ? { ...m, content: m.content || formatError(err) } : m)));
     } finally {
       setBusy(false);
       setStreamId(null);
@@ -82,7 +82,9 @@ export default function Home() {
             </div>
             <div>
               <h1 className="agent-studio__title">智能对话</h1>
-              <p className="agent-studio__subtitle">浅蓝与浅紫配色 · 上方问答 · 底部输入 · Enter 发送 · Shift+Enter 换行</p>
+              <p className="agent-studio__subtitle">
+                浅蓝与浅紫配色 · 上方问答 · 底部输入 · Enter 发送 · Shift+Enter 换行
+              </p>
             </div>
           </header>
 

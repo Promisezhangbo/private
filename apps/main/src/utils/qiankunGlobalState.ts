@@ -1,4 +1,4 @@
-import { initGlobalState, type OnGlobalStateChangeCallback } from "qiankun";
+import { initGlobalState, type OnGlobalStateChangeCallback } from 'qiankun';
 
 type InitQiankunState = {
   loading: boolean;
@@ -7,7 +7,7 @@ type InitQiankunState = {
 
 const initState: InitQiankunState = {
   loading: false,
-  loadingAppName: ""
+  loadingAppName: '',
 };
 
 // 创建全局状态容器
@@ -18,5 +18,5 @@ export const subscribeGlobalState = (callback: OnGlobalStateChangeCallback) => {
 };
 
 export const qiankunState = {
-  globalState
+  globalState,
 };

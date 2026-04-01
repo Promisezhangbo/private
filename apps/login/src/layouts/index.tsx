@@ -1,6 +1,6 @@
-import { routers } from "@/router";
-import { RouterProvider } from "react-router-dom";
-import AuthShell from "@/components/AuthShell";
+import { routers } from '@/router';
+import { RouterProvider } from 'react-router-dom';
+import AuthShell from '@/components/AuthShell';
 
 function Layouts() {
   return (

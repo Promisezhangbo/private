@@ -51,4 +51,3 @@ export function writeCache({ cachePath, cacheKey }) {
     // ignore cache write failure
   }
 }
-

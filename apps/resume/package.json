@@ -1,11 +1,12 @@
 {
   "name": "resume",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "typecheck": "tsc -b --noEmit",
     "lint": "oxlint",
     "preview": "vite preview"
   },
@@ -17,15 +18,15 @@
     "vite-plugin-qiankun": "^1.0.15"
   },
   "devDependencies": {
+    "@packages/openapi": "workspace:*",
     "@packages/style-config": "workspace:*",
     "@packages/ts-config": "workspace:*",
     "@packages/vite-build-utils": "workspace:*",
-    "@packages/openapi": "workspace:*",
     "@vitejs/plugin-react": "^6.0.1",
     "dayjs": "^1.11.20"
   },
   "peerDependencies": {
-    "sass": "^1.93.3",
-    "oxlint": "^1.57.0"
+    "oxlint": "^1.57.0",
+    "sass": "^1.93.3"
   }
 }

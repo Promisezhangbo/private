@@ -4,15 +4,15 @@
 
 ## 技术栈（摘要）
 
-| 领域 | 选型 |
-|------|------|
-| 包管理 / Monorepo | pnpm workspaces |
-| 构建与开发 | Vite 8、TypeScript、React 19 |
-| 微前端 | qiankun、`vite-plugin-qiankun` |
-| 静态检查 | 各应用内 **oxlint**（`.oxlintrc.json`） |
-| 格式化 | 根目录 **oxfmt**（与各应用 `oxfmt` 版本对齐使用） |
-| 样式 | **Stylelint**（根 `stylelint.config.mjs` + `@packages/stylelint-config`） |
-| Git | Husky：**pre-commit** 跑 lint-staged；**commit-msg** 跑 commitlint（约定式提交） |
+| 领域              | 选型                                                                             |
+| ----------------- | -------------------------------------------------------------------------------- |
+| 包管理 / Monorepo | pnpm workspaces                                                                  |
+| 构建与开发        | Vite 8、TypeScript、React 19                                                     |
+| 微前端            | qiankun、`vite-plugin-qiankun`                                                   |
+| 静态检查          | 各应用内 **oxlint**（`.oxlintrc.json`）                                          |
+| 格式化            | 根目录 **oxfmt**（与各应用 `oxfmt` 版本对齐使用）                                |
+| 样式              | **Stylelint**（根 `stylelint.config.mjs` + `@packages/stylelint-config`）        |
+| Git               | Husky：**pre-commit** 跑 lint-staged；**commit-msg** 跑 commitlint（约定式提交） |
 
 ## 环境要求
 
@@ -64,15 +64,15 @@ cd apps/main && pnpm dev
 
 ## 根目录常用脚本
 
-| 命令 | 说明 |
-|------|------|
-| `pnpm dev` | 所有 `apps/*` 并行 `dev` |
-| `pnpm build` | 所有 `apps/*` 并行 `build`，并清理后写入根 `dist/` |
-| `pnpm postbuild` | 复制主应用 `index.html` 为根 `index.html` / `404.html`，生成 `_redirects`（适配静态托管） |
-| `pnpm lint` | 所有子应用并行执行各自的 `lint`（当前为 `oxlint --fix`） |
-| `pnpm lint:style` | 对仓库内 `css`/`scss` 执行 Stylelint 并尝试修复 |
-| `pnpm format` | 根目录执行 `oxfmt --fix`（建议在 monorepo 根运行） |
-| `pnpm reinit` | 清理各包与根的 `node_modules` 与锁文件后重新 `pnpm install`（慎用） |
+| 命令              | 说明                                                                                      |
+| ----------------- | ----------------------------------------------------------------------------------------- |
+| `pnpm dev`        | 所有 `apps/*` 并行 `dev`                                                                  |
+| `pnpm build`      | 所有 `apps/*` 并行 `build`，并清理后写入根 `dist/`                                        |
+| `pnpm postbuild`  | 复制主应用 `index.html` 为根 `index.html` / `404.html`，生成 `_redirects`（适配静态托管） |
+| `pnpm lint`       | 所有子应用并行执行各自的 `lint`（当前为 `oxlint --fix`）                                  |
+| `pnpm lint:style` | 对仓库内 `css`/`scss` 执行 Stylelint 并尝试修复                                           |
+| `pnpm format`     | 根目录执行 `oxfmt --fix`（建议在 monorepo 根运行）                                        |
+| `pnpm reinit`     | 清理各包与根的 `node_modules` 与锁文件后重新 `pnpm install`（慎用）                       |
 
 ## 代码规范与 Git 钩子
 

@@ -1,16 +1,16 @@
-import React, { lazy } from "react";
-import { createBrowserRouter, Navigate } from "react-router-dom";
-import AgentLayout from "../layouts/AgentLayout";
+import React, { lazy } from 'react';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
+import AgentLayout from '../layouts/AgentLayout';
 
-const Home = lazy(() => import("@/pages/home"));
+const Home = lazy(() => import('@/pages/home'));
 
 const route = [
   {
-    path: "/agent",
+    path: '/agent',
     element: <AgentLayout />,
     children: [
       { index: true, element: <Navigate to="home" replace /> },
-      { path: "home", element: <Home /> },
+      { path: 'home', element: <Home /> },
     ],
   },
 ];

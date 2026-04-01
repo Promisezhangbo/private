@@ -20,10 +20,7 @@
   // 开启保存格式化，且仅触发 Prettier
   "editor.formatOnSave": true,
   // Stylelint（需安装扩展 stylelint.vscode-stylelint）；与 Prettier 分工：格式靠 Prettier，规则修复靠 Stylelint
-  "stylelint.validate": [
-    "css",
-    "scss"
-  ],
+  "stylelint.validate": ["css", "scss"],
   "stylelint.configFile": "${workspaceFolder}/stylelint.config.mjs",
   "css.validate": false,
   "scss.validate": false

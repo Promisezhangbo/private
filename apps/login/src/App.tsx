@@ -1,14 +1,14 @@
-import { ConfigProvider } from "antd";
-import zhCN from "antd/locale/zh_CN";
-import Layouts from "@/layouts";
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/locale/zh_CN';
+import Layouts from '@/layouts';
 
 const loginTheme = {
   token: {
-    colorPrimary: "#14b8a6",
+    colorPrimary: '#14b8a6',
     borderRadius: 12,
-    colorBgContainer: "#ffffff",
-    colorText: "#334155",
-    colorTextSecondary: "#64748b",
+    colorBgContainer: '#ffffff',
+    colorText: '#334155',
+    colorTextSecondary: '#64748b',
   },
 };
 

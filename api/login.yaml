@@ -3,7 +3,7 @@
 
 openapi: 3.0.3
 info:
-  title: ""
+  title: ''
   version: 0.0.1
 paths:
   /v1/dataset/algos:
@@ -13,12 +13,12 @@ paths:
       summary: list algos
       operationId: DatasetService_ListAlgos
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListAlgosResponse"
+                $ref: '#/components/schemas/ListAlgosResponse'
   /v1/dataset/tags:
     get:
       tags:
@@ -27,12 +27,12 @@ paths:
       description: Update the knowledge base, currently supporting updates to the name,
       operationId: DatasetService_AllDatasetTags
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AllDatasetTagsResponse"
+                $ref: '#/components/schemas/AllDatasetTagsResponse'
   /v1/datasets:
     get:
       tags:
@@ -72,12 +72,12 @@ paths:
             items:
               type: string
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListDatasetsResponse"
+                $ref: '#/components/schemas/ListDatasetsResponse'
     post:
       tags:
         - DatasetService
@@ -96,15 +96,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Dataset"
+              $ref: '#/components/schemas/Dataset'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Dataset"
+                $ref: '#/components/schemas/Dataset'
   /v1/datasets/{dataset}:
     get:
       tags:
@@ -120,12 +120,12 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Dataset"
+                $ref: '#/components/schemas/Dataset'
     delete:
       tags:
         - DatasetService
@@ -140,7 +140,7 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
     patch:
@@ -168,15 +168,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Dataset"
+              $ref: '#/components/schemas/Dataset'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Dataset"
+                $ref: '#/components/schemas/Dataset'
   /v1/datasets/{dataset}/documents:
     get:
       tags:
@@ -211,12 +211,12 @@ paths:
             type: integer
             format: int32
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListDocumentsResponse"
+                $ref: '#/components/schemas/ListDocumentsResponse'
     post:
       tags:
         - DocumentService
@@ -239,15 +239,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Doc"
+              $ref: '#/components/schemas/Doc'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Doc"
+                $ref: '#/components/schemas/Doc'
   /v1/datasets/{dataset}/documents/{document}:
     get:
       tags:
@@ -272,12 +272,12 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Doc"
+                $ref: '#/components/schemas/Doc'
     delete:
       tags:
         - DocumentService
@@ -301,7 +301,7 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
     patch:
@@ -336,15 +336,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Doc"
+              $ref: '#/components/schemas/Doc'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Doc"
+                $ref: '#/components/schemas/Doc'
   /v1/datasets/{dataset}/documents/{document}/segments:
     get:
       tags:
@@ -380,16 +380,16 @@ paths:
             format: int32
         - name: order_by
           in: query
-          description: "Sorting keyword, like: create_time desc."
+          description: 'Sorting keyword, like: create_time desc.'
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListSegmentsResponse"
+                $ref: '#/components/schemas/ListSegmentsResponse'
   /v1/datasets/{dataset}/documents/{document}/segments/{segment}:
     get:
       tags:
@@ -424,12 +424,12 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Segment"
+                $ref: '#/components/schemas/Segment'
   /v1/datasets/{dataset}/documents/{document}/segments/{segment}:edit:
     post:
       tags:
@@ -460,15 +460,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/EditSegmentRequest"
+              $ref: '#/components/schemas/EditSegmentRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EditSegmentResponse"
+                $ref: '#/components/schemas/EditSegmentResponse'
   /v1/datasets/{dataset}/documents/{document}/segments/{segment}:modifyStatus:
     post:
       tags:
@@ -499,10 +499,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ModifyStatusRequest"
+              $ref: '#/components/schemas/ModifyStatusRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/datasets/{dataset}/documents/{document}/segments:search:
@@ -531,15 +531,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SearchSegmentsRequest"
+              $ref: '#/components/schemas/SearchSegmentsRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListSegmentsResponse"
+                $ref: '#/components/schemas/ListSegmentsResponse'
   /v1/datasets/{dataset}/documents/{document}/table/meta:
     get:
       tags:
@@ -561,12 +561,12 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Meta"
+                $ref: '#/components/schemas/Meta'
   /v1/datasets/{dataset}/documents/{document}/table:add:
     post:
       tags:
@@ -591,10 +591,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AddTableDataRequest"
+              $ref: '#/components/schemas/AddTableDataRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/datasets/{dataset}/documents/{document}/table:batchDelete:
@@ -621,10 +621,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/BatchDeleteTableDataRequest"
+              $ref: '#/components/schemas/BatchDeleteTableDataRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/datasets/{dataset}/documents/{document}/table:modify:
@@ -651,10 +651,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ModifyTableDataRequest"
+              $ref: '#/components/schemas/ModifyTableDataRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/datasets/{dataset}/documents/{document}/table:search:
@@ -694,12 +694,12 @@ paths:
             type: integer
             format: int32
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SearchTableDataResponse"
+                $ref: '#/components/schemas/SearchTableDataResponse'
   /v1/datasets/{dataset}/documents:search:
     post:
       tags:
@@ -720,15 +720,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SearchDocumentsRequest"
+              $ref: '#/components/schemas/SearchDocumentsRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListDocumentsResponse"
+                $ref: '#/components/schemas/ListDocumentsResponse'
   /v1/datasets/{dataset}/group/{group}/documents/{document}/segments/{segment}:
     delete:
       tags:
@@ -764,7 +764,7 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/datasets/{dataset}/jobs:
@@ -785,7 +785,7 @@ paths:
             type: string
         - name: order_by
           in: query
-          description: "Sorting keyword, like: create_time desc."
+          description: 'Sorting keyword, like: create_time desc.'
           schema:
             type: string
         - name: page_token
@@ -800,12 +800,12 @@ paths:
             type: integer
             format: int32
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListJobsResponse"
+                $ref: '#/components/schemas/ListJobsResponse'
     post:
       tags:
         - JobService
@@ -832,15 +832,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Job"
+              $ref: '#/components/schemas/Job'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Job"
+                $ref: '#/components/schemas/Job'
   /v1/datasets/{dataset}/jobs/{job}:
     get:
       tags:
@@ -864,12 +864,12 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Job"
+                $ref: '#/components/schemas/Job'
     delete:
       tags:
         - JobService
@@ -889,7 +889,7 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/datasets/{dataset}/jobs/{job}:callback:
@@ -919,10 +919,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CallbackJobRequest"
+              $ref: '#/components/schemas/CallbackJobRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/datasets/{dataset}/jobs/{job}:cancel:
@@ -951,10 +951,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CancelJobRequest"
+              $ref: '#/components/schemas/CancelJobRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/datasets/{dataset}/jobs/{job}:preview:
@@ -981,15 +981,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PreviewJobFileRequest"
+              $ref: '#/components/schemas/PreviewJobFileRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PreviewJobFileResponse"
+                $ref: '#/components/schemas/PreviewJobFileResponse'
   /v1/datasets/{dataset}/jobs/{job}:resume:
     post:
       tags:
@@ -1014,10 +1014,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ResumeJobRequest"
+              $ref: '#/components/schemas/ResumeJobRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/datasets/{dataset}/jobs/{job}:start:
@@ -1046,10 +1046,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/StartJobRequest"
+              $ref: '#/components/schemas/StartJobRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/datasets/{dataset}/jobs/{job}:suspend:
@@ -1076,10 +1076,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SuspendJobRequest"
+              $ref: '#/components/schemas/SuspendJobRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/datasets/{dataset}/jobs:search:
@@ -1102,15 +1102,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SearchJobsRequest"
+              $ref: '#/components/schemas/SearchJobsRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListJobsResponse"
+                $ref: '#/components/schemas/ListJobsResponse'
   /v1/datasets/{dataset}/members:
     get:
       tags:
@@ -1137,12 +1137,12 @@ paths:
             type: integer
             format: int32
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListDatasetMembersResponse"
+                $ref: '#/components/schemas/ListDatasetMembersResponse'
   /v1/datasets/{dataset}/members/{member}:
     get:
       tags:
@@ -1164,12 +1164,12 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DatasetMember"
+                $ref: '#/components/schemas/DatasetMember'
     delete:
       tags:
         - DatasetMemberService
@@ -1190,7 +1190,7 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
     patch:
@@ -1222,15 +1222,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/DatasetMember"
+              $ref: '#/components/schemas/DatasetMember'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DatasetMember"
+                $ref: '#/components/schemas/DatasetMember'
   /v1/datasets/{dataset}/members:search:
     get:
       tags:
@@ -1267,12 +1267,12 @@ paths:
             type: integer
             format: int32
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SearchDatasetMemberResponse"
+                $ref: '#/components/schemas/SearchDatasetMemberResponse'
   /v1/datasets/{dataset}/tasks:callback:
     post:
       tags:
@@ -1295,10 +1295,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CallbackTaskRequest"
+              $ref: '#/components/schemas/CallbackTaskRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/datasets/{dataset}:batchAddMember:
@@ -1319,15 +1319,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/BatchAddDatasetMemberRequest"
+              $ref: '#/components/schemas/BatchAddDatasetMemberRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BatchAddDatasetMemberResponse"
+                $ref: '#/components/schemas/BatchAddDatasetMemberResponse'
   /v1/datasets/{dataset}:batchDelete:
     post:
       tags:
@@ -1346,10 +1346,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/BatchDeleteDocumentRequest"
+              $ref: '#/components/schemas/BatchDeleteDocumentRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/datasets/{dataset}:setDefault:
@@ -1369,10 +1369,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetDefaultDatasetRequest"
+              $ref: '#/components/schemas/SetDefaultDatasetRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/datasets/{dataset}:unsetDefault:
@@ -1392,10 +1392,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UnsetDefaultDatasetRequest"
+              $ref: '#/components/schemas/UnsetDefaultDatasetRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/datasets:allDefaultDatasets:
@@ -1405,12 +1405,12 @@ paths:
       summary: all default datasets
       operationId: DatasetService_AllDefaultDatasets
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AllDefaultDatasetsResponse"
+                $ref: '#/components/schemas/AllDefaultDatasetsResponse'
   /v1/datasets:presignUploadCoverImageUrl:
     post:
       tags:
@@ -1422,15 +1422,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PresignUploadCoverImageURLRequest"
+              $ref: '#/components/schemas/PresignUploadCoverImageURLRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PresignUploadCoverImageURLResponse"
+                $ref: '#/components/schemas/PresignUploadCoverImageURLResponse'
   /v1/datasets:search:
     post:
       tags:
@@ -1444,15 +1444,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SearchDatasetsRequest"
+              $ref: '#/components/schemas/SearchDatasetsRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListDatasetsResponse"
+                $ref: '#/components/schemas/ListDatasetsResponse'
   /v1/document/creators:
     get:
       tags:
@@ -1461,12 +1461,12 @@ paths:
       description: Get all document Creators in the dataset.
       operationId: DocumentService_AllDocumentCreators
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AllDocumentCreatorsResponse"
+                $ref: '#/components/schemas/AllDocumentCreatorsResponse'
   /v1/document/tags:
     get:
       tags:
@@ -1475,12 +1475,12 @@ paths:
       description: Get all document tags in the dataset.
       operationId: DocumentService_AllDocumentTags
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AllDocumentTagsResponse"
+                $ref: '#/components/schemas/AllDocumentTagsResponse'
   /v1/documents:search:
     post:
       tags:
@@ -1492,15 +1492,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SearchAllDocumentsRequest"
+              $ref: '#/components/schemas/SearchAllDocumentsRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListDocumentsResponse"
+                $ref: '#/components/schemas/ListDocumentsResponse'
   /v1/inner/datasets/{dataset}:internal:
     get:
       tags:
@@ -1526,12 +1526,12 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Dataset"
+                $ref: '#/components/schemas/Dataset'
   /v1/inner/rag:knowledgeRetrieve:
     post:
       tags:
@@ -1543,15 +1543,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/KnowledgeRetrieveRequest"
+              $ref: '#/components/schemas/KnowledgeRetrieveRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/KnowledgeRetrieveResponse"
+                $ref: '#/components/schemas/KnowledgeRetrieveResponse'
   /v1/jobs/{job}/files:batchPresign:
     post:
       tags:
@@ -1570,15 +1570,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/BatchPresignUploadFileURLRequest"
+              $ref: '#/components/schemas/BatchPresignUploadFileURLRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BatchPresignUploadFileURLResponse"
+                $ref: '#/components/schemas/BatchPresignUploadFileURLResponse'
   /v1/jobs/{job}/files:completeMultipartUploadFile:
     post:
       tags:
@@ -1597,10 +1597,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CompleteMultipartUploadFileRequest"
+              $ref: '#/components/schemas/CompleteMultipartUploadFileRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/jobs/{job}/files:presignMultipartUploadFileUrl:
@@ -1621,15 +1621,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PresignMultipartUploadFileURLRequest"
+              $ref: '#/components/schemas/PresignMultipartUploadFileURLRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PresignMultipartUploadFileURLResponse"
+                $ref: '#/components/schemas/PresignMultipartUploadFileURLResponse'
   /v1/jobs/{job}/files:presignUploadFileUrl:
     post:
       tags:
@@ -1648,15 +1648,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PresignUploadFileURLRequest"
+              $ref: '#/components/schemas/PresignUploadFileURLRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PresignUploadFileURLResponse"
+                $ref: '#/components/schemas/PresignUploadFileURLResponse'
   /v1/rag/database/tags:
     get:
       tags:
@@ -1665,12 +1665,12 @@ paths:
       description: Retrieve all unique database tags owned by the current user.
       operationId: DatabaseService_GetUserDatabaseTags
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GetUserDatabaseTagsResponse"
+                $ref: '#/components/schemas/GetUserDatabaseTagsResponse'
   /v1/rag/databases:
     post:
       tags:
@@ -1682,15 +1682,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/GetUserDatabasesRequest"
+              $ref: '#/components/schemas/GetUserDatabasesRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GetUserDatabasesResponse"
+                $ref: '#/components/schemas/GetUserDatabasesResponse'
   /v1/rag/databases/create:
     post:
       tags:
@@ -1702,15 +1702,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateDatabaseRequest"
+              $ref: '#/components/schemas/CreateDatabaseRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CreateDatabaseResponse"
+                $ref: '#/components/schemas/CreateDatabaseResponse'
   /v1/rag/databases/summary:
     get:
       tags:
@@ -1719,12 +1719,12 @@ paths:
       description: Retrieve all databases of the current user (summary only)
       operationId: DatabaseService_GetUserDatabaseSummaries
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GetUserDatabaseSummariesResponse"
+                $ref: '#/components/schemas/GetUserDatabaseSummariesResponse'
   /v1/rag/databases/validate-connection:
     post:
       tags:
@@ -1736,15 +1736,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ValidateDatabaseConnectionRequest"
+              $ref: '#/components/schemas/ValidateDatabaseConnectionRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ValidateDatabaseConnectionResponse"
+                $ref: '#/components/schemas/ValidateDatabaseConnectionResponse'
   /v1/rag/databases/{database_id}:
     delete:
       tags:
@@ -1760,12 +1760,12 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DeleteDatabaseResponse"
+                $ref: '#/components/schemas/DeleteDatabaseResponse'
   /v1/rag/databases/{database_id}/tables:
     post:
       tags:
@@ -1784,15 +1784,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/GetDatabaseTablesRequest"
+              $ref: '#/components/schemas/GetDatabaseTablesRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GetDatabaseTablesResponse"
+                $ref: '#/components/schemas/GetDatabaseTablesResponse'
   /v1/rag/databases/{database_id}/tables/{table_id}/cell:
     post:
       tags:
@@ -1817,20 +1817,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateTableCellRequest"
+              $ref: '#/components/schemas/UpdateTableCellRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UpdateTableCellResponse"
+                $ref: '#/components/schemas/UpdateTableCellResponse'
   /v1/rag/databases/{database_id}/tables/{table_id}/preview:
     post:
       tags:
         - DatabaseService
-      summary: "List table rows data specified table "
+      summary: 'List table rows data specified table '
       description: Retrieve paginated rows from a specific table.
       operationId: DatabaseService_ListTableRows
       parameters:
@@ -1850,15 +1850,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ListTableRowsRequest"
+              $ref: '#/components/schemas/ListTableRowsRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListTableRowsResponse"
+                $ref: '#/components/schemas/ListTableRowsResponse'
   /v1/rag/databases/{database_id}/update:
     post:
       tags:
@@ -1877,15 +1877,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateDatabaseRequest"
+              $ref: '#/components/schemas/UpdateDatabaseRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UpdateDatabaseResponse"
+                $ref: '#/components/schemas/UpdateDatabaseResponse'
   /v1/search:allSearchHistory:
     get:
       tags:
@@ -1894,12 +1894,12 @@ paths:
       description: Retrieve all search history.
       operationId: RetrievalService_AllSearchHistory
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AllSearchHistoryResponse"
+                $ref: '#/components/schemas/AllSearchHistoryResponse'
   /v1/search:searchKnowledge:
     post:
       tags:
@@ -1911,15 +1911,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SearchKnowledgeRequest"
+              $ref: '#/components/schemas/SearchKnowledgeRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SearchKnowledgeResponse"
+                $ref: '#/components/schemas/SearchKnowledgeResponse'
   /v1/searchHistories/{searchHistory}:
     delete:
       tags:
@@ -1935,7 +1935,7 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/segment/imageURIs:batchSign:
@@ -1949,15 +1949,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/BatchSignImageURIRequest"
+              $ref: '#/components/schemas/BatchSignImageURIRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BatchSignImageURIResponse"
+                $ref: '#/components/schemas/BatchSignImageURIResponse'
   /v1/segments:bulkDelete:
     post:
       tags:
@@ -1969,10 +1969,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/BulkDeleteRequest"
+              $ref: '#/components/schemas/BulkDeleteRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content: {}
   /v1/segments:hybrid:
@@ -1988,15 +1988,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/HybridSearchSegmentsRequest"
+              $ref: '#/components/schemas/HybridSearchSegmentsRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListSegmentsResponse"
+                $ref: '#/components/schemas/ListSegmentsResponse'
   /v1/segments:scroll:
     post:
       tags:
@@ -2008,15 +2008,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ScrollSegmentsRequest"
+              $ref: '#/components/schemas/ScrollSegmentsRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ScrollSegmentsResponse"
+                $ref: '#/components/schemas/ScrollSegmentsResponse'
   /v1/table:findMeta:
     post:
       tags:
@@ -2028,15 +2028,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/FindMetaRequest"
+              $ref: '#/components/schemas/FindMetaRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FindMetaResponse"
+                $ref: '#/components/schemas/FindMetaResponse'
   /v1/table:query:
     post:
       tags:
@@ -2048,15 +2048,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/QueryTableRequest"
+              $ref: '#/components/schemas/QueryTableRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/QueryTableResponse"
+                $ref: '#/components/schemas/QueryTableResponse'
   /v1/writerSegmentJob:submit:
     post:
       tags:
@@ -2074,15 +2074,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/WriterSegmentJob"
+              $ref: '#/components/schemas/WriterSegmentJob'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/WriterSegmentJob"
+                $ref: '#/components/schemas/WriterSegmentJob'
   /v1/writerSegmentJobs/{writerSegmentJob}:
     get:
       tags:
@@ -2098,12 +2098,12 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/WriterSegmentJob"
+                $ref: '#/components/schemas/WriterSegmentJob'
 components:
   schemas:
     AddTableDataRequest:
@@ -2113,7 +2113,7 @@ components:
       properties:
         parent:
           type: string
-          description: "Document containing the table. Format: datasets/{dataset_id}/documents/{document_id}"
+          description: 'Document containing the table. Format: datasets/{dataset_id}/documents/{document_id}'
         params:
           type: object
           additionalProperties:
@@ -2154,7 +2154,7 @@ components:
           readOnly: true
           type: array
           items:
-            $ref: "#/components/schemas/Dataset"
+            $ref: '#/components/schemas/Dataset'
           description: Default dataset list.
       description: Response of AllDefaultDatasets API.
     AllDocumentCreatorsResponse:
@@ -2165,7 +2165,7 @@ components:
         creators:
           type: array
           items:
-            $ref: "#/components/schemas/UserInfo"
+            $ref: '#/components/schemas/UserInfo'
           description: List of all document creators
       description: Response message containing all document creators
     AllDocumentTagsResponse:
@@ -2185,7 +2185,7 @@ components:
         list:
           type: array
           items:
-            $ref: "#/components/schemas/AllSearchHistoryResponse_SearchHistory"
+            $ref: '#/components/schemas/AllSearchHistoryResponse_SearchHistory'
           description: List of history
       description: Definition of all search history
     AllSearchHistoryResponse_SearchHistory:
@@ -2195,11 +2195,11 @@ components:
           type: string
           description: History id
         request:
-          $ref: "#/components/schemas/SearchKnowledgeRequest"
+          $ref: '#/components/schemas/SearchKnowledgeRequest'
         results:
           type: array
           items:
-            $ref: "#/components/schemas/DocumentSearchResult"
+            $ref: '#/components/schemas/DocumentSearchResult'
           description: Search result of history
         tokens:
           type: array
@@ -2227,7 +2227,7 @@ components:
             type: string
           description: The list of cloud management groupnames.
         role:
-          $ref: "#/components/schemas/Role"
+          $ref: '#/components/schemas/Role'
         user_id_list:
           type: array
           items:
@@ -2246,7 +2246,7 @@ components:
           readOnly: true
           type: array
           items:
-            $ref: "#/components/schemas/DatasetMember"
+            $ref: '#/components/schemas/DatasetMember'
           description: The list of successfully created members.
       description: The response body for bulk adding members to the dataset.
     BatchDeleteDocumentRequest:
@@ -2257,7 +2257,7 @@ components:
       properties:
         parent:
           type: string
-          description: "Parent dataset. Format: datasets/{dataset_id}"
+          description: 'Parent dataset. Format: datasets/{dataset_id}'
         names:
           type: array
           items:
@@ -2272,7 +2272,7 @@ components:
       properties:
         parent:
           type: string
-          description: "Document containing the table. Format: datasets/{dataset_id}/documents/{document_id}"
+          description: 'Document containing the table. Format: datasets/{dataset_id}/documents/{document_id}'
         names:
           type: array
           items:
@@ -2352,7 +2352,7 @@ components:
       properties:
         name:
           type: string
-          description: "The name of callback job. Format: datasets/{dataset_id}/jobs/{job_id}"
+          description: 'The name of callback job. Format: datasets/{dataset_id}/jobs/{job_id}'
         job_state:
           enum:
             - STAGE_UNSPECIFIED
@@ -2370,11 +2370,11 @@ components:
           type: string
           description: error message.
         job_info:
-          $ref: "#/components/schemas/JobInfo"
+          $ref: '#/components/schemas/JobInfo'
         document_info:
           type: array
           items:
-            $ref: "#/components/schemas/DocumentInfo"
+            $ref: '#/components/schemas/DocumentInfo'
           description: List of information about parsed knowledge
       description: Callback Job Request.
     CallbackTaskRequest:
@@ -2421,7 +2421,7 @@ components:
       properties:
         name:
           type: string
-          description: "The name of cancel job. Format: datasets/{dataset_id}/jobs/{job_id}"
+          description: 'The name of cancel job. Format: datasets/{dataset_id}/jobs/{job_id}'
       description: CancelJobRequest.
     ChildrenList:
       type: object
@@ -2442,7 +2442,7 @@ components:
       properties:
         job:
           type: string
-          description: "Job identifier, format: jobs/{job_id}"
+          description: 'Job identifier, format: jobs/{job_id}'
         upload_id:
           type: string
           description: Unique identifier for the multipart upload session
@@ -2452,7 +2452,7 @@ components:
         list:
           type: array
           items:
-            $ref: "#/components/schemas/MultipartUploadPart"
+            $ref: '#/components/schemas/MultipartUploadPart'
           description: List of completed upload parts with their ETags
       description: Request to complete a multipart file upload
     CreateDatabaseRequest:
@@ -2509,7 +2509,7 @@ components:
       properties:
         name:
           type: string
-          description: "The resource name of the dataset. Full resource path in the format: datasets/{dataset} This is the canonical identifier used in API calls and resource references."
+          description: 'The resource name of the dataset. Full resource path in the format: datasets/{dataset} This is the canonical identifier used in API calls and resource references.'
         dataset_id:
           readOnly: true
           type: string
@@ -2560,10 +2560,10 @@ components:
         parsers:
           type: array
           items:
-            $ref: "#/components/schemas/ParserConfig"
+            $ref: '#/components/schemas/ParserConfig'
           description: Parse Doc config. Configuration for document parsing and processing. Defines how documents are parsed, split, and converted into segments. Multiple parsers can be configured for different document types.
         algo:
-          $ref: "#/components/schemas/Algo"
+          $ref: '#/components/schemas/Algo'
         creator:
           readOnly: true
           type: string
@@ -2627,7 +2627,7 @@ components:
       properties:
         name:
           type: string
-          description: "Dataset member name. Format: {name=datasets/{dataset}/members/type/[group|user]/id/{id}/role/{role}}"
+          description: 'Dataset member name. Format: {name=datasets/{dataset}/members/type/[group|user]/id/{id}/role/{role}}'
         dataset_id:
           readOnly: true
           type: string
@@ -2643,7 +2643,7 @@ components:
           type: string
           description: The cloud management group_name is unique within the tenant and cannot be changed.
         role:
-          $ref: "#/components/schemas/Role"
+          $ref: '#/components/schemas/Role'
         create_time:
           readOnly: true
           type: string
@@ -2691,7 +2691,7 @@ components:
       properties:
         name:
           type: string
-          description: "The resource name of the document. Format: datasets/{dataset_id}/documents/{document_id}."
+          description: 'The resource name of the document. Format: datasets/{dataset_id}/documents/{document_id}.'
         document_id:
           readOnly: true
           type: string
@@ -2726,7 +2726,7 @@ components:
         columns:
           type: array
           items:
-            $ref: "#/components/schemas/DocumentTableColumn"
+            $ref: '#/components/schemas/DocumentTableColumn'
           description: Table column information if document type is DATASET_TYPE_TABLE
         create_time:
           readOnly: true
@@ -2871,7 +2871,7 @@ components:
           type: string
           description: Page content.
         document:
-          $ref: "#/components/schemas/Doc"
+          $ref: '#/components/schemas/Doc'
         confidence:
           type: number
           description: Confidence of result
@@ -2930,9 +2930,9 @@ components:
           type: string
           description: Display content
         structured_data:
-          $ref: "#/components/schemas/DocumentTableRow"
+          $ref: '#/components/schemas/DocumentTableRow'
         metadata:
-          $ref: "#/components/schemas/SegmentMetadata"
+          $ref: '#/components/schemas/SegmentMetadata'
       description: Doc search result.
     DocumentTableColumn:
       required:
@@ -2998,7 +2998,7 @@ components:
       properties:
         name:
           type: string
-          description: "The name of the segment to edit. Format: datasets/{dataset_id}/documents/{document_id}/segments/{segment_id}"
+          description: 'The name of the segment to edit. Format: datasets/{dataset_id}/documents/{document_id}/segments/{segment_id}'
         group:
           type: string
           description: The new group for the segment.
@@ -3010,7 +3010,7 @@ components:
       type: object
       properties:
         segment:
-          $ref: "#/components/schemas/Segment"
+          $ref: '#/components/schemas/Segment'
       description: Response for editing a segment.
     FileInfo:
       type: object
@@ -3047,7 +3047,7 @@ components:
         metas:
           type: array
           items:
-            $ref: "#/components/schemas/Meta"
+            $ref: '#/components/schemas/Meta'
           description: The list of tableMeta
       description: The response of search meta
     FusionQuery:
@@ -3086,7 +3086,7 @@ components:
       type: object
       properties:
         database:
-          $ref: "#/components/schemas/UserDatabase"
+          $ref: '#/components/schemas/UserDatabase'
         page:
           type: integer
           description: Current page number
@@ -3102,7 +3102,7 @@ components:
         tables:
           type: array
           items:
-            $ref: "#/components/schemas/TableInfo"
+            $ref: '#/components/schemas/TableInfo'
           description: List of table metadata
       description: Response body for GetDatabaseTables. Contains paginated results of tables within a database
     GetUserDatabaseSummariesResponse:
@@ -3111,7 +3111,7 @@ components:
         databases:
           type: array
           items:
-            $ref: "#/components/schemas/UserDatabaseSummary"
+            $ref: '#/components/schemas/UserDatabaseSummary'
           description: List of database summaries
       description: Response body for GetUserDatabaseSummaries. Contains simplified database information for quick overview
     GetUserDatabaseTagsResponse:
@@ -3170,7 +3170,7 @@ components:
         databases:
           type: array
           items:
-            $ref: "#/components/schemas/UserDatabase"
+            $ref: '#/components/schemas/UserDatabase'
           description: List of database info.
       description: Response body for GetUserDatabases. Contains paginated results of user databases
     HybridSearchDataset:
@@ -3182,7 +3182,7 @@ components:
         hybrid_search_documents:
           type: array
           items:
-            $ref: "#/components/schemas/HybridSearchDocument"
+            $ref: '#/components/schemas/HybridSearchDocument'
           description: Hybrid search documents
       description: Info of dataset when search by number
     HybridSearchDocument:
@@ -3204,7 +3204,7 @@ components:
         hybrid_search_datasets:
           type: array
           items:
-            $ref: "#/components/schemas/HybridSearchDataset"
+            $ref: '#/components/schemas/HybridSearchDataset'
           description: Hybrid search datasets
         query:
           type: string
@@ -3242,11 +3242,11 @@ components:
             format: enum
           description: Filter by segment type list.
         fusion_query:
-          $ref: "#/components/schemas/FusionQuery"
+          $ref: '#/components/schemas/FusionQuery'
         fusion_queries:
           type: array
           items:
-            $ref: "#/components/schemas/FusionQuery"
+            $ref: '#/components/schemas/FusionQuery'
           description: Fusion queries of search
         group:
           type: string
@@ -3265,7 +3265,7 @@ components:
       properties:
         name:
           type: string
-          description: "The resource name of the document. Format: datasets/{dataset}/jobs/{job}."
+          description: 'The resource name of the document. Format: datasets/{dataset}/jobs/{job}.'
         job_id:
           readOnly: true
           type: string
@@ -3305,12 +3305,12 @@ components:
           type: string
           description: Error message
         job_info:
-          $ref: "#/components/schemas/JobInfo"
+          $ref: '#/components/schemas/JobInfo'
         document_info:
           readOnly: true
           type: array
           items:
-            $ref: "#/components/schemas/DocumentInfo"
+            $ref: '#/components/schemas/DocumentInfo'
           description: List of information about parsed knowledge
         create_time:
           readOnly: true
@@ -3329,7 +3329,7 @@ components:
           type: string
           description: ID of the target path where knowledge will be imported
         segment_strategy:
-          $ref: "#/components/schemas/SegmentStrategy"
+          $ref: '#/components/schemas/SegmentStrategy'
         document_ids:
           type: array
           items:
@@ -3338,7 +3338,7 @@ components:
         files:
           type: array
           items:
-            $ref: "#/components/schemas/FileInfo"
+            $ref: '#/components/schemas/FileInfo'
           description: File list in file system.
         reparse:
           type: boolean
@@ -3446,19 +3446,19 @@ components:
         config:
           type: array
           items:
-            $ref: "#/components/schemas/KnowledgeBaseRetrieveConfig"
-          description: "Deprecated: Use retrieval_config instead."
+            $ref: '#/components/schemas/KnowledgeBaseRetrieveConfig'
+          description: 'Deprecated: Use retrieval_config instead.'
         top_k:
           type: integer
-          description: "Deprecated: Use retrieval_config instead."
+          description: 'Deprecated: Use retrieval_config instead.'
           format: int32
         retrieval_config:
-          $ref: "#/components/schemas/SearchKnowledgeConfig"
+          $ref: '#/components/schemas/SearchKnowledgeConfig'
         user_id:
           type: string
           description: User id
         query2:
-          $ref: "#/components/schemas/Query"
+          $ref: '#/components/schemas/Query'
       description: Request of KnowledgeRetrieve api
     KnowledgeRetrieveResponse:
       type: object
@@ -3466,7 +3466,7 @@ components:
         docs:
           type: array
           items:
-            $ref: "#/components/schemas/DocumentSearchResult"
+            $ref: '#/components/schemas/DocumentSearchResult'
           description: Doc result list
       description: Response of KnowledgeRetrieve api
     ListAlgosResponse:
@@ -3476,7 +3476,7 @@ components:
           readOnly: true
           type: array
           items:
-            $ref: "#/components/schemas/Algo"
+            $ref: '#/components/schemas/Algo'
           description: Algo list.
       description: Response of ListAlgos API.
     ListDatasetMembersResponse:
@@ -3485,7 +3485,7 @@ components:
         dataset_members:
           type: array
           items:
-            $ref: "#/components/schemas/DatasetMember"
+            $ref: '#/components/schemas/DatasetMember'
           description: Members of dataset.
         next_page_token:
           type: string
@@ -3497,7 +3497,7 @@ components:
         datasets:
           type: array
           items:
-            $ref: "#/components/schemas/Dataset"
+            $ref: '#/components/schemas/Dataset'
           description: List of datasets.
         total_size:
           type: integer
@@ -3515,7 +3515,7 @@ components:
         documents:
           type: array
           items:
-            $ref: "#/components/schemas/Doc"
+            $ref: '#/components/schemas/Doc'
           description: List of documents
         total_size:
           readOnly: true
@@ -3532,7 +3532,7 @@ components:
         jobs:
           type: array
           items:
-            $ref: "#/components/schemas/Job"
+            $ref: '#/components/schemas/Job'
           description: list of transfer job
         total_size:
           type: integer
@@ -3548,7 +3548,7 @@ components:
         segments:
           type: array
           items:
-            $ref: "#/components/schemas/Segment"
+            $ref: '#/components/schemas/Segment'
           description: List of segments
         total_size:
           type: integer
@@ -3582,12 +3582,12 @@ components:
         columns:
           type: array
           items:
-            $ref: "#/components/schemas/TableColumn"
+            $ref: '#/components/schemas/TableColumn'
           description: Metadata for each column in the table
         rows:
           type: array
           items:
-            $ref: "#/components/schemas/TableRow"
+            $ref: '#/components/schemas/TableRow'
           description: List of actual table rows with data
         page:
           type: integer
@@ -3602,7 +3602,7 @@ components:
           description: Total number of rows in the table
           format: int64
         table:
-          $ref: "#/components/schemas/TableInfo"
+          $ref: '#/components/schemas/TableInfo'
       description: Response body for ListTableRows. Contains paginated table data with column metadata
     Meta:
       type: object
@@ -3627,7 +3627,7 @@ components:
         columns:
           type: array
           items:
-            $ref: "#/components/schemas/DocumentTableColumn"
+            $ref: '#/components/schemas/DocumentTableColumn'
           description: Table column info if dateset type is DATASET_TYPE_TABLE
         ddl:
           type: string
@@ -3646,7 +3646,7 @@ components:
       properties:
         name:
           type: string
-          description: "The name of the segment to update. Format: datasets/{dataset_id}/documents/{document_id}/segments/{segment_id}"
+          description: 'The name of the segment to update. Format: datasets/{dataset_id}/documents/{document_id}/segments/{segment_id}'
         is_active:
           type: boolean
           description: The new is_active for the segment.
@@ -3663,7 +3663,7 @@ components:
       properties:
         parent:
           type: string
-          description: "Document containing the table. Format: datasets/{dataset_id}/documents/{document_id}"
+          description: 'Document containing the table. Format: datasets/{dataset_id}/documents/{document_id}'
         params:
           type: object
           additionalProperties:
@@ -3713,7 +3713,7 @@ components:
           type: object
           additionalProperties:
             type: string
-          description: "Params for parser. Key-value pairs containing parser-specific parameters. Examples: chunk_size, chunk_overlap, separators, etc."
+          description: 'Params for parser. Key-value pairs containing parser-specific parameters. Examples: chunk_size, chunk_overlap, separators, etc.'
         type:
           enum:
             - PARSE_TYPE_UNSPECIFIED
@@ -3735,7 +3735,7 @@ components:
       properties:
         job:
           type: string
-          description: "Job identifier, format: jobs/{job_id}"
+          description: 'Job identifier, format: jobs/{job_id}'
         relpath:
           type: string
           description: Relative path of the file within the job
@@ -3754,7 +3754,7 @@ components:
           readOnly: true
           type: array
           items:
-            $ref: "#/components/schemas/MultipartUploadFileURL"
+            $ref: '#/components/schemas/MultipartUploadFileURL'
           description: List of presigned URLs for each part of the multipart upload
       description: Response containing multipart upload URLs and upload ID
     PresignUploadCoverImageURLRequest:
@@ -3800,7 +3800,7 @@ components:
       properties:
         name:
           type: string
-          description: "The name of start job. Format: datasets/{dataset_id}/jobs/{job_id}"
+          description: 'The name of start job. Format: datasets/{dataset_id}/jobs/{job_id}'
       description: Request of PreviewJobFile API.
     PreviewJobFileResponse:
       required:
@@ -3811,12 +3811,12 @@ components:
         columns:
           type: array
           items:
-            $ref: "#/components/schemas/DocumentTableColumn"
+            $ref: '#/components/schemas/DocumentTableColumn'
           description: Column information obtained from parsing the uploaded file.
         rows:
           type: array
           items:
-            $ref: "#/components/schemas/DocumentTableRow"
+            $ref: '#/components/schemas/DocumentTableRow'
           description: Rows in the uploaded file.
         total:
           type: integer
@@ -3838,7 +3838,7 @@ components:
       properties:
         input_type:
           type: string
-          description: "Type of input, eg: `image`,`text`,`audio`,`file`. Default is `text`."
+          description: 'Type of input, eg: `image`,`text`,`audio`,`file`. Default is `text`.'
         text:
           type: string
           description: Query text.
@@ -3888,7 +3888,7 @@ components:
       properties:
         name:
           type: string
-          description: "Job identifier, format: datasets/{dataset_id}/jobs/{job_id}"
+          description: 'Job identifier, format: datasets/{dataset_id}/jobs/{job_id}'
       description: Request to resume a job
     Role:
       required:
@@ -3936,7 +3936,7 @@ components:
         segments:
           type: array
           items:
-            $ref: "#/components/schemas/Segment"
+            $ref: '#/components/schemas/Segment'
           description: List of segments
         next_page_token:
           type: string
@@ -3955,7 +3955,7 @@ components:
           description: Search keyword (document name, tags, creator)
         page_size:
           type: integer
-          description: "Page size (default: 10, max: 100)"
+          description: 'Page size (default: 10, max: 100)'
           format: int32
         page_token:
           type: string
@@ -3967,7 +3967,7 @@ components:
         dataset_members:
           type: array
           items:
-            $ref: "#/components/schemas/DatasetMember"
+            $ref: '#/components/schemas/DatasetMember'
           description: Members of dataset.
         next_page_token:
           type: string
@@ -3998,7 +3998,7 @@ components:
           format: int32
         order_by:
           type: string
-          description: "Sorting keyword, like: create_time desc."
+          description: 'Sorting keyword, like: create_time desc.'
         tags:
           type: array
           items:
@@ -4012,7 +4012,7 @@ components:
       properties:
         parent:
           type: string
-          description: "Parent dataset. Format: datasets/{dataset_id}"
+          description: 'Parent dataset. Format: datasets/{dataset_id}'
         p_id:
           type: string
           description: ID of the parent document for hierarchical search
@@ -4043,7 +4043,7 @@ components:
       properties:
         parent:
           type: string
-          description: "Parent dataset identifier, format: datasets/{dataset_id}"
+          description: 'Parent dataset identifier, format: datasets/{dataset_id}'
         job_status:
           type: array
           items:
@@ -4086,7 +4086,7 @@ components:
         dataset_list:
           type: array
           items:
-            $ref: "#/components/schemas/DatasetSelector"
+            $ref: '#/components/schemas/DatasetSelector'
           description: List of datasets to be searched.
         top_k:
           type: integer
@@ -4098,7 +4098,7 @@ components:
           format: float
         weight:
           type: number
-          description: "Semantic Retrieval: Returns content that matches the meaning of the query rather than the literal meaning of the query. It is recommended for scenarios that require contextual relevance and intent relevance. Full-Text Retrieval: Uses an inverted index strategy for retrieval, recommended for scenarios where precise keyword matching is needed. Weight: The weight represents the proportion between the two methods, with valid values ranging from 0 to 1. The larger the value, the greater the weight given to full-text retrieval, and the smaller the weight for semantic retrieval."
+          description: 'Semantic Retrieval: Returns content that matches the meaning of the query rather than the literal meaning of the query. It is recommended for scenarios that require contextual relevance and intent relevance. Full-Text Retrieval: Uses an inverted index strategy for retrieval, recommended for scenarios where precise keyword matching is needed. Weight: The weight represents the proportion between the two methods, with valid values ranging from 0 to 1. The larger the value, the greater the weight given to full-text retrieval, and the smaller the weight for semantic retrieval.'
           format: float
         open_window:
           type: boolean
@@ -4126,7 +4126,7 @@ components:
       type: object
       properties:
         config:
-          $ref: "#/components/schemas/SearchKnowledgeConfig"
+          $ref: '#/components/schemas/SearchKnowledgeConfig'
         page_size:
           type: integer
           description: Size per page
@@ -4138,7 +4138,7 @@ components:
           type: string
           description: The text want to retrieve.
         query:
-          $ref: "#/components/schemas/Query"
+          $ref: '#/components/schemas/Query'
       description: Rag search request.
     SearchKnowledgeResponse:
       type: object
@@ -4146,7 +4146,7 @@ components:
         docs:
           type: array
           items:
-            $ref: "#/components/schemas/DocumentSearchResult"
+            $ref: '#/components/schemas/DocumentSearchResult'
           description: Doc result list
         next_page_token:
           type: string
@@ -4164,7 +4164,7 @@ components:
       properties:
         parent:
           type: string
-          description: "The parent of the segment to retrieve. Format: datasets/{dataset_id}/documents/{document_id}."
+          description: 'The parent of the segment to retrieve. Format: datasets/{dataset_id}/documents/{document_id}.'
         keyword:
           type: string
           description: Support keyword search
@@ -4177,7 +4177,7 @@ components:
           format: int32
         order_by:
           type: string
-          description: "Sorting keyword, like: create_time desc."
+          description: 'Sorting keyword, like: create_time desc.'
         group:
           type: string
           description: group
@@ -4188,12 +4188,12 @@ components:
         columns:
           type: array
           items:
-            $ref: "#/components/schemas/DocumentTableColumn"
+            $ref: '#/components/schemas/DocumentTableColumn'
           description: Table column information
         rows:
           type: array
           items:
-            $ref: "#/components/schemas/Segment"
+            $ref: '#/components/schemas/Segment'
           description: List of table rows
         total_size:
           type: integer
@@ -4233,7 +4233,7 @@ components:
           description: Segment num
           format: int32
         metadata:
-          $ref: "#/components/schemas/SegmentMetadata"
+          $ref: '#/components/schemas/SegmentMetadata'
         words:
           readOnly: true
           type: integer
@@ -4286,7 +4286,7 @@ components:
           type: string
           description: Display content
         structured_data:
-          $ref: "#/components/schemas/DocumentTableRow"
+          $ref: '#/components/schemas/DocumentTableRow'
         answer:
           readOnly: true
           type: string
@@ -4311,7 +4311,7 @@ components:
           readOnly: true
           type: object
           additionalProperties:
-            $ref: "#/components/schemas/ChildrenList"
+            $ref: '#/components/schemas/ChildrenList'
           description: children ids
         meta:
           readOnly: true
@@ -4416,11 +4416,11 @@ components:
       properties:
         name:
           type: string
-          description: "The name of start job. Format: datasets/{dataset_id}/jobs/{job_id}"
+          description: 'The name of start job. Format: datasets/{dataset_id}/jobs/{job_id}'
         documents:
           type: array
           items:
-            $ref: "#/components/schemas/DocumentInfo"
+            $ref: '#/components/schemas/DocumentInfo'
           description: The fileList of failed files uploaded to aoss temporary path.
         failed_file_size:
           type: integer
@@ -4448,7 +4448,7 @@ components:
       properties:
         name:
           type: string
-          description: "Job identifier, format: datasets/{dataset_id}/jobs/{job_id}"
+          description: 'Job identifier, format: datasets/{dataset_id}/jobs/{job_id}'
       description: Request to suspend a job
     TableColumn:
       type: object
@@ -4551,7 +4551,7 @@ components:
           type: object
           additionalProperties:
             type: string
-          description: "Key: column name; Value: cell content as string"
+          description: 'Key: column name; Value: cell content as string'
       description: Represents a row's column-value mapping. Contains the actual data for one table row
     UnsetDefaultDatasetRequest:
       required:
@@ -4599,7 +4599,7 @@ components:
         primary_key_columns:
           type: array
           items:
-            $ref: "#/components/schemas/PrimaryKeyItem"
+            $ref: '#/components/schemas/PrimaryKeyItem'
           description: List of primary key columns to identify the specific row
         column_name:
           type: string
@@ -4760,7 +4760,7 @@ components:
         fields:
           type: array
           items:
-            $ref: "#/components/schemas/TableField"
+            $ref: '#/components/schemas/TableField'
           description: Table field for table type
         state:
           readOnly: true

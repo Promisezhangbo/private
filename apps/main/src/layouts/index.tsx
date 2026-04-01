@@ -1,17 +1,17 @@
-import { useAppTheme, type AppThemeMode } from "@/theme/useAppTheme";
-import "./index.scss";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Layout, Menu, Select } from "antd";
-import { useEffect, useState } from "react";
+import { useAppTheme, type AppThemeMode } from '@/theme/useAppTheme';
+import './index.scss';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Layout, Menu, Select } from 'antd';
+import { useEffect, useState } from 'react';
 const { Content, Header } = Layout;
 
 const menuMap = [
-  { key: "home", label: "首页", sub: false },
-  { key: "skill", label: "技能", sub: true },
-  { key: "resume", label: "简历", sub: true },
-  { key: "agent", label: "AI", sub: true },
-  { key: "blog", label: "Blog", sub: true },
-  { key: "login", label: "登录", sub: true },
+  { key: 'home', label: '首页', sub: false },
+  { key: 'skill', label: '技能', sub: true },
+  { key: 'resume', label: '简历', sub: true },
+  { key: 'agent', label: 'AI', sub: true },
+  { key: 'blog', label: 'Blog', sub: true },
+  { key: 'login', label: '登录', sub: true },
 ];
 
 const MENU_KEYS = menuMap.map((k) => k.key);
@@ -20,21 +20,21 @@ function Layouts() {
   const { mode, setMode } = useAppTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  const [currentMenu, setCurrentMenu] = useState<string>("home");
+  const [currentMenu, setCurrentMenu] = useState<string>('home');
   /** 登录子应用全屏展示时不渲染主应用顶栏 */
-  const showHeader = currentMenu !== "login";
+  const showHeader = currentMenu !== 'login';
   /** 微前端子应用路由：内容区去 padding，背景铺满主应用可视区域 */
-  const segment = location.pathname.split("/")[1] || "home";
+  const segment = location.pathname.split('/')[1] || 'home';
   const isMicroShell = menuMap
     .filter((k) => k.sub)
     .map((t) => t.key)
     .includes(segment);
   /** 与对应子应用 #app-root 使用同一套 Blog 底纹变量，避免子应用 JS 未到前内容区短暂露出主壳渐变 */
-  const microBlogSurface = isMicroShell && ["resume", "blog", "skill"].includes(segment);
+  const microBlogSurface = isMicroShell && ['resume', 'blog', 'skill'].includes(segment);
   /** 从 URL 第一段同步当前选中的菜单 */
   useEffect(() => {
-    const seg = location.pathname.split("/")[1] || "home";
-    setCurrentMenu(MENU_KEYS.includes(seg as (typeof MENU_KEYS)[number]) ? seg : "home");
+    const seg = location.pathname.split('/')[1] || 'home';
+    setCurrentMenu(MENU_KEYS.includes(seg as (typeof MENU_KEYS)[number]) ? seg : 'home');
   }, [location.pathname]);
   const onMenuSelect = (key: string) => {
     navigate(`/${key}`);
@@ -57,18 +57,18 @@ function Layouts() {
             value={mode}
             onChange={(v) => setMode(v as AppThemeMode)}
             options={[
-              { value: "light", label: "浅色" },
-              { value: "dark", label: "暗色" },
+              { value: 'light', label: '浅色' },
+              { value: 'dark', label: '暗色' },
             ]}
             aria-label="切换主题"
           />
         </Header>
       )}
-      <Content className={`main-content ${showHeader ? "" : " main-content--login-viewport"}`}>
+      <Content className={`main-content ${showHeader ? '' : ' main-content--login-viewport'}`}>
         <div
-          className={`main-content--flush${isMicroShell ? " main-content--micro" : ""}${microBlogSurface ? " main-content--micro-placeholder-blog" : ""}`}
+          className={`main-content--flush${isMicroShell ? ' main-content--micro' : ''}${microBlogSurface ? ' main-content--micro-placeholder-blog' : ''}`}
         >
-          {segment === "home" && <Outlet />}
+          {segment === 'home' && <Outlet />}
           <div id="sub-app" />
         </div>
       </Content>

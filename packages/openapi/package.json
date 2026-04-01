@@ -2,8 +2,8 @@
   "name": "@packages/openapi",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
   "description": "OpenAPI 多 YAML 生成：每个 <name>.yaml → <name>-gen/（独立域名/Token/baseURL）。根入口仅导出公共初始化器。",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./src/index.ts",

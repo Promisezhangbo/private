@@ -7,10 +7,10 @@
 ## 包内入口
 
 | 入口 | 作用 |
-|------|------|
+| --- | --- |
 | `@packages/openapi` | 聚合导出所有 `OpenApi<Name>Fn`（来自 `src/clients.ts`，自动生成），用于 VSCode 自动导入 |
 | `@packages/openapi/request` | 公共初始化器（生成的 `*-gen/index.ts` 内部复用，业务一般不需要直接用） |
-| `@packages/openapi/<name>-gen` |（可选）不再对外导出，避免 `package.json` 过长；推荐统一从根入口导入 |
+| `@packages/openapi/<name>-gen` | （可选）不再对外导出，避免 `package.json` 过长；推荐统一从根入口导入 |
 
 生成时把 `scripts/openapi-http.gen.ts` 拷入每个 `*-gen/` 的 `openapi-http.gen.ts`，并删除 Hey API 自动生成的无用 `index.ts`。
 
@@ -43,11 +43,9 @@ import axios from 'axios';
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 export async function listKnowledgeBases(body: ListKnowledgeBasesRequest) {
-  const { data } = await axios.post<ListKnowledgeBasesResponse>(
-    `${baseURL}/yuniverse/kb/list`,
-    body,
-    { headers: { 'Content-Type': 'application/json' } },
-  );
+  const { data } = await axios.post<ListKnowledgeBasesResponse>(`${baseURL}/yuniverse/kb/list`, body, {
+    headers: { 'Content-Type': 'application/json' },
+  });
   return data;
 }
 

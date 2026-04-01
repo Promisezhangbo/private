@@ -1,4 +1,4 @@
-@use "@style-config/variables" as *;
+@use '@style-config/variables' as *;
 
 /* 小清新：白卡片、柔和描边、薄荷/天蓝点缀 */
 $c-mint: #14b8a6;
@@ -61,7 +61,7 @@ $c-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.08);
     margin-bottom: 4px;
 
     &::before {
-      content: "";
+      content: '';
       width: min(120px, 40vw);
       height: 3px;
       margin-bottom: 2px;

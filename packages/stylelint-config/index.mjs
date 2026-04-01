@@ -5,12 +5,7 @@
  */
 export default {
   extends: ['stylelint-config-standard-scss'],
-  ignoreFiles: [
-    '**/dist/**',
-    '**/node_modules/**',
-    '**/coverage/**',
-    '**/*.min.css',
-  ],
+  ignoreFiles: ['**/dist/**', '**/node_modules/**', '**/coverage/**', '**/*.min.css'],
   rules: {
     'selector-class-pattern': null,
     'scss/load-no-partial-leading-underscore': null,

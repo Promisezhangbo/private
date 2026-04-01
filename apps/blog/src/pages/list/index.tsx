@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom";
-import { posts } from "@/data/posts";
-import { Card, Typography, List as AntList, Button } from "antd";
-import { ArrowRightOutlined, BookOutlined } from "@ant-design/icons";
-import type { Post } from "@/data/posts";
-import "./index.scss";
+import { useNavigate } from 'react-router-dom';
+import { posts } from '@/data/posts';
+import { Card, Typography, List as AntList, Button } from 'antd';
+import { ArrowRightOutlined, BookOutlined } from '@ant-design/icons';
+import type { Post } from '@/data/posts';
+import './index.scss';
 const { Title, Paragraph } = Typography;
 function List() {
   const navigate = useNavigate();
@@ -19,9 +19,7 @@ function List() {
             Tech Notes
           </div>
           <Title level={2}>博客</Title>
-          <Typography.Text type="secondary">
-            前端 · 工程化 · 架构笔记 — 卡片悬停预览，点击进入全文
-          </Typography.Text>
+          <Typography.Text type="secondary">前端 · 工程化 · 架构笔记 — 卡片悬停预览，点击进入全文</Typography.Text>
         </header>
         <AntList
           split={false}
@@ -34,7 +32,7 @@ function List() {
                   onClick={() => goDetail(p.id)}
                   role="link"
                   tabIndex={0}
-                  onKeyDown={(e) => e.key === "Enter" && goDetail(p.id)}
+                  onKeyDown={(e) => e.key === 'Enter' && goDetail(p.id)}
                 >
                   <BookOutlined />
                   {p.title}

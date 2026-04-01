@@ -2,14 +2,14 @@
   "name": "@packages/stylelint-config",
   "version": "1.0.0",
   "description": "Stylelint：Standard SCSS；排版交给 Prettier，避免与 stylelint-config-prettier@9 + stylelint@16 不兼容",
-  "type": "module",
   "license": "ISC",
-  "packageManager": "pnpm@10.13.1",
+  "type": "module",
   "exports": {
     ".": "./index.mjs"
   },
   "peerDependencies": {
     "stylelint": "^16.11.0",
     "stylelint-config-standard-scss": "^14.0.0"
-  }
+  },
+  "packageManager": "pnpm@10.13.1"
 }
