@@ -16,7 +16,7 @@
 - 已创建 Hugging Face Space（类型选择 **Docker**）。
 - Space 仓库当前若提示 `No application file`，说明需要你提交应用文件（至少要有 `Dockerfile`）。
 - 准备一个 Hugging Face Access Token（用于 git push），可在设置页生成：`https://huggingface.co/settings/tokens`
-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
+
 ---
 
 ## 推荐流程（不需要本地 Docker）
@@ -133,4 +133,3 @@ server {
 
 - 优先看日志里是网络问题还是 lockfile 不一致
 - 如遇到 pnpm 版本问题，确保 Dockerfile 的 pnpm 版本与根 `packageManager` 一致
-
