@@ -1,5 +1,5 @@
 {
-  "ignorePatterns": [],
+  "ignorePatterns": ["/dist"],
   "tabWidth": 2,
   "endOfLine": "lf",
   "overrides": [

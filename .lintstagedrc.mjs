@@ -8,4 +8,3 @@ export default {
   // json/md 仍用项目的 lint（避免把文件列表拼到 turbo 后）
   '**/*.{json,md}': () => 'pnpm lint',
 };
-
