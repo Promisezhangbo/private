@@ -15,7 +15,10 @@
     },
     "build": {
       "dependsOn": ["^generate", "^build"],
-      "outputs": ["dist/**", "apps/*/dist/**", "packages/*/dist/**"]
+      "outputs": [
+        "dist/**",
+        "../../dist/**"
+      ]
     },
     "dev": {
       "dependsOn": ["^generate"],
