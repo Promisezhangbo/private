@@ -1,0 +1,6 @@
+dist/**
+packages/openapi/gen/**
+**/node_modules/**
+**/coverage/**
+**/*.min.css
+
