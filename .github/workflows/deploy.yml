@@ -1,28 +1,22 @@
-# 部署到 GitHub Pages（手动触发）
-# - 全部：与本地 pnpm run build + postbuild 一致，整站 dist 上传。
-# - 单个子应用：拉取当前 gh-pages，只覆盖 dist/<app>/，其它子应用目录保留（适合热修某个微应用）。
+# 部署到 GitHub Pages(手动触发)
+# - all：与本地 pnpm run build + postbuild 一致；会构建 workspace 内全部 apps/*(新增应用只要有 package.json 即会参与构建，无需改本文件)。
+# - 单个子应用：拉取当前 gh-pages，只覆盖 dist/<app>/；app 名称为 apps 下目录名(与 pnpm --filter 一致)。
 # 说明：工作流文件须在默认分支上，Actions 里才会出现「Run workflow」。
-name: 部署到github pages
+name: GitHub 部署
 
 on:
   workflow_dispatch:
     inputs:
       branch:
-        description: "要检出并构建的分支（须已推送）"
+        description: "要检出并构建的分支(须已推送)"
         required: true
         default: main
         type: string
       scope:
-        description: "部署范围"
+        description: "部署范围：填 all 构建全部子应用；或填任一子应用目录名(main、login、blog、agent、skill、resume …)"
         required: true
         default: all
-        type: choice
-        options:
-          - all
-          - main
-          - login
-          - blog
-          - agent
+        type: string
 
 permissions:
   contents: write
@@ -56,34 +50,37 @@ jobs:
       - name: Install dependencies
         run: pnpm install -no-frozen-lockfile
 
-      - name: Build（全部子应用）
+      - name: Validate deploy scope
+        run: node scripts/deploy/validate_deploy_scope.mjs "${{ github.event.inputs.scope }}"
+
+      - name: Build(全部子应用)
         if: github.event.inputs.scope == 'all'
         run: TZ='Asia/Shanghai' pnpm run build
 
-      - name: Post-build（根目录 index / 404 / _redirects）
+      - name: Post-build(根目录 index / 404 / _redirects)
         if: github.event.inputs.scope == 'all'
         run: pnpm run postbuild
 
-      - name: Build（单个子应用）
+      - name: Build(单个子应用)
         if: github.event.inputs.scope != 'all'
         run: TZ='Asia/Shanghai' pnpm --filter ${{ github.event.inputs.scope }} build
 
-      - name: Post-build（仅单应用 main，生成根 index / 404 / _redirects）
+      - name: Post-build(仅单应用 main,生成根 index / 404 / _redirects)
         if: github.event.inputs.scope == 'main'
         run: pnpm run postbuild
 
-      - name: 合并 gh-pages（仅单应用部署）
+      - name: 合并 gh-pages(仅单应用部署)
         if: github.event.inputs.scope != 'all'
-        run: bash scripts/merge-gh-pages-app.sh "${{ github.event.inputs.scope }}"
+        run: bash scripts/deploy/merge_app_dist_to_deploy.sh "${{ github.event.inputs.scope }}"
 
       - name: Generate deploy banner
         env:
           BUILD_BRANCH: ${{ github.event.inputs.branch }}
-        run: node scripts/build_info.js
+        run: node scripts/deploy/build_tag_info.js "${{ github.event.inputs.scope }}"
 
       - name: Verify dist
         run: |
-          echo '📂 dist 目录：'
+          echo '📂 dist 目录:'
           ls -la ./dist
 
       - name: Deploy to GitHub Pages
