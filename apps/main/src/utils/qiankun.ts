@@ -43,19 +43,14 @@ export const apps = [
 
 export function registerAppsFn() {
   registerMicroApps(apps, {
-    beforeLoad: async (app) => {
-      console.log('全局加载前', app);
-    },
+    beforeLoad: async () => {},
     beforeMount: async (app) => {
       qiankunState.globalState.setGlobalState({ loading: true, loadingAppName: app.name });
-
-      console.log('全局挂载qiankun');
     },
     afterMount: async (app) => {
       setTimeout(() => {
         qiankunState.globalState.setGlobalState({ loading: false, loadingAppName: app.name });
       }, 1000);
-      console.log('全局挂载后', app, qiankunState.globalState);
     },
     beforeUnmount: async () => {},
     afterUnmount: async () => {},
