@@ -1,0 +1,1 @@
+var e=`/login/png/logo-DoAmBqtY.png`;function t(e){return new Promise(t=>setTimeout(t,e))}export{e as n,t};
