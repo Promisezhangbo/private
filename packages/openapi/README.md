@@ -1,8 +1,10 @@
 # @packages/openapi
 
-从仓库根目录 `api/*.yaml` 生成 Axios SDK。仓库根 `prebuild` / `predev` 会跑生成；改 spec 后也可手动执行：
+从仓库根目录 `api/*.yaml` 生成 Axios SDK，产物在 **`gen/`**（已 **gitignore**，检出后必须生成）。**`turbo run build`** / **`turbo run dev`** 会通过 **`dependsOn: ^generate`** 先对本包执行 **`generate`**。改 spec 后可手动执行：
 
-`pnpm --filter @packages/openapi run generate`
+`pnpm run generate`（根目录，等价于 `turbo run generate --filter=@packages/openapi`）
+
+**注意**：若对子应用使用 **`pnpm --filter <app> build`** 而**不用** Turbo，则**不会**触发生成，会出现找不到 **`gen/clients`**、**`*-gen-types`** 等错误；应使用 **`pnpm exec turbo run build --filter=<app>`**（与 GitHub 单应用部署一致）。
 
 ## 包内入口
 

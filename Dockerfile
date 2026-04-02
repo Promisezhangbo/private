@@ -10,17 +10,18 @@ RUN corepack enable && corepack prepare pnpm@10.13.1 --activate
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY turbo.json ./
 
-# monorepo 内容
+# monorepo 内容（scripts：各 app build 内 emit_deploy_tag_env 等）
 COPY apps ./apps
 COPY packages ./packages
 COPY api ./api
+COPY scripts ./scripts
 
 RUN pnpm install --frozen-lockfile
 
-# 只构建一个 app（默认 main，可在 Render 里用 APP 覆盖）
+# 只构建一个 app（默认 main）；须用 Turbo，才会先跑依赖包的 ^generate（如 openapi 生成 gen/）
 ARG APP=main
 ENV APP=$APP
-RUN pnpm --filter ${APP} build
+RUN pnpm exec turbo run build --filter=${APP}
 
 # -------- runtime stage --------
 FROM nginx:alpine

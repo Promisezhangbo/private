@@ -1,6 +1,6 @@
 # 部署到 GitHub Pages（手动触发）
 # - all：与本地 pnpm run build + postbuild 一致，构建全部 apps/*。
-# - 其它选项：单应用部署，合并 gh-pages 后只覆盖对应 dist/<app>/。
+# - 其它选项：单应用部署须走 Turbo（pnpm exec turbo run build --filter=<scope>），以执行 workspace 依赖的 ^generate（如 @packages/openapi）；勿用 pnpm --filter <app> build。
 # - 部署范围为下拉选项；列表由 apps/* 生成（勿手改 options 列表）：pnpm run deploy:sync-workflow-options
 # 说明：工作流须在默认分支上，Actions 里才会出现「Run workflow」。
 name: GitHub 部署
@@ -77,7 +77,7 @@ jobs:
         env:
           BUILD_BRANCH: ${{ github.event.inputs.branch }}
           DEPLOY_SCOPE: ${{ github.event.inputs.scope }}
-        run: TZ='Asia/Shanghai' pnpm --filter ${{ github.event.inputs.scope }} build
+        run: TZ='Asia/Shanghai' pnpm exec turbo run build --filter=${{ github.event.inputs.scope }}
 
       - name: Post-build(仅单应用 main,生成根 index / 404 / _redirects)
         if: github.event.inputs.scope == 'main'
