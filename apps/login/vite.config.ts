@@ -1,8 +1,12 @@
 import { appManualChunks } from '@packages/vite-build-utils';
+import { deployTagDefine, loadDeployEnv } from '@packages/vite-build-utils/loadDeployEnv';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import qiankun from 'vite-plugin-qiankun';
+
+const monorepoRoot = path.resolve(__dirname, '../..');
+loadDeployEnv(monorepoRoot);
 
 // https://vite.dev/config/
 export default defineConfig((config) => {
@@ -12,6 +16,7 @@ export default defineConfig((config) => {
   /** 与主应用 qiankun entry（localhost:9003）一致；否则 dev 下资源为 `/xxx`，会落到主应用域名导致 404 */
   const devPublicBase = 'http://localhost:9003/';
   return {
+    define: deployTagDefine(),
     /* 开发环境也必须启用 @vitejs/plugin-react，否则与预构建/TS 不一致；此前 isDev 下关闭会导致依赖预打包异常偏大 */
     plugins: [
       ...(isDev ? [] : [react()]),

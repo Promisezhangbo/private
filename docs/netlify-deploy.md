@@ -74,15 +74,11 @@ npx serve dist
 - 构建期：若某子应用需要 `VITE_*` 等变量，在 Netlify **Site configuration → Environment variables** 中为 **Production / Deploy previews** 等上下文分别配置。
 - **不要在文档或仓库中提交密钥**；敏感项仅放在 Netlify 后台或受保护的 CI Secret 中。
 
-## `deploy-success.js`（控制台部署信息）
+## 控制台部署标签（`VITE_DEPLOY_TAG`）
 
-全量构建并执行 `postbuild` 后，可在本地或 Netlify **Build command** 末尾增加一步（与 GitHub Actions 对齐）：
+各应用 **`build`** 会先执行 **`pnpm run deploy:emit-tag-env`**（或等价的 `node scripts/deploy/emit_deploy_tag_env.mjs`），再执行 Vite。Netlify 若使用根目录 **`pnpm run build && pnpm run postbuild`**，一般已包含上述步骤。
 
-```bash
-node scripts/deploy/build_tag_info.js all
-```
-
-若不需要在 Netlify 构建中打印浏览器控制台信息，可省略；详见 [GitHub Pages 部署说明](./github-pages-deploy.md) 中的「部署标签」一节。
+若需在 Netlify 上显示**分支名 / 部署范围**等，可在站点 **Environment variables** 中设置 **`BUILD_BRANCH`**、**`DEPLOY_SCOPE`**（例如 `all` 或子应用名）；未设置时脚本会尽量读 **git 分支**并回退为 **`local`**。详见 [GitHub Pages 部署说明](./github-pages-deploy.md) 中的「部署标签」一节。
 
 ## 常见问题
 

@@ -15,6 +15,7 @@
     "format": "oxfmt",
     "prepare": "husky",
     "postbuild": "bash ./scripts/postbuild.sh",
+    "deploy:emit-tag-env": "node scripts/deploy/emit_deploy_tag_env.mjs",
     "deploy:sync-workflow-options": "node scripts/deploy/sync_deploy_workflow_options.mjs",
     "reinit": "bash ./scripts/clean.sh"
   },

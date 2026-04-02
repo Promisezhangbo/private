@@ -124,7 +124,7 @@ cd apps/main && pnpm dev
 `.github/workflows/deploy.yml` 提供**手动触发**的部署流程：
 
 - **all**：等同本地 `pnpm build` + `pnpm postbuild`，上传根 `dist/`
-- **单个子应用**：当前工作流支持 `main/login/blog/agent`（只覆盖 `dist/<app>/`，其它目录保留）
+- **单个子应用**：下拉选项由 `apps/*` 同步至 `deploy.yml`（只覆盖 `dist/<app>/`，其它目录通过合并 gh-pages 保留）
 
 ---
 

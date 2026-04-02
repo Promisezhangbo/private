@@ -7,5 +7,5 @@
     "moduleResolution": "bundler",
     "target": "ESNext"
   },
-  "include": ["*.d.ts"]
+  "include": ["*.d.ts", "logDeployTag.ts"]
 }

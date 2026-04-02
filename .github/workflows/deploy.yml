@@ -61,11 +61,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install -no-frozen-lockfile
 
-      - name: Validate deploy scope
-        run: node scripts/deploy/validate_deploy_scope.mjs "${{ github.event.inputs.scope }}"
-
       - name: Build(全部子应用)
         if: github.event.inputs.scope == 'all'
+        env:
+          BUILD_BRANCH: ${{ github.event.inputs.branch }}
+          DEPLOY_SCOPE: ${{ github.event.inputs.scope }}
         run: TZ='Asia/Shanghai' pnpm run build
 
       - name: Post-build(根目录 index / 404 / _redirects)
@@ -74,6 +74,9 @@ jobs:
 
       - name: Build(单个子应用)
         if: github.event.inputs.scope != 'all'
+        env:
+          BUILD_BRANCH: ${{ github.event.inputs.branch }}
+          DEPLOY_SCOPE: ${{ github.event.inputs.scope }}
         run: TZ='Asia/Shanghai' pnpm --filter ${{ github.event.inputs.scope }} build
 
       - name: Post-build(仅单应用 main,生成根 index / 404 / _redirects)
@@ -83,16 +86,6 @@ jobs:
       - name: 合并 gh-pages(仅单应用部署)
         if: github.event.inputs.scope != 'all'
         run: bash scripts/deploy/merge_app_dist_to_deploy.sh "${{ github.event.inputs.scope }}"
-
-      - name: Generate deploy banner
-        env:
-          BUILD_BRANCH: ${{ github.event.inputs.branch }}
-        run: node scripts/deploy/build_tag_info.js "${{ github.event.inputs.scope }}"
-
-      - name: Verify dist
-        run: |
-          echo '📂 dist 目录:'
-          ls -la ./dist
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
@@ -104,8 +97,3 @@ jobs:
           force_orphan: true
           clean: true
           clean_keep: ".git"
-          exclude_assets: |
-            README.md
-            LICENSE
-            .gitignore
-            package.json

@@ -1,7 +1,11 @@
 import { appManualChunks } from '@packages/vite-build-utils';
+import { deployTagDefine, loadDeployEnv } from '@packages/vite-build-utils/loadDeployEnv';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
+
+const monorepoRoot = path.resolve(__dirname, '../..');
+loadDeployEnv(monorepoRoot);
 
 // https://vite.dev/config/
 /** @type {import('vite').UserConfig} */
@@ -12,6 +16,7 @@ export default defineConfig((config) => {
 
   return {
     base: isDev ? '/' : '/main/',
+    define: deployTagDefine(),
     plugins: [react()],
     resolve: {
       alias: {

@@ -1,9 +1,12 @@
 import { appManualChunks } from '@packages/vite-build-utils';
+import { deployTagDefine, loadDeployEnv } from '@packages/vite-build-utils/loadDeployEnv';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import qiankun from 'vite-plugin-qiankun';
-import dayjs from 'dayjs';
+
+const monorepoRoot = path.resolve(__dirname, '../..');
+loadDeployEnv(monorepoRoot);
 
 // https://vite.dev/config/
 export default defineConfig((config) => {
@@ -26,7 +29,7 @@ export default defineConfig((config) => {
       },
     },
     define: {
-      __BUILD_TIME__: isDev ? undefined : `"${dayjs().format('YYYY-MM-DD HH:mm:ss')}"`,
+      ...deployTagDefine(),
       VITE_ARK_API_KEY: JSON.stringify('76a06905-671a-4b76-b17e-8d391d201bf8'),
     },
     build: {

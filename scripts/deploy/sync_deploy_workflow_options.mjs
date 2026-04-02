@@ -5,6 +5,7 @@
  *
  * 用法：
  *   node scripts/deploy/sync_deploy_workflow_options.mjs          # 写回文件
+ *   node scripts/deploy/sync_deploy_workflow_options.mjs --check # 仅校验（CI / PR）
  */
 import fs from 'node:fs';
 import path from 'node:path';
