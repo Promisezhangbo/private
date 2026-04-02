@@ -2,24 +2,9 @@
 /**
  * CI / 本地：校验 GitHub Actions「部署范围」参数。
  * - all：构建全部 apps(与 pnpm run build 一致)
- * - 其它：须为 apps/<name>/package.json 存在的目录名(与 pnpm package name 一致)
+ * - 其它：须为 apps/<name>/package.json 存在的目录名
  */
-import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const appsDir = path.join(root, 'apps');
-
-function listApps() {
-  if (!fs.existsSync(appsDir)) return [];
-  return fs
-    .readdirSync(appsDir, { withFileTypes: true })
-    .filter((d) => d.isDirectory())
-    .map((d) => d.name)
-    .filter((name) => fs.existsSync(path.join(appsDir, name, 'package.json')))
-    .sort();
-}
+import { listWorkspaceAppNames } from './repo_apps.mjs';
 
 const scope = (process.argv[2] ?? '').trim();
 if (scope === 'all') {
@@ -32,7 +17,7 @@ if (!scope) {
   process.exit(1);
 }
 
-const apps = listApps();
+const apps = listWorkspaceAppNames();
 if (apps.includes(scope)) {
   console.log(`✅ deploy scope: ${scope}`);
   process.exit(0);

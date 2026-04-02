@@ -1,7 +1,8 @@
-# 部署到 GitHub Pages(手动触发)
-# - all：与本地 pnpm run build + postbuild 一致；会构建 workspace 内全部 apps/*(新增应用只要有 package.json 即会参与构建，无需改本文件)。
-# - 单个子应用：拉取当前 gh-pages，只覆盖 dist/<app>/；app 名称为 apps 下目录名(与 pnpm --filter 一致)。
-# 说明：工作流文件须在默认分支上，Actions 里才会出现「Run workflow」。
+# 部署到 GitHub Pages（手动触发）
+# - all：与本地 pnpm run build + postbuild 一致，构建全部 apps/*。
+# - 其它选项：单应用部署，合并 gh-pages 后只覆盖对应 dist/<app>/。
+# - 部署范围为下拉选项；列表由 apps/* 生成（勿手改 options 列表）：pnpm run deploy:sync-workflow-options
+# 说明：工作流须在默认分支上，Actions 里才会出现「Run workflow」。
 name: GitHub 部署
 
 on:
@@ -13,10 +14,20 @@ on:
         default: main
         type: string
       scope:
-        description: "部署范围：填 all 构建全部子应用；或填任一子应用目录名(main、login、blog、agent、skill、resume …)"
+        description: "部署范围（下拉选择）"
         required: true
         default: all
-        type: string
+        type: choice
+        options:
+          # deploy-workflow-options:begin
+          - all
+          - agent
+          - blog
+          - login
+          - main
+          - resume
+          - skill
+          # deploy-workflow-options:end
 
 permissions:
   contents: write

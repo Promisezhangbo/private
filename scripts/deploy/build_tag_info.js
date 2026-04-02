@@ -16,25 +16,12 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { listWorkspaceAppNames, REPO_ROOT } from './repo_apps.mjs';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(__dirname, '../..');
-const appsDir = path.join(repoRoot, 'apps');
-const distDir = path.join(repoRoot, 'dist');
+const distDir = path.join(REPO_ROOT, 'dist');
 
 const scope = (process.argv[2] ?? process.env.DEPLOY_SCOPE ?? '').trim();
 const buildBranch = process.env.BUILD_BRANCH ?? '';
-
-function listWorkspaceApps() {
-  if (!fs.existsSync(appsDir)) return [];
-  return fs
-    .readdirSync(appsDir, { withFileTypes: true })
-    .filter((d) => d.isDirectory())
-    .map((d) => d.name)
-    .filter((name) => fs.existsSync(path.join(appsDir, name, 'package.json')))
-    .sort();
-}
 
 function formatShanghaiBuildTime() {
   const parts = new Intl.DateTimeFormat('en-GB', {
@@ -120,12 +107,13 @@ function writeDeploySuccessJs(targetPath, appName, ctx) {
   }
   const src = buildScriptSource(appName, ctx);
   fs.writeFileSync(targetPath, `${src}\n`, 'utf8');
-  console.log(`✅ 生成：${path.relative(repoRoot, targetPath)}`);
+  console.log(`✅ 生成：${path.relative(REPO_ROOT, targetPath)}`);
 }
 
 function distAppDirsPresent() {
-  const names = listWorkspaceApps();
-  return names.filter((name) => fs.existsSync(path.join(distDir, name)) && fs.statSync(path.join(distDir, name)).isDirectory());
+  return listWorkspaceAppNames().filter(
+    (name) => fs.existsSync(path.join(distDir, name)) && fs.statSync(path.join(distDir, name)).isDirectory(),
+  );
 }
 
 if (!fs.existsSync(distDir)) {

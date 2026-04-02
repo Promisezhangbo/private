@@ -6,7 +6,7 @@
 # <app> 须为 apps/<app>/package.json 存在的目录名(新增子应用无需改本脚本)
 set -euo pipefail
 
-APP="${1:?用法: merge-gh-pages-app.sh <子应用目录名，如 main、login、skill>}"
+APP="${1:?用法: merge_app_dist_to_deploy.sh <子应用目录名，如 main、login、skill>}"
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 

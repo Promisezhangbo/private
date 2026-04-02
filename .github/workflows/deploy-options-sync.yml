@@ -1,0 +1,23 @@
+# 新增/删除 apps 下子应用时，提醒同步 deploy.yml 下拉选项（与 apps/* 一致）
+name: 检查部署 scope 选项是否同步
+
+on:
+  pull_request:
+    paths:
+      - 'apps/**'
+      - '.github/workflows/deploy.yml'
+      - 'scripts/deploy/sync_deploy_workflow_options.mjs'
+      - 'scripts/deploy/repo_apps.mjs'
+
+jobs:
+  check-options:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 校验 deploy.yml 中 scope.options 与 apps 一致
+        run: node scripts/deploy/sync_deploy_workflow_options.mjs --check
