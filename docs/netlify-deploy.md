@@ -23,9 +23,9 @@
 
 1. 登录 [Netlify](https://www.netlify.com/) → **Add new site** → **Import an existing project**，授权并选择本 Git 仓库。
 2. **Build settings**（若已识别根目录 `netlify.toml`，多数会自动填好）：
-   - **Base directory**：留空（仓库根）。
-   - **Build command**：与 `netlify.toml` 一致（`pnpm run build` 后 **`bash ./scripts/postbuild.sh`**，勿写 `pnpm run postbuild`，以免个别 Netlify 环境在 pnpm 收尾时出现 **`uv_cwd` ENOENT**）。
-   - **Publish directory**：`dist`。
+   - **Base directory**：**必须留空**（表示仓库根目录 `private/`）。**不要填 `dist`**。若 Base 设为 `dist`，构建会在 `repo/dist` 下执行，会出现 **`bash: ./scripts/postbuild.sh: No such file or directory`**、`getcwd` 报错，且 **Publish** 易被解析成 **`dist/dist`**。
+   - **Build command**：使用 `netlify.toml` 中的命令即可（会先 **`cd` 到 git 仓库根**，减轻误设 Base 时的路径问题；**Publish 仍须在控制台与 Base 配对正确**）。
+   - **Publish directory**：填 **`dist`**（相对**仓库根**，不是相对 `dist` 子目录）。
 3. **Environment**（按需）：
    - Node：建议在站点 **Environment variables** 中设置 `NODE_VERSION=20`，或与 `netlify.toml` 里 `[build.environment]` 保持一致。
    - 使用 **pnpm**：仓库根 `package.json` 的 `packageManager` 字段可被 Netlify/Corepack 识别；若构建报错，可在 Netlify 环境变量中开启 `ENABLE_PNPM` 或按 Netlify 文档启用 corepack（以平台当前文档为准）。

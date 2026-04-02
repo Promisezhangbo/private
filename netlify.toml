@@ -1,9 +1,13 @@
-# Netlify：发布目录为仓库根下 dist（与 postbuild 生成的 _redirects 一致）
-# 构建须包含 postbuild（根 index / 404 / _redirects），否则主应用壳层与刷新回退不完整
-# postbuild 用 bash 直接执行，避免「pnpm run postbuild」结束后 Corepack/pnpm 在部分环境下触发 uv_cwd ENOENT（与 Node 小版本无关）
+# Netlify：发布目录为仓库根下的 dist（Turbo 各 app 的 outDir 指向 ../../dist/<app>）
+#
+# 重要：控制台里「Base directory」必须留空（仓库根），「Publish directory」填 dist。
+# 若 Base 误设为 dist，日志里会出现 base=/opt/build/repo/dist、publish=.../dist/dist，
+# 且 bash ./scripts/postbuild.sh 找不到（脚本在仓库根 scripts/，不在 dist/scripts）。
+#
+# 下面先 cd 到 git 仓库根，即使 Base 被误设也能跑对命令；但 Publish 仍须在控制台改回「相对仓库根的 dist」。
+#
+# postbuild 用 bash 直接执行，减轻部分环境下 pnpm 收尾的 uv_cwd ENOENT。
 [build]
-  command = "pnpm install --no-frozen-lockfile && pnpm run build && bash ./scripts/postbuild.sh"
-  publish = "dist"
+command = "ROOT=\"$(git rev-parse --show-toplevel 2>/dev/null || pwd)\" && cd \"$ROOT\" && pnpm install --no-frozen-lockfile && pnpm run build && bash \"$ROOT/scripts/postbuild.sh\""
+publish = "dist"
 
-[build.environment]
-  NODE_VERSION = "20"
