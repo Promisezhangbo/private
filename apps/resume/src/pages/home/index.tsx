@@ -3,7 +3,6 @@ import type { KnowledgeBaseListItem, ListDatasetResponse } from '@packages/opena
 import React, { useEffect, useState } from 'react';
 
 function ResumeHome() {
-  const [dataset, setDataset] = useState<ListDatasetResponse>();
   const [dataList, setDataList] = useState<KnowledgeBaseListItem[]>([]);
 
   async function getDataFn() {
@@ -24,8 +23,7 @@ function ResumeHome() {
 
   return (
     <div>
-      <div>ResumeHome</div>
-      {dataset ? <p>{dataset.dataset_title ?? dataset.dataset_name ?? '—'}</p> : null}
+      <div>ResumeHome 测试一下打包问题</div>
     </div>
   );
 }
