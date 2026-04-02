@@ -9,15 +9,14 @@ const SKILLS: { name: string; percent: number }[] = [
   { name: 'JS', percent: 85 },
   { name: 'TS', percent: 85 },
   { name: 'React', percent: 85 },
-  { name: 'Git', percent: 80 },
-  { name: 'Nextjs', percent: 75 },
+  { name: 'Git', percent: 85 },
   { name: 'Taro', percent: 70 },
   { name: 'Webpack', percent: 70 },
-  { name: 'Vue2', percent: 65 },
-  { name: 'Vue3', percent: 65 },
-  { name: 'Vite', percent: 60 },
-  { name: 'Umijs', percent: 60 },
-  { name: 'Jest', percent: 55 },
+  { name: 'Vite', percent: 75 },
+  { name: 'Umijs', percent: 75 },
+  { name: 'Vitest', percent: 45 },
+  { name: 'monorepo架构', percent: 80 },
+  { name: 'qiankun', percent: 70 },
 ];
 
 const GREEN = '#52c41a';
