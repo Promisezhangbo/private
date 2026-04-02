@@ -1,1 +1,1 @@
-export function logDeployTag(style?: string): void;
+export function logDeployTag(appName: string, style?: string): void;

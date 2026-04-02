@@ -88,7 +88,7 @@ bash scripts/deploy/merge_app_dist_to_deploy.sh skill
 | --------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | `apps/<新应用>/package.json`            | **`build`** 需以 **`emit_deploy_tag_env.mjs`** 开头（可复制现有子应用）；存在后即可参与 Turbo 全量构建。         |
 | `apps/<新应用>/vite.config.ts`          | 与其它应用一致：`loadDeployEnv` + **`define: deployTagDefine()`**。                                              |
-| `apps/<新应用>/src/main.tsx`            | 在 **`render`** 开头调用 **`logDeployTag(...)`**（样式字符串可选）。                                              |
+| `apps/<新应用>/src/main.tsx`            | 在 **`render`** 开头调用 **`logDeployTag('<应用名>', 样式?)`**（应用名与目录名一致，便于区分控制台来源）。        |
 | `emit_deploy_tag_env.mjs` 内 **`PRESETS`** | 若需要与控制台 emoji/标题一致，可为新应用增一项。                                                                |
 | `pnpm run deploy:sync-workflow-options` | 新增子应用后运行并提交，更新 `deploy.yml` 中 `scope` 下拉选项。                                                  |
 | Vite `base` / `outDir`                  | 生产环境应指向 **`/<新应用>/`** 等，与 GitHub Pages 路径一致。                                                   |

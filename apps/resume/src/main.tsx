@@ -7,7 +7,7 @@ import 'antd/dist/reset.css';
 import './app.scss';
 let root: Root | null = null;
 function render(props: { container?: HTMLElement }) {
-  logDeployTag('color:#4f46e5;font-size:16px;font-weight:bold');
+  logDeployTag('resume', 'color:#4f46e5;font-size:16px;font-weight:bold');
   const { container } = props ?? {};
   const rootContainer = container?.querySelector('#root') || document.getElementById('root');
   if (!rootContainer) return;
