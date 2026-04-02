@@ -1,0 +1,48 @@
+@use '@style-config/variables' as *;
+@use '../../styles/login-shared' as *;
+
+.login-page--singin {
+  width: min(440px, 92vw);
+
+  .login-glass-card {
+    border-radius: 10px;
+    background: $c-card;
+    border: 1px solid $c-card-border;
+    box-shadow: $c-shadow;
+    padding: 24px;
+    background-image: linear-gradient(
+      165deg,
+      rgba(240, 253, 250, 0.35) 0%,
+      transparent 45%,
+      rgba(224, 242, 254, 0.25) 100%
+    );
+  }
+
+  @include login-brand;
+  @include login-inputs;
+
+  .ant-checkbox-inner {
+    border-radius: 2px;
+    border-color: $slate-300;
+    background: #fff;
+  }
+
+  .ant-checkbox:hover .ant-checkbox-inner {
+    border-color: $c-mint-light;
+  }
+
+  @include login-primary-submit;
+
+  .login-form-row {
+    margin-block: 4px 10px;
+
+    .ant-btn-link {
+      padding-inline: 8px;
+      color: $c-mint;
+
+      &:hover {
+        color: #0d9488;
+      }
+    }
+  }
+}

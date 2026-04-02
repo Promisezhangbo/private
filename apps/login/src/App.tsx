@@ -1,6 +1,8 @@
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
-import Layouts from '@/layouts';
+import { RouterProvider } from 'react-router-dom';
+import AuthShell from '@/components/AuthShell';
+import { routers } from '@/router';
 
 const loginTheme = {
   token: {
@@ -15,7 +17,9 @@ const loginTheme = {
 function App() {
   return (
     <ConfigProvider locale={zhCN} theme={loginTheme}>
-      <Layouts />
+      <AuthShell>
+        <RouterProvider router={routers} />
+      </AuthShell>
     </ConfigProvider>
   );
 }

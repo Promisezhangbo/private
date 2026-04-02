@@ -4,7 +4,7 @@ import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 const Register = lazy(() => import('@/pages/register'));
 const Singin = lazy(() => import('@/pages/singin'));
 
-const router = [
+export const routers = createBrowserRouter([
   {
     path: '/login',
     element: <Outlet />,
@@ -14,5 +14,4 @@ const router = [
       { path: 'register', element: <Register /> },
     ],
   },
-];
-export const routers = createBrowserRouter(router);
+]);

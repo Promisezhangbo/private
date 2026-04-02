@@ -1,0 +1,109 @@
+@use '@style-config/variables' as *;
+
+$c-mint: #14b8a6;
+$c-mint-light: #5eead4;
+$c-sky: #38bdf8;
+$c-card: rgba(255, 255, 255, 0.88);
+$c-card-border: rgba(148, 163, 184, 0.22);
+$c-input-bg: $slate-50;
+$c-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.08);
+
+@mixin login-brand {
+  .login-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+
+    &::before {
+      content: '';
+      width: 120px;
+      height: 3px;
+      margin-bottom: 2px;
+      border-radius: $pill-radius;
+      background: linear-gradient(90deg, $c-mint-light, $c-sky, rgba(196, 181, 253, 0.9));
+      opacity: 0.85;
+      box-shadow: 0 2px 12px rgba(45, 212, 191, 0.2);
+    }
+
+    .login-brand-title {
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.35;
+      color: $slate-700;
+    }
+  }
+}
+
+@mixin login-inputs {
+  .ant-input,
+  .ant-input-affix-wrapper,
+  .ant-input-password {
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: $slate-800;
+    background: $c-input-bg;
+    border-color: $slate-200;
+    transition:
+      border-color $dur-fast $ease-out,
+      box-shadow $dur-fast $ease-out,
+      background-color $dur-fast $ease-out;
+
+    &::placeholder {
+      color: $slate-400;
+    }
+
+    &:hover {
+      border-color: rgba(45, 212, 191, 0.45);
+      background: #fff;
+    }
+  }
+
+  .ant-input-password-icon {
+    color: $slate-400;
+
+    &:hover {
+      color: $c-mint;
+    }
+  }
+
+  .ant-input-affix-wrapper-focused,
+  .ant-input:focus,
+  .ant-input-focused,
+  .ant-input-password-focused {
+    border-color: rgba(45, 212, 191, 0.65);
+    box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.12);
+    background: #fff;
+  }
+}
+
+@mixin login-primary-submit {
+  .ant-btn-primary.ant-btn-lg {
+    width: 100%;
+    height: 48px;
+    font-size: 16px;
+    border-radius: 8px;
+    color: #fff;
+    background: linear-gradient(135deg, $c-mint 0%, #0d9488 100%);
+    box-shadow: 0 8px 24px -6px rgba(20, 184, 166, 0.45);
+    transition:
+      transform $dur-fast $ease-out,
+      box-shadow $dur-fast $ease-out,
+      filter $dur-fast $ease-out;
+
+    &:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 12px 28px -6px rgba(20, 184, 166, 0.5);
+      color: #fff;
+      background: linear-gradient(135deg, #0d9488 0%, $c-mint 100%);
+    }
+
+    &:active {
+      transform: translateY(0);
+      filter: brightness(0.98);
+    }
+  }
+}

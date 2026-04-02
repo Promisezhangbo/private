@@ -1,6 +1,8 @@
-import { message, Card, Typography, Flex, Button, Form, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { delay } from '@/utils/mockRequest';
+import { message, Flex, Button, Form, Input, Card, Typography, Image } from 'antd';
+import logo from '@/assets/logo.png';
+import { delay } from '@/utils/delay';
+import './index.scss';
 
 function Register() {
   const navigate = useNavigate();
@@ -23,7 +25,8 @@ function Register() {
     <div className="login-page login-page--register">
       <Card className="login-glass-card" variant="borderless">
         <div className="login-brand">
-          <Typography.Title level={4} className="login-brand-title login-register-title">
+          <Image src={logo} alt="" width={56} height={56} preview={false} />
+          <Typography.Title level={4} className="login-brand-title">
             创建账号
           </Typography.Title>
         </div>
@@ -65,7 +68,7 @@ function Register() {
           <Flex justify="space-between" className="login-register-footer">
             <Button onClick={() => form.resetFields()}>重置</Button>
             <Button type="link" onClick={() => navigate('/login/singin')}>
-              已有账号？登录
+              已有账号?登录
             </Button>
           </Flex>
           <Form.Item>

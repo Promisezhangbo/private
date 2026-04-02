@@ -1,10 +1,13 @@
 @use '@style-config/variables' as *;
 @use '@style-config/mixins' as m;
-@use './styles/auth-form';
 
 /* Login：小清新底景 — 薄荷 / 天蓝 / 淡紫的柔和渐变 */
 #app-root {
   @include m.sub-app-min-viewport;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: auto;
+  box-sizing: border-box;
   position: relative;
   background:
     radial-gradient(ellipse 85% 55% at 12% 28%, rgba(186, 230, 253, 0.75), transparent 52%),

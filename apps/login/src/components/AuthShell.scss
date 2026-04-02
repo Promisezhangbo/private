@@ -14,40 +14,50 @@
   }
 }
 
-.login-auth-shell {
-  position: relative;
-  z-index: $z-content;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
+.login-warp {
+  height: 100vh;
+  overflow: hidden;
 
-  &::before {
-    content: '';
-    position: fixed;
-    inset: 50%;
-    width: min(120vw, 900px);
-    height: min(120vw, 900px);
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background:
-      radial-gradient(circle at 35% 40%, rgba(45, 212, 191, 0.14), transparent 55%),
-      radial-gradient(circle at 70% 60%, rgba(125, 211, 252, 0.16), transparent 50%),
-      radial-gradient(circle at 50% 50%, rgba(196, 181, 253, 0.1), transparent 58%);
-    filter: blur(40px);
-    animation: login-shell-blob-drift 28s $ease-out infinite;
-    pointer-events: none;
-    z-index: $z-bg-grid;
-    will-change: transform;
-  }
+  .login-auth-shell {
+    height: 100vh;
+    overflow: auto;
+    box-sizing: border-box;
 
-  &::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: $z-bg-grid;
-    pointer-events: none;
-    background: radial-gradient(ellipse 85% 70% at 50% 45%, transparent 30%, rgba(248, 250, 252, 0.5) 100%);
+    .login-auth-inner {
+      min-height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      box-sizing: border-box;
+    }
+
+    &::before {
+      content: '';
+      position: fixed;
+      inset: 50%;
+      width: min(120vw, 900px);
+      height: min(120vw, 900px);
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 40%, rgba(45, 212, 191, 0.14), transparent 55%),
+        radial-gradient(circle at 70% 60%, rgba(125, 211, 252, 0.16), transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(196, 181, 253, 0.1), transparent 58%);
+      filter: blur(40px);
+      animation: login-shell-blob-drift 28s $ease-out infinite;
+      pointer-events: none;
+      z-index: $z-bg-grid;
+      will-change: transform;
+    }
+
+    &::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: $z-bg-grid;
+      pointer-events: none;
+      background: radial-gradient(ellipse 85% 70% at 50% 45%, transparent 30%, rgba(248, 250, 252, 0.5) 100%);
+    }
   }
 }

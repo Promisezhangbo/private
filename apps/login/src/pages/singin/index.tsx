@@ -1,7 +1,8 @@
-import reactLogo from '@/assets/react.svg';
+import logo from '@/assets/logo.png';
 import { useNavigate } from 'react-router-dom';
-import { message, Card, Typography, Image, Button, Flex, Form, Input, Checkbox } from 'antd';
-import { delay } from '@/utils/mockRequest';
+import { message, Button, Flex, Form, Input, Checkbox, Image, Typography } from 'antd';
+import { delay } from '@/utils/delay';
+import './index.scss';
 
 function Singin() {
   const navigate = useNavigate();
@@ -20,10 +21,10 @@ function Singin() {
   };
 
   return (
-    <div className="login-page">
-      <Card className="login-glass-card" variant="borderless">
+    <div className="login-page login-page--singin">
+      <div className="login-glass-card">
         <div className="login-brand">
-          <Image src={reactLogo} alt="" width={56} preview={false} />
+          <Image src={logo} alt="" width={56} height={56} preview={false} />
           <Typography.Title level={4} className="login-brand-title">
             欢迎回来
           </Typography.Title>
@@ -49,7 +50,7 @@ function Singin() {
             </Button>
           </Form.Item>
         </Form>
-      </Card>
+      </div>
     </div>
   );
 }
