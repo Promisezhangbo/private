@@ -1,7 +1,8 @@
 # Netlify：发布目录为仓库根下 dist（与 postbuild 生成的 _redirects 一致）
 # 构建须包含 postbuild（根 index / 404 / _redirects），否则主应用壳层与刷新回退不完整
+# postbuild 用 bash 直接执行，避免「pnpm run postbuild」结束后 Corepack/pnpm 在部分环境下触发 uv_cwd ENOENT（与 Node 小版本无关）
 [build]
-  command = "pnpm i --no-frozen-lockfile && pnpm run build && pnpm run postbuild"
+  command = "pnpm install --no-frozen-lockfile && pnpm run build && bash ./scripts/postbuild.sh"
   publish = "dist"
 
 [build.environment]

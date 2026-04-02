@@ -24,7 +24,7 @@
 1. 登录 [Netlify](https://www.netlify.com/) → **Add new site** → **Import an existing project**，授权并选择本 Git 仓库。
 2. **Build settings**（若已识别根目录 `netlify.toml`，多数会自动填好）：
    - **Base directory**：留空（仓库根）。
-   - **Build command**：`pnpm run build && pnpm run postbuild`（与 `netlify.toml` 中一致）。
+   - **Build command**：与 `netlify.toml` 一致（`pnpm run build` 后 **`bash ./scripts/postbuild.sh`**，勿写 `pnpm run postbuild`，以免个别 Netlify 环境在 pnpm 收尾时出现 **`uv_cwd` ENOENT**）。
    - **Publish directory**：`dist`。
 3. **Environment**（按需）：
    - Node：建议在站点 **Environment variables** 中设置 `NODE_VERSION=20`，或与 `netlify.toml` 里 `[build.environment]` 保持一致。
@@ -39,7 +39,7 @@
 ```bash
 pnpm install
 pnpm run build
-pnpm run postbuild
+bash ./scripts/postbuild.sh
 # 检查 dist 下是否有 main、login 等子目录及 dist/_redirects、dist/index.html
 npx netlify-cli deploy --dir=dist --dry-run
 ```
@@ -61,7 +61,7 @@ npx serve dist
 | 重写规则 | `dist/_redirects` 或 `netlify.toml` 的 `[[redirects]]` | 主要依赖 `dist/_redirects`（postbuild 生成） |
 | 单应用热更新 | 需自行在 CI 中实现「合并旧产物」类逻辑；Netlify 无内置等价 gh-pages 合并脚本 | 见 `merge_app_dist_to_deploy.sh` |
 
-若仅在 Netlify 上做**全量发布**，每次推送执行 **`pnpm run build && pnpm run postbuild`** 即可，无需合并脚本。
+若仅在 Netlify 上做**全量发布**，每次推送执行 **`pnpm run build`** 后再执行 **`bash ./scripts/postbuild.sh`**（与 `netlify.toml` 一致）即可，无需合并脚本。
 
 ## 部署预览（Deploy Previews）
 
@@ -76,7 +76,7 @@ npx serve dist
 
 ## 控制台部署标签（`VITE_DEPLOY_TAG`）
 
-各应用 **`build`** 会先执行 **`pnpm run deploy:emit-tag-env`**（或等价的 `node scripts/deploy/emit_deploy_tag_env.mjs`），再执行 Vite。Netlify 若使用根目录 **`pnpm run build && pnpm run postbuild`**，一般已包含上述步骤。
+各应用 **`build`** 会先执行 **`pnpm run deploy:emit-tag-env`**（或等价的 `node scripts/deploy/emit_deploy_tag_env.mjs`），再执行 Vite。Netlify 若使用根目录 **`netlify.toml` 中的 command**，一般已包含上述步骤。
 
 若需在 Netlify 上显示**分支名 / 部署范围**等，可在站点 **Environment variables** 中设置 **`BUILD_BRANCH`**、**`DEPLOY_SCOPE`**（例如 `all` 或子应用名）；未设置时脚本会尽量读 **git 分支**并回退为 **`local`**。详见 [GitHub Pages 部署说明](./github-pages-deploy.md) 中的「部署标签」一节。
 
@@ -86,7 +86,7 @@ npx serve dist
 检查 Netlify 使用的 Node 版本、是否启用 corepack，以及 `pnpm install` 是否在 Netlify 的 install 阶段正确执行。
 
 **刷新子路由 404**  
-确认 **`pnpm run postbuild` 已执行**，且 `dist/_redirects` 已随 `dist` 一起发布；不要在 Netlify 里把 **Publish directory** 错设为 `dist/main` 单独目录（除非你有意只发布主应用）。
+确认 **`postbuild.sh` 已执行**（根 `index.html` / `404` / `_redirects`），且 `dist/_redirects` 已随 `dist` 一起发布；不要在 Netlify 里把 **Publish directory** 错设为 `dist/main` 单独目录（除非你有意只发布主应用）。
 
 **子应用资源 404**  
 确认各应用生产环境 **`base`** 与 Netlify 站点路径一致（例如子应用挂在 `https://xxx.netlify.app/login/` 时，`base` 应为 `/login/`）。
