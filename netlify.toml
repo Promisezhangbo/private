@@ -1,13 +1,17 @@
-# Netlify：发布目录为仓库根下的 dist（Turbo 各 app 的 outDir 指向 ../../dist/<app>）
-#
-# 重要：控制台里「Base directory」必须留空（仓库根），「Publish directory」填 dist。
-# 若 Base 误设为 dist，日志里会出现 base=/opt/build/repo/dist、publish=.../dist/dist，
-# 且 bash ./scripts/postbuild.sh 找不到（脚本在仓库根 scripts/，不在 dist/scripts）。
-#
-# 下面先 cd 到 git 仓库根，即使 Base 被误设也能跑对命令；但 Publish 仍须在控制台改回「相对仓库根的 dist」。
-#
-# postbuild 用 bash 直接执行，减轻部分环境下 pnpm 收尾的 uv_cwd ENOENT。
+# ==============================================
+# 纯静态部署：跳过所有构建，直接发布本地 dist
+# ==============================================
 [build]
-command = "ROOT=\"$(git rev-parse --show-toplevel 2>/dev/null || pwd)\" && cd \"$ROOT\" && pnpm install --no-frozen-lockfile && pnpm run build && bash \"$ROOT/scripts/postbuild.sh\""
-publish = "dist"
+  # 跳过构建（不安裝依赖、不执行打包）
+  command = "# skip build"
+  # 直接发布你提交到 Git 的 dist 文件夹
+  publish = "dist"
 
+# ==============================================
+# SPA 路由（解决刷新 404，monorepo 多应用必备）
+# ==============================================
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
