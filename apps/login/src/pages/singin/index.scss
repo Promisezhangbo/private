@@ -5,7 +5,7 @@
   width: min(440px, 92vw);
 
   .login-glass-card {
-    border-radius: 10px;
+    border-radius: $radius-md;
     background: $c-card;
     border: 1px solid $c-card-border;
     box-shadow: $c-shadow;
@@ -22,7 +22,7 @@
   @include login-inputs;
 
   .ant-checkbox-inner {
-    border-radius: 2px;
+    border-radius: $radius-sm;
     border-color: $slate-300;
     background: #fff;
   }

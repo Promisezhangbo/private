@@ -29,7 +29,7 @@
     gap: 14px;
     padding: 14px 18px;
     margin: 16px 0 8px;
-    border-radius: 16px;
+    border-radius: $radius-md;
     border: 1px solid var(--border);
     background: linear-gradient(
       145deg,
@@ -46,7 +46,7 @@
     flex-shrink: 0;
     width: 48px;
     height: 48px;
-    border-radius: 14px;
+    border-radius: $radius-md;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -147,7 +147,7 @@
       box-sizing: border-box;
       width: fit-content;
       max-width: 100%;
-      border-radius: 16px 16px 6px;
+      border-radius: $radius-md $radius-md $radius-sm;
       background: linear-gradient(135deg, rgb(224 242 254 / 0.95) 0%, rgb(237 233 254 / 0.92) 100%);
       border-color: rgb(125 211 252 / 0.45);
       padding: 12px 14px;
@@ -163,7 +163,7 @@
     }
 
     .ant-bubble-start .ant-bubble-content {
-      border-radius: 16px;
+      border-radius: $radius-md;
       background: linear-gradient(180deg, rgb(255 255 255 / 0.98) 0%, rgb(248 250 252 / 0.95) 100%);
       border-color: var(--border);
       box-shadow: 0 2px 16px var(--shadow);
@@ -209,7 +209,7 @@
   &__attach-img-wrap {
     width: fit-content;
     max-width: 100%;
-    border-radius: 12px;
+    border-radius: $radius-md;
     overflow: hidden;
     border: 1px solid rgb(125 211 252 / 0.45);
     background: rgb(255 255 255 / 0.55);
@@ -230,7 +230,7 @@
     display: inline-flex;
     align-items: center;
     padding: 6px 10px;
-    border-radius: 8px;
+    border-radius: $radius-sm;
     font-size: 13px;
     color: var(--muted);
     background: rgb(255 255 255 / 0.65);
@@ -324,7 +324,7 @@
       padding: 8px 12px;
       border-left: 3px solid var(--purple);
       background: var(--purple-soft);
-      border-radius: 0 8px 8px 0;
+      border-radius: 0 $radius-sm $radius-sm 0;
       color: var(--muted);
     }
 
@@ -340,7 +340,7 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       background: var(--blue-soft);
       border: 1px solid rgb(56 189 248 / 0.15);
-      border-radius: 6px;
+      border-radius: $radius-sm;
     }
 
     pre {
@@ -351,7 +351,7 @@
       line-height: 1.55;
       background: linear-gradient(165deg, #f1f5f9 0%, #e0e7ff 100%);
       color: #1e293b;
-      border-radius: 12px;
+      border-radius: $radius-md;
       border: 1px solid var(--border);
 
       code {
@@ -369,7 +369,7 @@
       font-size: 14px;
       border-collapse: collapse;
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: $radius-md;
       overflow: hidden;
     }
 
@@ -406,7 +406,7 @@
   }
 
   &__sender {
-    border-radius: 18px !important;
+    border-radius: $radius-md !important;
     border: 1px solid var(--border) !important;
     background: rgb(255 255 255 / 0.95) !important;
     box-shadow: 0 4px 20px var(--shadow) !important;

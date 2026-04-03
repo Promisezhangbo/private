@@ -36,10 +36,20 @@ $sub-app-golden-ratio: 0.618;
 $sub-app-content-max-width: clamp(320px, #{$sub-app-golden-ratio * 100}vw, 1280px);
 $sub-app-shell-padding: clamp(20px, 4vw, 40px);
 
-// —— 圆角 ——
-$radius-md: 16px;
-$radius-lg: 18px;
-$radius-xl: 20px;
+// —— 圆角（整站两档：改 `$radius-sm` / `$radius-md` 即可全局联动）——
+/// 小组件、行内 code、标签、输入
+$radius-sm: 8px;
+
+/// 卡片、面板、气泡、主输入容器
+$radius-md: 12px;
+
+/// 兼容旧引用（原 18px），等同 `$radius-md`
+$radius-lg: $radius-md;
+
+/// 兼容旧引用（原 20px），等同 `$radius-md`
+$radius-xl: $radius-md;
+
+/// 胶囊形（标签、药丸按钮）
 $pill-radius: 999px;
 
 // —— 动效 ——

@@ -11,7 +11,10 @@ function App() {
       theme={{
         token: {
           colorBgLayout: 'transparent',
-          borderRadiusLG: 10,
+          // 与 @packages/style-config $radius-sm / $radius-md（8px / 12px）一致
+          borderRadius: 8,
+          borderRadiusLG: 12,
+          borderRadiusSM: 8,
         },
       }}
     >

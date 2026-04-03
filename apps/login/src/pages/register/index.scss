@@ -5,14 +5,14 @@
   width: min(440px, 92vw);
 
   .login-glass-card.ant-card {
-    border-radius: 10px;
+    border-radius: $radius-md;
     background: $c-card;
     border: 1px solid $c-card-border;
     box-shadow: $c-shadow;
 
     .ant-card-body {
       padding: 24px;
-      border-radius: 10px;
+      border-radius: $radius-md;
       background: linear-gradient(
         165deg,
         rgba(240, 253, 250, 0.35) 0%,
@@ -31,7 +31,7 @@
     margin-bottom: 14px;
 
     .ant-btn-default {
-      border-radius: 8px;
+      border-radius: $radius-sm;
       padding-inline: 16px;
       color: $slate-600;
       border: 1px solid $slate-200;

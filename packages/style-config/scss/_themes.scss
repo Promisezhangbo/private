@@ -9,7 +9,9 @@
 @mixin root-tokens {
   :root {
     --sc-header-height: #{$header-height-main};
+    --sc-radius-sm: #{$radius-sm};
     --sc-radius-md: #{$radius-md};
+    --sc-radius-lg: #{$radius-lg};
     --sc-radius-xl: #{$radius-xl};
     --sc-indigo-500: #{$indigo-500};
     --sc-slate-900: #{$slate-900};

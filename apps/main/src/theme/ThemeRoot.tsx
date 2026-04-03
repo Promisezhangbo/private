@@ -30,7 +30,10 @@ export function ThemeRoot({ children }: { children: ReactNode }) {
           algorithm: mode === 'dark' ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
           token: {
             colorPrimary: '#14b8a6',
-            borderRadius: 10,
+            // 与 @packages/style-config $radius-sm / $radius-md（8px / 12px）一致
+            borderRadius: 8,
+            borderRadiusLG: 12,
+            borderRadiusSM: 8,
           },
         }}
       >
