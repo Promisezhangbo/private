@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { Button, Input, message as antdMessage } from 'antd';
 import { RobotOutlined, SendOutlined } from '@ant-design/icons';
 import Markdown from '@ant-design/x-markdown';
@@ -10,6 +10,9 @@ const { TextArea } = Input;
 type Msg = { role: 'user' | 'assistant'; content: string; id: string };
 
 const EMPTY_REPLY = '（未收到模型正文，请稍后重试或检查模型配置。）';
+
+/** 距底部小于此值（px）视为「贴在底部」，流式输出时才自动跟随滚动 */
+const STICK_BOTTOM_THRESHOLD = 72;
 
 function formatError(err: unknown): string {
   const text = err instanceof Error ? err.message : String(err);
@@ -32,10 +35,21 @@ export default function Home() {
   const [busy, setBusy] = useState(false);
   const [streamId, setStreamId] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  /** 为 true 时，消息变化会将滚动条置底（用户向上翻看历史时为 false） */
+  const stickToBottomRef = useRef(true);
+
+  const updateStickFromScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const { scrollTop, scrollHeight, clientHeight } = el;
+    stickToBottomRef.current = scrollHeight - scrollTop - clientHeight < STICK_BOTTOM_THRESHOLD;
+  }, []);
 
   const send = useCallback(async () => {
     const text = input.trim();
     if (!text || busy) return;
+
+    stickToBottomRef.current = true;
 
     const userId = `u-${Date.now()}`;
     const botId = `a-${Date.now()}`;
@@ -66,15 +80,23 @@ export default function Home() {
     }
   }, [input, busy]);
 
-  useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
-  }, [messages, busy]);
+  useLayoutEffect(() => {
+    const el = scrollRef.current;
+    if (!el || !stickToBottomRef.current) return;
+    el.scrollTop = el.scrollHeight;
+  }, [messages]);
 
   const showEmpty = messages.length === 0 && !busy;
 
   return (
     <div className="agent-studio">
-      <div ref={scrollRef} className="agent-studio__scroll" role="log" aria-live="polite">
+      <div
+        ref={scrollRef}
+        className="agent-studio__scroll"
+        role="log"
+        aria-live="polite"
+        onScroll={updateStickFromScroll}
+      >
         <div className="agent-studio__inner">
           <header className="agent-studio__masthead">
             <div className="agent-studio__masthead-icon" aria-hidden>

@@ -27,8 +27,12 @@
 
 .agent-studio__scroll {
   flex: 1 1 0;
-
+  min-height: 0;
   overflow: auto;
+  overflow-x: hidden;
+
+  /* 为纵向滚动条预留槽位，避免覆盖右侧用户气泡（尤其 overlay 滚动条） */
+  scrollbar-gutter: stable;
   padding: 12px 0 10px;
 }
 
@@ -37,6 +41,9 @@
   flex-direction: column;
   gap: 12px;
   min-height: min-content;
+
+  /* 与 scrollbar-gutter 叠加一点边距，双保险 */
+  padding-inline-end: 2px;
 }
 
 .agent-studio__masthead {
@@ -163,12 +170,15 @@
   &--user {
     align-items: flex-end;
 
+    /* 避免气泡贴死滚动条区域 */
+    padding-inline-end: 4px;
+
     .agent-studio__role {
       color: rgb(2 132 199 / 0.85);
     }
 
     .agent-studio__card {
-      max-width: min(90%, 520px);
+      max-width: min(calc(90% - 8px), 512px);
       border-radius: 18px 18px 6px;
       background: linear-gradient(135deg, rgb(224 242 254 / 0.95) 0%, rgb(237 233 254 / 0.92) 100%);
       border-color: rgb(125 211 252 / 0.45);
