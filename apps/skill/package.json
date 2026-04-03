@@ -23,8 +23,7 @@
     "@packages/style-config": "workspace:*",
     "@packages/ts-config": "workspace:*",
     "@packages/vite-build-utils": "workspace:*",
-    "@vitejs/plugin-react": "^6.0.1",
-    "dayjs": "^1.11.20"
+    "@vitejs/plugin-react": "^6.0.1"
   },
   "peerDependencies": {
     "oxlint": "^1.57.0",
