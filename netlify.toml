@@ -7,7 +7,8 @@
 # 下面先 cd 到 git 仓库根，即使 Base 被误设也能跑对命令；但 Publish 仍须在控制台改回「相对仓库根的 dist」。
 #
 # postbuild 用 bash 直接执行，减轻部分环境下 pnpm 收尾的 uv_cwd ENOENT。
+[]
 [build]
-command = "pnpm install --no-frozen-lockfile && pnpm run build && bash \"$ROOT/scripts/postbuild.sh\""
+command = "pnpm install --no-frozen-lockfile && pnpm run build && bash ./scripts/postbuild.sh"
 publish = "dist"
 
