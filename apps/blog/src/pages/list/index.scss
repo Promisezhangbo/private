@@ -2,9 +2,53 @@
 @use '@style-config/mixins' as m;
 @use '../../styles/blog-shared';
 
-.blog-warp {
-  padding-bottom: 40px;
-  overflow: auto;
+.blog-wrap {
+  padding-bottom: 48px;
+
+  /* 纵向滚动交给 #app-root，避免双层滚动条且内容被裁切 */
+  overflow: visible;
+
+  .blog-category-tabs {
+    margin-bottom: 8px;
+
+    &.ant-tabs {
+      .ant-tabs-nav {
+        margin-bottom: 20px;
+
+        &::before {
+          border-color: rgb(56 189 248 / 0.12);
+        }
+      }
+
+      .ant-tabs-tab {
+        padding: 10px 18px;
+        font-weight: 600;
+        color: var(--blog-muted);
+        border-radius: $radius-sm;
+        transition:
+          color $dur-fast $ease-out,
+          background $dur-fast $ease-out;
+
+        &:hover {
+          color: var(--sc-blog-card-title-hover);
+        }
+      }
+
+      .ant-tabs-tab-active .ant-tabs-tab-btn {
+        color: #0284c7 !important;
+      }
+
+      .ant-tabs-ink-bar {
+        height: 3px;
+        border-radius: $pill-radius;
+        background: linear-gradient(90deg, #38bdf8, #6366f1);
+      }
+    }
+  }
+
+  .blog-list.ant-list {
+    margin-top: 4px;
+  }
 
   .blog-hero {
     h2.ant-typography {
@@ -26,14 +70,16 @@
       overflow: hidden;
       width: 100%;
 
+      /* 限制布局重算范围，减轻长列表滚动时的整树失效 */
+      contain: layout;
+
       &.ant-card {
         border-radius: $radius-lg !important;
         border: 1px solid var(--sc-blog-card-border) !important;
         background: var(--sc-blog-card-bg) !important;
-        backdrop-filter: blur(12px);
         box-shadow:
           0 1px 0 var(--sc-blog-card-shadow-inset) inset,
-          0 16px 40px var(--sc-blog-card-shadow-outer);
+          0 6px 20px var(--sc-blog-card-shadow-outer);
         transition:
           transform $dur-normal $ease-out,
           box-shadow $dur-normal $ease-out,
@@ -52,11 +98,11 @@
         }
 
         &:hover {
-          transform: translateY(-3px);
+          transform: translate3d(0, -3px, 0);
           border-color: var(--sc-blog-card-hover-border) !important;
           box-shadow:
             0 1px 0 var(--sc-blog-card-shadow-inset) inset,
-            0 24px 52px var(--sc-blog-card-hover-shadow),
+            0 12px 28px var(--sc-blog-card-hover-shadow),
             0 0 0 1px rgb(56 189 248 / 0.08);
         }
 

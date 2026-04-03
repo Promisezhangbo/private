@@ -1,30 +1,46 @@
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { posts } from '@/data/posts';
-import { Card, Typography, List as AntList, Button } from 'antd';
-import { ArrowRightOutlined, BookOutlined } from '@ant-design/icons';
-import type { Post } from '@/data/posts';
+import { BookOutlined, ArrowRightOutlined } from '@ant-design/icons';
+import { Button, Card, List as AntList, Tabs, Typography } from 'antd';
+import type { PostMeta } from '@/data/posts';
+import { CATEGORY_TABS, postsByCategory, type BlogCategory } from '@/data/posts';
 import './index.scss';
+
 const { Title, Paragraph } = Typography;
+
 function List() {
   const navigate = useNavigate();
-  console.log(11111);
+  const [category, setCategory] = useState<BlogCategory>('arch');
+  const list = useMemo(() => postsByCategory(category), [category]);
 
   const goDetail = (id: string) => navigate(`/blog/detail/${id}`);
+
   return (
-    <div className="blog-warp">
+    <div className="blog-wrap">
       <div className="blog-shell">
         <header className="blog-hero">
-          <div className="blog-hero__kicker">
-            <span className="blog-hero__kicker-pulse" aria-hidden />
-            Tech Notes
-          </div>
           <Title level={2}>博客</Title>
-          <Typography.Text type="secondary">前端 · 工程化 · 架构笔记 — 卡片悬停预览，点击进入全文</Typography.Text>
+          <Typography.Text type="secondary">
+            按分类浏览收录文章；列表展示标题与摘要，正文来自本地 Markdown，原文链接在详情页。
+          </Typography.Text>
         </header>
+
+        <Tabs
+          className="blog-category-tabs"
+          activeKey={category}
+          onChange={(k) => setCategory(k as BlogCategory)}
+          items={CATEGORY_TABS.map((t) => ({
+            key: t.key,
+            label: t.label,
+          }))}
+        />
+
         <AntList
+          className="blog-list"
           split={false}
-          dataSource={posts}
-          renderItem={(p: Post) => (
+          dataSource={list}
+          locale={{ emptyText: '该分类下暂无文章' }}
+          renderItem={(p: PostMeta) => (
             <AntList.Item className="blog-list-item-wrap">
               <Card className="blog-card" variant="borderless">
                 <div
@@ -51,4 +67,5 @@ function List() {
     </div>
   );
 }
+
 export default List;

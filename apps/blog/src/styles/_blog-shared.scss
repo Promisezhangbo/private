@@ -4,7 +4,7 @@
 .blog-shell {
   position: relative;
   z-index: $z-content;
-  padding: $sub-app-shell-padding;
+  padding: 0 20px 20px;
   max-width: $sub-app-content-max-width;
   margin: 0 auto;
 }

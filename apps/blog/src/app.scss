@@ -8,4 +8,26 @@
 
   @include m.sub-app-root-blog-surface;
   color: var(--blog-ink);
+
+  /* 独立运行 / 嵌入时均为滚动容器：提升合成层、减少嵌套滚动与橡皮筋穿透 */
+  transform: translateZ(0);
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+
+  /* 嵌入主应用：接 flex 链并成为唯一纵向滚动层（避免 min-height:100vh 顶破父级 overflow:hidden） */
+  &[data-blog-embedded='true'] {
+    min-height: 0;
+    flex: 1 1 0;
+
+    @include m.thin-scrollbar(8px, rgb(56 189 248 / 0.28));
+  }
+}
+
+/* 与 agent 一致：微前端下 #root 参与撑满，否则 height:100% / flex:1 子节点高度为 0 */
+.main-content--micro #sub-app #root {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }

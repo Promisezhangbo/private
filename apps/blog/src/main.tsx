@@ -16,11 +16,17 @@ function render(props: { container?: HTMLElement }) {
   // 复用 root 实例调用 render 方法
   const embedded = qiankunWindow.__POWERED_BY_QIANKUN__;
   const appRootStyle = embedded
-    ? { height: '100%', minHeight: '100%', overflow: 'auto' as const, boxSizing: 'border-box' as const }
+    ? {
+        flex: 1,
+        minHeight: 0,
+        minWidth: 0,
+        overflow: 'auto' as const,
+        boxSizing: 'border-box' as const,
+      }
     : { height: '100vh', minHeight: '100vh', overflow: 'auto' as const, boxSizing: 'border-box' as const };
   root.render(
     <React.StrictMode>
-      <div id="app-root" style={appRootStyle}>
+      <div id="app-root" style={appRootStyle} data-blog-embedded={embedded ? 'true' : undefined}>
         <App />
       </div>
     </React.StrictMode>,
