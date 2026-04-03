@@ -7,7 +7,7 @@
 ## 仓库内已有配置
 
 | 文件 | 作用 |
-|------|------|
+| --- | --- |
 | `netlify.toml` | 声明构建命令、`publish = "dist"`、建议的 Node 版本 |
 | `scripts/postbuild.sh` | 生成 `dist/index.html`、`dist/404.html`、`dist/_redirects`（Netlify 会读取发布目录中的 `_redirects`） |
 
@@ -55,7 +55,7 @@ npx serve dist
 ## 与 GitHub Pages 的差异（概念）
 
 | 项目 | Netlify | GitHub Pages（本仓库 Actions） |
-|------|---------|----------------------------------|
+| --- | --- | --- |
 | 触发方式 | 推送分支 / PR / 手动；支持 Deploy Preview | 当前为 **手动 workflow_dispatch** |
 | 发布目录 | `dist` | 同上 |
 | 重写规则 | `dist/_redirects` 或 `netlify.toml` 的 `[[redirects]]` | 主要依赖 `dist/_redirects`（postbuild 生成） |
@@ -93,7 +93,7 @@ npx serve dist
 
 ## 相关文件
 
-- `netlify.toml` — Netlify 构建与发布配置  
-- `scripts/postbuild.sh` — `_redirects`、根 `index.html` / `404.html`  
-- `package.json` — `build`、`postbuild`  
-- [github-pages-deploy.md](./github-pages-deploy.md) — GitHub Actions 与单应用合并部署流程  
+- `netlify.toml` — Netlify 构建与发布配置
+- `scripts/postbuild.sh` — `_redirects`、根 `index.html` / `404.html`
+- `package.json` — `build`、`postbuild`
+- [github-pages-deploy.md](./github-pages-deploy.md) — GitHub Actions 与单应用合并部署流程
