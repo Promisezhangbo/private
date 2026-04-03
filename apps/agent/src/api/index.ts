@@ -2,7 +2,13 @@ import OpenAI from 'openai';
 
 export type LLMStreamDelta = OpenAI.Chat.Completions.ChatCompletionChunk.Choice.Delta;
 
-export async function getLLMOutput(userContent: string, onDelta: (delta: LLMStreamDelta) => void): Promise<void> {
+/** 与 OpenAI 兼容的多模态 user content（字符串或 text + image_url 片段） */
+export type UserMessageContent = OpenAI.Chat.ChatCompletionUserMessageParam['content'];
+
+export async function getLLMOutput(
+  userContent: UserMessageContent,
+  onDelta: (delta: LLMStreamDelta) => void,
+): Promise<void> {
   const apiKey = VITE_ARK_API_KEY?.trim() ?? '';
 
   const client = new OpenAI({
@@ -28,17 +34,35 @@ export async function getLLMOutput(userContent: string, onDelta: (delta: LLMStre
   }
 }
 
-/** 从流式 delta 中取出可拼接到正文的字符串（兼容部分厂商扩展字段） */
-export function deltaToText(delta: LLMStreamDelta): string {
+/** 流式正文（不含思考；豆包等模型的思考在 {@link deltaToReasoning}） */
+export function deltaToContent(delta: LLMStreamDelta): string {
   if (delta.refusal) {
     return typeof delta.refusal === 'string' ? delta.refusal : '';
   }
-  if (typeof delta.content === 'string') {
-    return delta.content;
+  const c = delta.content as string | null | undefined | Array<{ text?: string }>;
+  if (typeof c === 'string') {
+    return c;
   }
-  const ext = delta as LLMStreamDelta & { reasoning_content?: string };
-  if (typeof ext.reasoning_content === 'string') {
-    return ext.reasoning_content;
+  if (Array.isArray(c)) {
+    return c
+      .map((part) => {
+        if (typeof part === 'object' && part !== null && 'text' in part) {
+          return String(part.text ?? '');
+        }
+        return '';
+      })
+      .join('');
   }
   return '';
+}
+
+/** 流式思考片段（如豆包 `reasoning_content`） */
+export function deltaToReasoning(delta: LLMStreamDelta): string {
+  const ext = delta as LLMStreamDelta & { reasoning_content?: string };
+  return typeof ext.reasoning_content === 'string' ? ext.reasoning_content : '';
+}
+
+/** 仅正文，用于拼接助手回复（与思考过程分离） */
+export function deltaToText(delta: LLMStreamDelta): string {
+  return deltaToContent(delta);
 }
