@@ -27,7 +27,7 @@ export default defineConfig((config) => {
     build: {
       outDir: '../../dist/main',
       chunkSizeWarningLimit: 900,
-      rollupOptions: {
+      rolldownOptions: {
         output: {
           assetFileNames: '[ext]/[name]-[hash].[ext]',
           chunkFileNames: 'js/[name]-[hash].js',
