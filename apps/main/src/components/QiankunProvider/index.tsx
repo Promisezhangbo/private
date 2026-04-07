@@ -10,6 +10,10 @@ function QiankunProvider(props: PropsWithChildren) {
       setLoading(state.loading);
     });
   }, []);
-  return <Spin spinning={loading}>{props.children}</Spin>;
+  return (
+    <Spin spinning={loading} styles={{ container: { height: '100%' } }}>
+      {props.children}
+    </Spin>
+  );
 }
 export default QiankunProvider;
