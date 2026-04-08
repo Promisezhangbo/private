@@ -66,7 +66,7 @@ export const STICK_BOTTOM_THRESHOLD = 72;
 
 export const HOME_WELCOME = {
   title: '智能对话',
-  description: '支持文字对话，以及粘贴/上传图片与文件；图片会尝试以多模态方式请求模型。',
+  description: '支持文字对话,以及粘贴/上传图片与文件;模型[doubao-seed-2-0-code-preview-260215]',
 } as const;
 
 export const PROMPT_ITEMS: PromptsItemType[] = [
