@@ -40,7 +40,8 @@ export default defineConfig((config) => {
         '@style-config': path.resolve(__dirname, '../../packages/style-config/scss'),
       },
     },
-    base: isDev ? '/' : '/resume/',
+    /* 与生产一致；开发时经 main:9000 代理访问 /resume/ */
+    base: '/resume/',
     server: {
       port: 9005,
       host: true,

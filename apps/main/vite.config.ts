@@ -3,9 +3,12 @@ import { deployTagDefine, loadDeployEnv } from '@packages/vite-build-utils/loadD
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
+import { microAppsDev } from './src/utils/microAppsDev';
 
 const monorepoRoot = path.resolve(__dirname, '../..');
 loadDeployEnv(monorepoRoot);
+
+/** 开发环境：Whistle 整站指 9000；proxy 表与 `qiankun.ts` 共用 `microAppsDev` */
 
 // https://vite.dev/config/
 /** @type {import('vite').UserConfig} */
@@ -44,6 +47,18 @@ export default defineConfig((config) => {
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
+      ...(isDev && {
+        proxy: Object.fromEntries(
+          microAppsDev.map((m) => [
+            m.activeRule,
+            {
+              target: `http://127.0.0.1:${m.port}`,
+              changeOrigin: true,
+              ws: true,
+            },
+          ]),
+        ),
+      }),
     },
   };
 });

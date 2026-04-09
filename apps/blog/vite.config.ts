@@ -40,7 +40,8 @@ export default defineConfig((config) => {
       },
       target: 'es2015',
     },
-    base: isDev ? '/' : '/blog/',
+    /* 与生产一致；开发时经 main:9000 代理访问 /blog/，避免 /src 与主应用冲突 */
+    base: '/blog/',
     server: {
       port: 9002,
       cors: true,

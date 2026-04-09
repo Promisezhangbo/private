@@ -15,7 +15,8 @@ export default defineConfig((config) => {
   const isDev = env.NODE_ENV === 'development';
 
   return {
-    base: isDev ? '/' : '/agent/',
+    /* 与生产一致；开发时 Whistle 整站指 main:9000，由 apps/main vite server.proxy 转发到此端口 */
+    base: '/agent/',
     plugins: [
       ...(isDev ? [] : [react()]),
       qiankun('agent', {
