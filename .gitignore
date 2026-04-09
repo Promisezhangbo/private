@@ -3,4 +3,3 @@
 packages/openapi/gen/
 .turbo/
 .env.deploy.local
-**/dist/

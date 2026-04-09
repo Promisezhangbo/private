@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/resume/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>resume</title>
+    <script crossorigin="">import('/resume/jse/index-index-BZ3endkb.js').finally(() => {
+            
+    const qiankunLifeCycle = window.moudleQiankunAppLifeCycles && window.moudleQiankunAppLifeCycles['resume'];
+    if (qiankunLifeCycle) {
+      window.proxy.vitemount((props) => qiankunLifeCycle.mount(props));
+      window.proxy.viteunmount((props) => qiankunLifeCycle.unmount(props));
+      window.proxy.vitebootstrap(() => qiankunLifeCycle.bootstrap());
+      window.proxy.viteupdate((props) => qiankunLifeCycle.update(props));
+    }
+  
+          })</script>
+    <link rel="modulepreload" crossorigin="" href="/resume/js/rolldown-runtime-BFlkjK8w.js">
+    <link rel="modulepreload" crossorigin="" href="/resume/js/react-vendor-DLhEG3D4.js">
+    <link rel="modulepreload" crossorigin="" href="/resume/js/vendor-C-bEZoTW.js">
+    <link rel="stylesheet" crossorigin="" href="/resume/css/vendor-DSGyN-cr.css">
+    <link rel="stylesheet" crossorigin="" href="/resume/css/index-DOawEOb8.css">
+  </head>
+
+  <body>
+    <div id="root"></div>
+  
+
+<script>
+  const createDeffer = (hookName) => {
+    const d = new Promise((resolve, reject) => {
+      window.proxy && (window.proxy[`vite${hookName}`] = resolve)
+    })
+    return props => d.then(fn => fn(props));
+  }
+  const bootstrap = createDeffer('bootstrap');
+  const mount = createDeffer('mount');
+  const unmount = createDeffer('unmount');
+  const update = createDeffer('update');
+
+  ;(global => {
+    global.qiankunName = 'resume';
+    global['resume'] = {
+      bootstrap,
+      mount,
+      unmount,
+      update
+    };
+  })(window);
+</script></body></html>
