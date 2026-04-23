@@ -1,0 +1,547 @@
+@use '@style-config/variables' as *;
+
+/* 简历页：与全站 --sc-* 语义对齐，区块间同一套层级与字号，减少 HR 视角的「跳台感」 */
+.resume-home-shell {
+  --resume-fs-body: 15px;
+  --resume-lh-body: 1.68;
+  --resume-fs-card-title: 17px;
+  --resume-fs-project-title: 18px;
+  --resume-border: var(--sc-dash-card-border);
+  --resume-sheet-bg: var(--sc-bg-body);
+  --resume-nested-bg: var(--sc-bg-layout);
+  --resume-elevated-bg: var(--sc-dash-card-bg);
+  --resume-section-title: rgb(2 6 23);
+  --resume-head-icon-on-box: rgb(255 255 255 / 0.94);
+  --resume-head-icon-box-bg: linear-gradient(150deg, rgb(15 118 110) 0%, rgb(13 148 136) 48%, rgb(20 184 166) 100%);
+  --resume-head-icon-box-shadow: 0 1px 3px rgb(15 23 42 / 0.12);
+
+  box-sizing: border-box;
+  width: 100%;
+  max-width: $sub-app-content-max-width;
+  margin: 0 auto;
+  padding: $sub-app-shell-padding;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .dash-hero.ant-card {
+    margin-bottom: 0;
+    border: 1px solid var(--sc-home-hero-border) !important;
+    border-radius: $radius-xl !important;
+    background: var(--sc-home-hero-bg) !important;
+    box-shadow: var(--sc-home-hero-shadow);
+
+    .dash-hero-title {
+      margin: 0 0 12px !important;
+      color: var(--sc-home-hero-title) !important;
+    }
+
+    .dash-hero-lead {
+      margin: 0 !important;
+      max-width: 60ch;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--sc-home-hero-lead) !important;
+
+      strong {
+        color: var(--sc-home-hero-lead-strong) !important;
+        font-weight: 600;
+      }
+    }
+
+    &.dash-hero--intro .dash-hero-lead {
+      max-width: none;
+    }
+
+    .dash-hero-intro__row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .dash-hero-intro__main {
+      flex: 1 1 240px;
+      min-width: 0;
+    }
+
+    .resume-export-pdf-btn.ant-btn {
+      flex-shrink: 0;
+      align-self: flex-start;
+      margin-top: 2px;
+      font-weight: 500;
+      border-color: var(--sc-dash-card-border);
+      color: var(--sc-dash-section-title);
+      background: var(--sc-dash-card-bg);
+
+      &:hover {
+        color: var(--sc-home-hero-tag-text) !important;
+        border-color: rgb(45 212 191 / 0.45) !important;
+        background: rgb(45 212 191 / 0.08) !important;
+      }
+    }
+
+    .resume-hero-portfolio.ant-typography {
+      margin: 12px 0 0 !important;
+      font-size: var(--resume-fs-body);
+    }
+  }
+
+  /* 作品集与项目「在线体验」：同一套弱强调药丸，与控制台 Tag 语义一致 */
+  .resume-hero-link.ant-typography,
+  .resume-project-card-v2__demo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: $pill-radius;
+    font-size: var(--resume-fs-body);
+    font-weight: 500;
+    text-decoration: none !important;
+    color: var(--sc-home-hero-tag-text) !important;
+    background: var(--sc-home-hero-tag-bg);
+    border: 1px solid var(--sc-home-hero-tag-border);
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease;
+
+    &:hover {
+      background: rgb(45 212 191 / 0.16);
+      border-color: rgb(45 212 191 / 0.32);
+    }
+  }
+
+  .resume-project-card-v2__demo-icon {
+    font-size: 12px;
+    line-height: 1;
+    opacity: 0.85;
+  }
+
+  .dash-panel.ant-card {
+    border-radius: $radius-xl !important;
+    border-color: var(--sc-dash-card-border) !important;
+    background: var(--sc-dash-card-bg) !important;
+    box-shadow: var(--sc-dash-card-shadow);
+
+    &.dash-panel--full {
+      height: auto;
+    }
+
+    .ant-card-head {
+      border-bottom-color: var(--sc-dash-card-border);
+      min-height: 56px;
+      padding: 4px 6px 0 8px;
+
+      .ant-card-head-title {
+        padding: 16px 8px 14px 4px;
+        font-size: var(--resume-fs-card-title);
+        line-height: 1.4;
+
+        .resume-card-head-title {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .resume-card-head-title__icon {
+          flex-shrink: 0;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+
+          font-size: 18px;
+        }
+
+        .resume-card-head-title__icon .anticon {
+          display: inherit;
+        }
+
+        .resume-card-head-title__text {
+          font-weight: 700;
+          letter-spacing: 0.03em;
+          color: var(--resume-section-title);
+        }
+      }
+    }
+
+    .ant-card-body {
+      color: var(--sc-home-hero-lead);
+      padding: 26px 28px 24px;
+    }
+
+    &.resume-projects-panel .ant-card-body {
+      padding: 0;
+    }
+
+    .dash-package-desc {
+      margin: 4px 0 0 !important;
+      font-size: var(--resume-fs-body);
+      line-height: var(--resume-lh-body);
+      color: var(--sc-blog-body-text) !important;
+    }
+
+    &.resume-self-panel .dash-package-desc {
+      margin-top: 0 !important;
+    }
+
+    .dash-package-list {
+      margin: 0;
+      padding-left: 20px;
+
+      li {
+        margin-bottom: 14px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .resume-work-highlight-list {
+      margin: 0 0 14px;
+      padding-left: 20px;
+      color: var(--sc-home-hero-lead);
+    }
+
+    .resume-work-highlight-item {
+      margin-bottom: 10px;
+      font-size: var(--resume-fs-body);
+      line-height: var(--resume-lh-body);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .resume-work-role.ant-typography {
+      display: block;
+      margin: 6px 0 12px !important;
+      font-size: var(--resume-fs-body);
+      color: var(--sc-home-hero-lead-strong) !important;
+      font-weight: 600;
+    }
+
+    .resume-work-body.ant-typography {
+      margin: 0 0 10px !important;
+      font-size: var(--resume-fs-body);
+      line-height: var(--resume-lh-body);
+      color: var(--sc-blog-body-text) !important;
+    }
+
+    .resume-work-stack.ant-typography {
+      margin: 0 !important;
+      font-size: var(--resume-fs-body);
+      line-height: 1.55;
+      color: var(--sc-home-hero-tech-label) !important;
+    }
+
+    .resume-project-title.ant-typography {
+      margin: 0 0 12px !important;
+      color: var(--sc-home-hero-title) !important;
+      font-size: var(--resume-fs-card-title) !important;
+      font-weight: 600 !important;
+      line-height: 1.4 !important;
+    }
+
+    .resume-divider.ant-divider-horizontal {
+      margin: 18px 0 !important;
+      border-color: var(--resume-border);
+    }
+
+    /* —— 教育经历：与项目块一致，扁平分隔、无衬底盒子 —— */
+    &.resume-edu-card-panel {
+      .resume-edu-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .resume-edu-card {
+        margin: 0;
+        padding: 12px 0;
+        border: none;
+        border-bottom: 1px solid var(--resume-border);
+        background: transparent;
+        box-shadow: none;
+
+        &:last-child {
+          border-bottom: none;
+          padding-bottom: 2px;
+        }
+      }
+
+      .resume-edu-card__top {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 8px 14px;
+        margin-bottom: 6px;
+      }
+
+      .resume-edu-card__school.ant-typography {
+        margin: 0 !important;
+        font-size: var(--resume-fs-card-title) !important;
+        font-weight: 600 !important;
+        line-height: 1.35 !important;
+        color: var(--sc-home-hero-title) !important;
+      }
+
+      .resume-edu-card__period.ant-typography {
+        margin: 0 !important;
+        font-size: var(--resume-fs-body);
+        font-weight: 500;
+        color: var(--sc-home-hero-tech-label);
+        letter-spacing: 0.02em;
+      }
+
+      .resume-edu-card__meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* 弱描边文字标签，避免色块抢戏 */
+      .resume-edu-card__pill {
+        display: inline-block;
+        padding: 3px 11px;
+        border-radius: $pill-radius;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1.5;
+        color: var(--sc-dash-section-title);
+        background: transparent;
+        border: 1px solid var(--resume-border);
+      }
+    }
+
+    /* —— 项目经验：结构保留，色与字重接语义变量 —— */
+    &.resume-projects-panel {
+      /* 与外层卡片同一白底，不再铺灰色衬底 */
+      .resume-projects-panel__sheet {
+        padding: 12px 28px 16px;
+        background: transparent;
+        border-radius: 0;
+      }
+
+      /* 项目块：扁平分隔，无独立灰底卡片、无大块间距 */
+      .resume-project-card-v2 {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 16px 0;
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px solid var(--resume-border);
+        background: transparent;
+        box-shadow: none;
+
+        &:last-child {
+          border-bottom: none;
+          padding-bottom: 2px;
+        }
+      }
+
+      .resume-project-card-v2__header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px 16px;
+        margin-bottom: 8px;
+      }
+
+      .resume-project-card-v2__title.ant-typography {
+        flex: 1 1 auto;
+        margin: 0 !important;
+        min-width: 0;
+        font-size: var(--resume-fs-project-title) !important;
+        font-weight: 600 !important;
+        line-height: 1.4 !important;
+        color: var(--sc-home-hero-title) !important;
+      }
+
+      .resume-project-card-v2__tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .resume-project-card-v2__tag {
+        display: inline-block;
+        padding: 3px 11px;
+        border-radius: $pill-radius;
+        font-size: 13px;
+        line-height: 1.55;
+        font-weight: 500;
+        color: var(--sc-home-hero-tag-text);
+        background: var(--sc-home-hero-tag-bg);
+        border: 1px solid var(--sc-home-hero-tag-border);
+      }
+
+      .resume-project-card-v2__desc {
+        margin-bottom: 10px;
+      }
+
+      .resume-project-card-v2__desc-head,
+      .resume-project-card-v2__duties-head {
+        margin-bottom: 6px;
+      }
+
+      .resume-project-card-v2__desc-pill,
+      .resume-project-card-v2__duties-pill {
+        display: inline-block;
+        padding: 3px 11px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--sc-dash-section-title);
+        background: transparent;
+        border: 1px solid var(--resume-border);
+      }
+
+      .resume-project-card-v2__desc-text.ant-typography {
+        margin: 0 !important;
+        font-size: var(--resume-fs-body);
+        line-height: var(--resume-lh-body);
+        color: var(--sc-blog-body-text) !important;
+      }
+
+      .resume-project-card-v2__duty-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-radius: 0;
+        background: transparent;
+        border: none;
+      }
+
+      .resume-project-card-v2__duty-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 10px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .resume-project-card-v2__duty-num {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        margin-top: 2px;
+        border-radius: 50%;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--sc-dash-icon);
+        background: rgb(45 212 191 / 0.12);
+        border: 1px solid rgb(45 212 191 / 0.28);
+      }
+
+      .resume-project-card-v2__duty-text {
+        flex: 1;
+        min-width: 0;
+        font-size: var(--resume-fs-body);
+        line-height: var(--resume-lh-body);
+        color: var(--sc-blog-body-text);
+      }
+    }
+  }
+
+  .dash-desc.ant-descriptions {
+    .ant-descriptions-item-label {
+      color: var(--sc-home-hero-tech-label);
+      font-weight: 600;
+      width: 88px;
+    }
+
+    .ant-descriptions-item-content {
+      color: var(--sc-home-hero-lead);
+      font-size: var(--resume-fs-body);
+      line-height: 1.55;
+    }
+  }
+}
+
+@media print {
+  @page {
+    margin: 10mm 12mm;
+  }
+
+  .resume-export-pdf-btn {
+    display: none !important;
+  }
+
+  .resume-home-shell {
+    max-width: none !important;
+    padding: 0 !important;
+    gap: 12px !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .resume-home-shell .dash-hero.ant-card,
+  .resume-home-shell .dash-panel.ant-card {
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .resume-home-shell .resume-projects-panel .resume-project-card-v2 {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
+html[data-theme='dark'] {
+  .resume-home-shell {
+    --resume-nested-bg: rgb(30 41 59 / 0.55);
+    --resume-sheet-bg: var(--sc-bg-body);
+    --resume-section-title: rgb(248 250 252 / 0.98);
+    --resume-head-icon-on-box: rgb(240 253 250 / 0.96);
+    --resume-head-icon-box-bg: linear-gradient(150deg, rgb(17 94 89) 0%, rgb(15 118 110) 45%, rgb(13 148 136) 100%);
+    --resume-head-icon-box-shadow: 0 1px 4px rgb(0 0 0 / 0.35);
+  }
+
+  .resume-home-shell .dash-panel.ant-card {
+    &.resume-projects-panel {
+      .resume-project-card-v2 {
+        box-shadow: none;
+        background: transparent;
+        border-bottom-color: rgb(51 65 85 / 0.45);
+      }
+
+      .resume-project-card-v2__duty-num {
+        background: rgb(45 212 191 / 0.12);
+        border-color: rgb(45 212 191 / 0.28);
+      }
+    }
+
+    &.resume-edu-card-panel {
+      .resume-edu-card {
+        border-bottom-color: rgb(51 65 85 / 0.45);
+        background: transparent;
+      }
+
+      .resume-edu-card__school.ant-typography {
+        color: rgb(248 250 252 / 0.95) !important;
+      }
+
+      .resume-edu-card__period.ant-typography {
+        color: rgb(148 163 184 / 0.95) !important;
+      }
+
+      .resume-edu-card__pill {
+        color: rgb(203 213 225 / 0.9);
+        border-color: rgb(71 85 105 / 0.55);
+      }
+    }
+  }
+}
