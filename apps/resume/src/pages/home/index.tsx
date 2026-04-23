@@ -1,5 +1,5 @@
 import { BankOutlined, BookOutlined, CodeOutlined, ProjectOutlined, UserOutlined } from '@ant-design/icons';
-import { App, Button, Card, Divider, Typography } from 'antd';
+import { Button, Card, Divider, Typography, message } from 'antd';
 import {
   education,
   profile,
@@ -97,7 +97,6 @@ function ProjectExperienceCard({ project }: { project: ResumeProject }) {
 }
 
 function ResumeHome() {
-  const { message } = App.useApp();
   const [exporting, setExporting] = useState(false);
 
   const handleExportResume = async () => {

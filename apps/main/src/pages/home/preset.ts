@@ -51,7 +51,7 @@ export const SUB_APPS = [
     path: '/resume',
     devPort: '9005',
     role: '子应用',
-    desc: '简历/知识库相关能力接入(OpenAPI 类型与请求),页面持续迭代中。',
+    desc: '在线简历：技能、工作经历、项目、教育与自我评价等结构化展示；样式与主题与主应用对齐。导出为下载静态文件 apps/resume/public/xx.pdf（构建后同源路径 /resume/xx.pdf）。',
   },
 ] as const;
 
@@ -67,7 +67,7 @@ export const PACKAGES = [
 ] as const;
 
 export const TECH_STACK = {
-  runtime: ['React 19', 'React Router 7', 'Ant Design 6', 'qiankun 2.x', 'vite-plugin-qiankun', 'Sass'],
+  runtime: ['React 19', 'React Router 7', 'Ant Design 6', '@ant-design/icons', 'qiankun 2.x', 'vite-plugin-qiankun', 'Sass'],
   build: ['Vite 8', 'TypeScript 5.9', 'Rolldown'],
   workspace: ['pnpm 10 workspace', 'Turbo 2.x', 'monorepo apps/* + packages/*'],
   quality: ['oxlint', 'stylelint', 'oxfmt', 'husky', 'lint-staged', 'commitlint'],
@@ -75,7 +75,7 @@ export const TECH_STACK = {
 
 export const ARCHITECTURE = {
   routing:
-    '主应用使用 React Router 7:`/` 重定向至 `/home` 展示控制台；`/agent`、`/blog`、`/login` 等前缀与 qiankun 的 activeRule 对齐。子应用挂载点为布局内的 `#sub-app`，未匹配子应用的路由由主应用壳层承载。',
+    '主应用使用 React Router 7：`/` 重定向至 `/home` 展示控制台；`/agent`、`/blog`、`/resume`、`/login` 等前缀与 qiankun 的 `activeRule` 对齐。子应用挂载点为布局内的 `#sub-app`；其中 `resume` 子应用内将 `/resume` 重定向至 `/resume/home` 展示简历页。未匹配子应用的路由由主应用壳层承载。',
   buildDeploy:
     '每个子应用独立 `vite build`，产物输出到仓库根目录 `dist/<app>/`，生产环境 `base` 为同源子路径（如 `/agent/`）。开发环境 entry 指向 `//localhost:900x`；子应用内联资源需使用与子应用 dev Server 一致的 publicPath / origin,避免在主应用域名下 404。',
   globalState:

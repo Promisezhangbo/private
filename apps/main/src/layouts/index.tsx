@@ -16,6 +16,16 @@ const menuMap = [
 
 const MENU_KEYS = menuMap.map((k) => k.key);
 
+/** 与各子应用 router 默认页对齐，减少一次 in-app Navigate */
+const MENU_PATH: Record<string, string> = {
+  home: '/home',
+  resume: '/resume/home',
+  skill: '/skill/home',
+  agent: '/agent/home',
+  blog: '/blog',
+  login: '/login',
+};
+
 function Layouts() {
   const { mode, setMode } = useAppTheme();
   const navigate = useNavigate();
@@ -37,7 +47,7 @@ function Layouts() {
     setCurrentMenu(MENU_KEYS.includes(seg as (typeof MENU_KEYS)[number]) ? seg : 'home');
   }, [location.pathname]);
   const onMenuSelect = (key: string) => {
-    navigate(`/${key}`);
+    navigate(MENU_PATH[key] ?? `/${key}`);
     setCurrentMenu(key);
   };
   return (

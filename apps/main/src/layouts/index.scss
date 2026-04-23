@@ -40,7 +40,7 @@
           box-sizing: border-box;
         }
 
-        /* resume / blog / skill：占位与子应用 #app-root 渐变同源（网格仍由子应用挂载后画） */
+        /* resume / blog / skill：壳层占位背景与控制台只读页同源（子应用挂载后由各自 #app-root 铺网格等细节） */
         &.main-content--micro-placeholder-blog #sub-app {
           background:
             radial-gradient(ellipse 110% 70% at 8% -10%, var(--sc-blog-bg-radial-a), transparent 52%),
