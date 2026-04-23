@@ -11,7 +11,7 @@ export const SUB_APPS = [
     path: '/home',
     devPort: '9000',
     role: '主应用',
-    desc: '顶栏布局、主题（浅色/暗色）、路由壳层、子应用注册与全局加载态；控制台首页即本页。',
+    desc: '顶栏布局、主题（浅色/暗色）、路由壳层、子应用注册与全局加载态；控制台首页即本页。访问 `/home` 时用 `@packages/seo` 写入宿主页 SEO。',
   },
   {
     key: 'agent',
@@ -64,6 +64,10 @@ export const PACKAGES = [
   { name: '@packages/vite-build-utils', desc: 'Vite/Rollup manualChunks 等构建复用逻辑。' },
   { name: '@packages/stylelint-config', desc: 'Stylelint 共享配置。' },
   { name: '@packages/openapi', desc: 'OpenAPI 生成类型与请求封装（如 blog-gen-types),供子应用按需依赖。' },
+  {
+    name: '@packages/seo',
+    desc: '运行时 SEO：`applyDocumentSeo` 同步宿主 `document` 的 title、description、Open Graph、Twitter Card 与 canonical；`appSeoPresets` 提供主应用与各子应用默认文案。主应用在 `/home`、子应用在 `render` 入口调用；详见 `docs/seo.md`。',
+  },
 ] as const;
 
 export const TECH_STACK = {
