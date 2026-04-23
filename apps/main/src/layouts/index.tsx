@@ -1,5 +1,6 @@
 import { useAppTheme, type AppThemeMode } from '@/theme/useAppTheme';
 import './index.scss';
+import { appSeoPresets, applyDocumentSeo } from '@packages/seo';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Layout, Menu, Select } from 'antd';
 import { useEffect, useState } from 'react';
@@ -45,6 +46,13 @@ function Layouts() {
   useEffect(() => {
     const seg = location.pathname.split('/')[1] || 'home';
     setCurrentMenu(MENU_KEYS.includes(seg as (typeof MENU_KEYS)[number]) ? seg : 'home');
+  }, [location.pathname]);
+  /** 控制台首页：同步宿主文档 SEO；子路由由各子应用在 mount 时写入 */
+  useEffect(() => {
+    const seg = location.pathname.split('/').filter(Boolean)[0] || 'home';
+    if (seg === 'home') {
+      applyDocumentSeo(document, appSeoPresets.main);
+    }
   }, [location.pathname]);
   const onMenuSelect = (key: string) => {
     navigate(MENU_PATH[key] ?? `/${key}`);

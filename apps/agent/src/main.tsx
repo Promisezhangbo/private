@@ -1,3 +1,4 @@
+import { appSeoPresets, applyDocumentSeo } from '@packages/seo';
 import { logDeployTag } from '@packages/vite-build-utils/logDeployTag';
 import React from 'react';
 import { createRoot, type Root } from 'react-dom/client';
@@ -6,6 +7,7 @@ import App from './App.tsx';
 import './app.scss';
 let root: Root | null = null;
 function render(props: { container?: HTMLElement }) {
+  applyDocumentSeo(document, appSeoPresets.agent);
   logDeployTag('agent', 'color:#06b6d4;font-size:16px;font-weight:bold');
   const { container } = props ?? {};
   const rootContainer = container?.querySelector('#root') || document.getElementById('root');

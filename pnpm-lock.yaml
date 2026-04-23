@@ -74,6 +74,9 @@ importers:
       '@ant-design/x-markdown':
         specifier: ^2.3.0
         version: 2.5.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@packages/seo':
+        specifier: workspace:*
+        version: link:../../packages/seo
       antd:
         specifier: ^6.3.0
         version: 6.3.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -120,6 +123,9 @@ importers:
       '@ant-design/icons':
         specifier: ^6.1.0
         version: 6.1.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@packages/seo':
+        specifier: workspace:*
+        version: link:../../packages/seo
       antd:
         specifier: ^6.3.0
         version: 6.3.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -163,6 +169,9 @@ importers:
 
   apps/login:
     dependencies:
+      '@packages/seo':
+        specifier: workspace:*
+        version: link:../../packages/seo
       antd:
         specifier: ^6.3.0
         version: 6.3.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -200,6 +209,9 @@ importers:
 
   apps/main:
     dependencies:
+      '@packages/seo':
+        specifier: workspace:*
+        version: link:../../packages/seo
       antd:
         specifier: ^6.3.0
         version: 6.3.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -240,6 +252,9 @@ importers:
       '@ant-design/icons':
         specifier: ^6.1.0
         version: 6.1.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@packages/seo':
+        specifier: workspace:*
+        version: link:../../packages/seo
       antd:
         specifier: ^6.3.0
         version: 6.3.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -280,6 +295,9 @@ importers:
 
   apps/skill:
     dependencies:
+      '@packages/seo':
+        specifier: workspace:*
+        version: link:../../packages/seo
       antd:
         specifier: ^6.3.0
         version: 6.3.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -339,6 +357,8 @@ importers:
       typescript:
         specifier: ~5.9.3
         version: 5.9.3
+
+  packages/seo: {}
 
   packages/style-config: {}
 
