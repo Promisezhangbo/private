@@ -1,0 +1,10 @@
+{
+  "tasks": {
+    "dev": "deno run --allow-net --watch src/deno.js",
+    "check": "deno check src/deno.js"
+  },
+  "deploy": {
+    "entrypoint": "src/deno.js"
+  },
+  "exclude": ["node_modules"]
+}

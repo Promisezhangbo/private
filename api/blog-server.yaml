@@ -1,0 +1,64 @@
+openapi: 3.0.3
+info:
+  title: blog-server API
+  version: 1.0.0
+  description: Blog 后端服务接口文档，适配 Swagger / OpenAPI。
+servers:
+  - url: http://localhost:8000
+    description: 本地 Node.js 或 Deno 开发环境
+  - url: https://blog-server.deno.dev
+    description: Deno Deploy 生产环境
+paths:
+  /getBlogList:
+    get:
+      tags:
+        - Blog
+      summary: 获取博客列表
+      operationId: getBlogList
+      responses:
+        '200':
+          description: 成功返回博客列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BlogListItem'
+              example:
+                - id: 1
+                  name: 我是一个blog
+        '405':
+          description: 请求方法不支持
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    BlogListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Blog ID
+          example: 1
+        name:
+          type: string
+          description: Blog 名称
+          example: 我是一个blog
+      required:
+        - id
+        - name
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: method_not_allowed
+        message:
+          type: string
+          example: POST is not supported
+      required:
+        - error
+        - message

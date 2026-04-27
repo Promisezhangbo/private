@@ -339,6 +339,8 @@ importers:
         specifier: ^6.0.1
         version: 6.0.1(vite@8.0.3(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(@types/node@24.12.0)(jiti@2.6.1)(sass@1.98.0)(yaml@2.8.3))
 
+  backend/blog-server: {}
+
   packages/openapi:
     dependencies:
       axios:

@@ -1,0 +1,13 @@
+{
+  "name": "blog-server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/node.js",
+    "start": "node src/node.js",
+    "build": "node --check src/handler.js && node --check src/node.js && node --check src/deno.js",
+    "lint": "oxlint --fix src",
+    "deploy:dev": "deno task dev"
+  }
+}

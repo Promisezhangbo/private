@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOutlined, ArrowRightOutlined } from '@ant-design/icons';
-import { Button, Card, List as AntList, Tabs, Typography } from 'antd';
+import { Alert, Button, Card, List as AntList, Space, Tabs, Typography } from 'antd';
+import { getBlogList, type ServerBlogItem } from '@/api/blogServer';
 import type { PostMeta } from '@/data/posts';
 import { CATEGORY_TABS, postsByCategory, type BlogCategory } from '@/data/posts';
 import './index.scss';
@@ -11,9 +12,32 @@ const { Title, Paragraph } = Typography;
 function List() {
   const navigate = useNavigate();
   const [category, setCategory] = useState<BlogCategory>('arch');
+  const [serverBlogs, setServerBlogs] = useState<ServerBlogItem[]>([]);
+  const [serverBlogsError, setServerBlogsError] = useState<string>();
   const list = useMemo(() => postsByCategory(category), [category]);
 
   const goDetail = (id: string) => navigate(`/blog/detail/${id}`);
+
+  useEffect(() => {
+    let ignore = false;
+
+    getBlogList()
+      .then((items) => {
+        if (!ignore) {
+          setServerBlogs(items);
+          setServerBlogsError(undefined);
+        }
+      })
+      .catch((error: unknown) => {
+        if (!ignore) {
+          setServerBlogsError(error instanceof Error ? error.message : '博客服务接口调用失败');
+        }
+      });
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
   return (
     <div className="blog-wrap">
@@ -33,6 +57,21 @@ function List() {
             key: t.key,
             label: t.label,
           }))}
+        />
+
+        <Alert
+          type={serverBlogsError ? 'warning' : 'info'}
+          showIcon
+          message="Blog Server"
+          description={
+            serverBlogsError ? (
+              serverBlogsError
+            ) : (
+              <Space wrap>
+                {serverBlogs.length > 0 ? serverBlogs.map((blog) => <span key={blog.id}>{blog.name}</span>) : '暂无服务端 Blog'}
+              </Space>
+            )
+          }
         />
 
         <AntList
