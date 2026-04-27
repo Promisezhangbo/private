@@ -1,7 +1,7 @@
 {
   "_comment": "Deno 侧任务与 Deploy 入口；业务代码仍以 src/handler.js + routes/ 为准。",
   "imports": {
-    "@neondatabase/serverless": "npm:@neondatabase/serverless@0.10.4"
+    "postgres": "npm:postgres@3.4.5"
   },
   "tasks": {
     "dev": "deno run --allow-net --allow-env --watch src/deno.js",

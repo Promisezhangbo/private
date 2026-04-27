@@ -1,12 +1,16 @@
 /**
- * 博客列表存储：有 `DATABASE_URL` 时用 Postgres（Neon serverless），否则用内存（便于无库本地跑）。
+ * 博客列表存储：有 `DATABASE_URL` 时用标准 Postgres TCP（兼容 Deno Deploy 注入的 Prisma Postgres 连接串），
+ * 否则用内存（便于无库本地跑）。
+ *
+ * 说明：不要用 `@neondatabase/serverless`（neon）连 Prisma Postgres —— 协议不匹配会触发 HTTP 404（如 resource-not-found）。
  */
-import { neon } from "@neondatabase/serverless";
+import postgres from "postgres";
 import { getDatabaseUrl } from "./env.js";
 
 /** 无 DATABASE_URL 时的内存数据（与初始种子一致）。 */
 const memoryBlogs = [{ id: 1, name: "我是一个blog" }];
 
+/** postgres.js 单例（有 DATABASE_URL 时懒创建）。 */
 let sqlClient;
 /** 建表 + 种子只跑一次。 */
 let schemaReady;
@@ -14,7 +18,13 @@ let schemaReady;
 function getSql() {
   const url = getDatabaseUrl();
   if (!url) return null;
-  if (!sqlClient) sqlClient = neon(url);
+  if (!sqlClient) {
+    sqlClient = postgres(url, {
+      max: 1,
+      idle_timeout: 20,
+      connect_timeout: 15
+    });
+  }
   return sqlClient;
 }
 
@@ -45,7 +55,7 @@ export async function listBlogs() {
   }
   await ensureSchema(sql);
   const rows = await sql`SELECT id, name FROM blogs ORDER BY id`;
-  return rows;
+  return rows.map((r) => ({ id: Number(r.id), name: String(r.name) }));
 }
 
 /**
@@ -65,5 +75,6 @@ export async function updateBlogById(id, name) {
     UPDATE blogs SET name = ${name} WHERE id = ${id}
     RETURNING id, name
   `;
-  return rows[0] ?? null;
+  const row = rows[0];
+  return row ? { id: Number(row.id), name: String(row.name) } : null;
 }
