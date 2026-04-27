@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "dependencies": {
+    "@neondatabase/serverless": "0.10.4"
+  },
   "scripts": {
     "dev": "node --watch src/node.js",
     "start": "node src/node.js",

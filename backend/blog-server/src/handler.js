@@ -26,7 +26,7 @@ export async function handleRequest(request) {
 
   // 精确匹配 method + pathname。
   const route = routes.find((item) => item.method === request.method && item.pathname === url.pathname);
-  if (route) return route.handler(request, url);
+  if (route) return await route.handler(request, url);
 
   // 路径命中但方法不对：返回 405 并列出该路径允许的动词。
   const matchedPathRoutes = routes.filter((item) => item.pathname === url.pathname);

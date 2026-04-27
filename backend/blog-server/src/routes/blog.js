@@ -1,12 +1,19 @@
 /** 博客相关 API 路由实现。 */
+import * as blogStore from "../db/blogStore.js";
 import { json } from "../utils/response.js";
 
-/** 内存列表；updateBlogName 会就地修改，getBlogList 始终读到最新。 */
-let blogList = [{ id: 1, name: "我是一个blog" }];
-
-/** GET /getBlogList — 返回博客列表 JSON。 */
-export function getBlogList() {
-  return json(blogList);
+/** GET /getBlogList — 有 DATABASE_URL 时读库，否则读内存。 */
+export async function getBlogList() {
+  try {
+    const rows = await blogStore.listBlogs();
+    return json(rows);
+  } catch (error) {
+    console.error(error);
+    return json(
+      { error: "database_error", message: error instanceof Error ? error.message : "database query failed" },
+      { status: 503 }
+    );
+  }
 }
 
 /**
@@ -29,11 +36,17 @@ export async function updateBlogName(request) {
     );
   }
 
-  const item = blogList.find((b) => b.id === id);
-  if (!item) {
-    return json({ error: "not_found", message: `No blog with id ${id}` }, { status: 404 });
+  try {
+    const updated = await blogStore.updateBlogById(id, name);
+    if (!updated) {
+      return json({ error: "not_found", message: `No blog with id ${id}` }, { status: 404 });
+    }
+    return json(updated);
+  } catch (error) {
+    console.error(error);
+    return json(
+      { error: "database_error", message: error instanceof Error ? error.message : "database update failed" },
+      { status: 503 }
+    );
   }
-
-  item.name = name;
-  return json({ id: item.id, name: item.name });
 }
