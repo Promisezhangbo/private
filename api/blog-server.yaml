@@ -6,7 +6,7 @@ info:
 servers:
   - url: http://localhost:8000
     description: 本地 Node.js 或 Deno 开发环境
-  - url: https://blog-server.deno.dev
+  - url: https://blog-server.promisezhangbo.deno.net
     description: Deno Deploy 生产环境
 paths:
   /getBlogList:
@@ -33,8 +33,62 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /updateBlogName:
+    post:
+      tags:
+        - Blog
+      summary: 更新博客名称
+      operationId: updateBlogName
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBlogNameRequest'
+            example:
+              id: 1
+              name: name1
+      responses:
+        '200':
+          description: 更新成功，返回当前条目
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlogListItem'
+              example:
+                id: 1
+                name: name1
+        '400':
+          description: 请求体非法或校验失败
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 指定 id 不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '405':
+          description: 请求方法不支持
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    UpdateBlogNameRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+      required:
+        - id
+        - name
     BlogListItem:
       type: object
       properties:

@@ -1,91 +1,38 @@
-const jsonHeaders = {
-  "content-type": "application/json; charset=utf-8",
-  "cache-control": "no-store",
-  "access-control-allow-origin": "*"
-};
+/**
+ * HTTP 请求总入口：解析 URL、处理 CORS 预检、按路由表分发。
+ * 新增接口：在 routes/ 实现 handler，再在下方的 routes 数组注册。
+ */
+import { getBlogList, updateBlogName } from "./routes/blog.js";
+import { getHealth, getRobots } from "./routes/system.js";
+import { methodNotAllowed, notFound, preflight } from "./utils/response.js";
 
-const textHeaders = {
-  "content-type": "text/plain; charset=utf-8",
-  "cache-control": "no-store",
-  "access-control-allow-origin": "*"
-};
+// 新增接口时，在这里加一条路由即可；具体业务逻辑放到 routes/ 下。
+const routes = [
+  { method: "GET", pathname: "/", handler: getHealth },
+  { method: "GET", pathname: "/health", handler: getHealth },
+  { method: "GET", pathname: "/getBlogList", handler: getBlogList },
+  { method: "POST", pathname: "/updateBlogName", handler: updateBlogName },
+  { method: "GET", pathname: "/robots.txt", handler: getRobots }
+];
 
-const blogList = [{ id: 1, name: "我是一个blog" }];
-
-function json(data, init = {}) {
-  return new Response(JSON.stringify(data), {
-    ...init,
-    headers: {
-      ...jsonHeaders,
-      ...init.headers
-    }
-  });
-}
-
-function text(message, init = {}) {
-  return new Response(message, {
-    ...init,
-    headers: {
-      ...textHeaders,
-      ...init.headers
-    }
-  });
-}
-
-function notFound(pathname) {
-  return json(
-    {
-      error: "not_found",
-      message: `No route matched ${pathname}`
-    },
-    { status: 404 }
-  );
-}
-
+/** 供 Deno.serve 与 Node createServer 共用。 */
 export async function handleRequest(request) {
   const url = new URL(request.url);
 
+  // 浏览器跨域请求会先发 OPTIONS 预检，直接返回允许访问。
   if (request.method === "OPTIONS") {
-    return new Response(null, {
-      status: 204,
-      headers: {
-        "access-control-allow-origin": "*",
-        "access-control-allow-methods": "GET,OPTIONS",
-        "access-control-allow-headers": "content-type"
-      }
-    });
+    return preflight();
   }
 
-  if (request.method !== "GET") {
-    return json(
-      {
-        error: "method_not_allowed",
-        message: `${request.method} is not supported`
-      },
-      {
-        status: 405,
-        headers: {
-          allow: "GET, OPTIONS"
-        }
-      }
-    );
-  }
+  // 精确匹配 method + pathname。
+  const route = routes.find((item) => item.method === request.method && item.pathname === url.pathname);
+  if (route) return route.handler(request, url);
 
-  if (url.pathname === "/" || url.pathname === "/health") {
-    return json({
-      name: "blog-server",
-      status: "ok",
-      runtime: "fetch",
-      timestamp: new Date().toISOString()
-    });
-  }
-
-  if (url.pathname === "/getBlogList") {
-    return json(blogList);
-  }
-
-  if (url.pathname === "/robots.txt") {
-    return text("User-agent: *\nAllow: /\n");
+  // 路径命中但方法不对：返回 405 并列出该路径允许的动词。
+  const matchedPathRoutes = routes.filter((item) => item.pathname === url.pathname);
+  if (matchedPathRoutes.length > 0) {
+    const allowedMethods = [...new Set([...matchedPathRoutes.map((item) => item.method), "OPTIONS"])];
+    return methodNotAllowed(request.method, allowedMethods);
   }
 
   return notFound(url.pathname);

@@ -1,7 +1,7 @@
 import { OpenApiBlogServerFn } from '@packages/openapi';
-import type { BlogListItem } from '@packages/openapi/blog-server-gen-types';
+import type { BlogListItem, UpdateBlogNameRequest } from '@packages/openapi/blog-server-gen-types';
 
-const defaultBlogServerBase = import.meta.env.DEV ? 'http://localhost:8000' : 'https://blog-server.deno.dev';
+const defaultBlogServerBase = import.meta.env.DEV ? 'http://localhost:8000' : 'https://blog-server.promisezhangbo.deno.net';
 
 const blogServerApi = OpenApiBlogServerFn({
   BASE: import.meta.env.VITE_BLOG_SERVER_BASE || defaultBlogServerBase,
@@ -13,4 +13,13 @@ export type ServerBlogItem = BlogListItem;
 export async function getBlogList(): Promise<ServerBlogItem[]> {
   const response = await blogServerApi.getBlogList();
   return response.data ?? [];
+}
+
+/** POST /updateBlogName，成功后再次 getBlogList 会得到更新后的 name。 */
+export async function updateBlogName(payload: UpdateBlogNameRequest): Promise<ServerBlogItem> {
+  const response = await blogServerApi.updateBlogName({ body: payload });
+  if (response.data == null) {
+    throw new Error('updateBlogName: empty response');
+  }
+  return response.data;
 }
