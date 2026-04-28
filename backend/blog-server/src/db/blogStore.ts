@@ -1,9 +1,6 @@
-/**
- * 博客数据：有 `DATABASE_URL` 时用 postgres.js 连标准 Postgres（含 Deno Deploy 注入的 Prisma Postgres）。
- * 表名默认 **`blogs`**，可用环境变量 `BLOG_TABLE` 覆盖。
- */
+/** Postgres（postgres.js）+ 无 DATABASE_URL 时内存回退；表名 `BLOG_TABLE`，默认 `blogs`。 */
 import postgres from "postgres";
-import { getBlogTableName, getDatabaseUrl } from "./env.ts";
+import { getBlogTableName, getDatabaseUrl } from "./env";
 
 export type BlogRow = {
   id: number;
@@ -12,39 +9,31 @@ export type BlogRow = {
   created_at: string | null;
 };
 
-type PgRow = {
-  id: unknown;
-  name: unknown;
-  content: unknown;
-  created_at: unknown;
+export type BlogListPageResult = {
+  items: BlogRow[];
+  total: number;
+  page: number;
+  pageSize: number;
 };
 
+type PgRow = { id: unknown; name: unknown; content: unknown; created_at: unknown };
 type SqlClient = ReturnType<typeof postgres>;
 
-/** 无 DATABASE_URL 时的内存数据。 */
 const memoryBlogs: BlogRow[] = [{ id: 1, name: "我是一个blog", content: null, created_at: null }];
-
 let sqlClient: SqlClient | null = null;
 
 function getSql(): SqlClient | null {
   const url = getDatabaseUrl();
   if (!url) return null;
   if (!sqlClient) {
-    sqlClient = postgres(url, {
-      max: 1,
-      idle_timeout: 20,
-      connect_timeout: 15,
-    });
+    sqlClient = postgres(url, { max: 1, idle_timeout: 20, connect_timeout: 15 });
   }
   return sqlClient;
 }
 
-/** 将 BLOG_TABLE 转为带双引号的 SQL 标识符（支持连字符表名）。 */
 function quotedTableIdent(): string {
   const name = getBlogTableName();
-  if (!/^[a-zA-Z0-9_-]+$/.test(name)) {
-    throw new Error(`Invalid BLOG_TABLE: ${name}`);
-  }
+  if (!/^[a-zA-Z0-9_-]+$/.test(name)) throw new Error(`Invalid BLOG_TABLE: ${name}`);
   return `"${name}"`;
 }
 
@@ -63,21 +52,61 @@ function normalizeRow(r: PgRow): BlogRow {
   };
 }
 
-/** 返回 { id, name, content, created_at }[]，按 id 排序。 */
-export async function listBlogs(): Promise<BlogRow[]> {
-  const sql = getSql();
-  if (!sql) {
-    return memoryBlogs.map((b) => ({ ...b }));
-  }
-  const rel = quotedTableIdent();
-  const rows = await sql`SELECT * FROM ${sql.unsafe(rel)} ORDER BY id`;
-  return rows.map((r) => normalizeRow(r as PgRow));
+function clampPagination(page: number, pageSize: number) {
+  const p = Number.isFinite(page) && page >= 1 ? Math.floor(page) : 1;
+  const raw = Number.isFinite(pageSize) && pageSize >= 1 ? Math.floor(pageSize) : 10;
+  const ps = Math.min(100, Math.max(1, raw));
+  return { page: p, pageSize: ps, offset: (p - 1) * ps };
 }
 
-/**
- * 按 id 更新 name；成功返回整行；无此行返回 null。
- * 无 DATABASE_URL 时改内存副本。
- */
+export async function listBlogsPaged(
+  page: number,
+  pageSize: number,
+  nameSearch?: string,
+): Promise<BlogListPageResult> {
+  const { page: p, pageSize: ps, offset } = clampPagination(page, pageSize);
+  const needle = nameSearch?.trim() || undefined;
+  const sql = getSql();
+
+  if (!sql) {
+    let list = memoryBlogs.map((b) => ({ ...b }));
+    if (needle) {
+      const q = needle.toLowerCase();
+      list = list.filter((b) => b.name.toLowerCase().includes(q));
+    }
+    return { items: list.slice(offset, offset + ps), total: list.length, page: p, pageSize: ps };
+  }
+
+  const rel = quotedTableIdent();
+  const filter = needle ? sql`WHERE strpos(lower(name), lower(${needle})) > 0` : sql``;
+  const countRows = await sql`
+    SELECT COUNT(*)::bigint AS c FROM ${sql.unsafe(rel)} ${filter}
+  `;
+  const total = Number((countRows[0] as { c?: unknown })?.c ?? 0);
+  const rows = await sql`
+    SELECT * FROM ${sql.unsafe(rel)} ${filter}
+    ORDER BY id LIMIT ${ps} OFFSET ${offset}
+  `;
+  return {
+    items: rows.map((r) => normalizeRow(r as PgRow)),
+    total,
+    page: p,
+    pageSize: ps,
+  };
+}
+
+export async function getBlogById(id: number): Promise<BlogRow | null> {
+  const sql = getSql();
+  if (!sql) {
+    const item = memoryBlogs.find((b) => b.id === id);
+    return item ? { ...item } : null;
+  }
+  const rel = quotedTableIdent();
+  const rows = await sql`SELECT * FROM ${sql.unsafe(rel)} WHERE id = ${id} LIMIT 1`;
+  const row = rows[0] as PgRow | undefined;
+  return row ? normalizeRow(row) : null;
+}
+
 export async function updateBlogById(id: number, name: string): Promise<BlogRow | null> {
   const sql = getSql();
   if (!sql) {
@@ -88,8 +117,7 @@ export async function updateBlogById(id: number, name: string): Promise<BlogRow 
   }
   const rel = quotedTableIdent();
   const rows = await sql`
-    UPDATE ${sql.unsafe(rel)} SET name = ${name} WHERE id = ${id}
-    RETURNING *
+    UPDATE ${sql.unsafe(rel)} SET name = ${name} WHERE id = ${id} RETURNING *
   `;
   const row = rows[0] as PgRow | undefined;
   return row ? normalizeRow(row) : null;

@@ -13,22 +13,92 @@ paths:
     get:
       tags:
         - Blog
-      summary: 获取博客列表
+      summary: 获取博客列表（分页）
       operationId: getBlogList
+      parameters:
+        - name: page
+          in: query
+          description: 页码，从 1 开始
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: pageSize
+          in: query
+          description: 每页条数
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+        - name: name
+          in: query
+          description: 按名称子串筛选（不区分大小写）；不传则不过滤
+          schema:
+            type: string
+            maxLength: 200
       responses:
         '200':
-          description: 成功返回博客列表
+          description: 成功返回分页列表
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/BlogListItem'
+                $ref: '#/components/schemas/BlogListPage'
               example:
-                - id: 1
-                  name: 我是一个blog
-                  content: null
-                  created_at: '2026-01-01T00:00:00.000Z'
+                items:
+                  - id: 1
+                    name: 我是一个blog
+                    content: null
+                    created_at: '2026-01-01T00:00:00.000Z'
+                total: 1
+                page: 1
+                pageSize: 10
+        '400':
+          description: 分页参数非法
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '405':
+          description: 请求方法不支持
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /getBlog:
+    get:
+      tags:
+        - Blog
+      summary: 按 id 获取单条博客
+      operationId: getBlog
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: 博客主键 id
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: 成功返回单条
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlogListItem'
+        '400':
+          description: 缺少或非法的 id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 不存在该 id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '405':
           description: 请求方法不支持
           content:
@@ -82,6 +152,29 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    BlogListPage:
+      type: object
+      description: 分页博客列表
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlogListItem'
+        total:
+          type: integer
+          format: int64
+          description: 总条数
+        page:
+          type: integer
+          description: 当前页（从 1 开始）
+        pageSize:
+          type: integer
+          description: 每页条数
+      required:
+        - items
+        - total
+        - page
+        - pageSize
     UpdateBlogNameRequest:
       type: object
       properties:

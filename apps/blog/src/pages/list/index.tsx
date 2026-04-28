@@ -1,8 +1,21 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOutlined, ArrowRightOutlined } from '@ant-design/icons';
-import { Alert, Button, Card, List as AntList, Space, Tabs, Typography } from 'antd';
-import { getBlogList, type ServerBlogItem } from '@/api/blogServer';
+import {
+  Alert,
+  Button,
+  Card,
+  Descriptions,
+  Input,
+  List as AntList,
+  Modal,
+  Pagination,
+  Space,
+  Spin,
+  Tabs,
+  Typography,
+} from 'antd';
+import { getBlog, getBlogList, type ServerBlogItem } from '@/api/blogServer';
 import type { PostMeta } from '@/data/posts';
 import { CATEGORY_TABS, postsByCategory, type BlogCategory } from '@/data/posts';
 import './index.scss';
@@ -14,6 +27,15 @@ function List() {
   const [category, setCategory] = useState<BlogCategory>('arch');
   const [serverBlogs, setServerBlogs] = useState<ServerBlogItem[]>([]);
   const [serverBlogsError, setServerBlogsError] = useState<string>();
+  const [serverPage, setServerPage] = useState(1);
+  const [serverPageSize, setServerPageSize] = useState(10);
+  const [serverTotal, setServerTotal] = useState(0);
+  const [nameDraft, setNameDraft] = useState('');
+  const [nameQuery, setNameQuery] = useState('');
+  const [detailOpen, setDetailOpen] = useState(false);
+  const [detailLoading, setDetailLoading] = useState(false);
+  const [detailItem, setDetailItem] = useState<ServerBlogItem | null>(null);
+  const [detailError, setDetailError] = useState<string>();
   const list = useMemo(() => postsByCategory(category), [category]);
 
   const goDetail = (id: string) => navigate(`/blog/detail/${id}`);
@@ -21,10 +43,15 @@ function List() {
   useEffect(() => {
     let ignore = false;
 
-    getBlogList()
-      .then((items) => {
+    getBlogList({
+      page: serverPage,
+      pageSize: serverPageSize,
+      name: nameQuery || undefined,
+    })
+      .then((pageData) => {
         if (!ignore) {
-          setServerBlogs(items);
+          setServerBlogs(pageData.items);
+          setServerTotal(pageData.total);
           setServerBlogsError(undefined);
         }
       })
@@ -37,7 +64,24 @@ function List() {
     return () => {
       ignore = true;
     };
-  }, []);
+  }, [serverPage, serverPageSize, nameQuery]);
+
+  const openServerBlogDetail = (id: number) => {
+    setDetailOpen(true);
+    setDetailLoading(true);
+    setDetailError(undefined);
+    setDetailItem(null);
+    getBlog(id)
+      .then((item) => {
+        setDetailItem(item);
+      })
+      .catch((e: unknown) => {
+        setDetailError(e instanceof Error ? e.message : '加载失败');
+      })
+      .finally(() => {
+        setDetailLoading(false);
+      });
+  };
 
   return (
     <div className="blog-wrap">
@@ -67,14 +111,71 @@ function List() {
             serverBlogsError ? (
               serverBlogsError
             ) : (
-              <Space wrap>
-                {serverBlogs.length > 0
-                  ? serverBlogs.map((blog) => <span key={String(blog.id)}>{blog.name}</span>)
-                  : '暂无服务端 Blog'}
+              <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+                <Input.Search
+                  allowClear
+                  placeholder="按名称子串筛选（不区分大小写）"
+                  value={nameDraft}
+                  onChange={(e) => setNameDraft(e.target.value)}
+                  onSearch={(v) => {
+                    setNameQuery(v.trim());
+                    setServerPage(1);
+                  }}
+                />
+                <Space wrap>
+                  {serverBlogs.length > 0
+                    ? serverBlogs.map((blog) => (
+                        <Button
+                          key={String(blog.id)}
+                          type="link"
+                          size="small"
+                          onClick={() => openServerBlogDetail(blog.id)}
+                        >
+                          {blog.name}
+                        </Button>
+                      ))
+                    : '暂无服务端 Blog'}
+                </Space>
+                {!serverBlogsError && serverTotal > 0 ? (
+                  <Pagination
+                    size="small"
+                    current={serverPage}
+                    pageSize={serverPageSize}
+                    total={serverTotal}
+                    showSizeChanger
+                    pageSizeOptions={['5', '10', '20', '50']}
+                    showTotal={(total) => `共 ${total} 条`}
+                    onChange={(page, pageSize) => {
+                      setServerPage(page);
+                      setServerPageSize(pageSize);
+                    }}
+                  />
+                ) : null}
               </Space>
             )
           }
         />
+
+        <Modal
+          title="服务端博客详情（GET /getBlog）"
+          open={detailOpen}
+          onCancel={() => setDetailOpen(false)}
+          footer={null}
+          destroyOnClose
+        >
+          {detailLoading ? (
+            <Spin />
+          ) : detailError ? (
+            <Typography.Text type="danger">{detailError}</Typography.Text>
+          ) : detailItem ? (
+            <Descriptions column={1} size="small" bordered>
+              <Descriptions.Item label="id">{detailItem.id}</Descriptions.Item>
+              <Descriptions.Item label="name">{detailItem.name}</Descriptions.Item>
+              <Descriptions.Item label="content">{detailItem.content ?? '—'}</Descriptions.Item>
+              <Descriptions.Item label="created_at">{detailItem.created_at ?? '—'}</Descriptions.Item>
+            </Descriptions>
+          ) : null}
+        </Modal>
 
         <AntList
           className="blog-list"

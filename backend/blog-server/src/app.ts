@@ -1,22 +1,13 @@
-/**
- * 应用入口：Hono 路由风格接近 Express（app.get / app.post、链式中间件）。
- */
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { blogRoutes } from "./routes/blog.ts";
-import { systemRoutes } from "./routes/system.ts";
+import { logger } from "hono/logger";
+import { blogRoutes } from "./routes/blog";
+import { systemRoutes } from "./routes/system";
 
 const app = new Hono();
-
-app.use(
-  "*",
-  cors({
-    origin: "*",
-    allowMethods: ["GET", "POST", "OPTIONS"],
-    allowHeaders: ["Content-Type"],
-  }),
-);
-
+// 内置 logger：请求 `<-- METHOD path`，响应 `--> METHOD path STATUS 耗时`
+app.use("*", logger());
+app.use("*", cors({ origin: "*", allowMethods: ["GET", "POST", "OPTIONS"], allowHeaders: ["Content-Type"] }));
 app.route("/", systemRoutes);
 app.route("/", blogRoutes);
 

@@ -35,6 +35,9 @@ scripts/
 
 新增接口时，在 `src/routes/` 下对应文件中为 Hono 子应用增加 `*.get` / `*.post` 等，并在 `src/app.ts` 里 `app.route("/", …)` 挂载（若新建子文件）。
 
+**`GET /getBlogList`**：查询参数 **`page`**（默认 1）、**`pageSize`**（默认 10，最大 100）、**`name`**（可选，按标题子串筛选，不区分大小写，最长 200 字符）；响应 **`{ items, total, page, pageSize }`**。  
+**`GET /getBlog?id=`**：按主键返回单条 JSON；缺少或非法 **`id`** 返回 400，无记录返回 404。详见 `api/blog-server.yaml`。
+
 ## Database（PostgreSQL）
 
 在 Deno Deploy 控制台 **Attach Prisma Postgres / SQL** 后，生产环境会自动注入 **`DATABASE_URL`**（标准 `postgresql://…` TCP 连接串）。本服务使用 **`postgres`（postgres.js）** 连接。
