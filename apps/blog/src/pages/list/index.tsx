@@ -49,6 +49,8 @@ function List() {
       name: nameQuery || undefined,
     })
       .then((pageData) => {
+        console.log(pageData, 'pageData==pageData');
+
         if (!ignore) {
           setServerBlogs(pageData.items);
           setServerTotal(pageData.total);
