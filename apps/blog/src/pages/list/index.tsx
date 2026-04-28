@@ -123,8 +123,8 @@ function List() {
                   }}
                 />
                 <Space wrap>
-                  {serverBlogs.length > 0
-                    ? serverBlogs.map((blog) => (
+                  {serverBlogs?.length > 0
+                    ? serverBlogs?.map((blog) => (
                         <Button
                           key={String(blog.id)}
                           type="link"
