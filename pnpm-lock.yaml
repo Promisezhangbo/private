@@ -341,9 +341,16 @@ importers:
 
   backend/blog-server:
     dependencies:
+      hono:
+        specifier: 4.6.12
+        version: 4.6.12
       postgres:
         specifier: 3.4.5
         version: 3.4.5
+    devDependencies:
+      '@packages/ts-config':
+        specifier: workspace:*
+        version: link:../../packages/ts-config
 
   packages/openapi:
     dependencies:
@@ -2516,6 +2523,10 @@ packages:
 
   highlightjs-vue@1.0.0:
     resolution: {integrity: sha512-PDEfEF102G23vHmPhLyPboFCD+BkMGu+GuJe2d9/eH4FsCwvgBpnc9n0pGE+ffKdph38s6foEZiEjdgHdzp+IA==}
+
+  hono@4.6.12:
+    resolution: {integrity: sha512-eHtf4kSDNw6VVrdbd5IQi16r22m3s7mWPLd7xOMhg1a/Yyb1A0qpUFq8xYMX4FMuDe1nTKeMX5rTx7Nmw+a+Ag==}
+    engines: {node: '>=16.9.0'}
 
   hookified@1.15.1:
     resolution: {integrity: sha512-MvG/clsADq1GPM2KGo2nyfaWVyn9naPiXrqIe4jYjXNZQt238kWyOGrsyc/DmRAQ+Re6yeo6yX/yoNCG5KAEVg==}
@@ -5948,6 +5959,8 @@ snapshots:
   highlight.js@10.7.3: {}
 
   highlightjs-vue@1.0.0: {}
+
+  hono@4.6.12: {}
 
   hookified@1.15.1: {}
 

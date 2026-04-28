@@ -1,16 +1,21 @@
 {
   "name": "blog-server",
-  "description": "博客后端：Fetch 风格 handler，Node 本地与 Deno Deploy 共用；路由见 src/handler.js。",
+  "description": "博客后端：Deno + TypeScript + Hono（Express 风格路由）；入口见 src/main.ts。",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "dependencies": {
+    "hono": "4.6.12",
     "postgres": "3.4.5"
   },
+  "devDependencies": {
+    "@packages/ts-config": "workspace:*"
+  },
   "scripts": {
-    "dev": "node --watch src/node.js",
-    "start": "node src/node.js",
-    "build": "node scripts/check-syntax.mjs",
+    "dev": "deno task dev",
+    "start": "deno run --allow-net --allow-env src/main.ts",
+    "build": "deno check src/main.ts",
+    "typecheck:tsc": "tsc --noEmit",
     "lint": "oxlint --fix src",
     "deploy:dev": "deno task dev"
   }

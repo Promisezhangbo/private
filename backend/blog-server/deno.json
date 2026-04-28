@@ -1,14 +1,19 @@
 {
-  "_comment": "Deno 侧任务与 Deploy 入口；业务代码仍以 src/handler.js + routes/ 为准。",
+  "nodeModulesDir": "auto",
+  "compilerOptions": {
+    "lib": ["deno.ns", "deno.unstable", "esnext", "dom"]
+  },
   "imports": {
+    "hono": "npm:hono@4.6.12",
+    "hono/cors": "npm:hono@4.6.12/cors",
     "postgres": "npm:postgres@3.4.5"
   },
   "tasks": {
-    "dev": "deno run --allow-net --allow-env --watch src/deno.js",
-    "check": "deno check src/deno.js"
+    "dev": "deno run --allow-net --allow-env --watch src/main.ts",
+    "check": "deno check src/main.ts"
   },
   "deploy": {
-    "entrypoint": "src/deno.js"
+    "entrypoint": "src/main.ts"
   },
   "exclude": ["node_modules"]
 }

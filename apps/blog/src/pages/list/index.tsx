@@ -62,13 +62,15 @@ function List() {
         <Alert
           type={serverBlogsError ? 'warning' : 'info'}
           showIcon
-          message="Blog Server"
+          message="Deno blog-server"
           description={
             serverBlogsError ? (
               serverBlogsError
             ) : (
               <Space wrap>
-                {serverBlogs.length > 0 ? serverBlogs.map((blog) => <span key={blog.id}>{blog.name}</span>) : '暂无服务端 Blog'}
+                {serverBlogs.length > 0
+                  ? serverBlogs.map((blog) => <span key={String(blog.id)}>{blog.name}</span>)
+                  : '暂无服务端 Blog'}
               </Space>
             )
           }

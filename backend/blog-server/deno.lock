@@ -1,0 +1,29 @@
+{
+  "version": "5",
+  "specifiers": {
+    "npm:hono@4.6.12": "4.6.12",
+    "npm:postgres@3.4.5": "3.4.5"
+  },
+  "npm": {
+    "hono@4.6.12": {
+      "integrity": "sha512-eHtf4kSDNw6VVrdbd5IQi16r22m3s7mWPLd7xOMhg1a/Yyb1A0qpUFq8xYMX4FMuDe1nTKeMX5rTx7Nmw+a+Ag==",
+      "tarball": "https://registry.npmmirror.com/hono/-/hono-4.6.12.tgz"
+    },
+    "postgres@3.4.5": {
+      "integrity": "sha512-cDWgoah1Gez9rN3H4165peY9qfpEo+SA61oQv65O3cRUE1pOEoJWwddwcqKE8XZYjbblOJlYDlLV4h67HrEVDg==",
+      "tarball": "https://registry.npmmirror.com/postgres/-/postgres-3.4.5.tgz"
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "npm:hono@4.6.12",
+      "npm:postgres@3.4.5"
+    ],
+    "packageJson": {
+      "dependencies": [
+        "npm:hono@4.6.12",
+        "npm:postgres@3.4.5"
+      ]
+    }
+  }
+}
