@@ -9,7 +9,8 @@
     "postgres": "npm:postgres@3.4.5"
   },
   "tasks": {
-    "dev": "deno run --allow-net --allow-env --watch src/main.ts",
+    "dev": "deno run --allow-net --allow-env --allow-read --watch src/main.ts",
+    "dev:db": "deno run --allow-net --allow-env --allow-read --env-file=.env.local --watch src/main.ts",
     "check": "deno check src/main.ts"
   },
   "deploy": {

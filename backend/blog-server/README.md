@@ -7,7 +7,8 @@
 ## Scripts
 
 ```bash
-pnpm --filter blog-server dev
+pnpm --filter blog-server dev          # 无 DATABASE_URL 时用内存占位数据
+pnpm --filter blog-server dev:db       # 从 .env.local 读 DATABASE_URL，连真实库（方案 B）
 pnpm --filter blog-server build
 pnpm --filter blog-server start
 ```
@@ -16,6 +17,7 @@ pnpm --filter blog-server start
 
 ```bash
 deno task dev
+deno task dev:db
 deno task check
 ```
 
@@ -39,7 +41,14 @@ scripts/
 
 业务表默认 **`blogs`**（至少包含 `id`、`name`；若有 `content`、`created_at` 会一并返回）。请先在数据库中建表；**不会**在运行时自动 `CREATE TABLE`。若表名不是 `blogs`，可通过环境变量 **`BLOG_TABLE`** 覆盖（仅允许字母、数字、下划线、连字符）。
 
-本地调试示例：
+### 本地连「与线上一致」的数据库（方案 B）
+
+1. 在 Deno Deploy 打开项目 **blog-server** → **Settings** → **Environment Variables**，或 SQL 附加组件里复制 **`DATABASE_URL`**（本仓库作 demo 时可自行取舍是否入库）。
+2. 在 **`backend/blog-server/`** 与 `deno.json` 同级放置 **`.env.local`**（可由 `cp .env.example .env.local` 得到），写入 **`DATABASE_URL=`**；不要只改 `.env.example`。表名若非 `blogs` 再填 **`BLOG_TABLE`**。
+3. 启动：`pnpm --filter blog-server dev` 或 **`dev:db`** 均可。`dev:db` 额外使用 **`--env-file=.env.local`**；此外运行时会**按文件路径**尝试读取同目录下的 `.env.local` 合并进环境变量（不依赖你从哪个目录执行命令），需 **`--allow-read`**（已在 `deno.json` 任务里开启）。**`.env.local` 已在仓库 `.gitignore` 中忽略**。
+4. 前端在开发模式下仍请求 `http://localhost:8000` 即可，列表会与线上一致。
+
+### 仅用当前 Shell 注入（不写文件）
 
 ```bash
 export DATABASE_URL="postgresql://..."

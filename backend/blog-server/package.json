@@ -13,7 +13,8 @@
   },
   "scripts": {
     "dev": "deno task dev",
-    "start": "deno run --allow-net --allow-env src/main.ts",
+    "dev:db": "deno task dev:db",
+    "start": "deno run --allow-net --allow-env --allow-read src/main.ts",
     "build": "deno check src/main.ts",
     "typecheck:tsc": "tsc --noEmit",
     "lint": "oxlint --fix src",
