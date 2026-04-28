@@ -4,6 +4,8 @@
 # - 部署范围为下拉选项；列表由 apps/* 生成（勿手改 options 列表）：pnpm run deploy:sync-workflow-options
 # 说明：工作流须在默认分支上，Actions 里才会出现「Run workflow」。
 name: GitHub 部署
+# Actions 列表标题：push 时用「提交说明 + 短 SHA」；手动触发时 event 无 commit message，用「分支 · 范围 · 短 SHA」。
+run-name: ${{ github.event_name == 'push' && format('{0} ({1})', replace(github.event.head_commit.message, '\n', ' '), substring(github.sha, 0, 7)) || format('{0} · {1} ({2})', github.event.inputs.branch, github.event.inputs.scope, substring(github.sha, 0, 7)) }}
 
 on:
   workflow_dispatch:
