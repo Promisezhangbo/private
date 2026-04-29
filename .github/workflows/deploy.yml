@@ -1,13 +1,17 @@
-# 部署到 GitHub Pages（手动触发）
+# 部署到 GitHub Pages（推送到 main 自动跑，或手动 Run workflow）
+# - push：Actions 列表标题为本次提交的 commit message（见 run-name）。
 # - all：与本地 pnpm run build + postbuild 一致，构建全部 apps/*。
 # - 其它选项：单应用部署须走 Turbo（pnpm exec turbo run build --filter=<scope>），以执行 workspace 依赖的 ^generate（如 @packages/openapi）；勿用 pnpm --filter <app> build。
 # - 部署范围为下拉选项；列表由 apps/* 生成（勿手改 options 列表）：pnpm run deploy:sync-workflow-options
 # 说明：工作流须在默认分支上，Actions 里才会出现「Run workflow」。
 name: GitHub 部署
-# Actions 列表标题（仅 workflow_dispatch）。官方表达式无 substring，无法在顶层 run-name 里写短 SHA。
-run-name: "${{ format('{0} · {1}', github.event.inputs.branch, github.event.inputs.scope) }}"
+# push：标题为提交说明（head_commit.message）。手动触发时 event 无提交说明，标题为「分支 · 范围」。
+run-name: "${{ case(github.event_name == 'push', replace(github.event.head_commit.message, '\n', ' '), format('{0} · {1}', github.event.inputs.branch, github.event.inputs.scope)) }}"
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       branch:
@@ -41,12 +45,15 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      DEPLOY_SCOPE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.scope || 'all' }}
+      DEPLOY_BRANCH: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.branch || github.ref_name }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.event.inputs.branch }}
+          ref: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.branch || github.sha }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -64,30 +71,30 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: Build(全部子应用)
-        if: github.event.inputs.scope == 'all'
+        if: env.DEPLOY_SCOPE == 'all'
         env:
-          BUILD_BRANCH: ${{ github.event.inputs.branch }}
-          DEPLOY_SCOPE: ${{ github.event.inputs.scope }}
+          BUILD_BRANCH: ${{ env.DEPLOY_BRANCH }}
+          DEPLOY_SCOPE: ${{ env.DEPLOY_SCOPE }}
         run: TZ='Asia/Shanghai' pnpm run build
 
       - name: Post-build(根目录 index / 404 / _redirects)
-        if: github.event.inputs.scope == 'all'
+        if: env.DEPLOY_SCOPE == 'all'
         run: pnpm run postbuild
 
       - name: Build(单个子应用)
-        if: github.event.inputs.scope != 'all'
+        if: env.DEPLOY_SCOPE != 'all'
         env:
-          BUILD_BRANCH: ${{ github.event.inputs.branch }}
-          DEPLOY_SCOPE: ${{ github.event.inputs.scope }}
-        run: TZ='Asia/Shanghai' pnpm exec turbo run build --filter=${{ github.event.inputs.scope }}
+          BUILD_BRANCH: ${{ env.DEPLOY_BRANCH }}
+          DEPLOY_SCOPE: ${{ env.DEPLOY_SCOPE }}
+        run: TZ='Asia/Shanghai' pnpm exec turbo run build --filter=${{ env.DEPLOY_SCOPE }}
 
       - name: Post-build(仅单应用 main,生成根 index / 404 / _redirects)
-        if: github.event.inputs.scope == 'main'
+        if: env.DEPLOY_SCOPE == 'main'
         run: pnpm run postbuild
 
       - name: 合并 gh-pages(仅单应用部署)
-        if: github.event.inputs.scope != 'all'
-        run: bash scripts/deploy/merge_app_dist_to_deploy.sh "${{ github.event.inputs.scope }}"
+        if: env.DEPLOY_SCOPE != 'all'
+        run: bash scripts/deploy/merge_app_dist_to_deploy.sh "${{ env.DEPLOY_SCOPE }}"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
