@@ -5,8 +5,8 @@
 # - 部署范围为下拉选项；列表由 apps/* 生成（勿手改 options 列表）：pnpm run deploy:sync-workflow-options
 # 说明：工作流须在默认分支上，Actions 里才会出现「Run workflow」。
 name: GitHub 部署
-# push：标题为提交说明（head_commit.message）。手动触发时 event 无提交说明，标题为「分支 · 范围」。
-run-name: "${{ case(github.event_name == 'push', replace(github.event.head_commit.message, '\n', ' '), format('{0} · {1}', github.event.inputs.branch, github.event.inputs.scope)) }}"
+# push：标题为提交说明（head_commit.message）。表达式无 replace，多行标题由 GitHub 原样展示。手动触发无提交说明，标题为「分支 · 范围」。
+run-name: "${{ case(github.event_name == 'push', github.event.head_commit.message, format('{0} · {1}', github.event.inputs.branch, github.event.inputs.scope)) }}"
 
 on:
   push:
