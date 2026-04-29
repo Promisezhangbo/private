@@ -5,6 +5,7 @@
   "packageManager": "pnpm@10.13.1",
   "exports": {
     ".": "./tsconfig.frontend.json",
+    "./common": "./common.d.ts",
     "./base": "./tsconfig.base.json",
     "./frontend": "./tsconfig.frontend.json",
     "./backend": "./tsconfig.backend.json",
