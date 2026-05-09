@@ -64,10 +64,14 @@ pnpm --filter blog-server dev
 Create or update the project from <https://console.deno.com/promisezhangbo> with these settings:
 
 - Project name: `blog-server`
-- Entry point: `backend/blog-server/src/main.ts`
-- Install/build command: leave empty
+- **Git 根目录**：绑定仓库根。**App directory（推荐）**：填 **`backend/blog-server`**，与官方 monorepo 指引一致。
+- Entry point（与上一行配套）：**`src/main.ts`**。**不要**写成 `deno.js`。
+- **备选**（未设 App directory 时）：Entry point 填 **`backend/blog-server/src/main.ts`**（相对仓库根）。**不要**把仓库 Root 设成 `src`（会出现 `src/backend/...` 错误路径）。
+- Install/build command: leave empty（勿执行 `pnpm install`，见前文说明）
 - Environment variables: **`DATABASE_URL`** 在挂载 SQL 后由平台注入，一般无需手填；其它密钥再按需添加
 
 Production URL: <https://blog-server.promisezhangbo.deno.net>
 
-`src/main.ts` 使用 `Deno.serve(app.fetch)`，为 Deno Deploy 期望的运行时入口。
+运行时入口为 `src/main.ts`：除本地 `deno run` 下的 `Deno.serve` 外，还 **`export default { fetch }`**，以符合新 Deno Deploy Dynamic 的 Warm up。若 **Warm up** 失败，**Production / Register crons** 可能连锁失败（日志里写 “Waiting for other timelines”）。
+
+部署配置可同时写在 **`deno.json`** 的 **`deploy.runtime`**（见本目录 `deno.json`）；控制台需正确设置 **App directory**，否则易出现构建或 Warm up 异常。
