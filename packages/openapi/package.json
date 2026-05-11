@@ -2,18 +2,13 @@
   "name": "@packages/openapi",
   "version": "1.0.0",
   "private": true,
-  "description": "OpenAPI 多 YAML 生成：每个 <name>.yaml → <name>-gen/（独立域名/Token/baseURL）。根入口仅导出公共初始化器。",
+  "description": "OpenAPI 多 YAML 生成：由 openapi-axios-sdk（openapi-gen）从 api/*.yaml 生成 gen/，各子应用从本包聚合入口与 *-gen-types 引用。",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "import": "./src/index.ts",
-      "default": "./src/index.ts"
-    },
-    "./request": {
-      "types": "./src/request.ts",
-      "import": "./src/request.ts",
-      "default": "./src/request.ts"
+      "types": "./gen/index.ts",
+      "import": "./gen/index.ts",
+      "default": "./gen/index.ts"
     },
     "./*-gen": {
       "types": "./gen/*-gen/index.ts",
@@ -27,16 +22,14 @@
     }
   },
   "scripts": {
-    "generate": "node ./scripts/generate.mjs",
+    "generate": "openapi-gen -c ./openapi.config.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "axios": "^1.7.9"
+    "axios": "^1.7.9",
+    "openapi-axios-sdk": "^0.2.2"
   },
   "devDependencies": {
-    "@apidevtools/swagger-parser": "^12.1.0",
-    "@hey-api/client-axios": "0.9.1",
-    "@hey-api/openapi-ts": "0.94.5",
     "typescript": "~5.9.3"
   }
 }

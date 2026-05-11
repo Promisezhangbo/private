@@ -2,7 +2,7 @@
 
 本仓库使用 **Turborepo** 做 monorepo 任务调度与缓存，核心目标是：
 
-- **把 OpenAPI 生成变成标准任务**（`@packages/openapi#generate`），并且在 `api/*.yaml` 和模板无变化时 **命中缓存跳过**。
+- **把 OpenAPI 生成变成标准任务**（`@packages/openapi#generate`，底层为 **`openapi-axios-sdk`** 的 **`openapi-gen`**），并且在 `api/*.yaml` 与生成配置无变化时 **命中缓存跳过**。
 - 确保各子应用的 `dev/build/typecheck` 在需要时 **自动等待生成任务完成**（避免“类型找不到/生成文件缺失”）。
 
 ---
@@ -94,7 +94,7 @@ pnpm exec turbo run dev --filter=!blog
 
 ### 本仓库 Turbo 配置要点（与 `turbo.json` 对齐）
 
-- **全局依赖（globalDependencies）**：将 `api/**/*.yaml`、`packages/openapi/scripts/**`、`packages/openapi/src/**` 作为全局输入，确保任何应用任务在这些内容变化时，缓存能正确失效。
+- **全局依赖（globalDependencies）**：将 `api/**/*.yaml`、`packages/openapi/openapi.config.ts` 作为全局输入，确保任何应用任务在这些内容变化时，缓存能正确失效。
 - **dev 不缓存**：`dev.cache=false` 且 `dev.persistent=true`，避免错误复用 dev 产物。
 
 ---
@@ -106,8 +106,7 @@ pnpm exec turbo run dev --filter=!blog
 当下面输入未变化时，`generate` 应该不重复执行：
 
 - `api/**/*.yaml`
-- `packages/openapi/scripts/**`
-- `packages/openapi/src/**`（如果它是 generate 的输入）
+- `packages/openapi/openapi.config.ts`
 
 生成输出（outputs）通常至少包含：
 
@@ -158,7 +157,7 @@ pnpm dev
 
 通常只有以下几类原因：
 
-- **inputs 变了**：比如你改了 `api/*.yaml`、`packages/openapi/scripts/**`、或模板文件。
+- **inputs 变了**：比如你改了 `api/*.yaml`、`packages/openapi/openapi.config.ts`，或升级了 `openapi-axios-sdk` 导致生成逻辑变化。
 - **outputs 没声明/没产出**：Turbo 找不到输出文件会导致缓存无法命中。
 - **gen 目录被清理**：例如你手动删除 `packages/openapi/gen/`，则必须重新生成。
 

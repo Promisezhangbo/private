@@ -14,7 +14,7 @@
 | 任务调度 / 缓存   | Turborepo（`turbo.json`）                                                        |
 | 构建与开发        | Vite（apps 里 `vite`）、TypeScript、React 19                                     |
 | 微前端            | qiankun、`vite-plugin-qiankun`（子应用）                                         |
-| 接口类型 / SDK    | `@packages/openapi`：多 YAML 生成（`api/*.yaml` → `packages/openapi/gen/**`）    |
+| 接口类型 / SDK    | `@packages/openapi`：`openapi-axios-sdk`（`openapi-gen`）从 `api/*.yaml` → `packages/openapi/gen/**`    |
 | 静态检查          | Oxlint（各 app 自己的 `lint` 脚本）                                              |
 | 格式化            | Oxfmt（根 `pnpm format`）                                                        |
 | 样式              | **Stylelint**（根 `stylelint.config.mjs` + `@packages/stylelint-config`）        |
@@ -72,7 +72,7 @@ cd apps/main && pnpm dev
 │   ├── style-config/          # @packages/style-config — 公共 SCSS 变量与主题
 │   ├── stylelint-config/      # @packages/stylelint-config — Stylelint 预设
 │   ├── vite-build-utils/      # @packages/vite-build-utils — 构建分包等工具
-│   └── openapi/               # @packages/openapi — OpenAPI 生成与请求初始化器
+│   └── openapi/               # @packages/openapi — openapi-gen 生成 gen/，聚合 OpenApi<Name> 入口
 ├── api/                       # OpenAPI YAML（*.yaml）
 ├── dist/                      # 构建输出（根脚本 build + postbuild）
 ├── scripts/                   # 部署辅助脚本等

@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["pnpm-lock.yaml", "api/**/*.yaml", "packages/openapi/scripts/**", "packages/openapi/src/**"],
+  "globalDependencies": ["pnpm-lock.yaml", "api/**/*.yaml", "packages/openapi/openapi.config.ts"],
   "tasks": {
     "generate": {
       "outputs": ["gen/**"]

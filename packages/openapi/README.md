@@ -1,27 +1,27 @@
 # @packages/openapi
 
-从仓库根目录 `api/*.yaml` 生成 Axios SDK，产物在 **`gen/`**（已 **gitignore**，检出后必须生成）。**`turbo run build`** / **`turbo run dev`** 会通过 **`dependsOn: ^generate`** 先对本包执行 **`generate`**。改 spec 后可手动执行：
+从仓库根目录 **`api/*.yaml`** 生成 Axios SDK，由 **`openapi-axios-sdk`** 提供的 CLI **`openapi-gen`** 执行（配置见本目录 **`openapi.config.ts`**）。产物在 **`gen/`**（已 **gitignore**，检出后须生成）。**`turbo run build` / `turbo run dev`** 会通过 **`dependsOn: ^generate`** 先对本包执行 **`generate`**。改 spec 后可手动：
 
-`pnpm run generate`（根目录，等价于 `turbo run generate --filter=@packages/openapi`）
+`pnpm run generate`（仓库根，等价于 `turbo run generate --filter=@packages/openapi`）
 
-**注意**：若对子应用使用 **`pnpm --filter <app> build`** 而**不用** Turbo，则**不会**触发生成，会出现找不到 **`gen/clients`**、**`*-gen-types`** 等错误；应使用 **`pnpm exec turbo run build --filter=<app>`**（与 GitHub 单应用部署一致）。
+**注意**：若对子应用使用 **`pnpm --filter <app> build`** 而**不用** Turbo，则**不会**触发生成，会出现找不到 **`gen/index.ts`**、**`*-gen-types`** 等错误；应使用 **`pnpm exec turbo run build --filter=<app>`**（与 GitHub 单应用部署一致）。
 
 ## 包内入口
 
 | 入口 | 作用 |
 | --- | --- |
-| `@packages/openapi` | 聚合导出所有 `OpenApi<Name>Fn`（来自 `src/clients.ts`，自动生成），用于 VSCode 自动导入 |
-| `@packages/openapi/request` | 公共初始化器（生成的 `*-gen/index.ts` 内部复用，业务一般不需要直接用） |
-| `@packages/openapi/<name>-gen` | （可选）不再对外导出，避免 `package.json` 过长；推荐统一从根入口导入 |
+| `@packages/openapi` | 聚合导出各 spec 的 **`OpenApi<Name>`** 工厂（来自 **`gen/index.ts`**，由 `openapi-gen` 生成） |
+| `@packages/openapi/<name>-gen` | 单 spec 子包（可选；推荐从根入口导入） |
+| `@packages/openapi/<name>-gen-types` | 仅类型 |
 
-生成时把 `scripts/openapi-http.gen.ts` 拷入每个 `*-gen/` 的 `openapi-http.gen.ts`，并删除 Hey API 自动生成的无用 `index.ts`。
+运行时公共逻辑在依赖 **`openapi-axios-sdk/runtime`**（由生成代码引用）；高级用法见 [openapi-axios-sdk README](https://www.npmjs.com/package/openapi-axios-sdk)。
 
 ## 示例：初始化并调用
 
 ```ts
-import { OpenApiBlogFn } from '@packages/openapi';
+import { OpenApiBlog } from '@packages/openapi';
 
-export const blogApi = OpenApiBlogFn({
+export const blogApi = OpenApiBlog({
   BASE: 'https://blog-api.example.com',
   token: () => localStorage.getItem('t') ?? '',
   WITH_CREDENTIALS: true,
@@ -32,7 +32,7 @@ const { data } = await blogApi.listKnowledgeBases({ body: { request_id: crypto.r
 
 ## 类型优先（无 axios）
 
-若你**主要想要类型**，希望在应用里**自己封装 axios**（拦截器、baseURL、错误处理全在业务侧），可从子路径**只引生成类型**，不经过 `OpenApiFn` / `openApiHttpClient`：
+若主要只要类型、自己在业务里封装 `axios`，可从子路径只引生成类型：
 
 ```ts
 import type {
@@ -50,16 +50,10 @@ export async function listKnowledgeBases(body: ListKnowledgeBasesRequest) {
   });
   return data;
 }
-
-// 列表项：具名 schema 在 spec 里已 $ref，可直接用 KnowledgeBaseListItem[]
 ```
 
-路径、方法名仍以 `api/openapi.yaml` 为准；上例 URL 需与文档一致。需要 **带鉴权/统一错误的现成客户端** 时再用根入口的 `OpenApiFn()` + 生成 SDK。
+路径、方法名以各 `api/*.yaml` 为准。需要带鉴权/统一错误的现成客户端时用根入口的 **`OpenApi<Name>()`** + 生成 SDK。
 
 ### 具名类型（可复用）
 
-`@hey-api/openapi-ts` 对 **`components/schemas` 里具名且被 `$ref` 引用的模型** 会生成独立 `export type`（如 `KnowledgeBaseListItem`）。**写在响应里的内联 `items: { type: object, properties: ... }` 只会变成匿名内联对象**，无法 `import` 单用。
-
-要在业务里直接用「列表项」类型：在 `api/openapi.yaml` 中把该结构提成 `components/schemas/YourName`，在 `results.items`（或其它字段）上写 `$ref: '#/components/schemas/YourName'`；多处**完全相同**的结构应共用同一 `$ref`，生成类型即自动合并。
-
-当前 spec 里已用 `$ref` 抽出的条目类型包括：`KnowledgeBaseListItem`、`FileListItem`、`GetFileTaskFileItem`、`FileTaskListItem`、`CreateChunkRequestItem`、`ChunkListItem`、`ChunkListItemMetadata`、`UpdateChunkRequestItem`。其余仍是内联对象的响应/请求，可按同样方式逐步补 schema。
+`@hey-api/openapi-ts` 对 **`components/schemas` 里具名且被 `$ref` 引用的模型** 会生成独立 `export type`。内联对象只会变成匿名类型；要在业务里复用列表项等类型，请在 YAML 中提成 `components/schemas` 并 `$ref`。

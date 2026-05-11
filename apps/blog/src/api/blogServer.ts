@@ -1,10 +1,8 @@
-import { OpenApiBlogServerFn } from '@packages/openapi';
+import { OpenApiBlogServer } from '@packages/openapi';
 import type { BlogListItem, BlogListPage, UpdateBlogNameRequest } from '@packages/openapi/blog-server-gen-types';
 
-const defaultBlogServerBase = import.meta.env.DEV ? 'http://localhost:8000' : 'https://blog-server.promisezhangbo.deno.net';
-
-const blogServerApi = OpenApiBlogServerFn({
-  BASE: import.meta.env.VITE_BLOG_SERVER_BASE || defaultBlogServerBase,
+const blogServerApi = OpenApiBlogServer({
+  BASE: 'https://blog-server.promisezhangbo.deno.net',
   errorHandling: { reporter: () => {}, debounceMs: 200 },
 });
 
@@ -13,11 +11,7 @@ export type ServerBlogItem = BlogListItem;
 export type { BlogListPage };
 
 /** GET /getBlogList 分页；可选 `name` 按标题子串筛选（不区分大小写）。 */
-export async function getBlogList(params?: {
-  page?: number;
-  pageSize?: number;
-  name?: string;
-}): Promise<BlogListPage> {
+export async function getBlogList(params?: { page?: number; pageSize?: number; name?: string }): Promise<BlogListPage> {
   const response = await blogServerApi.getBlogList({
     query: {
       page: params?.page,
