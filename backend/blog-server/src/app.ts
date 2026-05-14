@@ -1,15 +1,22 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
+import { getCorsAllowedOriginsExtra } from "./db/env";
 import { blogRoutes } from "./routes/blog";
 import { systemRoutes } from "./routes/system";
+
+const corsExtraOriginSet = new Set(getCorsAllowedOriginsExtra());
 
 /** 允许带凭证（axios `withCredentials`）的 Origin；须为具体 URL，不能依赖 `*` + `Allow-Credentials`。 */
 function corsReflectOrigin(origin: string): string | undefined {
   if (!origin || origin.trim() === "") return undefined;
   try {
     const u = new URL(origin);
-    if (u.hostname === "promisezhangbo.github.io" && u.protocol === "https:") return origin;
+    if (corsExtraOriginSet.has(origin)) return origin;
+    if (u.protocol === "https:") {
+      if (u.hostname === "promisezhangbo.github.io") return origin;
+      if (u.hostname.endsWith(".netlify.app") || u.hostname === "netlify.app") return origin;
+    }
     if (u.hostname === "localhost" || u.hostname === "127.0.0.1") {
       if (u.protocol === "http:" || u.protocol === "https:") return origin;
     }

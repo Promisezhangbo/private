@@ -1,3 +1,10 @@
+/** 逗号/空白分隔的完整 Origin（含协议与端口），与内置规则合并后用于 CORS 反射。 */
+export function getCorsAllowedOriginsExtra(): readonly string[] {
+  const raw = Deno.env.get("CORS_ALLOWED_ORIGINS")?.trim() ?? "";
+  if (!raw.length) return [];
+  return raw.split(/[\s,]+/).map((s) => s.trim()).filter(Boolean);
+}
+
 /** `DATABASE_URL` 非空则连库；Deploy 由平台注入。 */
 export function getDatabaseUrl(): string | undefined {
   const raw = Deno.env.get("DATABASE_URL")?.trim() ?? "";

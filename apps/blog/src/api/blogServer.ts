@@ -2,7 +2,7 @@ import { OpenApiBlogServer } from '@packages/openapi';
 import type { BlogListItem, BlogListPage, UpdateBlogNameRequest } from '@packages/openapi/blog-server-gen-types';
 
 const blogServerApi = OpenApiBlogServer({
-  BASE: 'https://blog-server.promisezhangbo.deno.net',
+  BASE: import.meta.env.VITE_BLOG_SERVER_BASE?.trim() || 'https://blog-server.promisezhangbo.deno.net',
   errorHandling: { reporter: () => {}, debounceMs: 200 },
 });
 
