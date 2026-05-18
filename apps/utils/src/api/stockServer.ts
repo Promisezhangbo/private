@@ -11,11 +11,16 @@ export type ServerStockRecord = StockRecord;
 export type { StockListPage };
 
 /** GET /getStockList 分页列表 */
-export async function getStockList(params?: { page?: number; pageSize?: number }): Promise<StockListPage> {
+export async function getStockList(params?: {
+  page?: number;
+  pageSize?: number;
+  stock_code?: string;
+}): Promise<StockListPage> {
   const response = await stockServerApi.getStockList({
     query: {
       page: params?.page,
       pageSize: params?.pageSize,
+      stock_code: params?.stock_code,
     },
   });
   if (response.data == null) {

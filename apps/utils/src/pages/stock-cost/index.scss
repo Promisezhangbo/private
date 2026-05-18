@@ -73,6 +73,38 @@
   justify-content: flex-start;
 }
 
+.utils-stock__presets {
+  margin-bottom: 20px;
+}
+
+.utils-stock__presets-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.utils-stock__summary {
+  margin-top: 20px;
+}
+
+.utils-stock__summary-desc {
+  margin-top: 8px;
+}
+
+.utils-stock__table {
+  .utils-stock__row--clickable {
+    cursor: pointer;
+  }
+
+  .utils-stock__row--active > td {
+    background: var(--ant-color-primary-bg) !important;
+  }
+
+  .utils-stock__row--clickable:hover > td {
+    background: var(--ant-color-fill-tertiary);
+  }
+}
+
 .utils-stock__form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -89,16 +121,34 @@
 
 .utils-stock__history {
   margin-top: 24px;
+
+  .ant-card-body {
+    min-width: 0;
+  }
 }
 
-.utils-stock__history-item {
-  cursor: default;
+.utils-stock__table-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.utils-stock__table-filter {
+  max-width: 320px;
+  width: 100%;
+}
+
+.utils-stock__table-filter-quick {
+  align-items: center;
 }
 
 .utils-stock__pagination {
   margin-top: 16px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
+  row-gap: 8px;
 }
 
 .utils-stock__actions {

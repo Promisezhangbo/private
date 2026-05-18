@@ -125,6 +125,12 @@ paths:
             minimum: 1
             maximum: 100
             default: 10
+        - name: stock_code
+          in: query
+          description: 按股票代码子串筛选（不区分大小写，trim 后匹配）
+          schema:
+            type: string
+            maxLength: 32
       responses:
         '200':
           description: 成功返回分页列表
@@ -133,7 +139,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/StockListPage'
         '400':
-          description: 分页参数非法
+          description: 分页或筛选参数非法
           content:
             application/json:
               schema:

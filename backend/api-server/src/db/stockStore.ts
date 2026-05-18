@@ -1,10 +1,11 @@
 /**
  * `stock` 表字段（与库一致）：
  * id, stock_code, stock_name, init_cost, init_num, add_cost, add_num, end_cost, commission
- * init_cost / add_cost / end_cost 为 smallint；commission 为 integer，默认 5。
+ * 价格列建议 NUMERIC(18,4)；股数 integer；佣金 integer。
  */
 import postgres from "postgres";
 import { getDatabaseUrl, getStockTableName } from "./env";
+import { roundStockPrice } from "./stockPrice";
 
 export type StockRow = {
   id: number;
@@ -50,9 +51,6 @@ type PgRow = {
 
 type SqlClient = ReturnType<typeof postgres>;
 
-const SMALLINT_MAX = 32767;
-const SMALLINT_MIN = -32768;
-
 const memoryStocks: StockRow[] = [];
 let memoryNextId = 1;
 let sqlClient: SqlClient | null = null;
@@ -80,25 +78,16 @@ function trimCode(v: unknown): string {
   return String(v ?? "").trim();
 }
 
-/** smallint 成本列：四舍五入为整数 */
-export function toDbSmallCost(value: number): number {
-  const n = Math.round(value);
-  if (!Number.isFinite(n) || n < SMALLINT_MIN || n > SMALLINT_MAX) {
-    throw new Error(`Cost value out of smallint range: ${value}`);
-  }
-  return n;
-}
-
 function normalizeRow(r: PgRow): StockRow {
   return {
     id: Number(r.id),
     stock_code: trimCode(r.stock_code),
     stock_name: String(r.stock_name ?? ""),
-    init_cost: num(r.init_cost),
+    init_cost: roundStockPrice(num(r.init_cost)),
     init_num: Math.floor(num(r.init_num)),
-    add_cost: num(r.add_cost),
+    add_cost: roundStockPrice(num(r.add_cost)),
     add_num: Math.floor(num(r.add_num)),
-    end_cost: num(r.end_cost),
+    end_cost: roundStockPrice(num(r.end_cost)),
     commission: Math.floor(num(r.commission ?? 5)),
   };
 }
@@ -110,12 +99,21 @@ function clampPagination(page: number, pageSize: number) {
   return { page: p, pageSize: ps, offset: (p - 1) * ps };
 }
 
-export async function listStocksPaged(page: number, pageSize: number): Promise<StockListPageResult> {
+export async function listStocksPaged(
+  page: number,
+  pageSize: number,
+  stockCodeSearch?: string,
+): Promise<StockListPageResult> {
   const { page: p, pageSize: ps, offset } = clampPagination(page, pageSize);
+  const needle = stockCodeSearch?.trim() || undefined;
   const sql = getSql();
 
   if (!sql) {
-    const sorted = [...memoryStocks].sort((a, b) => b.id - a.id);
+    let sorted = [...memoryStocks].sort((a, b) => b.id - a.id);
+    if (needle) {
+      const q = needle.toLowerCase();
+      sorted = sorted.filter((r) => r.stock_code.toLowerCase().includes(q));
+    }
     return {
       items: sorted.slice(offset, offset + ps).map((r) => ({ ...r })),
       total: sorted.length,
@@ -125,11 +123,16 @@ export async function listStocksPaged(page: number, pageSize: number): Promise<S
   }
 
   const rel = quotedTableIdent();
-  const countRows = await sql`SELECT COUNT(*)::bigint AS c FROM ${sql.unsafe(rel)}`;
+  const filter = needle
+    ? sql`WHERE strpos(lower(trim(stock_code)), lower(${needle})) > 0`
+    : sql``;
+  const countRows = await sql`
+    SELECT COUNT(*)::bigint AS c FROM ${sql.unsafe(rel)} ${filter}
+  `;
   const total = Number((countRows[0] as { c?: unknown })?.c ?? 0);
   const rows = await sql`
     SELECT id, stock_code, stock_name, init_cost, init_num, add_cost, add_num, end_cost, commission
-    FROM ${sql.unsafe(rel)}
+    FROM ${sql.unsafe(rel)} ${filter}
     ORDER BY id DESC
     LIMIT ${ps} OFFSET ${offset}
   `;
@@ -161,9 +164,9 @@ export async function getStockById(id: number): Promise<StockRow | null> {
 export async function createStock(input: CreateStockInput): Promise<StockRow> {
   const sql = getSql();
   const code = input.stock_code.trim();
-  const initCost = toDbSmallCost(input.init_cost);
-  const addCost = toDbSmallCost(input.add_cost);
-  const endCost = toDbSmallCost(input.end_cost);
+  const initCost = roundStockPrice(input.init_cost);
+  const addCost = roundStockPrice(input.add_cost);
+  const endCost = roundStockPrice(input.end_cost);
   const commission = Math.floor(input.commission);
 
   if (!sql) {

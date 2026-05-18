@@ -1,5 +1,6 @@
 import type { Context } from "hono";
 import { Hono } from "hono";
+import { roundStockPrice } from "../db/stockPrice";
 import * as stockStore from "../db/stockStore";
 
 export const stockRoutes = new Hono();
@@ -33,7 +34,7 @@ function calcEndCost(
   const total = initNum + addNum;
   if (total <= 0) return null;
   const raw = (initCost * initNum + (addCost * addNum + commission)) / total;
-  return Math.round(raw * 1000) / 1000;
+  return roundStockPrice(raw);
 }
 
 function parseNonNegNum(v: unknown): number | "invalid" {
@@ -49,12 +50,16 @@ function parseNonNegInt(v: unknown): number | "invalid" {
 stockRoutes.get("/getStockList", async (c) => {
   const page = intQ(c.req.query("page"), 1);
   const pageSize = intQ(c.req.query("pageSize"), 10);
+  const stockCode = c.req.query("stock_code");
+  if (stockCode != null && stockCode.length > 32) {
+    return bad(c, 400, "Query stock_code must be at most 32 characters");
+  }
   if (Number.isNaN(page) || Number.isNaN(pageSize)) {
     return bad(c, 400, "Query page and pageSize must be positive integers");
   }
   if (pageSize > 100) return bad(c, 400, "Query pageSize must be at most 100");
   try {
-    return c.json(await stockStore.listStocksPaged(page, pageSize));
+    return c.json(await stockStore.listStocksPaged(page, pageSize, stockCode ?? undefined));
   } catch (e) {
     return dbErr(c, e, "database query failed");
   }

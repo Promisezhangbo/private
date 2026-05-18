@@ -10,9 +10,9 @@ const menuMap = [
   { key: 'home', label: '首页', sub: false },
   { key: 'skill', label: '技能', sub: true },
   { key: 'resume', label: '简历', sub: true },
-  { key: 'agent', label: 'AI', sub: true },
-  { key: 'blog', label: 'Blog', sub: true },
-  { key: 'utils', label: 'Utils', sub: true },
+  { key: 'agent', label: 'AI工作台', sub: true },
+  { key: 'blog', label: '博客', sub: true },
+  { key: 'utils', label: '工具', sub: true },
   { key: 'login', label: '登录', sub: true },
 ];
 
