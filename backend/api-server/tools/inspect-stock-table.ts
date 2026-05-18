@@ -1,4 +1,6 @@
+/** 本地调试：打印 stock 表列信息与最近 3 条记录。需 DATABASE_URL。 */
 import postgres from "postgres";
+import { getStockTableName } from "../src/core/env.ts";
 
 const url = Deno.env.get("DATABASE_URL")?.trim();
 if (!url) {
@@ -6,7 +8,7 @@ if (!url) {
   Deno.exit(1);
 }
 
-const table = Deno.env.get("STOCK_TABLE")?.trim() || "stock";
+const table = getStockTableName();
 if (!/^[a-zA-Z0-9_-]+$/.test(table)) {
   console.error(`Invalid STOCK_TABLE: ${table}`);
   Deno.exit(1);
@@ -24,8 +26,7 @@ try {
   console.log("=== columns ===");
   console.log(JSON.stringify(cols, null, 2));
 
-  const rel = `"${table}"`;
-  const sample = await sql.unsafe(`SELECT * FROM ${rel} ORDER BY id DESC LIMIT 3`);
+  const sample = await sql.unsafe(`SELECT * FROM "${table}" ORDER BY id DESC LIMIT 3`);
   console.log("=== sample rows ===");
   console.log(JSON.stringify(sample, null, 2));
 } finally {

@@ -1,5 +1,5 @@
-import { createStock, getStockList, type ServerStockRecord } from '@/api/stockServer';
-import { calcEndCost, STOCK_COST_DECIMALS } from '@/utils/stockCost';
+import { createStock, deleteStock, getStockList, type ServerStockRecord } from '@/api/stockServer';
+import { calcEndCost, STOCK_COMMISSION_DECIMALS, STOCK_COST_DECIMALS } from '@/utils/stockCost';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import {
   Alert,
@@ -10,7 +10,9 @@ import {
   Form,
   Input,
   InputNumber,
+  message,
   Pagination,
+  Popconfirm,
   Space,
   Statistic,
   Table,
@@ -59,6 +61,7 @@ function StockCost() {
   const [listPage, setListPage] = useState(1);
   const [listPageSize, setListPageSize] = useState(10);
   const [listLoading, setListLoading] = useState(false);
+  const [deletingId, setDeletingId] = useState<number>();
   const [listError, setListError] = useState<string>();
   const [codeFilterDraft, setCodeFilterDraft] = useState('');
   const [codeFilterQuery, setCodeFilterQuery] = useState('');
@@ -105,28 +108,57 @@ function StockCost() {
   };
 
   const fillPreset = (code: string, name: string) => {
-    const matched = list.find((r) => r.stock_code === code);
-    if (matched) {
-      fillFromRecord(matched);
-      return;
-    }
-    const current = form.getFieldsValue();
-    applyToForm(
-      {
-        stock_code: code,
-        stock_name: name,
-        init_cost: current.init_cost,
-        init_num: current.init_num,
-        add_cost: current.add_cost,
-        add_num: current.add_num,
-        commission: current.commission ?? DEFAULT_COMMISSION,
-      },
-      { presetCode: code },
-    );
+    const commission = form.getFieldValue('commission') ?? DEFAULT_COMMISSION;
+    form.setFieldsValue({
+      stock_code: code,
+      stock_name: name,
+      init_cost: undefined,
+      init_num: undefined,
+      add_cost: undefined,
+      add_num: undefined,
+      commission,
+    });
+    setValues(null);
+    setSelectedRowId(undefined);
+    setActivePresetCode(code);
+    setSubmitError(undefined);
   };
 
   const fillFromRecord = (record: ServerStockRecord) => {
     applyToForm(recordToFormValues(record), { rowId: record.id, presetCode: record.stock_code });
+  };
+
+  const handleDelete = async (record: ServerStockRecord) => {
+    setDeletingId(record.id);
+    setListError(undefined);
+    try {
+      await deleteStock({ id: record.id });
+      if (selectedRowId === record.id) {
+        form.resetFields();
+        form.setFieldsValue({ commission: DEFAULT_COMMISSION });
+        setValues(null);
+        setSelectedRowId(undefined);
+        setActivePresetCode(undefined);
+      }
+      const pageData = await getStockList({
+        page: listPage,
+        pageSize: listPageSize,
+        stock_code: codeFilterQuery.trim() || undefined,
+      });
+      if (pageData.items.length === 0 && listPage > 1) {
+        setListPage(listPage - 1);
+      } else {
+        setList(pageData.items);
+        setListTotal(pageData.total);
+      }
+      message.success('记录已删除');
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : '删除失败';
+      setListError(msg);
+      message.error(msg);
+    } finally {
+      setDeletingId(undefined);
+    }
   };
 
   const onFinish = async (next: FormValues) => {
@@ -167,27 +199,27 @@ function StockCost() {
     { title: '代码', dataIndex: 'stock_code', width: 88 },
     { title: '名称', dataIndex: 'stock_name', ellipsis: true },
     {
-      title: 'init_cost',
+      title: '初始成本',
       dataIndex: 'init_cost',
       width: 88,
       align: 'right',
       render: (v: number) => v?.toFixed(STOCK_COST_DECIMALS),
     },
     {
-      title: 'init_num',
+      title: '初始股数',
       dataIndex: 'init_num',
       width: 80,
       align: 'right',
     },
     {
-      title: 'add_cost',
+      title: '新增股成本',
       dataIndex: 'add_cost',
       width: 88,
       align: 'right',
       render: (v: number) => v?.toFixed(STOCK_COST_DECIMALS),
     },
     {
-      title: 'add_num',
+      title: '新增股数',
       dataIndex: 'add_num',
       width: 80,
       align: 'right',
@@ -195,15 +227,39 @@ function StockCost() {
     {
       title: '佣金',
       dataIndex: 'commission',
-      width: 64,
-      align: 'right',
-    },
-    {
-      title: 'end_cost',
-      dataIndex: 'end_cost',
       width: 88,
       align: 'right',
+      render: (v: number) => v?.toFixed(STOCK_COMMISSION_DECIMALS),
+    },
+    {
+      title: '摊薄后持仓成本',
+      dataIndex: 'end_cost',
+      width: 120,
+      align: 'right',
       render: (v: number) => <strong>{v?.toFixed(STOCK_COST_DECIMALS)}</strong>,
+    },
+    {
+      title: '操作',
+      key: 'actions',
+      width: 72,
+      fixed: 'right',
+      align: 'center',
+      onCell: () => ({
+        onClick: (e) => e.stopPropagation(),
+      }),
+      render: (_, record) => (
+        <Popconfirm
+          title="确定删除这条记录？"
+          okText="删除"
+          cancelText="取消"
+          okButtonProps={{ danger: true }}
+          onConfirm={() => void handleDelete(record)}
+        >
+          <Button type="link" size="small" danger loading={deletingId === record.id}>
+            删除
+          </Button>
+        </Popconfirm>
+      ),
     },
   ];
 
@@ -228,9 +284,7 @@ function StockCost() {
           顶部快捷选项填入代码与名称；点击下方表格行可回填该条记录的全部金额与数量，并在右侧查看计算结果。
         </Typography.Paragraph>
 
-        {submitError && (
-          <Alert type="error" showIcon message={submitError} className="utils-stock__alert" closable />
-        )}
+        {submitError && <Alert type="error" showIcon message={submitError} className="utils-stock__alert" closable />}
 
         <div className="utils-stock__layout">
           <Card className="utils-stock__panel utils-stock__panel--form" title="输入参数">
@@ -246,7 +300,7 @@ function StockCost() {
                     type={activePresetCode === p.stock_code ? 'primary' : 'default'}
                     onClick={() => fillPreset(p.stock_code, p.stock_name)}
                   >
-                    {p.stock_code} {p.stock_name}
+                    {p.stock_name}
                   </Button>
                 ))}
               </Space>
@@ -306,7 +360,7 @@ function StockCost() {
                 </Form.Item>
               </div>
               <Form.Item label="佣金 commission" name="commission" rules={[{ required: true, message: '请输入佣金' }]}>
-                <InputNumber min={0} precision={0} style={{ width: '100%' }} />
+                <InputNumber min={0} precision={STOCK_COMMISSION_DECIMALS} style={{ width: '100%' }} placeholder="例如 5 或 5.25" />
               </Form.Item>
               <Form.Item className="utils-stock__actions">
                 <Button type="primary" htmlType="submit" loading={submitting}>
@@ -402,7 +456,7 @@ function StockCost() {
             columns={columns}
             dataSource={list}
             pagination={false}
-            scroll={{ x: 720 }}
+            scroll={{ x: 800 }}
             locale={{ emptyText: '暂无记录，完成一次计算后将出现在此' }}
             rowClassName={(record) =>
               record.id === selectedRowId ? 'utils-stock__row--active' : 'utils-stock__row--clickable'

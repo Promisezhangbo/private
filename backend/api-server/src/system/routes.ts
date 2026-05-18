@@ -1,5 +1,6 @@
+/** 健康检查与 robots.txt（无数据库依赖）。 */
 import { Hono } from "hono";
-import { getDatabaseUrl } from "../db/env";
+import { getDatabaseUrl } from "../core/env.ts";
 
 const health = () => ({
   name: "api-server",

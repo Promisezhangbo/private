@@ -1,11 +1,11 @@
 /**
- * `stock` 表字段（与库一致）：
- * id, stock_code, stock_name, init_cost, init_num, add_cost, add_num, end_cost, commission
- * 价格列建议 NUMERIC(18,4)；股数 integer；佣金 integer。
+ * Stock 持仓成本数据访问：`STOCK_TABLE`（默认 `stock`）。
+ * 列类型建议：价格 NUMERIC(18,3)、股数 integer、佣金 NUMERIC(10,2)。
  */
-import postgres from "postgres";
-import { getDatabaseUrl, getStockTableName } from "./env";
-import { roundStockPrice } from "./stockPrice";
+import { getSql, quoteTable } from "../core/db.ts";
+import { getStockTableName } from "../core/env.ts";
+import { clampPagination } from "../core/pagination.ts";
+import { ceilStockPrice, formatStockCommission } from "./price.ts";
 
 export type StockRow = {
   id: number;
@@ -49,54 +49,29 @@ type PgRow = {
   commission: unknown;
 };
 
-type SqlClient = ReturnType<typeof postgres>;
+const STOCK_COLUMNS =
+  "id, stock_code, stock_name, init_cost, init_num, add_cost, add_num, end_cost, commission";
 
 const memoryStocks: StockRow[] = [];
 let memoryNextId = 1;
-let sqlClient: SqlClient | null = null;
 
-function getSql(): SqlClient | null {
-  const url = getDatabaseUrl();
-  if (!url) return null;
-  if (!sqlClient) {
-    sqlClient = postgres(url, { max: 1, idle_timeout: 20, connect_timeout: 15 });
-  }
-  return sqlClient;
-}
-
-function quotedTableIdent(): string {
-  const name = getStockTableName();
-  if (!/^[a-zA-Z0-9_-]+$/.test(name)) throw new Error(`Invalid STOCK_TABLE: ${name}`);
-  return `"${name}"`;
-}
-
-function num(v: unknown): number {
-  return Number(v);
-}
-
-function trimCode(v: unknown): string {
-  return String(v ?? "").trim();
+function tableIdent(): string {
+  return quoteTable(getStockTableName());
 }
 
 function normalizeRow(r: PgRow): StockRow {
+  const n = (v: unknown) => Number(v);
   return {
-    id: Number(r.id),
-    stock_code: trimCode(r.stock_code),
+    id: n(r.id),
+    stock_code: String(r.stock_code ?? "").trim(),
     stock_name: String(r.stock_name ?? ""),
-    init_cost: roundStockPrice(num(r.init_cost)),
-    init_num: Math.floor(num(r.init_num)),
-    add_cost: roundStockPrice(num(r.add_cost)),
-    add_num: Math.floor(num(r.add_num)),
-    end_cost: roundStockPrice(num(r.end_cost)),
-    commission: Math.floor(num(r.commission ?? 5)),
+    init_cost: ceilStockPrice(n(r.init_cost)),
+    init_num: Math.floor(n(r.init_num)),
+    add_cost: ceilStockPrice(n(r.add_cost)),
+    add_num: Math.floor(n(r.add_num)),
+    end_cost: ceilStockPrice(n(r.end_cost)),
+    commission: formatStockCommission(n(r.commission ?? 5)),
   };
-}
-
-function clampPagination(page: number, pageSize: number) {
-  const p = Number.isFinite(page) && page >= 1 ? Math.floor(page) : 1;
-  const raw = Number.isFinite(pageSize) && pageSize >= 1 ? Math.floor(pageSize) : 10;
-  const ps = Math.min(100, Math.max(1, raw));
-  return { page: p, pageSize: ps, offset: (p - 1) * ps };
 }
 
 export async function listStocksPaged(
@@ -122,7 +97,7 @@ export async function listStocksPaged(
     };
   }
 
-  const rel = quotedTableIdent();
+  const rel = tableIdent();
   const filter = needle
     ? sql`WHERE strpos(lower(trim(stock_code)), lower(${needle})) > 0`
     : sql``;
@@ -130,14 +105,12 @@ export async function listStocksPaged(
     SELECT COUNT(*)::bigint AS c FROM ${sql.unsafe(rel)} ${filter}
   `;
   const total = Number((countRows[0] as { c?: unknown })?.c ?? 0);
-  const rows = await sql`
-    SELECT id, stock_code, stock_name, init_cost, init_num, add_cost, add_num, end_cost, commission
-    FROM ${sql.unsafe(rel)} ${filter}
-    ORDER BY id DESC
-    LIMIT ${ps} OFFSET ${offset}
+  const listRows = await sql`
+    SELECT ${sql.unsafe(STOCK_COLUMNS)} FROM ${sql.unsafe(rel)} ${filter}
+    ORDER BY id DESC LIMIT ${ps} OFFSET ${offset}
   `;
   return {
-    items: rows.map((r) => normalizeRow(r as PgRow)),
+    items: listRows.map((r) => normalizeRow(r as PgRow)),
     total,
     page: p,
     pageSize: ps,
@@ -150,10 +123,9 @@ export async function getStockById(id: number): Promise<StockRow | null> {
     const item = memoryStocks.find((s) => s.id === id);
     return item ? { ...item } : null;
   }
-  const rel = quotedTableIdent();
+  const rel = tableIdent();
   const rows = await sql`
-    SELECT id, stock_code, stock_name, init_cost, init_num, add_cost, add_num, end_cost, commission
-    FROM ${sql.unsafe(rel)}
+    SELECT ${sql.unsafe(STOCK_COLUMNS)} FROM ${sql.unsafe(rel)}
     WHERE id = ${id}
     LIMIT 1
   `;
@@ -164,10 +136,10 @@ export async function getStockById(id: number): Promise<StockRow | null> {
 export async function createStock(input: CreateStockInput): Promise<StockRow> {
   const sql = getSql();
   const code = input.stock_code.trim();
-  const initCost = roundStockPrice(input.init_cost);
-  const addCost = roundStockPrice(input.add_cost);
-  const endCost = roundStockPrice(input.end_cost);
-  const commission = Math.floor(input.commission);
+  const initCost = ceilStockPrice(input.init_cost);
+  const addCost = ceilStockPrice(input.add_cost);
+  const endCost = ceilStockPrice(input.end_cost);
+  const commission = formatStockCommission(input.commission);
 
   if (!sql) {
     const row: StockRow = {
@@ -185,7 +157,7 @@ export async function createStock(input: CreateStockInput): Promise<StockRow> {
     return { ...row };
   }
 
-  const rel = quotedTableIdent();
+  const rel = tableIdent();
   const rows = await sql`
     INSERT INTO ${sql.unsafe(rel)} (
       stock_code, stock_name, init_cost, init_num, add_cost, add_num, end_cost, commission
@@ -193,7 +165,24 @@ export async function createStock(input: CreateStockInput): Promise<StockRow> {
       ${code}, ${input.stock_name}, ${initCost}, ${input.init_num},
       ${addCost}, ${input.add_num}, ${endCost}, ${commission}
     )
-    RETURNING id, stock_code, stock_name, init_cost, init_num, add_cost, add_num, end_cost, commission
+    RETURNING ${sql.unsafe(STOCK_COLUMNS)}
   `;
   return normalizeRow(rows[0] as PgRow);
+}
+
+export async function deleteStockById(id: number): Promise<boolean> {
+  const sql = getSql();
+  if (!sql) {
+    const idx = memoryStocks.findIndex((s) => s.id === id);
+    if (idx < 0) return false;
+    memoryStocks.splice(idx, 1);
+    return true;
+  }
+  const rel = tableIdent();
+  const rows = await sql`
+    DELETE FROM ${sql.unsafe(rel)}
+    WHERE id = ${id}
+    RETURNING id
+  `;
+  return rows.length > 0;
 }

@@ -208,6 +208,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /deleteStock:
+    post:
+      tags:
+        - Stock
+      summary: 删除持仓成本计算记录
+      operationId: deleteStock
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteStockRequest'
+      responses:
+        '200':
+          description: 删除成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteStockResponse'
+        '400':
+          description: 请求体非法
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 不存在该 id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: 数据库错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /updateBlogName:
     post:
       tags:
@@ -331,8 +368,8 @@ components:
           type: integer
           description: 加仓股数 d
         commission:
-          type: integer
-          description: 佣金，默认 5
+          type: number
+          description: 佣金，默认 5，最多 2 位小数
       required:
         - stock_code
         - stock_name
@@ -341,6 +378,28 @@ components:
         - add_cost
         - add_num
         - commission
+    DeleteStockRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 1
+          description: 要删除的记录 id
+      required:
+        - id
+    DeleteStockResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          enum: [true]
+        id:
+          type: integer
+          format: int64
+      required:
+        - ok
+        - id
     StockRecord:
       type: object
       description: 与 stock 表字段一致
@@ -368,8 +427,8 @@ components:
           type: number
           description: 摊薄后持仓成本
         commission:
-          type: integer
-          description: 佣金
+          type: number
+          description: 佣金（最多 2 位小数）
       required:
         - id
         - stock_code

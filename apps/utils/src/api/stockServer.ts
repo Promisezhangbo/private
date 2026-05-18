@@ -1,5 +1,11 @@
 import { OpenApiApiServer } from '@packages/openapi';
-import type { CreateStockRequest, StockListPage, StockRecord } from '@packages/openapi/api-server-gen-types';
+import type {
+  CreateStockRequest,
+  DeleteStockRequest,
+  DeleteStockResponse,
+  StockListPage,
+  StockRecord,
+} from '@packages/openapi/api-server-gen-types';
 
 const stockServerApi = OpenApiApiServer({
   BASE: import.meta.env.VITE_API_SERVER_BASE?.trim() || 'https://api-server.promisezhangbo.deno.net',
@@ -48,6 +54,15 @@ export async function createStock(payload: CreateStockRequest): Promise<ServerSt
   const response = await stockServerApi.createStock({ body: payload });
   if (response.data == null) {
     throw new Error('createStock: empty response');
+  }
+  return response.data;
+}
+
+/** POST /deleteStock */
+export async function deleteStock(payload: DeleteStockRequest): Promise<DeleteStockResponse> {
+  const response = await stockServerApi.deleteStock({ body: payload });
+  if (response.data == null) {
+    throw new Error('deleteStock: empty response');
   }
   return response.data;
 }

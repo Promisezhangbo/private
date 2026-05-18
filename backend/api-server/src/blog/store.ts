@@ -1,6 +1,10 @@
-/** Postgres（postgres.js）+ 无 DATABASE_URL 时内存回退；表名 `BLOG_TABLE`，默认 `blogs`。 */
-import postgres from "postgres";
-import { getBlogTableName, getDatabaseUrl } from "./env";
+/**
+ * Blog 数据访问：`BLOG_TABLE`（默认 `blogs`）。
+ * 无 `DATABASE_URL` 时使用内存占位数据，便于本地无库开发。
+ */
+import { getSql, quoteTable } from "../core/db.ts";
+import { getBlogTableName } from "../core/env.ts";
+import { clampPagination } from "../core/pagination.ts";
 
 export type BlogRow = {
   id: number;
@@ -17,24 +21,11 @@ export type BlogListPageResult = {
 };
 
 type PgRow = { id: unknown; name: unknown; content: unknown; created_at: unknown };
-type SqlClient = ReturnType<typeof postgres>;
 
 const memoryBlogs: BlogRow[] = [{ id: 1, name: "我是一个blog", content: null, created_at: null }];
-let sqlClient: SqlClient | null = null;
 
-function getSql(): SqlClient | null {
-  const url = getDatabaseUrl();
-  if (!url) return null;
-  if (!sqlClient) {
-    sqlClient = postgres(url, { max: 1, idle_timeout: 20, connect_timeout: 15 });
-  }
-  return sqlClient;
-}
-
-function quotedTableIdent(): string {
-  const name = getBlogTableName();
-  if (!/^[a-zA-Z0-9_-]+$/.test(name)) throw new Error(`Invalid BLOG_TABLE: ${name}`);
-  return `"${name}"`;
+function tableIdent(): string {
+  return quoteTable(getBlogTableName());
 }
 
 function normalizeRow(r: PgRow): BlogRow {
@@ -50,13 +41,6 @@ function normalizeRow(r: PgRow): BlogRow {
     content: r.content == null ? null : String(r.content),
     created_at: created,
   };
-}
-
-function clampPagination(page: number, pageSize: number) {
-  const p = Number.isFinite(page) && page >= 1 ? Math.floor(page) : 1;
-  const raw = Number.isFinite(pageSize) && pageSize >= 1 ? Math.floor(pageSize) : 10;
-  const ps = Math.min(100, Math.max(1, raw));
-  return { page: p, pageSize: ps, offset: (p - 1) * ps };
 }
 
 export async function listBlogsPaged(
@@ -77,7 +61,7 @@ export async function listBlogsPaged(
     return { items: list.slice(offset, offset + ps), total: list.length, page: p, pageSize: ps };
   }
 
-  const rel = quotedTableIdent();
+  const rel = tableIdent();
   const filter = needle ? sql`WHERE strpos(lower(name), lower(${needle})) > 0` : sql``;
   const countRows = await sql`
     SELECT COUNT(*)::bigint AS c FROM ${sql.unsafe(rel)} ${filter}
@@ -101,7 +85,7 @@ export async function getBlogById(id: number): Promise<BlogRow | null> {
     const item = memoryBlogs.find((b) => b.id === id);
     return item ? { ...item } : null;
   }
-  const rel = quotedTableIdent();
+  const rel = tableIdent();
   const rows = await sql`SELECT * FROM ${sql.unsafe(rel)} WHERE id = ${id} LIMIT 1`;
   const row = rows[0] as PgRow | undefined;
   return row ? normalizeRow(row) : null;
@@ -115,7 +99,7 @@ export async function updateBlogById(id: number, name: string): Promise<BlogRow 
     item.name = name;
     return { ...item };
   }
-  const rel = quotedTableIdent();
+  const rel = tableIdent();
   const rows = await sql`
     UPDATE ${sql.unsafe(rel)} SET name = ${name} WHERE id = ${id} RETURNING *
   `;

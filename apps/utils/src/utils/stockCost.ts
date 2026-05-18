@@ -12,10 +12,12 @@ export type StockCostInput = {
 };
 
 export const STOCK_COST_DECIMALS = 3;
+export const STOCK_COMMISSION_DECIMALS = 2;
 
-export function roundToDecimals(value: number, decimals = STOCK_COST_DECIMALS): number {
+/** 保留指定位小数，向上取整 */
+export function ceilToDecimals(value: number, decimals = STOCK_COST_DECIMALS): number {
   const factor = 10 ** decimals;
-  return Math.round(value * factor) / factor;
+  return Math.ceil(value * factor) / factor;
 }
 
 /** [(init_cost×init_num) + (add_cost×add_num + commission)] / (init_num + add_num) → end_cost */
@@ -24,5 +26,5 @@ export function calcEndCost(input: StockCostInput): number | null {
   const totalShares = b + d;
   if (totalShares <= 0) return null;
   const raw = (a * b + (c * d + commission)) / totalShares;
-  return roundToDecimals(raw);
+  return ceilToDecimals(raw);
 }

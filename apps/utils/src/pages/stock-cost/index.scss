@@ -103,6 +103,10 @@
   .utils-stock__row--clickable:hover > td {
     background: var(--ant-color-fill-tertiary);
   }
+
+  .ant-table-cell-fix-right {
+    background: inherit;
+  }
 }
 
 .utils-stock__form-grid {
