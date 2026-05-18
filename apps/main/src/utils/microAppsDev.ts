@@ -11,4 +11,5 @@ export const microAppsDev = [
   { name: 'login', port: 9003, prodBase: '/login/', activeRule: '/login' },
   { name: 'skill', port: 9004, prodBase: '/skill/', activeRule: '/skill' },
   { name: 'resume', port: 9005, prodBase: '/resume/', activeRule: '/resume' },
+  { name: 'utils', port: 9006, prodBase: '/utils/', activeRule: '/utils' },
 ] as const;

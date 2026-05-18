@@ -53,6 +53,14 @@ export const SUB_APPS = [
     role: '子应用',
     desc: '在线简历：技能、工作经历、项目、教育与自我评价等结构化展示；样式与主题与主应用对齐。导出为下载静态文件 apps/resume/public/xx.pdf（构建后同源路径 /resume/xx.pdf）。',
   },
+  {
+    key: 'utils',
+    name: 'utils',
+    path: '/utils',
+    devPort: '9006',
+    role: '子应用',
+    desc: '工具箱：股票持仓成本等实用小工具页面。',
+  },
 ] as const;
 
 export const PACKAGES = [

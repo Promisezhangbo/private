@@ -18,7 +18,7 @@ export async function getLLMOutput(
   });
 
   const stream = await client.chat.completions.create({
-    model: 'doubao-seed-2-0-code-preview-260215',
+    model: 'doubao-seed-2-0-pro-260215',
     messages: [{ role: 'user', content: userContent }],
     stream: true,
   });

@@ -12,6 +12,7 @@ const menuMap = [
   { key: 'resume', label: '简历', sub: true },
   { key: 'agent', label: 'AI', sub: true },
   { key: 'blog', label: 'Blog', sub: true },
+  { key: 'utils', label: 'Utils', sub: true },
   { key: 'login', label: '登录', sub: true },
 ];
 
@@ -24,6 +25,7 @@ const MENU_PATH: Record<string, string> = {
   skill: '/skill/home',
   agent: '/agent/home',
   blog: '/blog',
+  utils: '/utils/list',
   login: '/login',
 };
 
@@ -41,7 +43,7 @@ function Layouts() {
     .map((t) => t.key)
     .includes(segment);
   /** 与对应子应用 #app-root 使用同一套 Blog 底纹变量，避免子应用 JS 未到前内容区短暂露出主壳渐变 */
-  const microBlogSurface = isMicroShell && ['resume', 'blog', 'skill'].includes(segment);
+  const microBlogSurface = isMicroShell && ['resume', 'blog', 'skill', 'utils'].includes(segment);
   /** 从 URL 第一段同步当前选中的菜单 */
   useEffect(() => {
     const seg = location.pathname.split('/')[1] || 'home';

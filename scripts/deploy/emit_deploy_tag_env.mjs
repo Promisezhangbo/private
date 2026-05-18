@@ -25,6 +25,7 @@ const PRESETS = {
   agent: { emoji: '🤖', title: 'AI Agent' },
   skill: { emoji: '📊', title: '技能' },
   resume: { emoji: '📄', title: '简历' },
+  utils: { emoji: '🧰', title: '工具箱' },
 };
 
 function formatShanghaiTime() {

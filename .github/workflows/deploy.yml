@@ -29,6 +29,7 @@ on:
           - all
           - agent
           - blog
+          - utils
           - login
           - main
           - resume

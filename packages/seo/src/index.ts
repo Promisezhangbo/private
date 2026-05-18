@@ -107,4 +107,9 @@ export const appSeoPresets = {
     description: '在线简历：技能、经历、项目与教育等结构化展示，支持导出 PDF。',
     keywords: 'zhangbo, 张博, 简历, 在线简历, PDF',
   },
+  utils: {
+    title: '工具箱 | 张博',
+    description: '实用小工具：股票持仓成本计算等。',
+    keywords: 'zhangbo, 张博, utils, 工具, 股票, 成本',
+  },
 } as const satisfies Record<string, DocumentSeoInput>;
