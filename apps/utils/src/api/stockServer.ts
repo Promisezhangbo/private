@@ -2,7 +2,7 @@ import { OpenApiApiServer } from '@packages/openapi';
 import type { CreateStockRequest, StockListPage, StockRecord } from '@packages/openapi/api-server-gen-types';
 
 const stockServerApi = OpenApiApiServer({
-  BASE: import.meta.env.VITE_API_SERVER_BASE?.trim() || 'https://blog-server.promisezhangbo.deno.net',
+  BASE: import.meta.env.VITE_API_SERVER_BASE?.trim() || 'https://api-server.promisezhangbo.deno.net',
   errorHandling: { reporter: () => {}, debounceMs: 200 },
 });
 

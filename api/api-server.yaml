@@ -6,7 +6,7 @@ info:
 servers:
   - url: http://localhost:8000
     description: 本地 Node.js 或 Deno 开发环境
-  - url: https://blog-server.promisezhangbo.deno.net
+  - url: https://api-server.promisezhangbo.deno.net
     description: Deno Deploy 生产环境
 paths:
   /getBlogList:

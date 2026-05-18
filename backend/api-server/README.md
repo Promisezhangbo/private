@@ -71,7 +71,7 @@ pnpm --filter api-server dev
 
 - **App directory（推荐）**：`backend/api-server`
 - **Entry point**：`src/main.ts`
-- 控制台项目名可仍为 `blog-server`（历史名称）；生产 URL 示例：<https://blog-server.promisezhangbo.deno.net>
-- 若修改 App directory，须从 `backend/blog-server` 改为 **`backend/api-server`**，否则部署找不到入口。
+- 生产 URL：<https://api-server.promisezhangbo.deno.net>
+- **App directory**：`backend/api-server`
 
 运行时 **`export default { fetch }`** 以符合 Deno Deploy Dynamic；详见 `deno.json` 的 `deploy.runtime`。
