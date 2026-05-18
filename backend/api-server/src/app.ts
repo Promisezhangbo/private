@@ -3,6 +3,7 @@ import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { getCorsAllowedOriginsExtra } from "./db/env";
 import { blogRoutes } from "./routes/blog";
+import { stockRoutes } from "./routes/stock";
 import { systemRoutes } from "./routes/system";
 
 const corsExtraOriginSet = new Set(getCorsAllowedOriginsExtra());
@@ -42,5 +43,6 @@ app.use(
 );
 app.route("/", systemRoutes);
 app.route("/", blogRoutes);
+app.route("/", stockRoutes);
 
 export { app };

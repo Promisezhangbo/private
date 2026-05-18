@@ -1,6 +1,6 @@
 {
-  "name": "blog-server",
-  "description": "博客后端：Deno + TypeScript + Hono（Express 风格路由）；入口见 src/main.ts。",
+  "name": "api-server",
+  "description": "monorepo 唯一 Deno 后端（blog / stock 等）：TypeScript + Hono；入口见 src/main.ts。",
   "version": "0.0.0",
   "private": true,
   "type": "module",

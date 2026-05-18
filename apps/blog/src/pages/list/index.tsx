@@ -108,7 +108,7 @@ function List() {
         <Alert
           type={serverBlogsError ? 'warning' : 'info'}
           showIcon
-          message="Deno blog-server"
+          message="Deno api-server"
           description={
             serverBlogsError ? (
               serverBlogsError

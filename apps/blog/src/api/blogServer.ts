@@ -1,8 +1,8 @@
-import { OpenApiBlogServer } from '@packages/openapi';
-import type { BlogListItem, BlogListPage, UpdateBlogNameRequest } from '@packages/openapi/blog-server-gen-types';
+import { OpenApiApiServer } from '@packages/openapi';
+import type { BlogListItem, BlogListPage, UpdateBlogNameRequest } from '@packages/openapi/api-server-gen-types';
 
-const blogServerApi = OpenApiBlogServer({
-  BASE: import.meta.env.VITE_BLOG_SERVER_BASE?.trim() || 'https://blog-server.promisezhangbo.deno.net',
+const blogServerApi = OpenApiApiServer({
+  BASE: import.meta.env.VITE_API_SERVER_BASE?.trim() || 'https://blog-server.promisezhangbo.deno.net',
   errorHandling: { reporter: () => {}, debounceMs: 200 },
 });
 

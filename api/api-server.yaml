@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: blog-server API
+  title: api-server API
   version: 1.0.0
   description: Blog 后端服务接口文档，适配 Swagger / OpenAPI。
 servers:
@@ -105,6 +105,103 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /getStockList:
+    get:
+      tags:
+        - Stock
+      summary: 获取持仓成本计算记录列表（分页）
+      operationId: getStockList
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+      responses:
+        '200':
+          description: 成功返回分页列表
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockListPage'
+        '400':
+          description: 分页参数非法
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /getStock:
+    get:
+      tags:
+        - Stock
+      summary: 按 id 获取单条持仓成本记录
+      operationId: getStock
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: 成功返回单条
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockRecord'
+        '400':
+          description: 缺少或非法的 id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 不存在该 id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /createStock:
+    post:
+      tags:
+        - Stock
+      summary: 新增持仓成本计算记录
+      operationId: createStock
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStockRequest'
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockRecord'
+        '400':
+          description: 请求体非法
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: 数据库错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /updateBlogName:
     post:
       tags:
@@ -186,6 +283,97 @@ components:
       required:
         - id
         - name
+    StockListPage:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockRecord'
+        total:
+          type: integer
+          format: int64
+        page:
+          type: integer
+        pageSize:
+          type: integer
+      required:
+        - items
+        - total
+        - page
+        - pageSize
+    CreateStockRequest:
+      type: object
+      description: 与 stock 表字段一致；end_cost 由服务端按公式计算后写入
+      properties:
+        stock_code:
+          type: string
+          maxLength: 32
+        stock_name:
+          type: string
+          maxLength: 128
+        init_cost:
+          type: number
+          description: 当前成本价 a（smallint）
+        init_num:
+          type: integer
+          description: 当前持股数 b
+        add_cost:
+          type: number
+          description: 加仓成本价 c（smallint）
+        add_num:
+          type: integer
+          description: 加仓股数 d
+        commission:
+          type: integer
+          description: 佣金，默认 5
+      required:
+        - stock_code
+        - stock_name
+        - init_cost
+        - init_num
+        - add_cost
+        - add_num
+        - commission
+    StockRecord:
+      type: object
+      description: 与 stock 表字段一致
+      properties:
+        id:
+          type: integer
+          format: int64
+        stock_code:
+          type: string
+        stock_name:
+          type: string
+        init_cost:
+          type: number
+          description: 当前成本价 a
+        init_num:
+          type: integer
+          description: 当前持股数 b
+        add_cost:
+          type: number
+          description: 加仓成本价 c
+        add_num:
+          type: integer
+          description: 加仓股数 d
+        end_cost:
+          type: number
+          description: 摊薄后持仓成本
+        commission:
+          type: integer
+          description: 佣金
+      required:
+        - id
+        - stock_code
+        - stock_name
+        - init_cost
+        - init_num
+        - add_cost
+        - add_num
+        - end_cost
+        - commission
     BlogListItem:
       type: object
       properties:

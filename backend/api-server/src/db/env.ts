@@ -16,3 +16,9 @@ export function getBlogTableName(): string {
   const raw = Deno.env.get("BLOG_TABLE")?.trim() ?? "blogs";
   return raw.length > 0 ? raw : "blogs";
 }
+
+/** 持仓成本记录表，默认 `stock`。 */
+export function getStockTableName(): string {
+  const raw = Deno.env.get("STOCK_TABLE")?.trim() ?? "stock";
+  return raw.length > 0 ? raw : "stock";
+}

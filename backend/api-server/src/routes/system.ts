@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { getDatabaseUrl } from "../db/env";
 
 const health = () => ({
-  name: "blog-server",
+  name: "api-server",
   status: "ok" as const,
   runtime: "deno" as const,
   dataSource: getDatabaseUrl() ? ("postgres" as const) : ("memory" as const),

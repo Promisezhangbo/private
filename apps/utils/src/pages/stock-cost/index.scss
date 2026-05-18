@@ -43,6 +43,10 @@
   margin-bottom: 20px !important;
 }
 
+.utils-stock__alert {
+  margin-bottom: 16px;
+}
+
 .utils-stock__layout {
   display: grid;
   grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr);
@@ -77,6 +81,24 @@
   @media (width <= 520px) {
     grid-template-columns: 1fr;
   }
+}
+
+.utils-stock__form-grid--meta {
+  margin-bottom: 0;
+}
+
+.utils-stock__history {
+  margin-top: 24px;
+}
+
+.utils-stock__history-item {
+  cursor: default;
+}
+
+.utils-stock__pagination {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .utils-stock__actions {

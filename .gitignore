@@ -1,5 +1,5 @@
 **/node_modules/
-backend/blog-server/.env.local
+backend/api-server/.env.local
 .pnpm-store/
 packages/openapi/gen/
 .turbo/

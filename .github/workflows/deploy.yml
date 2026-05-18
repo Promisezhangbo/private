@@ -29,11 +29,11 @@ on:
           - all
           - agent
           - blog
-          - utils
           - login
           - main
           - resume
           - skill
+          - utils
           # deploy-workflow-options:end
 
 permissions:
