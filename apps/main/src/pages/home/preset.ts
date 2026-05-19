@@ -59,11 +59,24 @@ export const SUB_APPS = [
     path: '/utils',
     devPort: '9006',
     role: '子应用',
-    desc: '工具箱：股票持仓成本等实用小工具页面。',
+    desc: '工具箱：股票持仓成本、OpenAPI SDK 使用说明（基于 api-server.yaml 的静态演示）等页面。',
   },
 ] as const;
 
-export const PACKAGES = [
+export type PackageLink = {
+  label: string;
+  href: string;
+  /** 站内路径用 React Router；外链新窗口打开 */
+  external?: boolean;
+};
+
+export type PackageItem = {
+  name: string;
+  desc: string;
+  links?: readonly PackageLink[];
+};
+
+export const PACKAGES: readonly PackageItem[] = [
   {
     name: '@packages/style-config',
     desc: '跨应用 Sass 变量、主题 mixin、语义色板(CSS 变量，对齐 Ant Design 深浅色)。',
@@ -71,7 +84,19 @@ export const PACKAGES = [
   { name: '@packages/ts-config', desc: 'TypeScript 工程引用与全局类型声明。' },
   { name: '@packages/vite-build-utils', desc: 'Vite/Rollup manualChunks 等构建复用逻辑。' },
   { name: '@packages/stylelint-config', desc: 'Stylelint 共享配置。' },
-  { name: '@packages/openapi', desc: 'OpenAPI 生成类型与请求封装（如 blog-gen-types),供子应用按需依赖。' },
+  {
+    name: '@packages/openapi',
+    desc:
+      'Monorepo 内 OpenAPI 工作流：api/*.yaml + packages/openapi/openapi.config.ts → 自研 openapi-axios-sdk（openapi-gen）→ packages/openapi/gen/；包内 pnpm run generate / typecheck，仓库根 pnpm run generate。与 backend/api-server 配套。',
+    links: [
+      { label: 'SDK 使用说明（utils 子应用）', href: '/utils/openapi-demo' },
+      {
+        label: 'openapi-axios-sdk（自研，npm）',
+        href: 'https://www.npmjs.com/package/openapi-axios-sdk',
+        external: true,
+      },
+    ],
+  },
   {
     name: '@packages/seo',
     desc: '运行时 SEO：`applyDocumentSeo` 同步宿主 `document` 的 title、description、Open Graph、Twitter Card 与 canonical；`appSeoPresets` 提供主应用与各子应用默认文案。主应用在 `/home`、子应用在 `render` 入口调用；详见 `docs/seo.md`。',
@@ -80,8 +105,8 @@ export const PACKAGES = [
 
 export const TECH_STACK = {
   runtime: ['React 19', 'React Router 7', 'Ant Design 6', '@ant-design/icons', 'qiankun 2.x', 'vite-plugin-qiankun', 'Sass'],
-  build: ['Vite 8', 'TypeScript 5.9', 'Rolldown'],
-  workspace: ['pnpm 10 workspace', 'Turbo 2.x', 'monorepo apps/* + packages/*'],
+  build: ['Vite 8', 'TypeScript 5.9', 'Rolldown', 'openapi-axios-sdk（自研 openapi-gen）'],
+  workspace: ['pnpm 10 workspace', 'Turbo 2.x', 'monorepo apps/* + packages/* + api/*.yaml'],
   quality: ['oxlint', 'stylelint', 'oxfmt', 'husky', 'lint-staged', 'commitlint'],
 } as const;
 

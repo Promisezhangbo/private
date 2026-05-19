@@ -68,5 +68,7 @@ deno run --allow-net --allow-env --env-file=.env.local tools/inspect-stock-table
 
 ## Deno Deploy
 
+代码推上去会自动部署
+
 - **App directory**：`backend/api-server`
 - **Entry point**：`src/main.ts`

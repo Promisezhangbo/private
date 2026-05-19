@@ -158,6 +158,23 @@
   color: var(--sc-home-hero-lead) !important;
 }
 
+.dash-package-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 8px;
+}
+
+.dash-package-link {
+  font-size: 13px;
+  color: var(--ant-color-primary);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 html[data-theme='dark'] {
   .dash-matrix.ant-descriptions .ant-descriptions-item-label {
     background: rgb(255 255 255 / 0.04);

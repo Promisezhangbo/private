@@ -1,4 +1,5 @@
 import { Card, Descriptions, Tag, Typography } from 'antd';
+import { Link } from 'react-router-dom';
 import './index.scss';
 import { ARCHITECTURE, OVERVIEW, PACKAGES, SUB_APPS, TECH_STACK } from './preset';
 
@@ -67,6 +68,27 @@ function Home() {
                 {p.name}
               </Typography.Text>
               <Typography.Paragraph className="dash-package-desc">{p.desc}</Typography.Paragraph>
+              {p.links?.length ? (
+                <div className="dash-package-links">
+                  {p.links.map((link) =>
+                    link.external ? (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="dash-package-link"
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link key={link.href} to={link.href} className="dash-package-link">
+                        {link.label}
+                      </Link>
+                    ),
+                  )}
+                </div>
+              ) : null}
             </li>
           ))}
         </ul>

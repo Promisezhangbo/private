@@ -1,9 +1,16 @@
-import { LineChartOutlined } from '@ant-design/icons';
+import { ApiOutlined, LineChartOutlined } from '@ant-design/icons';
 import { Card, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import './index.scss';
 
 const UTIL_ITEMS = [
+  {
+    key: 'openapi',
+    title: 'OpenAPI SDK 说明',
+    desc: '基于 api-server.yaml 展示 openapi-axios-sdk 接入步骤与调用示例（仅展示，不发起请求）。',
+    path: '/utils/openapi',
+    icon: <ApiOutlined />,
+  },
   {
     key: 'stock-cost',
     title: '股票持仓成本',
