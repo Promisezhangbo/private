@@ -5,6 +5,7 @@ import {
 } from '@/generated/micro-app-shell.generated';
 import { useAppTheme, type AppThemeMode } from '@/theme/useAppTheme';
 import './index.scss';
+import { SiteLocaleSwitcher } from '@packages/i18n';
 import { appSeoPresets, applyDocumentSeo } from '@packages/seo';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Layout, Menu, Select } from 'antd';
@@ -63,18 +64,21 @@ function Layouts() {
             items={menuMap.map((k) => ({ key: k.key, label: k.label }))}
             onClick={({ key }) => onMenuSelect(String(key))}
           />
-          <Select
-            size="small"
-            className="main-header-theme-select"
-            variant="borderless"
-            value={mode}
-            onChange={(v) => setMode(v as AppThemeMode)}
-            options={[
-              { value: 'light', label: '浅色' },
-              { value: 'dark', label: '暗色' },
-            ]}
-            aria-label="切换主题"
-          />
+          <div className="main-header-actions">
+            <SiteLocaleSwitcher className="main-header-locale-select" />
+            <Select
+              size="small"
+              className="main-header-theme-select"
+              variant="borderless"
+              value={mode}
+              onChange={(v) => setMode(v as AppThemeMode)}
+              options={[
+                { value: 'light', label: '浅色' },
+                { value: 'dark', label: '暗色' },
+              ]}
+              aria-label="切换主题"
+            />
+          </div>
         </Header>
       )}
       <Content className={`main-content ${showHeader ? '' : ' main-content--login-viewport'}`}>

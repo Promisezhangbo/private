@@ -7,6 +7,7 @@
 - Turbo 使用说明：见 `docs/turbo.md`
 - 后端 api-server：见 `backend/api-server/README.md`
 - 文档索引：见 `docs/README.md`
+- 多语言：见 `docs/i18n.md`
 
 ## 技术栈（摘要）
 
@@ -90,7 +91,8 @@ pnpm micro-app:remove
 │   ├── stylelint-config/      # @packages/stylelint-config — Stylelint 预设
 │   ├── vite-build-utils/      # @packages/vite-build-utils — 构建分包等工具
 │   ├── openapi/               # @packages/openapi — openapi-gen 生成 gen/，聚合 OpenApi<Name> 入口
-│   └── micro-app-cli/         # @packages/micro-app-cli — 子应用 create/remove/sync 脚手架
+│   ├── micro-app-cli/         # @packages/micro-app-cli — 子应用 create/remove/sync 脚手架
+│   └── i18n/                  # @packages/i18n — i18next 多语言（zh-CN / en），login 已接入
 ├── api/                       # OpenAPI YAML（*.yaml）
 ├── dist/                      # 构建输出（根脚本 build + postbuild）
 ├── scripts/                   # 部署辅助脚本等

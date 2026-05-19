@@ -1,3 +1,4 @@
+import { SiteLocaleSwitcher } from '@packages/i18n';
 import type { ReactNode } from 'react';
 import './AuthShell.scss';
 
@@ -10,6 +11,7 @@ type AuthShellProps = {
 export default function AuthShell({ children }: AuthShellProps) {
   return (
     <div className="login-warp">
+      <SiteLocaleSwitcher className="login-locale-switcher" />
       <div className="login-auth-shell">
         <div className="login-auth-inner">{children}</div>
       </div>

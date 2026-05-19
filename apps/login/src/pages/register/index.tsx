@@ -1,3 +1,4 @@
+import { useT } from '@packages/i18n';
 import { useNavigate } from 'react-router-dom';
 import { message, Flex, Button, Form, Input, Card, Typography, Image } from 'antd';
 import logo from '@/assets/logo.png';
@@ -7,17 +8,18 @@ import './index.scss';
 function Register() {
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const { t } = useT('login');
 
   const onFinish = async () => {
-    const hide = message.loading({ content: '正在注册...', key: 'register' });
+    const hide = message.loading({ content: t('register.loading'), key: 'register' });
     try {
       await delay(800);
       hide();
-      message.success({ content: '注册成功，请登录', key: 'register' });
+      message.success({ content: t('register.success'), key: 'register' });
       navigate('/login/singin');
     } catch {
       hide();
-      message.error('注册失败');
+      message.error(t('register.failed'));
     }
   };
 
@@ -27,53 +29,61 @@ function Register() {
         <div className="login-brand">
           <Image src={logo} alt="" width={56} height={56} preview={false} />
           <Typography.Title level={4} className="login-brand-title">
-            创建账号
+            {t('register.title')}
           </Typography.Title>
         </div>
         <Form form={form} layout="vertical" onFinish={onFinish}>
-          <Form.Item name="username" label="用户名" rules={[{ required: true, message: '请输入用户名' }]}>
-            <Input placeholder="请输入用户名" autoComplete="username" />
+          <Form.Item
+            name="username"
+            label={t('register.username')}
+            rules={[{ required: true, message: t('register.usernameRequired') }]}
+          >
+            <Input placeholder={t('register.usernamePlaceholder')} autoComplete="username" />
           </Form.Item>
           <Form.Item
             name="email"
-            label="邮箱"
+            label={t('register.email')}
             rules={[
-              { required: true, message: '请输入邮箱' },
-              { type: 'email', message: '请输入正确的邮箱' },
+              { required: true, message: t('register.emailRequired') },
+              { type: 'email', message: t('register.emailInvalid') },
             ]}
           >
-            <Input placeholder="name@example.com" autoComplete="email" />
+            <Input placeholder={t('register.emailPlaceholder')} autoComplete="email" />
           </Form.Item>
-          <Form.Item name="password" label="密码" rules={[{ required: true, message: '请输入密码' }]}>
-            <Input.Password placeholder="至少 8 位字符" autoComplete="new-password" />
+          <Form.Item
+            name="password"
+            label={t('register.password')}
+            rules={[{ required: true, message: t('register.passwordRequired') }]}
+          >
+            <Input.Password placeholder={t('register.passwordPlaceholder')} autoComplete="new-password" />
           </Form.Item>
           <Form.Item
             name="confirm"
-            label="确认密码"
+            label={t('register.confirmPassword')}
             dependencies={['password']}
             rules={[
-              { required: true, message: '请再次输入密码' },
+              { required: true, message: t('register.confirmRequired') },
               ({ getFieldValue }) => ({
                 validator(_: unknown, value?: string) {
                   if (!value || getFieldValue('password') === value) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(new Error('两次输入的密码不一致'));
+                  return Promise.reject(new Error(t('register.confirmMismatch')));
                 },
               }),
             ]}
           >
-            <Input.Password placeholder="再次输入密码" autoComplete="new-password" />
+            <Input.Password placeholder={t('register.confirmPlaceholder')} autoComplete="new-password" />
           </Form.Item>
           <Flex justify="space-between" className="login-register-footer">
-            <Button onClick={() => form.resetFields()}>重置</Button>
+            <Button onClick={() => form.resetFields()}>{t('register.reset')}</Button>
             <Button type="link" onClick={() => navigate('/login/singin')}>
-              已有账号?登录
+              {t('register.goSignin')}
             </Button>
           </Flex>
           <Form.Item>
             <Button type="primary" htmlType="submit" size="large" block>
-              注册
+              {t('register.submit')}
             </Button>
           </Form.Item>
         </Form>

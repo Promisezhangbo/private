@@ -1,6 +1,24 @@
 .main-app {
   .main-header {
+    display: flex;
+    align-items: center;
     background: transparent;
+
+    .ant-menu {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .main-header-actions {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .main-header-locale-select {
+      width: 108px;
+    }
 
     .main-header-theme-select {
       width: 96px;

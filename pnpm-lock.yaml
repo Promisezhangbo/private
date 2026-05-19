@@ -169,6 +169,9 @@ importers:
 
   apps/login:
     dependencies:
+      '@packages/i18n':
+        specifier: workspace:*
+        version: link:../../packages/i18n
       '@packages/seo':
         specifier: workspace:*
         version: link:../../packages/seo
@@ -209,6 +212,9 @@ importers:
 
   apps/main:
     dependencies:
+      '@packages/i18n':
+        specifier: workspace:*
+        version: link:../../packages/i18n
       '@packages/seo':
         specifier: workspace:*
         version: link:../../packages/seo
@@ -397,6 +403,26 @@ importers:
       '@packages/ts-config':
         specifier: workspace:*
         version: link:../../packages/ts-config
+
+  packages/i18n:
+    dependencies:
+      antd:
+        specifier: ^6.0.0
+        version: 6.3.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      i18next:
+        specifier: ^25.8.0
+        version: 25.10.10(typescript@5.9.3)
+      react:
+        specifier: ^19.0.0
+        version: 19.2.4
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.4(react@19.2.4)
+      react-i18next:
+        specifier: ^16.5.4
+        version: 16.6.6(i18next@25.10.10(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
+
+  packages/micro-app-cli: {}
 
   packages/openapi:
     dependencies:
@@ -2577,6 +2603,9 @@ packages:
   html-dom-parser@5.1.8:
     resolution: {integrity: sha512-MCIUng//mF2qTtGHXJWr6OLfHWmg3Pm8ezpfiltF83tizPWY17JxT4dRLE8lykJ5bChJELoY3onQKPbufJHxYA==}
 
+  html-parse-stringify@3.0.1:
+    resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
+
   html-react-parser@5.2.17:
     resolution: {integrity: sha512-m+K/7Moq1jodAB4VL0RXSOmtwLUYoAsikZhwd+hGQe5Vtw2dbWfpFd60poxojMU0Tsh9w59mN1QLEcoHz0Dx9w==}
     peerDependencies:
@@ -2600,6 +2629,14 @@ packages:
     resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
     engines: {node: '>=18'}
     hasBin: true
+
+  i18next@25.10.10:
+    resolution: {integrity: sha512-cqUW2Z3EkRx7NqSyywjkgCLK7KLCL6IFVFcONG7nVYIJ3ekZ1/N5jUsihHV6Bq37NfhgtczxJcxduELtjTwkuQ==}
+    peerDependencies:
+      typescript: ^5 || ^6
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
@@ -3304,6 +3341,22 @@ packages:
     peerDependencies:
       react: ^19.2.4
 
+  react-i18next@16.6.6:
+    resolution: {integrity: sha512-ZgL2HUoW34UKUkOV7uSQFE1CDnRPD+tCR3ywSuWH7u2iapnz86U8Bi3Vrs620qNDzCf1F47NxglCEkchCTDOHw==}
+    peerDependencies:
+      i18next: '>= 25.10.9'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+      typescript: ^5 || ^6
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+      typescript:
+        optional: true
+
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
@@ -3663,6 +3716,11 @@ packages:
     peerDependencies:
       browserslist: '>= 4.21.0'
 
+  use-sync-external-store@1.6.0:
+    resolution: {integrity: sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -3724,6 +3782,10 @@ packages:
         optional: true
       yaml:
         optional: true
+
+  void-elements@3.1.0:
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
+    engines: {node: '>=0.10.0'}
 
   vscode-jsonrpc@8.2.0:
     resolution: {integrity: sha512-C+r0eKJUIfiDIfwJhria30+TYWPtuHJXHtI7J0YlOmKAo7ogxP20T0zxB7HZQIFhIyvoBPwWskjxrvAtfjyZfA==}
@@ -6018,6 +6080,10 @@ snapshots:
       domhandler: 5.0.3
       htmlparser2: 10.1.0
 
+  html-parse-stringify@3.0.1:
+    dependencies:
+      void-elements: 3.1.0
+
   html-react-parser@5.2.17(@types/react@19.2.14)(react@19.2.4):
     dependencies:
       domhandler: 5.0.3
@@ -6040,6 +6106,12 @@ snapshots:
       entities: 7.0.1
 
   husky@9.1.7: {}
+
+  i18next@25.10.10(typescript@5.9.3):
+    dependencies:
+      '@babel/runtime': 7.29.2
+    optionalDependencies:
+      typescript: 5.9.3
 
   iconv-lite@0.6.3:
     dependencies:
@@ -6921,6 +6993,17 @@ snapshots:
       react: 19.2.4
       scheduler: 0.27.0
 
+  react-i18next@16.6.6(i18next@25.10.10(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3):
+    dependencies:
+      '@babel/runtime': 7.29.2
+      html-parse-stringify: 3.0.1
+      i18next: 25.10.10(typescript@5.9.3)
+      react: 19.2.4
+      use-sync-external-store: 1.6.0(react@19.2.4)
+    optionalDependencies:
+      react-dom: 19.2.4(react@19.2.4)
+      typescript: 5.9.3
+
   react-is@18.3.1: {}
 
   react-markdown@10.1.0(@types/react@19.2.14)(react@19.2.4):
@@ -7357,6 +7440,10 @@ snapshots:
       escalade: 3.2.0
       picocolors: 1.1.1
 
+  use-sync-external-store@1.6.0(react@19.2.4):
+    dependencies:
+      react: 19.2.4
+
   util-deprecate@1.0.2: {}
 
   uuid@11.1.0: {}
@@ -7393,6 +7480,8 @@ snapshots:
     transitivePeerDependencies:
       - '@emnapi/core'
       - '@emnapi/runtime'
+
+  void-elements@3.1.0: {}
 
   vscode-jsonrpc@8.2.0: {}
 

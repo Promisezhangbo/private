@@ -60,6 +60,10 @@ export const PACKAGES: readonly PackageItem[] = [
     name: '@packages/micro-app-cli',
     desc: '微前端子应用脚手架：`pnpm micro-app:create` 交互创建子应用、`pnpm micro-app:remove` 删除；自动更新 registry、qiankun 注册、主应用菜单、SEO、首页子应用表与 GitHub Actions deploy 下拉。',
   },
+  {
+    name: '@packages/i18n',
+    desc: '共享多语言（i18next）：全站 `private_locale`；`I18nProvider`、`useT`、`AntdLocaleProvider`、`SiteLocaleSwitcher`。main 顶栏与 login 已接入。详见 `docs/i18n.md`。',
+  },
 ] as const;
 
 export const TECH_STACK = {
