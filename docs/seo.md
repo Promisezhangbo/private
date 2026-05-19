@@ -4,7 +4,7 @@
 
 ## 目标与范围
 
-- **主应用**（`apps/main`）与各 **子应用**（`agent`、`blog`、`login`、`skill`、`resume`）在首屏 HTML 与 SPA 路由切换后，尽量提供一致的 `title`、`description`、Open Graph、Twitter Card 与规范链接（`canonical`）。
+- **主应用**（`apps/main`）与各 **子应用**（`agent`、`blog`、`login`、`skill`、`resume`、`utils`）在首屏 HTML 与 SPA 路由切换后，尽量提供一致的 `title`、`description`、Open Graph、Twitter Card 与规范链接（`canonical`）。
 - **登录子应用** 使用 `noindex, nofollow`，避免登录页进入公开索引、稀释其他页面权重。
 
 本方案面向 **浏览器内可执行的 SPA**：部分爬虫若不执行 JavaScript，仅能读到各应用构建产物中的 `index.html` 静态片段；执行 JS 后由运行时逻辑补全 `og:url` 等与当前 URL 一致的字段。

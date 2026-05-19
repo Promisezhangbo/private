@@ -5,6 +5,8 @@
 ## 文档
 
 - Turbo 使用说明：见 `docs/turbo.md`
+- 后端 api-server：见 `backend/api-server/README.md`
+- 文档索引：见 `docs/README.md`
 
 ## 技术栈（摘要）
 
@@ -66,8 +68,11 @@ cd apps/main && pnpm dev
 │   ├── main/                  # 基座：路由、布局、qiankun 注册与全局状态
 │   ├── login/ blog/ resume/   # 微应用
 │   ├── agent/                 # 微应用：集成 OpenAI SDK 等实验能力
-│   └── skill/                 # 微应用：动效等实验能力
-├── packages/                  #  workspace 共享包
+│   ├── skill/                 # 微应用：动效等实验能力
+│   └── utils/                 # 微应用：工具箱（持仓成本、OpenAPI SDK 说明等）
+├── backend/                   # 后端（当前为 api-server，Deno + Hono）
+│   └── api-server/
+├── packages/                  # workspace 共享包
 │   ├── ts-config/             # @packages/ts-config — TS 基础配置
 │   ├── style-config/          # @packages/style-config — 公共 SCSS 变量与主题
 │   ├── stylelint-config/      # @packages/stylelint-config — Stylelint 预设

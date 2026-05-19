@@ -1,7 +1,7 @@
 export const OVERVIEW = {
   title: 'Private 工作台',
   subtitle:
-    '基于 pnpm workspace + Turbo 的前端单体仓库：主应用承载布局与微前端容器，业务以独立子应用开发与构建，由 qiankun 在运行时按路由挂载。',
+    '基于 pnpm workspace + Turbo 的 Monorepo：前端 apps/* 由 qiankun 挂载；后端 backend/api-server（Deno）实现 api/api-server.yaml；OpenAPI 生成 SDK 供子应用调用。',
 };
 
 export const SUB_APPS = [
@@ -89,7 +89,7 @@ export const PACKAGES: readonly PackageItem[] = [
     desc:
       'Monorepo 内 OpenAPI 工作流：api/*.yaml + packages/openapi/openapi.config.ts → 自研 openapi-axios-sdk（openapi-gen）→ packages/openapi/gen/；包内 pnpm run generate / typecheck，仓库根 pnpm run generate。与 backend/api-server 配套。',
     links: [
-      { label: 'SDK 使用说明（utils 子应用）', href: '/utils/openapi-demo' },
+      { label: 'SDK 使用说明（utils 子应用）', href: '/utils/openapi' },
       {
         label: 'openapi-axios-sdk（自研，npm）',
         href: 'https://www.npmjs.com/package/openapi-axios-sdk',
@@ -106,7 +106,8 @@ export const PACKAGES: readonly PackageItem[] = [
 export const TECH_STACK = {
   runtime: ['React 19', 'React Router 7', 'Ant Design 6', '@ant-design/icons', 'qiankun 2.x', 'vite-plugin-qiankun', 'Sass'],
   build: ['Vite 8', 'TypeScript 5.9', 'Rolldown', 'openapi-axios-sdk（自研 openapi-gen）'],
-  workspace: ['pnpm 10 workspace', 'Turbo 2.x', 'monorepo apps/* + packages/* + api/*.yaml'],
+  workspace: ['pnpm 10 workspace', 'Turbo 2.x', 'apps/* + packages/* + backend/* + api/*.yaml'],
+  backend: ['Deno', 'Hono', 'PostgreSQL（Prisma Postgres）', 'Deno Deploy'],
   quality: ['oxlint', 'stylelint', 'oxfmt', 'husky', 'lint-staged', 'commitlint'],
 } as const;
 
@@ -121,4 +122,6 @@ export const ARCHITECTURE = {
     '使用 `registerMicroApps` + `start` 拉起子应用生命周期；`prefetch` 关闭以降低首访噪音；`sandbox` 开启，当前未启用实验性样式隔离（`experimentalStyleIsolation: false`），依赖命名空间与约定减少样式串扰。',
   styling:
     '跨应用复用 `@packages/style-config`(Sass 变量与 mixin),语义色板以 CSS 变量挂在 `:root` / `html[data-theme]`，与主应用 `ThemeRoot` + Ant Design `algorithm` 同步切换浅/暗色，保证顶栏与子应用壳层观感一致。',
+  backend:
+    '后端 `backend/api-server` 独立进程部署（默认 https://api-server.promisezhangbo.deno.net）。子应用通过 `VITE_API_SERVER_BASE` 指向该地址；契约见 `api/api-server.yaml`，与 `@packages/openapi` 生成类型一致。`pnpm dev` 不启动后端，需另开终端 `pnpm --filter api-server dev:db`。',
 } as const;
