@@ -162,7 +162,19 @@
       min-width: 0;
     }
 
+    /* flex 子项需 min-width:0，否则 Markdown 长行会把气泡撑出可视区 */
+    .ant-bubble-start .ant-bubble-body {
+      flex: 1 1 0;
+      min-width: 0;
+      max-width: 100%;
+    }
+
     .ant-bubble-start .ant-bubble-content {
+      box-sizing: border-box;
+      min-width: 0;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      word-break: break-word;
       border-radius: $radius-md;
       background: linear-gradient(180deg, rgb(255 255 255 / 0.98) 0%, rgb(248 250 252 / 0.95) 100%);
       border-color: var(--border);
@@ -288,6 +300,16 @@
 
   &__md {
     font-size: 15px;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+
+    /* @ant-design/x-markdown 根节点及常见块级子元素 */
+    :where(p, li, td, th, blockquote, span, div, h1, h2, h3, h4) {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
 
     h1,
     h2,
@@ -346,6 +368,7 @@
     pre {
       margin: 0.65em 0;
       padding: 12px 14px;
+      max-width: 100%;
       overflow-x: auto;
       font-size: 13px;
       line-height: 1.55;
@@ -365,12 +388,13 @@
 
     table {
       width: 100%;
+      max-width: 100%;
       margin: 0.65em 0;
       font-size: 14px;
+      table-layout: fixed;
       border-collapse: collapse;
       border: 1px solid var(--border);
       border-radius: $radius-md;
-      overflow: hidden;
     }
 
     th,
@@ -378,6 +402,8 @@
       padding: 8px 10px;
       border-bottom: 1px solid var(--border);
       text-align: left;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
     th {
@@ -392,10 +418,19 @@
     a {
       color: #0284c7;
       text-decoration: none;
+      overflow-wrap: anywhere;
+      word-break: break-word;
 
       &:hover {
         text-decoration: underline;
       }
+    }
+
+    img,
+    svg,
+    video {
+      max-width: 100%;
+      height: auto;
     }
   }
 
