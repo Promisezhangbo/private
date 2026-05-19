@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^6.1.0",
+    "@packages/i18n": "workspace:*",
     "@packages/openapi": "workspace:*",
     "@packages/seo": "workspace:*",
     "antd": "^6.3.0",

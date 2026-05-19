@@ -74,6 +74,9 @@ importers:
       '@ant-design/x-markdown':
         specifier: ^2.3.0
         version: 2.5.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@packages/i18n':
+        specifier: workspace:*
+        version: link:../../packages/i18n
       '@packages/seo':
         specifier: workspace:*
         version: link:../../packages/seo
@@ -123,6 +126,9 @@ importers:
       '@ant-design/icons':
         specifier: ^6.1.0
         version: 6.1.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@packages/i18n':
+        specifier: workspace:*
+        version: link:../../packages/i18n
       '@packages/seo':
         specifier: workspace:*
         version: link:../../packages/seo
@@ -258,6 +264,9 @@ importers:
       '@ant-design/icons':
         specifier: ^6.1.0
         version: 6.1.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@packages/i18n':
+        specifier: workspace:*
+        version: link:../../packages/i18n
       '@packages/seo':
         specifier: workspace:*
         version: link:../../packages/seo
@@ -301,6 +310,9 @@ importers:
 
   apps/skill:
     dependencies:
+      '@packages/i18n':
+        specifier: workspace:*
+        version: link:../../packages/i18n
       '@packages/seo':
         specifier: workspace:*
         version: link:../../packages/seo
@@ -350,6 +362,9 @@ importers:
       '@ant-design/icons':
         specifier: ^6.1.0
         version: 6.1.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@packages/i18n':
+        specifier: workspace:*
+        version: link:../../packages/i18n
       '@packages/openapi':
         specifier: workspace:*
         version: link:../../packages/openapi

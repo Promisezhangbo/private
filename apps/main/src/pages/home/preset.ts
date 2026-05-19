@@ -62,7 +62,7 @@ export const PACKAGES: readonly PackageItem[] = [
   },
   {
     name: '@packages/i18n',
-    desc: '共享多语言（i18next）：全站 `private_locale`；`I18nProvider`、`useT`、`AntdLocaleProvider`、`SiteLocaleSwitcher`。main 顶栏与 login 已接入。详见 `docs/i18n.md`。',
+    desc: '共享多语言（i18next）：全站 `private_locale`；全部子应用已挂 `I18nProvider`+`AntdLocaleProvider`，login 文案已迁移，其余命名空间预留。详见 `docs/i18n.md`。',
   },
 ] as const;
 

@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@packages/i18n": "workspace:*",
     "@packages/seo": "workspace:*",
     "@ant-design/icons": "^6.1.0",
     "antd": "^6.3.0",
