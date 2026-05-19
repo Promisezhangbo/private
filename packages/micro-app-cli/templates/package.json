@@ -1,0 +1,31 @@
+{
+  "name": "__NAME__",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node ../../scripts/deploy/emit_deploy_tag_env.mjs && tsc -b && vite build",
+    "typecheck": "tsc -b --noEmit",
+    "lint": "oxlint --fix",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@packages/seo": "workspace:*",
+    "antd": "^6.3.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.2",
+    "vite-plugin-qiankun": "^1.0.15"
+  },
+  "devDependencies": {
+    "@packages/style-config": "workspace:*",
+    "@packages/ts-config": "workspace:*",
+    "@packages/vite-build-utils": "workspace:*",
+    "@vitejs/plugin-react": "^6.0.1"
+  },
+  "peerDependencies": {
+    "oxlint": "^1.57.0",
+    "sass": "^1.93.3"
+  }
+}

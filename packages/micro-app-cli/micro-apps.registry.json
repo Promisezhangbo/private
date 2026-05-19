@@ -1,0 +1,89 @@
+{
+  "apps": [
+    {
+      "name": "skill",
+      "port": 9004,
+      "menuOrder": 10,
+      "menuLabel": "技能",
+      "entryPath": "home",
+      "blogSurface": true,
+      "description": "技能图谱展示：技术栈熟练度等可视化（含动效）。",
+      "seo": {
+        "title": "技能图谱 | 张博",
+        "description": "技术栈与熟练度等信息的可视化展示。",
+        "keywords": "zhangbo, 张博, 技能, 可视化, 技术栈"
+      }
+    },
+    {
+      "name": "resume",
+      "port": 9005,
+      "menuOrder": 20,
+      "menuLabel": "简历",
+      "entryPath": "home",
+      "blogSurface": true,
+      "description": "在线简历：技能、工作经历、项目、教育与自我评价等结构化展示；样式与主题与主应用对齐。导出为下载静态文件 apps/resume/public/xx.pdf（构建后同源路径 /resume/xx.pdf）。",
+      "seo": {
+        "title": "在线简历 | 张博",
+        "description": "在线简历：技能、经历、项目与教育等结构化展示，支持导出 PDF。",
+        "keywords": "zhangbo, 张博, 简历, 在线简历, PDF"
+      }
+    },
+    {
+      "name": "agent",
+      "port": 9001,
+      "menuOrder": 30,
+      "menuLabel": "AI工作台",
+      "entryPath": "home",
+      "blogSurface": false,
+      "description": "对话式 AI 工作台：流式/非流式 LLM 调用、Markdown 渲染(@ant-design/x-markdown),可通过环境变量配置模型 Key。",
+      "seo": {
+        "title": "AI 工作台 | 张博",
+        "description": "对话式 AI 工作台：流式与非流式大模型调用、Markdown 渲染与可配置模型能力。",
+        "keywords": "zhangbo, 张博, AI, LLM, Markdown, 对话, Agent"
+      }
+    },
+    {
+      "name": "blog",
+      "port": 9002,
+      "menuOrder": 40,
+      "menuLabel": "博客",
+      "entryPath": "root",
+      "blogSurface": true,
+      "description": "技术博客：文章列表与详情、本地 posts 数据驱动的阅读体验。",
+      "seo": {
+        "title": "技术博客 | 张博",
+        "description": "技术文章列表与详情，本地内容驱动的阅读体验。",
+        "keywords": "zhangbo, 张博, 博客, 技术文章, 前端"
+      }
+    },
+    {
+      "name": "utils",
+      "port": 9006,
+      "menuOrder": 50,
+      "menuLabel": "工具",
+      "entryPath": "list",
+      "blogSurface": true,
+      "description": "工具箱：股票持仓成本、OpenAPI SDK 使用说明（基于 api-server.yaml 的静态演示）等页面。",
+      "seo": {
+        "title": "工具箱 | 张博",
+        "description": "实用小工具：股票持仓成本计算等。",
+        "keywords": "zhangbo, 张博, utils, 工具, 股票, 成本"
+      }
+    },
+    {
+      "name": "login",
+      "port": 9003,
+      "menuOrder": 60,
+      "menuLabel": "登录",
+      "entryPath": "root",
+      "blogSurface": false,
+      "description": "登录与注册:独立构建与部署入口,qiankun 场景下开发期通过固定 publicPath 保证静态资源指向子应用 origin。",
+      "seo": {
+        "title": "登录与注册 | 张博",
+        "description": "账户登录与注册入口。",
+        "keywords": "zhangbo, 张博, 登录, 注册",
+        "robots": "noindex, nofollow"
+      }
+    }
+  ]
+}

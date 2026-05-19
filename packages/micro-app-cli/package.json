@@ -1,0 +1,15 @@
+{
+  "name": "@packages/micro-app-cli",
+  "version": "0.1.0",
+  "private": true,
+  "description": "微前端子应用脚手架：create / remove / sync，自动更新 registry、qiankun、部署流水线等",
+  "type": "module",
+  "bin": {
+    "micro-app": "./bin/micro-app.mjs"
+  },
+  "scripts": {
+    "sync": "node ./src/cli.mjs sync",
+    "create": "node ./src/cli.mjs create",
+    "remove": "node ./src/cli.mjs remove"
+  }
+}

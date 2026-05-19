@@ -1,0 +1,10 @@
+{
+  "extends": "@packages/ts-config/backend-node",
+  "compilerOptions": {
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": false
+  },
+  "include": ["src/**/*.mjs", "bin/**/*.mjs"],
+  "exclude": ["templates/**"]
+}

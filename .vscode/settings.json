@@ -1,4 +1,10 @@
 {
+  "files.associations": {
+    "*.ts.tpl": "plaintext",
+    "*.tsx.tpl": "plaintext",
+    "*.scss.tpl": "plaintext",
+    "*.css.tpl": "plaintext"
+  },
   "[javascript]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },

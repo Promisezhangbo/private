@@ -17,6 +17,9 @@
     "postbuild": "bash ./scripts/postbuild.sh",
     "deploy:emit-tag-env": "node scripts/deploy/emit_deploy_tag_env.mjs",
     "deploy:sync-workflow-options": "node scripts/deploy/sync_deploy_workflow_options.mjs",
+    "micro-app:create": "pnpm --filter @packages/micro-app-cli create",
+    "micro-app:remove": "pnpm --filter @packages/micro-app-cli remove",
+    "micro-app:sync": "pnpm --filter @packages/micro-app-cli sync",
     "reinit": "bash ./scripts/clean.sh"
   },
   "devDependencies": {

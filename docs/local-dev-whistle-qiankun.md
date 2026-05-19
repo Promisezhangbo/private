@@ -36,7 +36,7 @@
 
 ## 端口约定（与代码一致）
 
-定义位置：**`apps/main/src/utils/microAppsDev.ts`**（新增子应用时只改此文件，并保证子应用 `vite.config` 的 `server.port` / `base` 与之一致）。
+定义位置：**`apps/main/src/utils/microAppsDev.ts`**（由 **`pnpm micro-app:create`** / **`packages/micro-app-cli/micro-apps.registry.json`** 自动生成；手动新增时请改 registry 后执行 `pnpm micro-app:sync`）。子应用 `vite.config` 的 `server.port` / `base` 须与之一致。
 
 | 应用   | 开发端口 | 路径前缀（`activeRule` / `base`） |
 | ------ | -------- | --------------------------------- |
@@ -85,8 +85,12 @@ promise-zhangbo.netlify.app/ http://127.0.0.1:9000/
 
 ## 新增子应用时的检查清单
 
-1. **`apps/main/src/utils/microAppsDev.ts`**：增加一行 `{ name, port, prodBase, activeRule }`。
-2. **子应用 `vite.config.ts`**：`base: '/<name>/'`、`server.port` 与上表一致；`vite-plugin-qiankun` 的 name 与 `name` 字段一致。
+推荐在仓库根执行 **`pnpm micro-app:create`**（交互输入名称），会自动创建 `apps/<name>/` 并同步 registry、qiankun、主应用菜单、SEO 与 deploy 下拉。
+
+若需手改：
+
+1. **`packages/micro-app-cli/micro-apps.registry.json`**：增加应用元数据后执行 **`pnpm micro-app:sync`**（会重写 `microAppsDev.ts` 等）。
+2. **子应用 `vite.config.ts`**：`base: '/<name>/'`、`server.port` 与 registry 一致；`vite-plugin-qiankun` 的 name 与 `name` 字段一致。
 3. **子应用路由**：`createBrowserRouter` 的根路径为 `/<name>`（与 `activeRule`、`base` 一致）。
 4. 重新执行根目录 `pnpm dev`，确认 Whistle 仍只需 **一条** 指向 `9000` 的规则。
 

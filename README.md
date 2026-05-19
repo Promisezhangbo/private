@@ -60,6 +60,18 @@ pnpm --filter main dev
 cd apps/main && pnpm dev
 ```
 
+### 新增 / 删除微前端子应用
+
+```bash
+# 交互输入子应用名称，自动创建 apps/<name> 并同步 qiankun、菜单、SEO、deploy 下拉等
+pnpm micro-app:create
+
+# 交互选择并删除子应用（不可删 main）
+pnpm micro-app:remove
+```
+
+详见 [`packages/micro-app-cli/README.md`](packages/micro-app-cli/README.md)。
+
 ## 仓库结构
 
 ```
@@ -77,7 +89,8 @@ cd apps/main && pnpm dev
 │   ├── style-config/          # @packages/style-config — 公共 SCSS 变量与主题
 │   ├── stylelint-config/      # @packages/stylelint-config — Stylelint 预设
 │   ├── vite-build-utils/      # @packages/vite-build-utils — 构建分包等工具
-│   └── openapi/               # @packages/openapi — openapi-gen 生成 gen/，聚合 OpenApi<Name> 入口
+│   ├── openapi/               # @packages/openapi — openapi-gen 生成 gen/，聚合 OpenApi<Name> 入口
+│   └── micro-app-cli/         # @packages/micro-app-cli — 子应用 create/remove/sync 脚手架
 ├── api/                       # OpenAPI YAML（*.yaml）
 ├── dist/                      # 构建输出（根脚本 build + postbuild）
 ├── scripts/                   # 部署辅助脚本等

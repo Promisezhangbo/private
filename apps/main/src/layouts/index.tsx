@@ -1,3 +1,8 @@
+import {
+  microAppBlogSurfaceKeys,
+  microAppMenuEntries,
+  microAppMenuPaths,
+} from '@/generated/micro-app-shell.generated';
 import { useAppTheme, type AppThemeMode } from '@/theme/useAppTheme';
 import './index.scss';
 import { appSeoPresets, applyDocumentSeo } from '@packages/seo';
@@ -6,27 +11,14 @@ import { Layout, Menu, Select } from 'antd';
 import { useEffect, useState } from 'react';
 const { Content, Header } = Layout;
 
-const menuMap = [
-  { key: 'home', label: '首页', sub: false },
-  { key: 'skill', label: '技能', sub: true },
-  { key: 'resume', label: '简历', sub: true },
-  { key: 'agent', label: 'AI工作台', sub: true },
-  { key: 'blog', label: '博客', sub: true },
-  { key: 'utils', label: '工具', sub: true },
-  { key: 'login', label: '登录', sub: true },
-];
+const menuMap = [{ key: 'home', label: '首页', sub: false }, ...microAppMenuEntries];
 
 const MENU_KEYS = menuMap.map((k) => k.key);
 
 /** 与各子应用 router 默认页对齐，减少一次 in-app Navigate */
 const MENU_PATH: Record<string, string> = {
   home: '/home',
-  resume: '/resume/home',
-  skill: '/skill/home',
-  agent: '/agent/home',
-  blog: '/blog',
-  utils: '/utils/list',
-  login: '/login',
+  ...microAppMenuPaths,
 };
 
 function Layouts() {
@@ -43,7 +35,8 @@ function Layouts() {
     .map((t) => t.key)
     .includes(segment);
   /** 与对应子应用 #app-root 使用同一套 Blog 底纹变量，避免子应用 JS 未到前内容区短暂露出主壳渐变 */
-  const microBlogSurface = isMicroShell && ['resume', 'blog', 'skill', 'utils'].includes(segment);
+  const microBlogSurface =
+    isMicroShell && (microAppBlogSurfaceKeys as readonly string[]).includes(segment);
   /** 从 URL 第一段同步当前选中的菜单 */
   useEffect(() => {
     const seg = location.pathname.split('/')[1] || 'home';

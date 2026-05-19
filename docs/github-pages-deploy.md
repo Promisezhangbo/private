@@ -84,15 +84,17 @@ bash scripts/deploy/merge_app_dist_to_deploy.sh skill
 
 ## 新增子应用时的清单
 
+推荐：**`pnpm micro-app:create`**（见 `packages/micro-app-cli/README.md`），会自动创建子应用目录并执行 **`deploy:sync-workflow-options`**。
+
 | 项 | 说明 |
 | --- | --- |
-| `apps/<新应用>/package.json` | **`build`** 需以 **`emit_deploy_tag_env.mjs`** 开头（可复制现有子应用）；存在后即可参与 Turbo 全量构建。 |
+| `apps/<新应用>/package.json` | **`build`** 需以 **`emit_deploy_tag_env.mjs`** 开头（脚手架已包含）；存在后即可参与 Turbo 全量构建。 |
 | `apps/<新应用>/vite.config.ts` | 与其它应用一致：`loadDeployEnv` + **`define: deployTagDefine()`**。 |
 | `apps/<新应用>/src/main.tsx` | 在 **`render`** 开头调用 **`logDeployTag('<应用名>', 样式?)`**（应用名与目录名一致，便于区分控制台来源）。 |
 | `emit_deploy_tag_env.mjs` 内 **`PRESETS`** | 若需要与控制台 emoji/标题一致，可为新应用增一项。 |
 | `pnpm run deploy:sync-workflow-options` | 新增子应用后运行并提交，更新 `deploy.yml` 中 `scope` 下拉选项。 |
 | Vite `base` / `outDir` | 生产环境应指向 **`/<新应用>/`** 等，与 GitHub Pages 路径一致。 |
-| 主应用 qiankun | 需在 **`apps/main`** 中注册微应用、菜单与路由等。 |
+| 主应用 qiankun | 由 **`micro-app-cli`** 同步 `microAppsDev.ts`、菜单与首页子应用表等；手改时请维护 **`micro-apps.registry.json`** 并 `pnpm micro-app:sync`。 |
 
 ## 相关文件索引
 

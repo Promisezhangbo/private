@@ -1,9 +1,9 @@
+/** AUTO-GENERATED — 请勿手改。运行 pnpm micro-app:sync 或 create/remove 后自动更新。 */
 /**
- * 微应用开发期端口、路由前缀与生产 entry 路径（唯一数据源）。
+ * 微应用开发期端口、路由前缀与生产 entry 路径。
+ * 数据源：packages/micro-app-cli/micro-apps.registry.json
  * - `qiankun.ts` 据此生成 `apps`
  * - `vite.config.ts` 据此生成 `server.proxy`
- *
- * 新增子应用时只改本文件。
  */
 export const microAppsDev = [
   { name: 'agent', port: 9001, prodBase: '/agent/', activeRule: '/agent' },
