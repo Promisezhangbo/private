@@ -1,5 +1,7 @@
 ## Turborepo 使用文档（当前仓库）
 
+> 文档索引与其它专题：[README.md](./README.md)
+
 本仓库使用 **Turborepo** 做 monorepo 任务调度与缓存，核心目标是：
 
 - **把 OpenAPI 生成变成标准任务**（`@packages/openapi#generate`，底层为 **`openapi-axios-sdk`** 的 **`openapi-gen`**），并且在 `api/*.yaml` 与生成配置无变化时 **命中缓存跳过**。

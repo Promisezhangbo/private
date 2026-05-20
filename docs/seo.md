@@ -87,6 +87,17 @@ applyDocumentSeo(document, {
 
 登录与注册页通常不需要被公开搜索收录；预设与 `apps/login/index.html` 中均为 `noindex, nofollow`。若将来需要「可收录的说明页」，应使用独立路径与新预设，勿改登录页为 `index`。
 
+## 与多语言（@packages/i18n）的关系
+
+| 场景 | 行为 |
+| --- | --- |
+| **login** | `LoginSeoSync` 监听 `locale`，从 `useT('login')` 读取 `seo.title` / `seo.description` 等，再调用 `applyDocumentSeo`。**唯一**随语言切换 SEO 的应用。 |
+| **main `/home`** | `appSeoPresets.main` 中文文案；与语言切换无关。 |
+| **其它子应用** | 各 `main.tsx` 在 `render` 前写入对应 `appSeoPresets.<name>`（中文）；`index.html` 中 `og:locale` 多为静态 `zh_CN`。 |
+| **`applyDocumentSeo` 实现** | 当前固定 `document.documentElement.lang = 'zh-CN'`、`og:locale = zh_CN`（见 `packages/seo/src/index.ts`）。多语言 SEO 需在调用处扩展或改造该函数。 |
+
+页面 UI 国际化见 [i18n.md](./i18n.md)；login 的 `seo.*` 词条在 `packages/i18n/src/locales/*/login.ts`。
+
 ## 如何按路由细化 SEO
 
 默认预设只覆盖「应用级」首页感知的文案。若某子应用内有 **文章详情、独立落地页** 等，可在对应路由组件 `useEffect` 中再次调用 `applyDocumentSeo`，传入该页的 `title`、`description`，并传入准确 `pathname`（或与 `location.pathname` 一致而省略，由工具从当前地址推导）。
@@ -102,5 +113,6 @@ applyDocumentSeo(document, {
 
 ## 相关文档
 
-- 微前端本地与线上域名联调：[`docs/local-dev-whistle-qiankun.md`](./local-dev-whistle-qiankun.md)
-- 文档索引：[`docs/README.md`](./README.md)
+- [多语言](./i18n.md)
+- [本地联调 / qiankun](./local-dev-whistle-qiankun.md)
+- [文档索引](./README.md)

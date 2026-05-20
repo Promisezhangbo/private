@@ -46,6 +46,7 @@
 | login  | 9003     | `/login/`                         |
 | skill  | 9004     | `/skill/`                         |
 | resume | 9005     | `/resume/`                        |
+| utils  | 9006     | `/utils/`                         |
 
 主应用开发代理逻辑：**`apps/main/vite.config.ts`** 在 `NODE_ENV === 'development'` 时根据 `microAppsDev` 生成 `server.proxy`（含 `ws: true`，便于子应用 HMR）。
 
@@ -114,3 +115,9 @@ promise-zhangbo.netlify.app/ http://127.0.0.1:9000/
 | `scripts/dev.mjs`                     | 交互式选择要启动的 app                                |
 
 部署到 GitHub Pages / Netlify 的目录与路由约定，另见 [github-pages-deploy.md](./github-pages-deploy.md)、[netlify-deploy.md](./netlify-deploy.md)。
+
+## 相关文档
+
+- [文档索引](./README.md)（应用端口总表）
+- [多语言](./i18n.md)
+- [SEO](./seo.md)

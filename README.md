@@ -4,10 +4,12 @@
 
 ## 文档
 
-- Turbo 使用说明：见 `docs/turbo.md`
-- 后端 api-server：见 `backend/api-server/README.md`
-- 文档索引：见 `docs/README.md`
-- 多语言：见 `docs/i18n.md`
+- **文档索引**：见 [`docs/README.md`](docs/README.md)（应用端口表、横切能力现状、各专题链接）
+- **本地联调**（Whistle + qiankun）：[`docs/local-dev-whistle-qiankun.md`](docs/local-dev-whistle-qiankun.md)
+- **多语言**：[`docs/i18n.md`](docs/i18n.md)（全应用已接 Provider；页面文案目前仅 login 完成迁移）
+- **SEO**：[`docs/seo.md`](docs/seo.md)
+- **Turborepo**：[`docs/turbo.md`](docs/turbo.md)
+- **后端 api-server**：[`backend/api-server/README.md`](backend/api-server/README.md)
 
 ## 技术栈（摘要）
 
@@ -79,10 +81,8 @@ pnpm micro-app:remove
 /
 ├── apps/                      # 子应用（宿主 + 微应用）
 │   ├── main/                  # 基座：路由、布局、qiankun 注册与全局状态
-│   ├── login/ blog/ resume/   # 微应用
-│   ├── agent/                 # 微应用：集成 OpenAI SDK 等实验能力
-│   ├── skill/                 # 微应用：动效等实验能力
-│   └── utils/                 # 微应用：工具箱（持仓成本、OpenAPI SDK 说明等）
+│   ├── login/ blog/ resume/ skill/ utils/  # 微应用
+│   └── agent/                 # 微应用：AI 工作台（LLM 对话等）
 ├── backend/                   # 后端（当前为 api-server，Deno + Hono）
 │   └── api-server/
 ├── packages/                  # workspace 共享包
@@ -91,8 +91,9 @@ pnpm micro-app:remove
 │   ├── stylelint-config/      # @packages/stylelint-config — Stylelint 预设
 │   ├── vite-build-utils/      # @packages/vite-build-utils — 构建分包等工具
 │   ├── openapi/               # @packages/openapi — openapi-gen 生成 gen/，聚合 OpenApi<Name> 入口
-│   ├── micro-app-cli/         # @packages/micro-app-cli — 子应用 create/remove/sync 脚手架
-│   └── i18n/                  # @packages/i18n — i18next 多语言（zh-CN / en），login 已接入
+│   ├── seo/                   # @packages/seo — applyDocumentSeo、appSeoPresets
+│   ├── i18n/                  # @packages/i18n — i18next（zh-CN / en）；全应用 Provider 已接，文案仅 login 迁移完
+│   └── micro-app-cli/         # @packages/micro-app-cli — 子应用 create/remove/sync 脚手架
 ├── api/                       # OpenAPI YAML（*.yaml）
 ├── dist/                      # 构建输出（根脚本 build + postbuild）
 ├── scripts/                   # 部署辅助脚本等
@@ -135,9 +136,10 @@ pnpm micro-app:remove
 
 ## qiankun 与联调
 
-- 主应用在路由对应位置需提供子应用挂载容器（具体以 `apps/main` 内 qiankun 注册逻辑为准）。
-- 各微应用在 `vite.config` 中通过 `vite-plugin-qiankun` 声明应用名；**本地 dev 端口须与主应用里配置的 entry 一致**，否则无法加载子应用。
-- 常见问题：**Target container not existed** — 先确认容器 DOM 已渲染，再执行注册/挂载；必要时将注册时机延后到布局/路由就绪之后。
+- 主应用在路由对应位置需提供子应用挂载容器（见 `apps/main` 内 qiankun 注册）。
+- 各微应用 `vite.config` 使用 `vite-plugin-qiankun`；**开发端口与 `base` 以 `apps/main/src/utils/microAppsDev.ts` 为准**（数据源：`packages/micro-app-cli/micro-apps.registry.json`）。
+- 通过 **Whistle 走线上域名** 联调：见 [`docs/local-dev-whistle-qiankun.md`](docs/local-dev-whistle-qiankun.md)（主应用 9000 代理子路径，勿在 Whistle 剥前缀）。
+- 常见问题：**Target container not existed** — 先确认容器 DOM 已渲染，再注册/挂载；必要时延后到布局/路由就绪之后。
 
 ## 部署（GitHub Pages）
 

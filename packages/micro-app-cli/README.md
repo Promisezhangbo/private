@@ -38,9 +38,12 @@ pnpm micro-app:sync
 创建后会：
 
 1. 在 `apps/<name>/` 生成与现有子应用对齐的 Vite + qiankun + React Router 工程（含 `/name/home` 占位页）
-2. 分配下一可用 dev 端口（当前最大端口 + 1）
-3. 更新 registry 并执行 sync + `deploy:sync-workflow-options`
-4. 提示在仓库根目录执行 `pnpm install`
+2. 模板已包含 `@packages/i18n` 依赖及 `I18nProvider` + `AntdLocaleProvider`（`namespaces={['<name>']}`）
+3. 分配下一可用 dev 端口（当前最大端口 + 1）
+4. 更新 registry 并执行 sync（含 `microAppsDev.ts`、菜单、SEO 预设、`deploy.yml` 下拉）
+5. 提示在仓库根目录执行 `pnpm install`
+
+**仍需手动**：在 `packages/i18n` 增加 `<name>` 命名空间文案并在 `resources.ts` 注册，详见 [docs/i18n.md](../../docs/i18n.md)。
 
 ## 命名规则
 
