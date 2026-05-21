@@ -9,6 +9,7 @@
 | [local-dev-whistle-qiankun.md](./local-dev-whistle-qiankun.md) | 本地 Whistle + 主应用 Vite 代理联调线上域名；端口与 `microAppsDev` 约定 |
 | [i18n.md](./i18n.md) | 多语言（`@packages/i18n`）：全站 `private_locale`、各应用接入状态、页面迁移清单 |
 | [seo.md](./seo.md) | SEO（`@packages/seo`）：`applyDocumentSeo`、各应用预设与 qiankun 下的 `document` 行为 |
+| [google-search-console.md](./google-search-console.md) | Google Search Console：DNS / HTML 验证说明（DNS 在域名服务商配置） |
 | [turbo.md](./turbo.md) | Turborepo 任务、缓存、`filter`、与 OpenAPI 生成的依赖关系 |
 
 ## 部署

@@ -1,7 +1,7 @@
 import { MICRO_APP_SUB_APPS } from './microApps.generated';
 
 export const OVERVIEW = {
-  title: 'Private 工作台',
+  title: '工作台',
   subtitle:
     '基于 pnpm workspace + Turbo 的 Monorepo：前端 apps/* 由 qiankun 挂载；后端 backend/api-server（Deno）实现 api/api-server.yaml；OpenAPI 生成 SDK 供子应用调用。',
 };
@@ -41,8 +41,7 @@ export const PACKAGES: readonly PackageItem[] = [
   { name: '@packages/stylelint-config', desc: 'Stylelint 共享配置。' },
   {
     name: '@packages/openapi',
-    desc:
-      'Monorepo 内 OpenAPI 工作流：api/*.yaml + packages/openapi/openapi.config.ts → 自研 openapi-axios-sdk（openapi-gen）→ packages/openapi/gen/；包内 pnpm run generate / typecheck，仓库根 pnpm run generate。与 backend/api-server 配套。',
+    desc: 'Monorepo 内 OpenAPI 工作流：api/*.yaml + packages/openapi/openapi.config.ts → 自研 openapi-axios-sdk（openapi-gen）→ packages/openapi/gen/；包内 pnpm run generate / typecheck，仓库根 pnpm run generate。与 backend/api-server 配套。',
     links: [
       { label: 'SDK 使用说明（utils 子应用）', href: '/utils/openapi' },
       {
@@ -67,7 +66,15 @@ export const PACKAGES: readonly PackageItem[] = [
 ] as const;
 
 export const TECH_STACK = {
-  runtime: ['React 19', 'React Router 7', 'Ant Design 6', '@ant-design/icons', 'qiankun 2.x', 'vite-plugin-qiankun', 'Sass'],
+  runtime: [
+    'React 19',
+    'React Router 7',
+    'Ant Design 6',
+    '@ant-design/icons',
+    'qiankun 2.x',
+    'vite-plugin-qiankun',
+    'Sass',
+  ],
   build: ['Vite 8', 'TypeScript 5.9', 'Rolldown', 'openapi-axios-sdk（自研 openapi-gen）'],
   workspace: ['pnpm 10 workspace', 'Turbo 2.x', 'apps/* + packages/* + backend/* + api/*.yaml'],
   backend: ['Deno', 'Hono', 'PostgreSQL（Prisma Postgres）', 'Deno Deploy'],
