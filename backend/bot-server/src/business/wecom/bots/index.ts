@@ -6,9 +6,8 @@
  * 2. 在本文件 `wecomBots` 数组中追加一行
  * 3. 配置对应环境变量后重新部署
  */
-import type { WecomBotDefinition } from "../types.ts";
-import { offWorkBot } from "./off-work.ts";
+import type { WecomBotDefinition } from '../types.ts';
+import { offWorkBot } from './off-work.ts';
+import { onWorkBot } from './on-work.ts';
 
-export const wecomBots: readonly WecomBotDefinition[] = [
-  offWorkBot,
-];
+export const wecomBots: readonly WecomBotDefinition[] = [offWorkBot, onWorkBot];
