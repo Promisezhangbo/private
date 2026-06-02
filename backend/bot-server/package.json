@@ -1,0 +1,22 @@
+{
+  "name": "bot-server",
+  "description": "monorepo 机器人后端（Deno + Hono）：定时通知 / Webhook 转发，按机器人类型分目录（wecom / feishu ...），入口见 src/main.ts。",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "hono": "4.6.12"
+  },
+  "devDependencies": {
+    "@packages/ts-config": "workspace:*"
+  },
+  "scripts": {
+    "dev": "deno task dev",
+    "dev:env": "deno task dev:env",
+    "start": "deno run --allow-net --allow-env --allow-read --unstable-cron src/main.ts",
+    "build": "deno check src/main.ts",
+    "typecheck:tsc": "tsc --noEmit",
+    "lint": "oxlint --fix src",
+    "deploy:dev": "deno task dev"
+  }
+}

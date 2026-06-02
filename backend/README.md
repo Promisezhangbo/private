@@ -1,15 +1,16 @@
 # backend
 
-Monorepo 后端根目录，当前仅包含 **`api-server`**（Deno + Hono + PostgreSQL）。
-
-开发与部署说明见 **[api-server/README.md](./api-server/README.md)**。
+| 项目 | 职责 | 文档 |
+|------|------|------|
+| `api-server` | Hono + PostgreSQL | [api-server/README.md](./api-server/README.md) |
+| `bot-server` | 定时通知 / 机器人 | [bot-server/README.md](./bot-server/README.md) |
 
 ```text
-backend/api-server/
-  src/core/       # 环境变量、数据库、HTTP 公用逻辑
-  src/blog/       # 博客 API
-  src/stock/      # 持仓成本 API
-  src/system/     # 健康检查
-  sql/console/    # 在 SQL 控制台手动执行的 DDL 迁移
-  tools/          # 本地调试脚本（非 Deploy 入口）
+backend/bot-server/src/
+  main.ts
+  routes/           # 网络层
+  jobs/             # 定时入口 → business
+  business/         # 业务（按渠道分目录）
+    wecom/bots/     # 每个企业微信机器人一个文件，改 bots/index.ts 即可上线
+  utils/            # 全局工具
 ```

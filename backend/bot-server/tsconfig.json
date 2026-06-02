@@ -1,0 +1,4 @@
+{
+  "extends": "@packages/ts-config/backend",
+  "include": ["src/**/*.ts", "src/**/*.d.ts"]
+}

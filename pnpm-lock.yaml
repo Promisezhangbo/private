@@ -419,6 +419,16 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ts-config
 
+  backend/bot-server:
+    dependencies:
+      hono:
+        specifier: 4.6.12
+        version: 4.6.12
+    devDependencies:
+      '@packages/ts-config':
+        specifier: workspace:*
+        version: link:../../packages/ts-config
+
   packages/i18n:
     dependencies:
       antd:
