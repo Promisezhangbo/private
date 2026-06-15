@@ -28,6 +28,8 @@
 
 依赖：`devDependencies` 中需包含 `sass` 与本包 `workspace:*`。
 
+移动端 / 响应式断点与各 app 落地说明见 [docs/responsive-mobile.md](../../docs/responsive-mobile.md)。
+
 ## qiankun 嵌入主应用时
 
 子应用 `#app-root` 在独立运行时用 `100vh` 铺满视口；嵌入主应用时应使用 `height/minHeight: 100%`，由主应用 `.main-content--flush` + `#sub-app` 提供高度链，避免四周露主应用底色、出现双滚动条。
