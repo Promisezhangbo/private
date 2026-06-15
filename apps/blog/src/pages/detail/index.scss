@@ -1,4 +1,5 @@
 @use '@style-config/variables' as *;
+@use '@style-config/mixins' as m;
 @use '../../styles/blog-shared';
 
 .blog-detail-card {
@@ -216,4 +217,30 @@
 
 .blog-detail-back {
   margin-top: 24px;
+}
+
+@include m.respond-down($bp-sm) {
+  .blog-detail-card.ant-card .ant-card-body {
+    padding: 20px 16px 24px;
+  }
+
+  .blog-md {
+    font-size: 15px;
+    line-height: 1.75;
+
+    h2 {
+      font-size: 1.2rem;
+    }
+
+    th,
+    td {
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+
+    table {
+      display: block;
+      overflow-x: auto;
+    }
+  }
 }

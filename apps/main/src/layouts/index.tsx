@@ -7,9 +7,10 @@ import { useAppTheme, type AppThemeMode } from '@/theme/useAppTheme';
 import './index.scss';
 import { SiteLocaleSwitcher } from '@packages/i18n';
 import { appSeoPresets, applyDocumentSeo } from '@packages/seo';
+import { MenuOutlined } from '@ant-design/icons';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Layout, Menu, Select } from 'antd';
-import { useEffect, useState } from 'react';
+import { Button, Drawer, Grid, Layout, Menu, Select } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
 const { Content, Header } = Layout;
 
 const menuMap = [{ key: 'home', label: '首页', sub: false }, ...microAppMenuEntries];
@@ -23,10 +24,17 @@ const MENU_PATH: Record<string, string> = {
 };
 
 function Layouts() {
+  const screens = Grid.useBreakpoint();
+  const isCompactNav = screens.md === false;
   const { mode, setMode } = useAppTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const [currentMenu, setCurrentMenu] = useState<string>('home');
+  const [navDrawerOpen, setNavDrawerOpen] = useState(false);
+  const menuItems = useMemo(
+    () => menuMap.map((k) => ({ key: k.key, label: k.label })),
+    [],
+  );
   /** 登录子应用全屏展示时不渲染主应用顶栏 */
   const showHeader = currentMenu !== 'login';
   /** 微前端子应用路由：内容区去 padding，背景铺满主应用可视区域 */
@@ -54,16 +62,32 @@ function Layouts() {
     navigate(MENU_PATH[key] ?? `/${key}`);
     setCurrentMenu(key);
   };
+  const onNavSelect = (key: string) => {
+    onMenuSelect(key);
+    setNavDrawerOpen(false);
+  };
   return (
     <Layout className="main-app">
       {showHeader && (
         <Header className="main-header">
-          <Menu
-            mode="horizontal"
-            selectedKeys={[currentMenu]}
-            items={menuMap.map((k) => ({ key: k.key, label: k.label }))}
-            onClick={({ key }) => onMenuSelect(String(key))}
-          />
+          {isCompactNav && (
+            <Button
+              type="text"
+              className="main-header-menu-btn"
+              icon={<MenuOutlined />}
+              aria-label="打开导航菜单"
+              onClick={() => setNavDrawerOpen(true)}
+            />
+          )}
+          {!isCompactNav && (
+            <Menu
+              className="main-header-nav main-header-nav--desktop"
+              mode="horizontal"
+              selectedKeys={[currentMenu]}
+              items={menuItems}
+              onClick={({ key }) => onMenuSelect(String(key))}
+            />
+          )}
           <div className="main-header-actions">
             <SiteLocaleSwitcher className="main-header-locale-select" />
             <Select
@@ -79,6 +103,21 @@ function Layouts() {
               aria-label="切换主题"
             />
           </div>
+          <Drawer
+            title="导航"
+            placement="left"
+            width={280}
+            className="main-header-drawer"
+            open={navDrawerOpen}
+            onClose={() => setNavDrawerOpen(false)}
+          >
+            <Menu
+              mode="inline"
+              selectedKeys={[currentMenu]}
+              items={menuItems}
+              onClick={({ key }) => onNavSelect(String(key))}
+            />
+          </Drawer>
         </Header>
       )}
       <Content className={`main-content ${showHeader ? '' : ' main-content--login-viewport'}`}>

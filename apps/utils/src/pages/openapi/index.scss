@@ -1,15 +1,17 @@
 @use '@style-config/mixins' as m;
+@use '@style-config/variables' as *;
 
 .utils-page.openapi-demo {
-  flex: 1 1 0;
-  min-width: 0;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
+  @include m.sub-app-page;
   padding: 24px 0 48px;
-  overflow: auto;
 
-  @include m.thin-scrollbar;
+  @include m.respond-down($bp-sm) {
+    padding: 16px 0 32px;
+  }
+
+  .utils-page__inner {
+    @include m.sub-app-page-inner;
+  }
 }
 
 .openapi-demo__back {
@@ -37,6 +39,12 @@
 .openapi-demo__tabs {
   .ant-tabs-content {
     padding-top: 4px;
+  }
+
+  @include m.respond-down($bp-sm) {
+    .ant-tabs-nav-wrap {
+      overflow: auto;
+    }
   }
 }
 

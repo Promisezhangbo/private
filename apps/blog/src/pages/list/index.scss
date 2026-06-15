@@ -140,4 +140,25 @@
       }
     }
   }
+
+  @include m.respond-down($bp-sm) {
+    .blog-category-tabs.ant-tabs {
+      .ant-tabs-nav {
+        margin-bottom: 16px;
+      }
+
+      .ant-tabs-tab {
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+    }
+
+    .blog-list-item-wrap .blog-card.ant-card .ant-card-body {
+      padding-left: 18px;
+    }
+
+    .blog-card-title {
+      font-size: 16px;
+    }
+  }
 }

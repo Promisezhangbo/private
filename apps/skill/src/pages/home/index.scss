@@ -4,17 +4,15 @@
 .skill-page {
   position: relative;
   z-index: $z-content;
-  flex: 1 1 0;
-  min-width: 0;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
+
+  @include m.sub-app-page;
   width: 100%;
   padding: 24px 0 48px;
   box-sizing: border-box;
-  overflow: auto;
 
-  @include m.thin-scrollbar;
+  @include m.respond-down($bp-sm) {
+    padding: 16px 0 32px;
+  }
 
   .skill-page__motion {
     flex: 1 1 0;
@@ -25,11 +23,7 @@
 }
 
 .skill-page__inner {
-  width: 100%;
-  max-width: $sub-app-content-max-width;
-  margin: 0 auto;
-  padding: 0 $sub-app-shell-padding;
-  box-sizing: border-box;
+  @include m.sub-app-page-inner;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -55,7 +49,7 @@
       align-items: start;
     }
 
-    @media (width <= 720px) {
+    @include m.respond-down($bp-sm) {
       .skill-page__columns {
         grid-template-columns: 1fr;
         gap: 0;

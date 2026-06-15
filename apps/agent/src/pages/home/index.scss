@@ -1,4 +1,5 @@
 @use '@style-config/variables' as *;
+@use '@style-config/mixins' as m;
 
 /* 清新科技风：浅蓝 + 浅紫，与 @ant-design/x 组件统一 */
 .agent-studio {
@@ -458,6 +459,32 @@
       border: none !important;
       background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%) !important;
       box-shadow: 0 4px 14px rgb(56 189 248 / 0.35) !important;
+    }
+  }
+
+  @include m.respond-down($bp-sm) {
+    &__masthead {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      padding: 12px 14px;
+      margin: 12px 0 6px;
+    }
+
+    &__masthead-title {
+      font-size: 1.12rem;
+    }
+
+    &__dock {
+      padding: 10px 0 calc(12px + env(safe-area-inset-bottom, 0));
+    }
+
+    &__sender .ant-sender-content {
+      padding: 12px 12px 12px 16px;
+
+      .ant-sender-input {
+        font-size: 15px;
+      }
     }
   }
 }

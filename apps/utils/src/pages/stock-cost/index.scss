@@ -2,23 +2,16 @@
 @use '@style-config/mixins' as m;
 
 .utils-stock {
-  flex: 1 1 0;
-  min-width: 0;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
+  @include m.sub-app-page;
   padding: 24px 0 48px;
-  overflow: auto;
 
-  @include m.thin-scrollbar;
+  @include m.respond-down($bp-sm) {
+    padding: 16px 0 32px;
+  }
 }
 
 .utils-stock__inner {
-  width: 100%;
-  max-width: $sub-app-content-max-width;
-  margin: 0 auto;
-  padding: 0 $sub-app-shell-padding;
-  box-sizing: border-box;
+  @include m.sub-app-page-inner;
 }
 
 .utils-stock__back {
@@ -53,7 +46,7 @@
   gap: 16px;
   align-items: start;
 
-  @media (width <= 768px) {
+  @include m.respond-down($bp-sm) {
     grid-template-columns: 1fr;
   }
 }
@@ -114,7 +107,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 0 16px;
 
-  @media (width <= 520px) {
+  @include m.respond-down($bp-xs) {
     grid-template-columns: 1fr;
   }
 }

@@ -1,10 +1,11 @@
 @use '@style-config/variables' as *;
+@use '@style-config/mixins' as m;
 
 /* 列表 / 详情：版心 + 科技风页眉 */
 .blog-shell {
   position: relative;
   z-index: $z-content;
-  padding: 0 20px 20px;
+  padding: 0 $sub-app-shell-padding 20px;
   max-width: $sub-app-content-max-width;
   margin: 0 auto;
 }
@@ -72,4 +73,8 @@ html[data-theme='dark'] .blog-hero__kicker {
 .blog-empty {
   padding: 48px 24px;
   text-align: center;
+
+  @include m.respond-down($bp-sm) {
+    padding: 32px 16px;
+  }
 }

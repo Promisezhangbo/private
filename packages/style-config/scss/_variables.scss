@@ -29,6 +29,12 @@ $orange-800: #9a3412;
 $header-height-main: 56px;
 $sub-app-max-width-wide: 1040px;
 
+// —— 响应式断点（与 Ant Design Grid md/lg 对齐，子应用 @include respond-down 统一引用）——
+$bp-xs: 520px;
+$bp-sm: 768px;
+$bp-md: 1024px;
+$bp-lg: 1280px;
+
 /// 视口宽度黄金分割比（login 子应用不使用）
 $sub-app-golden-ratio: 0.618;
 

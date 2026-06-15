@@ -1,8 +1,18 @@
+@use '@style-config/variables' as *;
+@use '@style-config/mixins' as m;
+
 .main-app {
   .main-header {
     display: flex;
     align-items: center;
     background: transparent;
+
+    .main-header-menu-btn {
+      display: none;
+      flex-shrink: 0;
+      margin-inline-end: 4px;
+      color: var(--sc-header-menu-text) !important;
+    }
 
     .ant-menu {
       flex: 1 1 auto;
@@ -14,6 +24,7 @@
       flex-shrink: 0;
       align-items: center;
       gap: 4px;
+      margin-inline-start: auto;
     }
 
     .main-header-locale-select {
@@ -23,11 +34,44 @@
     .main-header-theme-select {
       width: 96px;
     }
+
+    @include m.respond-down($bp-sm) {
+      &.ant-layout-header {
+        padding-inline: 12px;
+        gap: 8px;
+      }
+
+      .main-header-menu-btn {
+        display: inline-flex;
+      }
+
+      .main-header-nav--desktop {
+        display: none;
+      }
+
+      .main-header-locale-select {
+        width: 92px;
+      }
+
+      .main-header-theme-select {
+        width: 84px;
+      }
+    }
+  }
+
+  .main-header-drawer {
+    .ant-drawer-body {
+      padding: 12px 0;
+    }
+
+    .ant-menu {
+      border-inline-end: none !important;
+    }
   }
 
   .main-content {
     overflow: hidden;
-    height: calc(100vh - 56px);
+    height: calc(100dvh - #{$header-height-main});
     display: flex;
 
     .main-content--flush {

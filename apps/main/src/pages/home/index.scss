@@ -1,4 +1,5 @@
 @use '@style-config/variables' as *;
+@use '@style-config/mixins' as m;
 
 .main-home-shell {
   box-sizing: border-box;
@@ -9,6 +10,10 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  @include m.respond-down($bp-sm) {
+    gap: 12px;
+  }
 }
 
 .dash-hero.ant-card {
@@ -209,5 +214,25 @@
 html[data-theme='dark'] {
   .dash-matrix.ant-descriptions .ant-descriptions-item-label {
     background: rgb(255 255 255 / 0.04);
+  }
+}
+
+@include m.respond-down($bp-sm) {
+  .dash-desc.ant-descriptions {
+    .ant-descriptions-item-label {
+      width: auto;
+    }
+  }
+
+  .dash-desc--arch.ant-descriptions {
+    .ant-descriptions-item-label {
+      width: auto;
+      min-width: 0;
+    }
+  }
+
+  .dash-backend-pre {
+    padding: 10px 12px;
+    font-size: 11px;
   }
 }

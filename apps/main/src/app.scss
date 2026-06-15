@@ -1,6 +1,7 @@
 @use '@style-config/variables' as *;
 @use '@style-config/themes' as themes;
 @use '@style-config/semantic-palette';
+@use '@style-config/mixins' as m;
 
 /* 主应用全局 CSS 变量（与 Ant Design / 布局对齐） */
 @include themes.root-tokens;
@@ -130,5 +131,12 @@ body {
     background: var(--sc-header-select-bg) !important;
     border-color: var(--sc-header-select-border) !important;
     color: var(--sc-header-select-text) !important;
+  }
+
+  @include m.respond-down($bp-sm) {
+    &.ant-layout-header {
+      padding-inline: 12px;
+      gap: 8px;
+    }
   }
 }

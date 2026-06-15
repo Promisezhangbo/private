@@ -1,4 +1,5 @@
 @use '@style-config/variables' as *;
+@use '@style-config/mixins' as m;
 
 /* 简历页：与全站 --sc-* 语义对齐，区块间同一套层级与字号，减少 HR 视角的「跳台感」 */
 .resume-home-shell {
@@ -466,6 +467,26 @@
       color: var(--sc-home-hero-lead);
       font-size: var(--resume-fs-body);
       line-height: 1.55;
+    }
+  }
+}
+
+@include m.respond-down($bp-sm) {
+  .resume-home-shell {
+    gap: 16px;
+
+    .dash-hero-intro__row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .resume-export-pdf-btn.ant-btn {
+      align-self: stretch;
+      text-align: center;
+    }
+
+    .resume-projects-panel .resume-projects-panel__sheet {
+      padding: 8px 0 12px;
     }
   }
 }

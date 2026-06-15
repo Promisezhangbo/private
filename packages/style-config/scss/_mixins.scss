@@ -66,6 +66,41 @@
   }
 }
 
+/// 视口宽度 ≤ $bp 时生效（如 `@include respond-down($bp-sm) { ... }`）
+@mixin respond-down($bp) {
+  @media (width <= $bp) {
+    @content;
+  }
+}
+
+/// 视口宽度 > $bp 时生效
+@mixin respond-up($bp) {
+  @media (width > $bp) {
+    @content;
+  }
+}
+
+/// 子应用页面滚动容器（flex 链 + 细滚动条）
+@mixin sub-app-page {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+
+  @include thin-scrollbar;
+}
+
+/// 子应用内容版心（与 $sub-app-content-max-width / $sub-app-shell-padding 对齐）
+@mixin sub-app-page-inner {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: $sub-app-content-max-width;
+  margin: 0 auto;
+  padding: 0 $sub-app-shell-padding;
+}
+
 /// WebKit 细滚动条
 @mixin thin-scrollbar($width: 8px, $thumb: rgba(148, 163, 184, 0.25)) {
   &::-webkit-scrollbar {

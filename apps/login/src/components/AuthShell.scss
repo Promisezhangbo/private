@@ -1,4 +1,5 @@
 @use '@style-config/variables' as *;
+@use '@style-config/mixins' as m;
 
 /* 柔和光斑缓慢漂移，无高对比霓虹 */
 @keyframes login-shell-blob-drift {
@@ -31,6 +32,10 @@
       justify-content: center;
       padding: 24px 16px;
       box-sizing: border-box;
+
+      @include m.respond-down($bp-xs) {
+        padding: 16px 12px;
+      }
     }
 
     &::before {
